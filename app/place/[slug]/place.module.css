@@ -1,0 +1,57 @@
+.place { display: flex; flex-direction: column; gap: var(--s4); max-width: var(--measure); }
+.missing { color: var(--paper-dim); }
+
+.name {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-4);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.meta {
+  display: flex; align-items: center; gap: var(--s3);
+  font-size: var(--step--1);
+  letter-spacing: var(--track-mid);
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+.meta a { color: var(--paper-dim); text-decoration-color: var(--edge-strong); }
+.meta a:hover { color: var(--accent); }
+.gone {
+  padding: 2px 7px;
+  border: 1px solid var(--paper-ring);
+  border-radius: 2px;
+  color: var(--paper-dim);
+  font-size: 10px;
+}
+.statusNote, .unnamed { color: var(--paper-dim); font-size: var(--step-0); }
+.unnamed { font-family: var(--font-display-loaded), var(--font-display); font-size: var(--step-1); }
+
+.visits { list-style: none; margin: var(--s3) 0 0; padding: 0;
+  display: flex; flex-direction: column; gap: var(--s5); }
+.visit { display: flex; flex-direction: column; gap: var(--s2);
+  padding-top: var(--s4); border-top: 1px solid var(--edge); }
+.show {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s3);
+  font-size: var(--step--1); letter-spacing: var(--track-wide);
+  text-transform: uppercase; color: var(--paper);
+}
+.se { font-family: var(--font-mono); font-size: 10px; color: var(--paper-faint);
+  letter-spacing: var(--track-mid); }
+.epTitle { font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-1); color: var(--paper-dim); }
+.ate { font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-2); line-height: 1.25; }
+
+.quote { margin: 0; }
+.quote blockquote { margin: 0; padding-left: var(--s4);
+  border-left: 1px solid var(--edge-strong); color: var(--paper-dim);
+  font-size: var(--step-0); line-height: 1.65; }
+.quote figcaption { margin-top: var(--s2); padding-left: var(--s4);
+  font-family: var(--font-mono); font-size: 9.5px;
+  letter-spacing: var(--track-wide); text-transform: uppercase;
+  color: var(--paper-faint); }
+
+.credit { margin-top: var(--s4); padding-top: var(--s4);
+  border-top: 1px solid var(--edge); color: var(--paper-faint);
+  font-size: var(--step--1); line-height: 1.6; }
+.credit strong { color: var(--paper-dim); font-weight: 400; }

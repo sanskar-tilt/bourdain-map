@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# build-time artifact, regenerate with scripts/export_map_data.py
+/data/detail.json

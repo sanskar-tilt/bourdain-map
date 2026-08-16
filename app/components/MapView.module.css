@@ -1,0 +1,48 @@
+.wrap { position: absolute; inset: 0; z-index: var(--z-map); }
+.map { position: absolute; inset: 0; background: var(--map-water); }
+
+/* MapLibre's own chrome, brought into the palette. */
+.map :global(.maplibregl-ctrl-group) {
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  box-shadow: none;
+  border-radius: 2px;
+}
+.map :global(.maplibregl-ctrl-group button + button) { border-top-color: var(--edge); }
+.map :global(.maplibregl-ctrl-icon) { filter: invert(0.78) sepia(0.1); }
+.map :global(.maplibregl-ctrl-attrib) {
+  background: color-mix(in srgb, var(--ground) 82%, transparent);
+  color: var(--paper-faint);
+  font-size: 10px;
+}
+.map :global(.maplibregl-ctrl-attrib a) { color: var(--paper-dim); }
+
+.status, .noTiles {
+  position: absolute;
+  left: var(--s5); bottom: var(--s4);
+  margin: 0;
+  z-index: var(--z-chrome);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: var(--track-mid);
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+.noTiles { bottom: calc(var(--s4) + 20px); color: var(--accent-dim); text-transform: none; }
+.noTiles code { font-size: 10px; }
+
+.reset {
+  position: absolute;
+  left: var(--s5); bottom: calc(var(--s4) + 26px);
+  z-index: var(--z-chrome);
+  padding: var(--s2) var(--s3);
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  border: 1px solid var(--edge);
+  border-radius: 2px;
+  color: var(--paper-dim);
+  font: inherit;
+  font-size: var(--step--1);
+  cursor: pointer;
+  transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+.reset:hover { color: var(--paper); border-color: var(--edge-strong); }

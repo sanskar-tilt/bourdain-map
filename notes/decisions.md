@@ -159,6 +159,68 @@ exactly the pirated uploads the brief rules out. Columns ship empty; see
 
 ---
 
+## Architecture — the database is a compiler
+
+The read path never touches a database. Postgres is the build-time workbench;
+the site is `places.geojson`, `search.json` and a build-time `detail.json`,
+baked into static HTML.
+
+**Static export is safe for everything that comes later. Verified, not
+assumed:**
+
+- *Magic-link auth works.* supabase-js 2.112.3 defaults to the implicit flow,
+  which puts the token in the URL fragment and resolves entirely in the
+  browser. PKCE also works — `?code=` exchanged client-side via
+  `exchangeCodeForSession`. Neither needs a server route. The thing that would
+  force SSR is `@supabase/ssr`'s cookie-based session, so **don't reach for
+  that package**.
+- *Live RSVP counts work.* A static page client-fetches the `gathering_seats`
+  view with the anon key. Already confirmed against the running instance by
+  curl, before any of this was built.
+
+So gatherings and auth do not force a rebuild as SSR later. That was the
+question worth answering before committing, and the answer is no.
+
+**The map is mounted once, above the router.** It lives in `app/layout.tsx`
+via `MapShell`, so navigating to `/place/x` changes what is selected and where
+the camera is, and nothing else. No unmount, no white flash, no tile refetch.
+
+**Payload:** `places.geojson` is 114KB gzipped against a 400KB budget. See
+`notes/performance-budget.md` — the budgets are in the repo and are limits,
+not aspirations.
+
+### First load: not zoomed all the way out
+
+Landing at z1.45 centred on [10, 26] rather than a Mercator default. Three
+reasons:
+
+1. It crops Antarctica and most of the empty Pacific, so the opening frame is
+   a composition rather than a rectangle with the data in the middle third.
+2. Clustering is on below z7, so the world view is ~40 warm points, not 2,095
+   dots. A wall of dots is what you get from *not* clustering; clustered, the
+   same data reads as a constellation and the eye goes to the dense places.
+3. The search palette is one keystroke away and opens on the cities with the
+   most places, so the empty state is an invitation rather than a blank box.
+
+A "Whole world" control returns you there, so the framing is a starting point
+rather than a cage.
+
+### How the awkward pins read
+
+- **Closed (53).** Paper-coloured ring, nothing filled in, no glow. Absence,
+  not a status badge — and legible at pin size without a label. Deliberately
+  not a second bright colour.
+- **Unnamed (42, "Meal with locals").** A ring in the accent, lit but not
+  filled. Present and unmistakably a place he ate, with nothing written in the
+  middle because nobody wrote down whose table it was. The place page says so
+  in as many words. They are not null-name bugs and must never render as one.
+- **Repeat visits (38).** A second, fainter ring. He came back.
+- **Kind, where known.** Varies radius only, never hue. Colour means state; if
+  it also meant category the map would need a legend, and a map that needs a
+  legend has already lost.
+
+---
+
 ## Design
 
 Three directions built as static mockups in `notes/refs/`. All three stay on

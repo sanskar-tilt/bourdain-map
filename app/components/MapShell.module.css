@@ -1,0 +1,105 @@
+.shell {
+  position: fixed;
+  inset: 0;
+  background: var(--ground);
+}
+
+/* ---------------------------------------------------------------- chrome */
+.masthead {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: var(--z-chrome);
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s4) var(--s5);
+  pointer-events: none;
+}
+.masthead > * { pointer-events: auto; }
+
+.wordmark {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-2);
+  color: var(--paper);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.wordmark:hover { color: var(--accent); }
+
+.searchTrigger {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s2) var(--s3);
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  border: 1px solid var(--edge);
+  border-radius: 2px;
+  color: var(--paper-dim);
+  font: inherit;
+  font-size: var(--step--1);
+  cursor: pointer;
+  transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+.searchTrigger:hover { border-color: var(--edge-strong); color: var(--paper); }
+.searchTrigger kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--paper-faint);
+  border: 1px solid var(--edge);
+  border-radius: 2px;
+  padding: 1px 4px;
+}
+
+/* ----------------------------------------------------------------- panel */
+/* Never a modal. The map stays visible and interactive alongside it. */
+.panel {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw);
+  z-index: var(--z-panel);
+  background: var(--panel);
+  border-left: 1px solid var(--edge);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateX(100%);
+  transition: transform var(--slow) var(--ease);
+}
+.shell[data-panel="open"] .panel { transform: translateX(0); }
+.panel[aria-hidden="true"] { pointer-events: none; }
+
+.panelBody { padding: var(--s6) var(--s5) var(--s7); }
+
+.close {
+  position: sticky;
+  top: var(--s3);
+  float: right;
+  margin: var(--s3) var(--s3) 0 0;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  background: var(--raised);
+  border: 1px solid var(--edge);
+  border-radius: 2px;
+  color: var(--paper-dim);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+.close:hover { color: var(--paper); border-color: var(--edge-strong); }
+
+/* Mobile: a bottom sheet, not a panel that eats the screen. */
+@media (max-width: 720px) {
+  .panel {
+    top: auto;
+    left: 0;
+    width: 100%;
+    height: min(68vh, 620px);
+    border-left: 0;
+    border-top: 1px solid var(--edge-strong);
+    border-radius: 12px 12px 0 0;
+    transform: translateY(100%);
+  }
+  .shell[data-panel="open"] .panel { transform: translateY(0); }
+  .panelBody { padding: var(--s5) var(--s4) var(--s6); }
+}
