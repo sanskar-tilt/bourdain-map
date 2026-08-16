@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import BourdainMark from "./BourdainMark";
 import type { PhotoMeta } from "../../lib/photo";
+import { runOpening, type OpeningMode } from "../../lib/opening";
 import s from "./home.module.css";
 
 /* The loader.
@@ -48,6 +49,7 @@ export default function Loader({
   const [resolved, setResolved] = useState(false);
   const [phase, setPhase] = useState<"idle" | "run" | "wipe" | "done">("idle");
   const raf = useRef(0);
+  const stopOpening = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -58,13 +60,24 @@ export default function Loader({
     let seen = false;
     try { seen = sessionStorage.getItem("wha:loader") === "1"; } catch {}
 
-    // No loader at all under reduced motion, and never on a repeat visit.
-    // Reduced motion: never. Repeat visit: never, unless forced.
-    if (reduced || (seen && !hold && !force)) { setPhase("done"); return; }
+    // Reduced motion: nothing runs, everything settled at t=0.
+    // Repeat visit: no loader, but the arrival still plays — the site should
+    // never simply appear.
+    const mode: OpeningMode = reduced
+      ? "none"
+      : seen && !hold && !force
+        ? "arrival"
+        : "full";
+
+    // The timeline owns the curtain and everything after it, in every mode.
+    // It has to start before any early return, or a repeat visit gets no
+    // arrival at all.
+    stopOpening.current = runOpening(hold ? "none" : mode);
+
+    if (mode !== "full") { setPhase("done"); return; }
     if (!hold && !force) { try { sessionStorage.setItem("wha:loader", "1"); } catch {} }
 
     setPhase("run");
-    document.documentElement.style.overflow = "hidden";
 
     const start = performance.now();
     let nextSwap = start + interval(0);
@@ -88,20 +101,16 @@ export default function Loader({
       setN(total);
       setResolved(true);
       if (hold) return;                       // freeze for screenshots
+      // The curtain and everything after it belong to the shared opening
+      // timeline, so the hero can start while this is still travelling.
       window.setTimeout(() => {
         setPhase("wipe");
-        window.setTimeout(() => {
-          setPhase("done");
-          document.documentElement.style.overflow = "";
-        }, WIPE);
+        window.setTimeout(() => setPhase("done"), WIPE);
       }, HOLD);
     };
 
     raf.current = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(raf.current);
-      document.documentElement.style.overflow = "";
-    };
+    return () => { cancelAnimationFrame(raf.current); stopOpening.current?.(); };
   }, [objects, portrait, total]);
 
   if (phase === "done" || phase === "idle") return null;

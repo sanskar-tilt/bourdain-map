@@ -35,8 +35,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(sessionStorage.getItem('wha:loader')==='1'){" +
-              "document.documentElement.setAttribute('data-loader','seen')}}catch(e){}",
+              // Runs before first paint. Puts the hero in its pre-animation
+              // state so the curtain never lifts on settled content — and
+              // does nothing at all without JS or under reduced motion, so
+              // those readers get the finished page.
+              "try{var r=document.documentElement;" +
+              "if(!matchMedia('(prefers-reduced-motion: reduce)').matches){" +
+              "r.dataset.opening='pending'}}catch(e){}",
           }}
         />
       </head>

@@ -115,10 +115,15 @@ export default function Home() {
         />
       </HeroPullback>
 
-      {/* The mark and the sentence sit under the photograph, not over it. */}
-      <section className={`${s.section} ${s.heroText} reveal`}>
-        <p className={s.heroMark}>Where he ate</p>
-        <Quote text={heroQuote} big />
+      {/* The mark and the sentence sit under the photograph, not over it.
+          These lines belong to the opening timeline, not to the observer. */}
+      <section className={`${s.section} ${s.heroText}`}>
+        <MaskedText as="p" text="Where he ate" className={s.heroMark} arrival />
+        {heroQuote ? (
+          <MaskedText as="blockquote" text={heroQuote} className={s.quoteBig} arrival />
+        ) : (
+          <Quote text={heroQuote} big />
+        )}
       </section>
 
       {/* ------------------------------------------------ the counter */}

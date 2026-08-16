@@ -106,3 +106,64 @@ html.lenis, html.lenis body { height: auto; }
 }
 .no-js .reveal { opacity: 1; transform: none; }
 .no-js .line-mask > span { transform: none; }
+
+/* ------------------------------------------------------------------
+   The opening arrival.
+
+   One timeline from black to settled. The pre-animation state is stamped
+   on <html> by an inline head script before first paint, so the curtain
+   never lifts on a page that is already sitting there finished.
+
+   No JS, or reduced motion: the attribute is never set and every rule
+   below is inert, which lands on the settled page.
+   ------------------------------------------------------------------ */
+
+/* Scroll is locked only until the curtain begins moving. */
+html.is-locked, html.is-locked body { overflow: hidden; }
+
+/* --- the photograph: settles into place rather than appearing --- */
+html[data-opening="pending"] .arrival-photo,
+html[data-opening="curtain"] .arrival-photo {
+  opacity: 0;
+  transform: scale(1.06);
+}
+.arrival-photo {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--t-enter) var(--ease-out),
+              transform 1800ms var(--ease-out);
+}
+
+/* --- the nav: last, quietly, never first --- */
+html[data-opening="pending"] .arrival-nav,
+html[data-opening="curtain"] .arrival-nav,
+html[data-opening="photo"] .arrival-nav,
+html[data-opening="text"] .arrival-nav { opacity: 0; }
+.arrival-nav {
+  opacity: 1;
+  transition: opacity 800ms var(--ease-out);
+}
+
+/* --- the scroll cue: arrives, then breathes --- */
+html[data-opening="pending"] .arrival-cue,
+html[data-opening="curtain"] .arrival-cue,
+html[data-opening="photo"] .arrival-cue,
+html[data-opening="text"] .arrival-cue,
+html[data-opening="nav"] .arrival-cue { opacity: 0; }
+.arrival-cue {
+  opacity: 1;
+  transition: opacity 800ms var(--ease-out);
+}
+html[data-opening="cue"] .arrival-cue span,
+html[data-opening="done"] .arrival-cue span {
+  animation: cue-drift 2600ms var(--ease-in-out) infinite;
+}
+@keyframes cue-drift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrival-photo, .arrival-nav, .arrival-cue { opacity: 1; transform: none; }
+  html[data-opening] .arrival-cue span { animation: none; }
+}

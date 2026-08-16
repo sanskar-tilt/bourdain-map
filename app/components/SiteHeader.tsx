@@ -15,7 +15,7 @@ const NAV = [
 export default function SiteHeader() {
   const path = usePathname() ?? "/";
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} arrival-nav`}>
       {/* next/link prefetches on hover by default in production builds. */}
       <Link href="/" className={styles.wordmark} aria-label="Where he ate — home">
         <BourdainMark small />

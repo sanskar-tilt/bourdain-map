@@ -147,6 +147,9 @@ export default function HeroPullback({ target, children }: Props) {
           <canvas ref={canvas} />
         </div>
         <div className={s.pullPhoto}>{children}</div>
+        <p className={`${s.scrollCue} arrival-cue`} aria-hidden="true">
+          <span className="label">scroll</span>
+        </p>
       </div>
     </section>
   );

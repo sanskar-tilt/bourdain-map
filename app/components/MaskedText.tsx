@@ -22,10 +22,13 @@ export default function MaskedText({
   as: Tag = "p",
   text,
   className,
+  arrival,
 }: {
   as?: "h1" | "h2" | "p" | "blockquote";
   text: string;
   className?: string;
+  /** Driven by the opening timeline rather than by scrolling into view. */
+  arrival?: boolean;
 }) {
   const host = useRef<HTMLElement>(null);
 
@@ -71,6 +74,24 @@ export default function MaskedText({
     split();
     if (reduced) { el.classList.add("is-in"); return; }
 
+    // The hero's lines belong to the opening; the observer would fire them
+    // early, because they are already in view.
+    if (arrival) {
+      const t0 = window.setTimeout(() => {}, 0);
+      window.clearTimeout(t0);
+      let r = 0;
+      const onResizeArrival = () => {
+        window.clearTimeout(r);
+        r = window.setTimeout(() => {
+          const wasIn = el.classList.contains("is-in");
+          split();
+          if (wasIn) el.classList.add("is-in");
+        }, 150);
+      };
+      window.addEventListener("resize", onResizeArrival);
+      return () => { window.removeEventListener("resize", onResizeArrival); window.clearTimeout(r); };
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -94,13 +115,14 @@ export default function MaskedText({
     };
     window.addEventListener("resize", onResize);
     return () => { io.disconnect(); window.removeEventListener("resize", onResize); window.clearTimeout(t); };
-  }, [text]);
+  }, [text, arrival]);
 
   return (
     <Tag
       ref={host as never}
       className={`${s.masked} ${className ?? ""}`}
       aria-label={text}
+      {...(arrival ? { "data-arrival-text": "" } : {})}
     >
       {/* Server-rendered as the plain string: correct without JS, and the
           splitter replaces it on mount. */}

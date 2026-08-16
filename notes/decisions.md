@@ -530,3 +530,27 @@ undated       a_cooks_tour
   grids). Anything that reads as language goes through `MaskedText`.
 - **`?loader=1` forces a replay** ignoring sessionStorage; `?loader=hold`
   freezes the resolved frame.
+
+---
+
+## The opening arrival — one timeline
+
+- **Phases are stamped on `<html data-opening>`** and the CSS keys off them,
+  so the hero's pre-animation state exists in the markup before any JS runs.
+  An inline head script sets `pending` before first paint; without JS, or
+  under reduced motion, the attribute is never set and every arrival rule is
+  inert, which lands on the finished page. No flash of settled content.
+- **Driven from the shared Lenis rAF loop**, not its own timers. One clock.
+- **The overlap is real and asserted.** The hero begins 400ms into a 1200ms
+  curtain. Measured: `curtain y=−6px, text y=16.3px` in the same frame — both
+  in motion at once, which is what makes it one gesture instead of two events.
+- **Scroll unlocks as the curtain starts, not when it ends** — traced at
+  5221ms against a curtain finishing near 6421ms.
+- **A repeat visit gets no loader but still gets the arrival**, running from
+  t=0. `runOpening` is called before any early return, or the arrival would be
+  skipped along with the loader.
+- **Timeline, traced:** `pending → curtain (5221) → photo (5637) → text (5804)
+  → nav (6385) → cue (6634) → done (8537)`.
+- **`notes/refs/home/opening.webm`** — 7.1s, 60fps, 426 frames. Longest
+  motionless stretch is **1124ms starting at 3945ms**, which is the deliberate
+  hold on his photograph. Nothing else on the timeline stands still.

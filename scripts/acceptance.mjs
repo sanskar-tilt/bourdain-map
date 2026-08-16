@@ -131,6 +131,54 @@ const browser = await puppeteer.launch({
 }
 
 /* ------------------------------------------------------------------ 3 */
+/* The overlap. The hero must begin while the curtain is still travelling —
+   a gap between them reads as two events. Proving it means catching one
+   frame where the curtain is mid-move AND the hero text is mid-rise. */
+{
+  const p = await browser.newPage();
+  await p.setViewport({ width: 1440, height: 900 });
+  await p.goto(`${BASE}/?loader=1`, { waitUntil: "domcontentloaded" });
+
+  const samples = [];
+  const t0 = Date.now();
+  while (Date.now() - t0 < 9000) {
+    samples.push(await p.evaluate(() => {
+      const curtain = document.querySelector('[data-phase]');
+      const inner = document.querySelector('[data-arrival-text] span > span');
+      const cs = curtain ? getComputedStyle(curtain) : null;
+      return {
+        phase: document.documentElement.dataset.opening ?? null,
+        curtainPresent: Boolean(curtain),
+        curtainT: cs ? cs.transform : null,
+        textT: inner ? getComputedStyle(inner).transform : null,
+      };
+    }));
+    await new Promise((r) => setTimeout(r, 60));
+  }
+
+  // Curtain is "still moving" when it exists and is partly translated:
+  // not at its resting place (identity) and not fully gone.
+  const ty = (m) => {
+    if (!m || m === "none") return 0;
+    const n = m.match(/matrix\(([^)]+)\)/);
+    return n ? parseFloat(n[1].split(",")[5]) : 0;
+  };
+  const overlap = samples.find(
+    (x) => x.curtainPresent && ty(x.curtainT) < -1 && x.textT && x.textT !== "none" && ty(x.textT) !== 0
+  );
+
+  ok("hero text is mid-rise while the curtain is still moving",
+     Boolean(overlap),
+     overlap
+       ? `curtain y=${ty(overlap.curtainT).toFixed(0)}px, text y=${ty(overlap.textT).toFixed(1)}px`
+       : "no frame had both in motion");
+
+  const phases = [...new Set(samples.map((x) => x.phase))].filter(Boolean);
+  ok("timeline advances through its phases", phases.length >= 4, phases.join(" → "));
+  await p.close();
+}
+
+/* ------------------------------------------------------------------ 4 */
 /* Reduced motion: no loader at all, and the pin does not engage. */
 {
   const p = await browser.newPage();

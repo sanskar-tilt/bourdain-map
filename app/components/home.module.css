@@ -339,3 +339,11 @@
 @media (prefers-reduced-motion: reduce) {
   .lineMask > span { transform: none; }
 }
+
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s5);
+  transform: translateX(-50%);
+  z-index: 3;
+}
