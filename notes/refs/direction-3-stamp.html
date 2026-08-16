@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction 3 — Entry Stamp</title>
+<style>
+  /* ------------------------------------------------------------------
+     DIRECTION 3 — ENTRY STAMP
+     The passport page. Every visit is an inked impression: rotated a
+     degree or two, overlapping, bled at the edges. Four shows, four
+     inks. A place he went three times has three stamps on it, and the
+     page tells you that before you read a word.
+     Committed single-theme: a paper document has one look.
+     ------------------------------------------------------------------ */
+  :root {
+    --page:     #E8E6DF;   /* cool document stock, not cream */
+    --page-2:   #DFDDD4;
+    --ink:      #14161C;
+    --navy:     #23324E;   /* A Cook's Tour */
+    --oxblood:  #8E2F32;   /* No Reservations */
+    --forest:   #2C5B47;   /* Parts Unknown */
+    --violet:   #4A3A66;   /* The Layover */
+    --faint:    #A9A69B;
+    --rule:     #C6C3B8;
+
+    --slab: Superclarendon, "Bookman Old Style", Rockwell, Georgia, serif;
+    --sans: "Avenir Next", Avenir, "Gill Sans", "Gill Sans MT", sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+    --s1:4px; --s2:8px; --s3:12px; --s4:18px; --s5:28px; --s6:44px;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font-family: var(--sans); font-size: 14px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--oxblood); outline-offset: 3px; }
+
+  .app { display: grid; grid-template-columns: 1fr 396px; height: 100vh; }
+  @media (max-width: 900px) { .app { grid-template-columns: 1fr; } }
+
+  /* ---------- map ---------- */
+  .map { position: relative; overflow: hidden; background: var(--page); }
+  #surface { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  .masthead {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+    display: flex; align-items: baseline; gap: var(--s4);
+    padding: var(--s4) var(--s5);
+  }
+  .wordmark {
+    font-family: var(--slab); font-size: 17px; letter-spacing: .04em;
+  }
+  .masthead .count {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--faint);
+  }
+
+  /* pins: small inked dots, coloured by the show that got there first */
+  .pin {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 24px; height: 24px; padding: 0; border: 0; background: none;
+    cursor: pointer; display: grid; place-items: center;
+  }
+  .pin i {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--navy);
+    opacity: .82; transition: transform .13s ease, opacity .13s ease;
+  }
+  .pin:hover i { transform: scale(1.6); opacity: 1; }
+  .pin[data-kind="market"] i { border-radius: 2px; }
+  .pin[data-kind="food"] i { border-radius: 50%; }
+  /* closed: the ring remains, the ink is gone — a cancelled stamp */
+  .pin[data-status="closed"] i {
+    background: none; border: 1.5px solid var(--faint); opacity: 1;
+  }
+  .pin[data-status="closed"]::after {
+    content: ""; position: absolute; width: 18px; height: 1.5px;
+    background: var(--faint); transform: rotate(-32deg);
+  }
+  .pin[data-status="closed"]:hover::after { background: var(--oxblood); }
+  .pin[data-status="closed"]:hover i { border-color: var(--oxblood); }
+  .pin[aria-current="true"] i {
+    background: var(--oxblood); transform: scale(1.5); opacity: 1;
+    box-shadow: 0 0 0 4px rgba(142,47,50,.16);
+  }
+  .pin .flag {
+    position: absolute; left: 17px; white-space: nowrap;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--faint);
+    opacity: 0; transition: opacity .13s ease; pointer-events: none;
+  }
+  .pin:hover .flag, .pin[aria-current="true"] .flag { opacity: 1; color: var(--ink); }
+
+  /* ---------- passport page ---------- */
+  .page {
+    background: var(--page-2); border-left: 1px solid var(--rule);
+    overflow-y: auto; padding: var(--s5) var(--s5) var(--s6);
+  }
+  .page-head {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  h1 {
+    font-family: var(--slab); font-size: 33px; line-height: 1.1;
+    margin: var(--s3) 0 var(--s2); letter-spacing: -.01em; text-wrap: balance;
+  }
+  .sub {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .rule { border: 0; border-top: 1px solid var(--rule); margin: var(--s5) 0; }
+  .label {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--faint); margin-bottom: var(--s4);
+  }
+
+  /* the stamps — signature */
+  .stamps { display: flex; flex-wrap: wrap; gap: var(--s3); margin-bottom: var(--s5); }
+  .stamp {
+    --c: var(--navy);
+    border: 2px solid var(--c); color: var(--c);
+    padding: 7px 11px 6px; text-align: center; min-width: 104px;
+    opacity: .88; position: relative;
+    box-shadow: inset 0 0 0 1px var(--page-2);
+  }
+  .stamp:nth-child(1) { transform: rotate(-2.2deg); }
+  .stamp:nth-child(2) { transform: rotate(1.6deg); }
+  .stamp:nth-child(3) { transform: rotate(-.9deg); }
+  .stamp .show {
+    font-family: var(--slab); font-size: 11.5px; line-height: 1.15;
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+  .stamp .season {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .2em;
+    margin-top: 3px; padding-top: 3px; border-top: 1px solid currentColor;
+  }
+  .stamp[data-show="cooks"]   { --c: var(--navy); }
+  .stamp[data-show="nores"]   { --c: var(--oxblood); }
+  .stamp[data-show="parts"]   { --c: var(--forest); }
+  .stamp[data-show="layover"] { --c: var(--violet); }
+
+  /* what he ate, per visit */
+  .visits { display: flex; flex-direction: column; gap: var(--s4); }
+  .visit { display: grid; grid-template-columns: 8px 1fr; gap: var(--s3); }
+  .visit .tick { background: var(--navy); opacity: .5; }
+  .visit[data-show="parts"] .tick { background: var(--forest); }
+  .visit[data-show="layover"] .tick { background: var(--violet); }
+  .visit .who {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .visit .dish { font-family: var(--slab); font-size: 16px; margin-top: 2px; }
+  .visit blockquote {
+    margin: var(--s2) 0 0; font-size: 13.5px; line-height: 1.6; color: #3B3E45;
+  }
+  .visit blockquote cite {
+    display: block; margin-top: var(--s1); font-style: normal;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--faint);
+  }
+
+  /* empty seat, as an unstamped box awaiting an impression */
+  .seats { border: 1.5px dashed var(--rule); padding: var(--s4); margin-top: var(--s5); }
+  .seats .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .chairs { display: flex; gap: 7px; margin: var(--s3) 0 var(--s2); }
+  .chair { width: 26px; height: 30px; border: 1.5px solid var(--faint); border-radius: 2px; }
+  .chair.taken { background: var(--forest); border-color: var(--forest); opacity: .85; }
+  .chair.free { border-style: dashed; border-color: var(--oxblood); }
+  .seats .caption { font-family: var(--slab); font-size: 15px; }
+
+  .credit {
+    margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: #55585F; line-height: 1.6;
+  }
+
+  /* ---------- direction sheet ---------- */
+  .sheet { padding: var(--s5); background: var(--page); border-top: 2px solid var(--ink); }
+  .sheet h2 { font-family: var(--slab); font-size: 16px; margin: 0 0 var(--s4); }
+  .sheet dl { display: grid; grid-template-columns: 110px 1fr; gap: var(--s2) var(--s4);
+    margin: 0; font-size: 13px; max-width: 800px; }
+  .sheet dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--faint); padding-top: 4px; }
+  .sheet dd { margin: 0; }
+  .swatches { display: flex; flex-wrap: wrap; gap: var(--s3); }
+  .sw { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; }
+  .sw b { width: 20px; height: 20px; border: 1px solid var(--rule); display: block; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="map">
+    <canvas id="surface"></canvas>
+    <div class="masthead">
+      <span class="wordmark">Where he ate</span>
+      <span class="count">San Francisco · 26 places · 4 gone</span>
+    </div>
+  </div>
+
+  <aside class="page">
+    <div class="page-head"><span>Place</span><span>37.7910 / −122.4210</span></div>
+
+    <h1>Swan Oyster Depot</h1>
+    <div class="sub">San Francisco · status unconfirmed</div>
+
+    <hr class="rule">
+
+    <div class="label">Stamped three times</div>
+    <div class="stamps">
+      <div class="stamp" data-show="cooks">
+        <div class="show">A Cook's<br>Tour</div>
+        <div class="season">No season</div>
+      </div>
+      <div class="stamp" data-show="parts">
+        <div class="show">Parts<br>Unknown</div>
+        <div class="season">S 06</div>
+      </div>
+      <div class="stamp" data-show="layover">
+        <div class="show">The<br>Layover</div>
+        <div class="season">S 01</div>
+      </div>
+    </div>
+
+    <div class="visits">
+      <div class="visit" data-show="cooks">
+        <div class="tick"></div>
+        <div>
+          <div class="who">A Cook's Tour</div>
+          <div class="dish">Oysters, crabs</div>
+        </div>
+      </div>
+      <div class="visit" data-show="parts">
+        <div class="tick"></div>
+        <div>
+          <div class="who">Parts Unknown · season 6</div>
+          <blockquote>
+            This was one of Tony's regular stops when he visited San Francisco.
+            He had crab and oysters.
+            <cite>deannd</cite>
+          </blockquote>
+        </div>
+      </div>
+      <div class="visit" data-show="layover">
+        <div class="tick"></div>
+        <div>
+          <div class="who">The Layover · season 1</div>
+          <blockquote>
+            Seafood — one of Tony's favorite SF restaurants.
+            <cite>deannd</cite>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <div class="seats">
+      <div class="top"><span>Table · Thu 4 Sep, 7pm</span><span>4 seats</span></div>
+      <div class="chairs">
+        <span class="chair taken"></span><span class="chair taken"></span>
+        <span class="chair free"></span><span class="chair free"></span>
+      </div>
+      <div class="caption">Two seats still empty.</div>
+    </div>
+
+    <p class="credit">
+      Places compiled by <strong>deannd</strong> on r/AnthonyBourdain over two
+      years, used with permission. The descriptions above are hers.
+    </p>
+  </aside>
+</div>
+
+<section class="sheet">
+  <h2>Direction 3 — Entry Stamp</h2>
+  <dl>
+    <dt>Palette</dt>
+    <dd>
+      <div class="swatches">
+        <span class="sw"><b style="background:#E8E6DF"></b>page #E8E6DF</span>
+        <span class="sw"><b style="background:#23324E"></b>navy #23324E</span>
+        <span class="sw"><b style="background:#8E2F32"></b>oxblood #8E2F32</span>
+        <span class="sw"><b style="background:#2C5B47"></b>forest #2C5B47</span>
+        <span class="sw"><b style="background:#4A3A66"></b>violet #4A3A66</span>
+        <span class="sw"><b style="background:#A9A69B"></b>faint #A9A69B</span>
+      </div>
+    </dd>
+    <dt>Type</dt>
+    <dd>Superclarendon for names, dishes and stamp faces — a slab with enough
+      weight to read as pressed ink. Avenir Next for body. SF Mono for labels
+      and coordinates.</dd>
+    <dt>Signature</dt>
+    <dd>Every visit is an entry stamp, one ink per show, rotated slightly and
+      overlapping. A place he went to three times carries three stamps, and
+      you see that before reading anything. Across the site the four inks are
+      the only colour system there is.</dd>
+    <dt>States</dt>
+    <dd>Closed places keep the ring and lose the ink, struck through like a
+      cancelled stamp — present, visibly spent. Kind changes the dot's corner
+      radius where known. Generic pins are stamped like any other visit; a
+      meal with people whose names nobody wrote down still happened.</dd>
+    <dt>Risk</dt>
+    <dd>Nearest of the three to the "Bourdain homage" default CLAUDE.md warns
+      about. It stays clear by being a document rather than a magazine: cool
+      grey stock instead of warm cream, a slab instead of a high-contrast
+      display serif, and four desaturated inks instead of a terracotta accent.</dd>
+  </dl>
+</section>
+
+<script>
+(function () {
+  var PLACES = [
+    ["Swan Oyster Depot",-122.42097,37.79097,"unknown","unknown"],
+    ["Tadich Grill",-122.39944,37.79343,"food","unknown"],
+    ["House of Prime Rib",-122.42254,37.79345,"food","unknown"],
+    ["R & G Lounge",-122.40495,37.79412,"food","unknown"],
+    ["Red's Java House",-122.38743,37.78721,"food","unknown"],
+    ["Ferry Plaza Farmers Market",-122.39341,37.79558,"market","unknown"],
+    ["Tonga Room",-122.40998,37.79214,"unknown","unknown"],
+    ["COI",-122.40341,37.79805,"unknown","unknown"],
+    ["La Folie",-122.42201,37.79814,"unknown","unknown"],
+    ["Blue Bottle Coffee",-122.40776,37.78246,"unknown","unknown"],
+    ["Mission Chinese Food",-122.41963,37.76118,"unknown","unknown"],
+    ["The Alembic",-122.45112,37.76932,"unknown","unknown"],
+    ["The Castro Theatre",-122.43476,37.76203,"unknown","unknown"],
+    ["Polly Ann Ice Cream",-122.49771,37.75347,"unknown","unknown"],
+    ["King of Noodles",-122.47574,37.76345,"unknown","unknown"],
+    ["To Hyang",-122.46036,37.78097,"unknown","unknown"],
+    ["4505 Burgers & BBQ",-122.43825,37.77620,"unknown","unknown"],
+    ["That's It",-122.41844,37.75397,"food","unknown"],
+    ["Pier 23 Cafe",-122.40090,37.80337,"unknown","unknown"],
+    ["Parklab Junction",-122.39775,37.78803,"unknown","unknown"],
+    ["Hotel Des Arts",-122.40494,37.79027,"unknown","unknown"],
+    ["Ralph Gracie Jiu Jitsu",-122.41125,37.77681,"unknown","unknown"],
+    ["Incanto",-122.42719,37.74598,"food","closed"],
+    ["Pirate Cat Cafe",-122.41039,37.75746,"food","closed"],
+    ["Sinbad's Pier 2",-122.39225,37.79470,"unknown","closed"],
+    ["Sushi Sebo",-122.42496,37.77648,"food","closed"]
+  ];
+  var BOUNDS = { w: -122.515, e: -122.375, s: 37.738, n: 37.812 };
+
+  var map = document.querySelector(".map");
+  var cv = document.getElementById("surface");
+  var ctx = cv.getContext("2d");
+
+  function project(lon, lat, w, h) {
+    return [ (lon - BOUNDS.w) / (BOUNDS.e - BOUNDS.w) * w,
+             (BOUNDS.n - lat) / (BOUNDS.n - BOUNDS.s) * h ];
+  }
+  function rng(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function draw() {
+    var r = map.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    var w = r.width, h = r.height;
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    ctx.fillStyle = "#E8E6DF"; ctx.fillRect(0, 0, w, h);
+
+    // Water as a flat tint with a guilloche-ish line, like a document panel.
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(w * 0.72, 0); ctx.lineTo(w, 0); ctx.lineTo(w, h * 0.30);
+    ctx.quadraticCurveTo(w * 0.85, h * 0.22, w * 0.78, h * 0.09);
+    ctx.closePath();
+    ctx.fillStyle = "#DCDACF"; ctx.fill();
+    ctx.clip();
+    ctx.strokeStyle = "rgba(35,50,78,.10)"; ctx.lineWidth = 1;
+    for (var i = 0; i < 26; i++) {
+      ctx.beginPath();
+      ctx.arc(w * 0.92, h * 0.02, 20 + i * 13, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    var rand = rng(7);
+    ctx.save();
+    ctx.translate(w / 2, h / 2); ctx.rotate(-0.06); ctx.translate(-w / 2, -h / 2);
+    for (var x = -60; x < w + 120; x += 26) {
+      var major = rand() > 0.86;
+      ctx.strokeStyle = major ? "rgba(35,50,78,.20)" : "rgba(35,50,78,.09)";
+      ctx.lineWidth = major ? 1.3 : 0.6;
+      ctx.beginPath(); ctx.moveTo(x, -40); ctx.lineTo(x, h + 40); ctx.stroke();
+    }
+    for (var y = -60; y < h + 120; y += 26) {
+      var maj = rand() > 0.86;
+      ctx.strokeStyle = maj ? "rgba(35,50,78,.20)" : "rgba(35,50,78,.09)";
+      ctx.lineWidth = maj ? 1.3 : 0.6;
+      ctx.beginPath(); ctx.moveTo(-40, y); ctx.lineTo(w + 40, y); ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.strokeStyle = "rgba(142,47,50,.28)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(w * 0.32, h); ctx.lineTo(w * 0.86, h * 0.36); ctx.stroke();
+  }
+
+  function placePins() {
+    Array.prototype.forEach.call(map.querySelectorAll(".pin"), function (n) { n.remove(); });
+    var r = map.getBoundingClientRect();
+    PLACES.forEach(function (p) {
+      var xy = project(p[1], p[2], r.width, r.height);
+      var b = document.createElement("button");
+      b.className = "pin";
+      b.dataset.kind = p[3]; b.dataset.status = p[4];
+      b.style.left = xy[0] + "px"; b.style.top = xy[1] + "px";
+      if (p[0] === "Swan Oyster Depot") b.setAttribute("aria-current", "true");
+      b.setAttribute("aria-label", p[0] + (p[4] === "closed" ? ", closed" : ""));
+      b.innerHTML = '<i></i><span class="flag">' + p[0] +
+        (p[4] === "closed" ? " · gone" : "") + '</span>';
+      map.appendChild(b);
+    });
+  }
+
+  function render() { draw(); placePins(); }
+  render();
+  window.addEventListener("resize", render);
+})();
+</script>
+</body>
+</html>

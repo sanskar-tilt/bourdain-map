@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction 2 — Night Arrivals</title>
+<style>
+  /* ------------------------------------------------------------------
+     DIRECTION 2 — NIGHT ARRIVALS
+     3am in an airport. The world as a departure board: amber phosphor
+     on blue-black, geometric type, tabular everything. He spent more of
+     his life in these rooms than in any restaurant.
+     Committed single-theme: a lit board has one look.
+     ------------------------------------------------------------------ */
+  :root {
+    --ground:   #0A0F14;
+    --panel:    #111820;
+    --raised:   #18212B;
+    --edge:     #24303C;
+    --amber:    #E9B44C;   /* the board */
+    --live:     #63C88B;   /* a table with seats free */
+    --dim:      #6C7E8E;
+    --text:     #DCE6EE;
+    --strike:   #4A5A69;
+
+    --geo: Futura, "Century Gothic", "Avenir Next", Avenir, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    --s1:4px; --s2:8px; --s3:12px; --s4:18px; --s5:28px; --s6:44px;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--ground); color: var(--text);
+    font-family: var(--geo); font-size: 14px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  .app { display: grid; grid-template-columns: 1fr 380px; height: 100vh; }
+  @media (max-width: 860px) { .app { grid-template-columns: 1fr; } }
+
+  /* ---------- map ---------- */
+  .map { position: relative; overflow: hidden; background: var(--ground); }
+  #surface { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  .masthead {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+    display: flex; align-items: center; gap: var(--s4);
+    padding: var(--s4) var(--s5);
+  }
+  .wordmark { font-size: 13px; letter-spacing: .3em; text-transform: uppercase; color: var(--amber); }
+  .board-time {
+    margin-left: auto; font-family: var(--mono); font-size: 12px;
+    color: var(--dim); font-variant-numeric: tabular-nums; letter-spacing: .08em;
+  }
+
+  /* pins are board lamps */
+  .pin {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 24px; height: 24px; padding: 0; border: 0; background: none;
+    cursor: pointer; display: grid; place-items: center;
+  }
+  .pin i {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+    box-shadow: 0 0 8px rgba(233,180,76,.55);
+    transition: transform .14s ease, box-shadow .14s ease;
+  }
+  .pin:hover i { transform: scale(1.7); box-shadow: 0 0 16px rgba(233,180,76,.8); }
+  .pin[data-kind="market"] i { border-radius: 1px; transform: rotate(45deg); }
+  .pin[data-kind="market"]:hover i { transform: rotate(45deg) scale(1.6); }
+  .pin[data-kind="food"] i { width: 7px; height: 7px; }
+  /* closed = a lamp that has gone out. Still on the board. */
+  .pin[data-status="closed"] i {
+    background: none; border: 1px solid var(--strike); box-shadow: none;
+    width: 8px; height: 8px;
+  }
+  .pin[data-status="closed"]:hover i { border-color: var(--dim); transform: scale(1.4); }
+  .pin[aria-current="true"] i {
+    background: #fff; box-shadow: 0 0 0 3px rgba(233,180,76,.28), 0 0 20px rgba(233,180,76,.9);
+    transform: scale(1.5);
+  }
+  .pin .flag {
+    position: absolute; left: 18px; white-space: nowrap;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--dim);
+    opacity: 0; transition: opacity .14s ease; pointer-events: none;
+  }
+  .pin:hover .flag, .pin[aria-current="true"] .flag { opacity: 1; color: var(--amber); }
+
+  /* ---------- board panel ---------- */
+  .board {
+    background: var(--panel); border-left: 1px solid var(--edge);
+    overflow-y: auto; padding: var(--s5) var(--s5) var(--s6);
+  }
+  .row-head {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--dim);
+    padding-bottom: var(--s2); border-bottom: 1px solid var(--edge);
+  }
+  h1 {
+    font-size: 30px; line-height: 1.08; font-weight: 500; letter-spacing: .01em;
+    margin: var(--s4) 0 var(--s2); text-wrap: balance;
+  }
+  .sub {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--dim);
+  }
+
+  .label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--dim);
+    margin: var(--s5) 0 var(--s3);
+  }
+
+  /* appearances as board rows */
+  .rows { display: flex; flex-direction: column; }
+  .brow {
+    display: grid; grid-template-columns: 52px 1fr; gap: var(--s3);
+    padding: var(--s3) 0; border-bottom: 1px solid var(--edge);
+  }
+  .brow .code {
+    font-family: var(--mono); font-size: 12px; color: var(--amber);
+    letter-spacing: .08em; font-variant-numeric: tabular-nums;
+  }
+  .brow .show { font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
+  .brow .dish { margin-top: 3px; color: var(--text); }
+  .brow .said {
+    margin-top: var(--s2); color: var(--dim); font-size: 13px; line-height: 1.55;
+    border-left: 2px solid var(--edge); padding-left: var(--s3);
+  }
+  .brow .said cite {
+    display: block; margin-top: var(--s1); font-style: normal;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--strike);
+  }
+
+  /* the empty seat as a split-flap counter — the signature */
+  .seats {
+    margin-top: var(--s5); background: var(--raised);
+    border: 1px solid var(--edge); padding: var(--s4);
+  }
+  .seats .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .flaps { display: flex; gap: 6px; margin: var(--s3) 0 var(--s2); }
+  .flap {
+    width: 34px; height: 46px; background: #060A0E; border: 1px solid var(--edge);
+    display: grid; place-items: center; position: relative; overflow: hidden;
+    font-family: var(--mono); font-size: 22px; color: var(--amber);
+    font-variant-numeric: tabular-nums;
+  }
+  .flap::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    height: 1px; background: rgba(0,0,0,.85);
+  }
+  .flap.empty { color: var(--live); animation: flip 2.6s ease-in-out infinite; }
+  @keyframes flip {
+    0%, 82%, 100% { transform: rotateX(0deg); }
+    86% { transform: rotateX(-88deg); }
+    90% { transform: rotateX(0deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .flap.empty { animation: none; } }
+  .seats .caption { font-size: 13px; color: var(--live); }
+
+  .credit {
+    margin-top: var(--s5); font-size: 12px; color: var(--dim); line-height: 1.6;
+    border-top: 1px solid var(--edge); padding-top: var(--s4);
+  }
+  .credit strong { color: var(--text); }
+
+  /* ---------- direction sheet ---------- */
+  .sheet { padding: var(--s5); background: var(--ground); border-top: 1px solid var(--edge); }
+  .sheet h2 { font-size: 13px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--amber); margin: 0 0 var(--s4); }
+  .sheet dl { display: grid; grid-template-columns: 110px 1fr; gap: var(--s2) var(--s4);
+    margin: 0; font-size: 13px; max-width: 800px; }
+  .sheet dt { font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--dim); padding-top: 3px; }
+  .sheet dd { margin: 0; }
+  .swatches { display: flex; flex-wrap: wrap; gap: var(--s3); }
+  .sw { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; }
+  .sw b { width: 20px; height: 20px; border: 1px solid var(--edge); display: block; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="map">
+    <canvas id="surface"></canvas>
+    <div class="masthead">
+      <span class="wordmark">Where he ate</span>
+      <span class="board-time">SAN FRANCISCO · 26 PLACES · 4 GONE</span>
+    </div>
+  </div>
+
+  <aside class="board">
+    <div class="row-head"><span>Place</span><span>37.7910 / −122.4210</span></div>
+
+    <h1>Swan Oyster Depot</h1>
+    <div class="sub">San Francisco · status unconfirmed</div>
+
+    <div class="label">Visits</div>
+    <div class="rows">
+      <div class="brow">
+        <div class="code">— —</div>
+        <div>
+          <div class="show">A Cook's Tour</div>
+          <div class="dish">Oysters, crabs</div>
+        </div>
+      </div>
+      <div class="brow">
+        <div class="code">S06</div>
+        <div>
+          <div class="show">Parts Unknown</div>
+          <div class="said">
+            This was one of Tony's regular stops when he visited San Francisco.
+            He had crab and oysters.
+            <cite>deannd</cite>
+          </div>
+        </div>
+      </div>
+      <div class="brow">
+        <div class="code">S01</div>
+        <div>
+          <div class="show">The Layover</div>
+          <div class="said">
+            Seafood — one of Tony's favorite SF restaurants.
+            <cite>deannd</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seats">
+      <div class="top"><span>Table · Thu 4 Sep 19:00</span><span>Seats</span></div>
+      <div class="flaps">
+        <span class="flap">0</span><span class="flap">2</span>
+        <span class="flap empty">0</span><span class="flap empty">2</span>
+      </div>
+      <div class="caption">Two seats still empty.</div>
+    </div>
+
+    <p class="credit">
+      Places compiled by <strong>deannd</strong> on r/AnthonyBourdain over two
+      years, used with permission. The descriptions above are hers.
+    </p>
+  </aside>
+</div>
+
+<section class="sheet">
+  <h2>Direction 2 — Night Arrivals</h2>
+  <dl>
+    <dt>Palette</dt>
+    <dd>
+      <div class="swatches">
+        <span class="sw"><b style="background:#0A0F14"></b>ground #0A0F14</span>
+        <span class="sw"><b style="background:#111820"></b>panel #111820</span>
+        <span class="sw"><b style="background:#E9B44C"></b>amber #E9B44C</span>
+        <span class="sw"><b style="background:#63C88B"></b>live #63C88B</span>
+        <span class="sw"><b style="background:#6C7E8E"></b>dim #6C7E8E</span>
+        <span class="sw"><b style="background:#DCE6EE"></b>text #DCE6EE</span>
+      </div>
+    </dd>
+    <dt>Type</dt>
+    <dd>Futura for names and show titles — the airline face, geometric and
+      unsentimental. SF Mono for all data, tabular figures throughout.</dd>
+    <dt>Signature</dt>
+    <dd>The empty seat as a split-flap counter. Seats taken on the left in
+      amber, seats free on the right in green, flapping every few seconds.
+      Site-wide the same counter reads how many meals are currently waiting
+      for someone — the map as an arrivals board.</dd>
+    <dt>States</dt>
+    <dd>Closed places are lamps that have gone out: hollow, unlit, still on
+      the board. Nothing is removed. Kind changes the lamp shape where known.
+      Generic pins read as what they are — "Meal with locals, S06" is a
+      legitimate board row, not a missing name.</dd>
+  </dl>
+</section>
+
+<script>
+(function () {
+  var PLACES = [
+    ["Swan Oyster Depot",-122.42097,37.79097,"unknown","unknown"],
+    ["Tadich Grill",-122.39944,37.79343,"food","unknown"],
+    ["House of Prime Rib",-122.42254,37.79345,"food","unknown"],
+    ["R & G Lounge",-122.40495,37.79412,"food","unknown"],
+    ["Red's Java House",-122.38743,37.78721,"food","unknown"],
+    ["Ferry Plaza Farmers Market",-122.39341,37.79558,"market","unknown"],
+    ["Tonga Room",-122.40998,37.79214,"unknown","unknown"],
+    ["COI",-122.40341,37.79805,"unknown","unknown"],
+    ["La Folie",-122.42201,37.79814,"unknown","unknown"],
+    ["Blue Bottle Coffee",-122.40776,37.78246,"unknown","unknown"],
+    ["Mission Chinese Food",-122.41963,37.76118,"unknown","unknown"],
+    ["The Alembic",-122.45112,37.76932,"unknown","unknown"],
+    ["The Castro Theatre",-122.43476,37.76203,"unknown","unknown"],
+    ["Polly Ann Ice Cream",-122.49771,37.75347,"unknown","unknown"],
+    ["King of Noodles",-122.47574,37.76345,"unknown","unknown"],
+    ["To Hyang",-122.46036,37.78097,"unknown","unknown"],
+    ["4505 Burgers & BBQ",-122.43825,37.77620,"unknown","unknown"],
+    ["That's It",-122.41844,37.75397,"food","unknown"],
+    ["Pier 23 Cafe",-122.40090,37.80337,"unknown","unknown"],
+    ["Parklab Junction",-122.39775,37.78803,"unknown","unknown"],
+    ["Hotel Des Arts",-122.40494,37.79027,"unknown","unknown"],
+    ["Ralph Gracie Jiu Jitsu",-122.41125,37.77681,"unknown","unknown"],
+    ["Incanto",-122.42719,37.74598,"food","closed"],
+    ["Pirate Cat Cafe",-122.41039,37.75746,"food","closed"],
+    ["Sinbad's Pier 2",-122.39225,37.79470,"unknown","closed"],
+    ["Sushi Sebo",-122.42496,37.77648,"food","closed"]
+  ];
+  var BOUNDS = { w: -122.515, e: -122.375, s: 37.738, n: 37.812 };
+
+  var map = document.querySelector(".map");
+  var cv = document.getElementById("surface");
+  var ctx = cv.getContext("2d");
+
+  function project(lon, lat, w, h) {
+    return [ (lon - BOUNDS.w) / (BOUNDS.e - BOUNDS.w) * w,
+             (BOUNDS.n - lat) / (BOUNDS.n - BOUNDS.s) * h ];
+  }
+  function rng(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function draw() {
+    var r = map.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    var w = r.width, h = r.height;
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    ctx.fillStyle = "#0A0F14"; ctx.fillRect(0, 0, w, h);
+
+    // Water reads darker than land at night, not lighter.
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(w * 0.72, 0); ctx.lineTo(w, 0); ctx.lineTo(w, h * 0.30);
+    ctx.quadraticCurveTo(w * 0.85, h * 0.22, w * 0.78, h * 0.09);
+    ctx.closePath();
+    ctx.fillStyle = "#060A0E"; ctx.fill();
+    ctx.restore();
+
+    // Streets glow faintly — a city seen from a descending plane.
+    var rand = rng(7);
+    ctx.save();
+    ctx.translate(w / 2, h / 2); ctx.rotate(-0.06); ctx.translate(-w / 2, -h / 2);
+    for (var x = -60; x < w + 120; x += 26) {
+      var major = rand() > 0.86;
+      ctx.strokeStyle = major ? "rgba(108,126,142,.30)" : "rgba(108,126,142,.13)";
+      ctx.lineWidth = major ? 1.3 : 0.6;
+      ctx.beginPath(); ctx.moveTo(x, -40); ctx.lineTo(x, h + 40); ctx.stroke();
+    }
+    for (var y = -60; y < h + 120; y += 26) {
+      var maj = rand() > 0.86;
+      ctx.strokeStyle = maj ? "rgba(108,126,142,.30)" : "rgba(108,126,142,.13)";
+      ctx.lineWidth = maj ? 1.3 : 0.6;
+      ctx.beginPath(); ctx.moveTo(-40, y); ctx.lineTo(w + 40, y); ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.strokeStyle = "rgba(233,180,76,.20)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(w * 0.32, h); ctx.lineTo(w * 0.86, h * 0.36); ctx.stroke();
+  }
+
+  function placePins() {
+    Array.prototype.forEach.call(map.querySelectorAll(".pin"), function (n) { n.remove(); });
+    var r = map.getBoundingClientRect();
+    PLACES.forEach(function (p) {
+      var xy = project(p[1], p[2], r.width, r.height);
+      var b = document.createElement("button");
+      b.className = "pin";
+      b.dataset.kind = p[3]; b.dataset.status = p[4];
+      b.style.left = xy[0] + "px"; b.style.top = xy[1] + "px";
+      if (p[0] === "Swan Oyster Depot") b.setAttribute("aria-current", "true");
+      b.setAttribute("aria-label", p[0] + (p[4] === "closed" ? ", closed" : ""));
+      b.innerHTML = '<i></i><span class="flag">' + p[0] +
+        (p[4] === "closed" ? " · gone" : "") + '</span>';
+      map.appendChild(b);
+    });
+  }
+
+  function render() { draw(); placePins(); }
+  render();
+  window.addEventListener("resize", render);
+})();
+</script>
+</body>
+</html>

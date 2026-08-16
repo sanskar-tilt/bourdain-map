@@ -113,6 +113,62 @@ voice. Site copy comes from `notes/why.md`.
 
 ---
 
+## Design
+
+Three directions built as static mockups in `notes/refs/`. All three stay on
+disk; the pick is reversible because palette and type live in tokens.
+
+- `direction-1-dupe.html` — kitchen ticket. Cool thermal paper, carbon ink,
+  one printer red. Condensed grotesque + mono. Signature: the place panel is
+  a printed order dupe, one line item per visit.
+- `direction-2-arrivals.html` — departure board at 3am. Blue-black, amber
+  phosphor, Futura. Signature: the empty seat as a split-flap counter.
+- `direction-3-stamp.html` — passport page. Cool document stock, four inks
+  one per show, Superclarendon slab. Signature: every visit is an entry
+  stamp, rotated and overlapping.
+
+**Picked: direction 2, Night Arrivals.** Reasons, in the order that decided it:
+
+1. **The map is the product, and this is the only one that makes the map
+   easy.** 2,095 pins have to read as foreground with the world receding
+   behind them. A dark, desaturated basemap gets that for free — luminous
+   points on a dim ground. The two light directions have to fight their own
+   basemap to keep pins dominant, and low-contrast light basemaps are much
+   harder to keep legible.
+2. **It answers the first-two-seconds problem by itself.** At world zoom,
+   clustered warm points on a dark ground look like a night flight map. That
+   is worth looking at before you have interacted with anything.
+3. **The signature scales past one place.** A split-flap counter works on a
+   place panel and site-wide — "14 meals currently waiting for someone" is
+   the same component. The dupe's ticket and the stamp page are both panel-
+   only ideas.
+4. **Closed reads at pin size with no label.** A lamp that has gone out is
+   immediately legible and quietly sad, which is the brief. Struck-through
+   marks (1) and cancelled stamps (3) both need to be large enough to see the
+   strike.
+5. **Colour stays free for state.** Shows are distinguished by label, kind by
+   marker shape, so amber/green/unlit can mean *there / seats free / gone*
+   rather than being spent on categories. Direction 3 spends its whole colour
+   system on which show it was.
+6. **Subject-true without the homage.** Airports and red-eyes are where he
+   actually spent his life. It avoids both the warm-cream-and-serif default
+   CLAUDE.md warns about and the food-blog register.
+
+What I'd have kept from the others, and didn't: direction 3's stamps are the
+best answer to "almost no text per place" — three overlapping stamps tell you
+he came back, before you read a word. If Night Arrivals turns out thin on the
+panel, that is the idea to port over as a repeat-visit indicator.
+
+Known risk: dark ground plus a single warm accent is close to a generic
+dashboard look. Managed by Futura rather than a neutral UI grotesque, tabular
+figures everywhere, one accent only, and no gradients.
+
+---
+
 ## Process
 
 **Work on `main`.** Solo project, no reviewers, branches are overhead.
+
+**Design tokens live in one place.** Palette, type and spacing are CSS custom
+properties in a single tokens file, never literals in components. Changing
+direction later is a restyle, not a rebuild.
