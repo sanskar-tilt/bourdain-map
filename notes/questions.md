@@ -127,3 +127,21 @@ museum) that needs data we don't have.
   than on all ~20 Tokyo places. The city unit is whatever the geocoder returned,
   and merging wards into metros is a judgement call per city. Same for London's
   three. Worth a metro-level page eventually.
+
+---
+
+## Blocked
+
+**Viktor's motion report was never pasted.** The prompt ended with
+`[PASTE VIKTOR'S FULL MOTION REPORT BELOW THIS LINE BEFORE SENDING` and what
+followed was terminal scrollback — a fragment of my own previous reply and a
+repeat of the brief. There is no browser-agent analysis in it.
+
+`notes/refs/nothin-motion.md` is therefore **not created**. I'm not writing a
+file called "Viktor's motion analysis" out of my own inference and committing it
+verbatim-labelled; that would put invented observations into the record as
+someone else's measurements, and the instruction was explicitly that where his
+timings disagree with the extracted CSS, the CSS wins — which only means
+anything if his numbers are actually his.
+
+Paste it and it takes one commit. Everything else in that brief proceeded.
