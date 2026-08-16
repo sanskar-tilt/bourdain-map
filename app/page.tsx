@@ -1,5 +1,6 @@
 import Loader from "./components/Loader";
 import FluidHero from "./components/FluidHero";
+import HeroPullback from "./components/HeroPullback";
 import Reveal from "./components/Reveal";
 import TrailMap from "./components/TrailMap";
 import MaskedText from "./components/MaskedText";
@@ -101,6 +102,13 @@ export default function Home() {
   if (hero?.placeSlug && !heroPlace) {
     console.warn(`[home] content/home.json: no place with slug "${hero.placeSlug}"`);
   }
+  if (hero?.photo && !hero.placeSlug) {
+    console.warn("[home] hero photo has no placeSlug — the pull-back cannot land on the map");
+  }
+  // Where the photographed plate actually is. Null means we do not know, and
+  // the pull-back draws the world without a highlighted pin rather than
+  // dropping one somewhere plausible.
+  const target = heroPlace ? { lon: heroPlace.lon, lat: heroPlace.lat } : null;
   const pairQuote = pick((m.pairing?.quotes ?? []).filter(Boolean));
 
   return (
@@ -121,6 +129,19 @@ export default function Home() {
           <Quote text={heroQuote} big />
         )}
       </section>
+
+      {/* ---------------------------------------------- the pull-back
+          One plate, then the whole life: the photograph shrinks with the
+          scrollbar until it is a single pin among all the others. Restored
+          below the quote by request; it takes the page's one pin, which the
+          trail yielded back. */}
+      <HeroPullback target={target}>
+        <Shot
+          file={hero?.photo} meta={hero?.meta}
+          alt={hero?.alt} credit={hero?.credit}
+          ratio={1.6} sizes="100vw"
+        />
+      </HeroPullback>
 
       {/* ------------------------------------------------ the counter */}
       <section className={`${s.section} ${s.counterSection} reveal`}>
@@ -143,11 +164,11 @@ export default function Home() {
       </section>
 
       {/* ---------------------------------------------------- the trail
-          The one sticky set-piece besides the hero: pins for two viewports
-          while the route draws itself against the scrollbar. */}
+          Plain mode again: the pull-back's return took the page's one pin,
+          so the trail draws on entry rather than against the scrollbar. */}
       <section className={`${s.section} reveal`}>
         <p className="label">the trail</p>
-        <TrailMap height={420} setPiece />
+        <TrailMap height={340} />
       </section>
 
       {/* ------------------------------------------------- the video */}

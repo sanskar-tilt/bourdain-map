@@ -288,9 +288,9 @@ const browser = await puppeteer.launch({
 }
 
 /* ------------------------------------------------------------------ */
-/* Exactly one sticky set-piece: the trail. No inline --p survives from
-   the pull-back era, and the pin count is one on desktop, zero below
-   the 992px gate. */
+/* Exactly one sticky set-piece: the pull-back (the trail yielded the pin
+   back when it returned). Its inline --p may exist only on the pin
+   itself; the pin count is one on desktop, zero below the 992px gate. */
 {
   const p = await browser.newPage();
   await p.setViewport({ width: 1440, height: 900 });
@@ -300,14 +300,14 @@ const browser = await puppeteer.launch({
     pins: document.querySelectorAll("[data-pin]").length,
     sticky: [...document.querySelectorAll("[data-pin] *")].some(
       (el) => getComputedStyle(el).position === "sticky"),
-    withP: [...document.querySelectorAll("body *")].filter(
-      (el) => el.style.getPropertyValue("--p") !== ""
+    strayP: [...document.querySelectorAll("body *")].filter(
+      (el) => !el.hasAttribute("data-pin") && el.style.getPropertyValue("--p") !== ""
     ).length,
   }));
-  ok("exactly one pinned element on the homepage, none of the old --p",
-     desk.pins === 1 && desk.sticky && desk.withP === 0, JSON.stringify(desk));
+  ok("exactly one pinned element (the pull-back), --p only on the pin",
+     desk.pins === 1 && desk.sticky && desk.strayP === 0, JSON.stringify(desk));
 
-  /* The scrollbar is the pen: progress tracks scroll linearly. */
+  /* The scrollbar is the pen: the photo's --p tracks scroll linearly. */
   const scrub = async (frac) => {
     return p.evaluate(async (f) => {
       const el = document.querySelector("[data-pin]");
@@ -325,15 +325,15 @@ const browser = await puppeteer.launch({
         if (Math.abs(window.scrollY - y) < 4) break;
       }
       await new Promise((r) => setTimeout(r, 150));
-      return parseFloat(el.dataset.progress ?? "-1");
+      return parseFloat(el.style.getPropertyValue("--p") || "-1");
     }, frac);
   };
   const p0 = await scrub(0);
   const pHalf = await scrub(0.5);
   const p1 = await scrub(1);
-  ok("trail set-piece draws linearly against scroll",
+  ok("pull-back scales linearly against scroll",
      p0 < 0.05 && Math.abs(pHalf - 0.5) < 0.1 && p1 > 0.95,
-     `progress at 0/0.5/1 of travel: ${p0} / ${pHalf} / ${p1}`);
+     `--p at 0/0.5/1 of travel: ${p0} / ${pHalf} / ${p1}`);
   await p.close();
 }
 
@@ -344,7 +344,7 @@ const browser = await puppeteer.launch({
   await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
   await new Promise((r) => setTimeout(r, 1200));
   const pins = await p.evaluate(() => document.querySelectorAll("[data-pin]").length);
-  ok("trail set-piece: no pin below 992px", pins === 0, `${pins}`);
+  ok("pull-back: no pin below 992px", pins === 0, `${pins}`);
   await p.close();
 }
 

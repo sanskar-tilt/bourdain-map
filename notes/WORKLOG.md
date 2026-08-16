@@ -247,3 +247,30 @@ Six steps produced five harness bugs and three product bugs. Every single
 green that felt too easy hid something (stale out/, skipped photo check).
 The stale-build guard fired on its first opportunity. Keep the rule: proofs
 on their own pages, and when a test disagrees with a probe, suspect the test.
+
+---
+
+## Post-run: the pull-back restored (user request)
+
+Back from git (`02ce8b7~1`), placed below the hero-quote section. Two changes
+from the original: the scroll cue stayed with the fluid hero rather than
+returning (two "scroll" cues would be absurd), and `data-pin` is now toggled
+with the gate so the pin census stays truthful below 992px.
+
+**The one-pin rule forced a trade:** the trail yielded its set-piece mode and
+draws on entry again (plain mode kept in the component, dormant, for the map
+page). The pull-back scrubs linearly — measured 0 / 0.4998 / 0.9998 across its
+travel. The one-pin acceptance now names the pull-back and permits inline
+`--p` on the pin element only.
+
+**The portrait.** A supplied photo of Bourdain is wired into
+`loader.portrait` as `bourdain-portrait.jpg` — the frame the loader resolves
+on, which is the slot specced for the one photograph of him. The image
+arrived as a paste, which exists nowhere on disk I can reach, so the manifest
+points at a file that does not exist yet and the build says so out loud. The
+credit field is empty and stays empty until a real one is supplied — not mine
+to invent, least of all for a professional portrait.
+
+Note: the stale-build guard blocked the acceptance run against an old out/
+for the second time (missing import broke tsc). Both times it fired, it was
+right.
