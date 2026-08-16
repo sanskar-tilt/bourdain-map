@@ -17,7 +17,9 @@ structural rather than say it in an About page.
   sponsored placement, ever. This is a condition of the data licence.
 - **Attribution.** The seed dataset was compiled by deannd (r/AnthonyBourdain)
   over two years and used with permission. Credit visibly and permanently, not
-  in a footer nobody reads.
+  in a footer nobody reads. Her descriptions ship as-is and display credited —
+  but they are quoted material on a place panel, visibly hers. They are not the
+  site's voice. Site copy comes from `notes/why.md`.
 - **No ratings.** No stars, no scores, no "top 10". A rating field turns this
   into TripAdvisor within a month.
 - **Copyright.** Facts are fine — he ate here, S5E12, this dish. His prose,
@@ -35,24 +37,50 @@ Keep it on free tiers. There's no revenue and that's deliberate.
 
 ## Data model
 
-See `schema.sql`. Three decisions that matter:
+See `supabase/migrations/`. The decisions that matter:
 
-- `places` and `appearances` are separate. The same restaurant appears across
-  multiple shows; the source data has duplicate rows for this reason. One pin,
-  visits listed underneath, episode trail preserved.
+- `places` and `appearances` are separate, because the same restaurant appears
+  across multiple shows. One pin, visits listed underneath. Worth knowing how
+  little this buys: 38 places out of 2,095 have more than one appearance. The
+  split is right and cheap, but it is not the hard part of the import.
+- **There are no episode numbers.** The source KMLs contain zero `SxxExx`
+  strings, zero "episode N", and no air dates. `appearances.episode`,
+  `episode_title` and `air_date` import as null and stay null until someone
+  does a separate enrichment pass against an episode list. Season survives
+  only for Parts Unknown and The Layover, where the KML folders encode it —
+  1,149 of 2,135 placemarks. Don't promise an episode trail in the UI.
+- The hard part of the import is **name collisions**. 41 placemarks are
+  literally named "Meal with locals", spread across four continents, and 816
+  same-name pairs sit more than 50km apart. Dedupe matches on normalised name
+  AND proximity (≤250m), with a blocklist of generic names that never merge at
+  any distance. Name-only matching merges Manila into Montreal.
 - `places.status` treats `closed` as first-class. Many of these are gone.
   Render them present-but-greyed — it's the most affecting thing the map does,
   and it stops people turning up to a shuttered address.
+  Status comes from the `(Closed)` suffix on the KML `<name>` — 57 of them,
+  clean and reliable. It does **not** come from the word "closed" in a
+  description: those usually mean a *different*, older restaurant closed and
+  this pin is its replacement ("Tony visited Mitchell's BBQ which is now
+  closed. This is the newer spot."). Trusting the description greys out a
+  restaurant that's serving today. Send those 42 to the skip log for a human.
 - `stories.body` has a 100-char minimum and no rating. Makes people write a
   sentence rather than "great vibes".
 
 ## Build order
 
-1. **Import.** Seed `places` + `appearances` from deannd's data. Dedupe on
-   name + coords proximity. Expect messy rows; log what you skip rather than
-   silently dropping it.
-2. **Map.** World view, ~1,500 pins, clustered. Click a pin → place panel:
-   what he ate, which episode, current status.
+1. **Import.** Seed `places` + `appearances` from deannd's five KMLs. Dedupe
+   on normalised name + proximity, with a generic-name blocklist. Runs offline
+   from the files — no network. Expect messy rows; log what you skip rather
+   than silently dropping it.
+   **Pass 2: reverse-geocode.** Nothing in the KMLs carries city, country or
+   address, so `city` and `country_code` are nullable and backfilled from the
+   coordinates afterwards. `slug` is generated from name + city and stays null
+   until that lands, so no live URL ever has to change.
+2. **Map.** World view, ~2,095 pins, clustered. Click a pin → place panel:
+   what he ate, which show and season where known, current status.
+   He didn't only eat — 239 pins are markets, bars, spas, hot springs and
+   hotels. `places.kind` carries the distinction; default to food, toggle the
+   rest on. Don't drop them.
 3. **Tables.** "Open a table here" → date, seats, blurb. RSVP. Auth via
    Supabase magic link.
 4. **Stories.** Post-meal writeup, attached to place and gathering.

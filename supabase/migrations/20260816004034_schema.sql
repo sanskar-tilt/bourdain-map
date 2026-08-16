@@ -3,7 +3,12 @@
 -- Data seeded from deannd's compilation (r/AnthonyBourdain), used with permission.
 -- Non-commercial: no affiliate links, no bookings, no ads.
 
-create extension if not exists postgis;
+-- Into `extensions`, not `public`: PostGIS installs ~1,000 functions and
+-- PostgREST exposes whatever is in public. PostGIS refuses ALTER EXTENSION
+-- ... SET SCHEMA, so this cannot be corrected in a later migration — it has
+-- to be right here. The postgres role's search_path already includes
+-- extensions, so `geography(point, 4326)` below resolves.
+create extension if not exists postgis with schema extensions;
 
 -- ---------------------------------------------------------------
 -- 1. THE CANON — places he went. Read-only to users; you seed these.
