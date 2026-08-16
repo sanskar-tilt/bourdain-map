@@ -7,6 +7,18 @@ entry when it's answered and move the answer to `decisions.md`.
 
 ## Needs your call
 
+**I need the URL of deannd's original My Maps.** City pages link out to
+eatlikebourdain.com and an r/AnthonyBourdain search, but the third link you
+asked for — her original maps — needs a real URL and I won't invent one. It
+belongs on every city page and on the About page, since the whole dataset is
+hers. Send the link (or links, if it's one per show) and I'll wire it into
+`elsewhere()` in `app/city/[slug]/page.tsx`.
+
+**The basemap decision, if you want to overrule it.** Extracting global z0–z10
+(3.7GB, fits R2's free tier) rather than the z0–z12 you asked for, because
+z0–z12 measures 18GB and breaks the free-tier constraint. Full reasoning and
+the R2 setup you need to do is in `notes/basemap-setup.md`.
+
 **There is no second geocode to reconcile.** Step 0 asked me to reconcile my
 Nominatim run against an offline reverse-geocode "done separately". That
 dataset is not on this machine — `data/` contains only the KMLs, the Wikipedia
