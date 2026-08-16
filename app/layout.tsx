@@ -40,7 +40,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               // does nothing at all without JS or under reduced motion, so
               // those readers get the finished page.
               "try{var r=document.documentElement;" +
-              "if(!matchMedia('(prefers-reduced-motion: reduce)').matches){" +
+              // Only the homepage runs an opening, so only the homepage gets a
+              // pre-animation state. Setting it anywhere else hides the header
+              // on a page that has nothing to clear it.
+              "if(location.pathname==='/' && " +
+              "!matchMedia('(prefers-reduced-motion: reduce)').matches){" +
               "r.dataset.opening='pending'}}catch(e){}",
           }}
         />

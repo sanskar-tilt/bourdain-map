@@ -56,14 +56,15 @@ export default function Loader({
     const flag = params.get("loader");
     const hold  = flag === "hold";   // freeze on the resolved frame
     const force = flag === "1";      // replay, ignoring sessionStorage
+    const off   = flag === "off";    // settled at t=0, for tests
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let seen = false;
     try { seen = sessionStorage.getItem("wha:loader") === "1"; } catch {}
 
-    // Reduced motion: nothing runs, everything settled at t=0.
-    // Repeat visit: no loader, but the arrival still plays — the site should
-    // never simply appear.
-    const mode: OpeningMode = reduced
+    // Reduced motion, or an explicit ?loader=off: nothing runs, everything
+    // settled at t=0. Repeat visit: no loader, but the arrival still plays —
+    // the site should never simply appear.
+    const mode: OpeningMode = reduced || off
       ? "none"
       : seen && !hold && !force
         ? "arrival"

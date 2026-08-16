@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { onScroll } from "../../lib/scroll";
 
 /* Entrances, once.
 
@@ -8,15 +9,24 @@ import { useEffect } from "react";
    unobserves. Nothing re-animates on the way back up — that is what keeps
    the page feeling like a document rather than a toy.
 
-   IntersectionObserver, no scroll listener, no library. rootMargin's bottom
-   value of -5% is the "top 95%" trigger. */
+   IntersectionObserver, no library. But an observer alone is not enough: it
+   only delivers a callback when the intersection *changes*, and a jump
+   straight down the page — Cmd+End, a deep anchor, a restored scroll
+   position — takes a section from not-intersecting-below to
+   not-intersecting-above without ever intersecting. Those sections would sit
+   invisible above the reader forever. So a cheap sweep runs alongside, on the
+   shared scroll frame, settling anything that has been passed.
+*/
+
+const settle = (el: Element) => el.classList.add("is-in");
 
 export default function Reveal() {
   useEffect(() => {
     document.documentElement.classList.remove("no-js");
 
+    const pending = new Set<Element>(document.querySelectorAll(".reveal"));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in"));
+      pending.forEach(settle);
       return;
     }
 
@@ -24,15 +34,30 @@ export default function Reveal() {
       (entries) => {
         for (const e of entries) {
           if (!e.isIntersecting) continue;
-          e.target.classList.add("is-in");
+          settle(e.target);
+          pending.delete(e.target);
           io.unobserve(e.target);
         }
       },
       { rootMargin: "0px 0px -5% 0px", threshold: 0 }
     );
+    pending.forEach((el) => io.observe(el));
 
-    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    // The sweep. Only after a jump worth caring about, so this costs nothing
+    // during ordinary scrolling.
+    let last = -1e9;
+    const stop = onScroll((y) => {
+      if (Math.abs(y - last) < 200 || pending.size === 0) return;
+      last = y;
+      for (const el of [...pending]) {
+        if (el.getBoundingClientRect().bottom >= 0) continue;
+        settle(el);
+        pending.delete(el);
+        io.unobserve(el);
+      }
+    });
+
+    return () => { io.disconnect(); stop(); };
   }, []);
 
   return null;

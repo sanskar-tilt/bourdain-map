@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { onScroll } from "../../lib/scroll";
 import s from "./home.module.css";
 
 /* Text arrives. It does not fade.
@@ -75,10 +76,11 @@ export default function MaskedText({
     if (reduced) { el.classList.add("is-in"); return; }
 
     // The hero's lines belong to the opening; the observer would fire them
-    // early, because they are already in view.
+    // early, because they are already in view. But if no opening is going to
+    // run, nothing else would ever settle them — so check.
     if (arrival) {
-      const t0 = window.setTimeout(() => {}, 0);
-      window.clearTimeout(t0);
+      const phase = document.documentElement.dataset.opening;
+      if (!phase || phase === "done" || phase === "settled") el.classList.add("is-in");
       let r = 0;
       const onResizeArrival = () => {
         window.clearTimeout(r);
@@ -92,17 +94,31 @@ export default function MaskedText({
       return () => { window.removeEventListener("resize", onResizeArrival); window.clearTimeout(r); };
     }
 
+    let done = false;
+    const settle = () => {
+      if (done) return;
+      done = true;
+      el.classList.add("is-in");
+      io.unobserve(el);
+      stopSweep();
+    };
+
     const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue;
-          e.target.classList.add("is-in");
-          io.unobserve(e.target);
-        }
-      },
+      (entries) => { if (entries.some((e) => e.isIntersecting)) settle(); },
       { rootMargin: "0px 0px -5% 0px" }
     );
     io.observe(el);
+
+    // The observer only reports a *change* in intersection, so a jump that
+    // takes this line from below the fold to above it never fires. Sweep on
+    // the shared scroll frame after any large jump, or the line stays parked
+    // below its mask edge and invisible.
+    let last = -1e9;
+    const stopSweep = onScroll((y) => {
+      if (done || Math.abs(y - last) < 200) return;
+      last = y;
+      if (el.getBoundingClientRect().bottom < 0) settle();
+    });
 
     let t = 0;
     const onResize = () => {
@@ -114,7 +130,7 @@ export default function MaskedText({
       }, 150);
     };
     window.addEventListener("resize", onResize);
-    return () => { io.disconnect(); window.removeEventListener("resize", onResize); window.clearTimeout(t); };
+    return () => { io.disconnect(); stopSweep(); window.removeEventListener("resize", onResize); window.clearTimeout(t); };
   }, [text, arrival]);
 
   return (

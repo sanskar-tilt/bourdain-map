@@ -34,7 +34,7 @@ async function pass(reduced) {
   await p.screenshot({ path: `${OUT}/${tag}02-loader-final.png` });
 
   // the pull-back, at known scroll fractions
-  await p.goto(`${BASE}/?loader=skip`, { waitUntil: "networkidle0" });
+  await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
   await new Promise((r) => setTimeout(r, 1200));
   const stops = [["03-hero-fullbleed", 0], ["04-hero-half", 0.5], ["05-hero-landed", 1]];
   for (const [name, frac] of stops) {

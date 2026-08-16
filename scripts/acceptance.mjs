@@ -163,9 +163,18 @@ const browser = await puppeteer.launch({
     const n = m.match(/matrix\(([^)]+)\)/);
     return n ? parseFloat(n[1].split(",")[5]) : 0;
   };
-  const overlap = samples.find(
-    (x) => x.curtainPresent && ty(x.curtainT) < -1 && x.textT && x.textT !== "none" && ty(x.textT) !== 0
-  );
+  // A static pre-state also has a non-zero transform, so "non-zero" is not
+  // evidence of motion. Require the value to be *changing* between frames
+  // while the curtain is mid-travel.
+  let overlap = null;
+  for (let i = 1; i < samples.length; i++) {
+    const a = samples[i - 1], c = samples[i];
+    if (!c.curtainPresent || ty(c.curtainT) >= -1) continue;
+    if (!c.textT || c.textT === "none") continue;
+    if (ty(a.textT) === ty(c.textT)) continue;   // not moving
+    overlap = c;
+    break;
+  }
 
   ok("hero text is mid-rise while the curtain is still moving",
      Boolean(overlap),
@@ -179,6 +188,64 @@ const browser = await puppeteer.launch({
 }
 
 /* ------------------------------------------------------------------ 4 */
+/* Masked lines must arrive. Measuring mid-transition proves only that a
+   transform exists; the end state is the thing that matters, and a line
+   stuck at translateY(100%) inside overflow:hidden is invisible. */
+{
+  const p = await browser.newPage();
+  await p.setViewport({ width: 1440, height: 900 });
+  await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
+  await new Promise((r) => setTimeout(r, 2500));
+  await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await new Promise((r) => setTimeout(r, 2000));
+
+  const lines = await p.evaluate(() =>
+    [...document.querySelectorAll('[class*="lineMask"] > span')]
+      .map((el) => getComputedStyle(el).transform)
+  );
+  const unsettled = lines.filter((t) => t !== "none");
+  ok("every masked line has settled to transform:none",
+     lines.length > 0 && unsettled.length === 0,
+     `${lines.length} lines, ${unsettled.length} stuck${unsettled.length ? " — " + unsettled[0] : ""}`);
+  await p.close();
+}
+
+/* ------------------------------------------------------------------ 5 */
+/* Nothing ships hidden. After a full scroll, anything rendered and visible
+   must have settled — no orphaned pre-animation states. */
+{
+  const p = await browser.newPage();
+  await p.setViewport({ width: 1440, height: 900 });
+
+  for (const route of ["/?loader=off", "/about/", "/tables/"]) {
+    await p.goto(`${BASE}${route}`, { waitUntil: "networkidle0" });
+    await new Promise((r) => setTimeout(r, 2200));
+    await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await new Promise((r) => setTimeout(r, 2200));
+
+    const bad = await p.evaluate(() => {
+      const out = [];
+      for (const el of document.querySelectorAll("body *")) {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) continue;      // not rendered
+        // Scroll-linked transforms are state, not a failed entrance.
+        if (el.closest("[data-pin]")) continue;
+        const cs = getComputedStyle(el);
+        if (cs.display === "none" || cs.visibility === "hidden") continue;
+        if (parseFloat(cs.opacity) < 0.01) {
+          out.push(`opacity 0: ${el.tagName.toLowerCase()}.${el.className}`.slice(0, 90));
+        }
+      }
+      return out.slice(0, 4);
+    });
+
+    ok(`nothing hidden after settle on ${route}`, bad.length === 0,
+       bad.join(" | ") || "clean");
+  }
+  await p.close();
+}
+
+/* ------------------------------------------------------------------ 6 */
 /* Reduced motion: no loader at all, and the pin does not engage. */
 {
   const p = await browser.newPage();

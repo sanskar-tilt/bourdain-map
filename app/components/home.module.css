@@ -334,7 +334,10 @@
   transform: translateY(100%);
   transition: transform var(--t-enter) var(--ease-out);
 }
-.masked.is-in .lineMask > span { transform: none; }
+/* :global — `is-in` is a state class set from JS. Scoped, the literal
+   string JS adds can never match the hashed name, and every line stays
+   parked below its own mask edge. */
+.masked:global(.is-in) .lineMask > span { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .lineMask > span { transform: none; }
