@@ -17,24 +17,29 @@
 }
 .map :global(.maplibregl-ctrl-attrib a) { color: var(--paper-dim); }
 
-.status, .noTiles {
+/* One stack, bottom-left, so these can never collide as copy changes. */
+.corner {
   position: absolute;
   left: var(--s5); bottom: var(--s4);
-  margin: 0;
   z-index: var(--z-chrome);
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: var(--s2);
+  pointer-events: none;
+}
+.corner > * { pointer-events: auto; }
+
+.status, .noTiles {
+  margin: 0;
   font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: var(--track-mid);
   text-transform: uppercase;
   color: var(--paper-faint);
 }
-.noTiles { bottom: calc(var(--s4) + 20px); color: var(--accent-dim); text-transform: none; }
+.noTiles { color: var(--accent-dim); text-transform: none; }
 .noTiles code { font-size: 10px; }
 
 .reset {
-  position: absolute;
-  left: var(--s5); bottom: calc(var(--s4) + 26px);
-  z-index: var(--z-chrome);
   padding: var(--s2) var(--s3);
   background: color-mix(in srgb, var(--panel) 88%, transparent);
   border: 1px solid var(--edge);

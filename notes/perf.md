@@ -55,17 +55,29 @@ Time to Interactive        3.2 s
 
 ## Frame timings
 
-Headless Chrome, 1440×900, all **2,095 pins loaded**, driven through a scripted
-pan across a dense region → zoom in through the cluster-break threshold → pan
-again unclustered → zoom back out. 258 frames sampled.
+Headless Chrome, 1440×900, driven through a scripted pan across a dense region
+→ zoom in through the cluster-break threshold → pan again unclustered → zoom
+back out. 258 frames sampled.
 
 ```
+source features        56  (clusters at world zoom)
+rendered on screen     36
 frame interval p50     16.7 ms   (60 fps)
-frame interval p95     18.5 ms   (54 fps)
-worst frame            18.7 ms
-frames over 16.7ms     125  (48.4%)
+frame interval p95     17.4 ms   (57 fps)
+worst frame            17.7 ms
+frames over 16.7ms     127  (49.2%)
 frames over 33ms       0    (0.0%)
 ```
+
+> **An earlier version of this file reported these numbers from an empty map.**
+> The harness waited on the "2,095 places" label, which is written from our own
+> `fetch` and says nothing about the map. MapLibre v6's module worker never
+> instantiated under Turbopack, so the GeoJSON source held zero features while
+> the label cheerfully claimed 2,095 — and the script reported a confident
+> 60fps for rendering nothing. It now asserts `isSourceLoaded`, counts
+> `querySourceFeatures`, and throws if `queryRenderedFeatures` is empty rather
+> than reporting a frame rate for a blank canvas. Fixed by pinning MapLibre to
+> v5. The numbers above are from a map with pins actually on it.
 
 The 48.4% figure looks alarming and isn't: 16.7ms *is* the vsync interval, so
 roughly half of a steady 60fps stream lands microseconds either side of it.

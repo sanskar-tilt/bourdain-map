@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   trailingSlash: true,
+  // There is a stray package-lock.json in the home directory, so Turbopack
+  // infers the workspace root as ~ and then 403s every chunk under
+  // /_next/static in dev — MapLibre included, which leaves the map a black
+  // rectangle with no canvas at all. Production builds were unaffected, which
+  // is exactly what makes it easy to miss.
+  turbopack: { root: __dirname },
 };
 
 export default nextConfig;

@@ -81,6 +81,9 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
       renderWorldCopies: true,
     });
     map.current = m;
+    // Exposed so the map can be inspected from the console and from the
+    // headless perf/diagnostic scripts. Read-only in practice.
+    (window as unknown as { __map?: unknown }).__map = m;
 
     m.addControl(new NavigationControl({ showCompass: false }), "bottom-right");
 
@@ -314,19 +317,21 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
   return (
     <div className={styles.wrap}>
       <div ref={holder} className={styles.map} />
-      {!hasBasemap && (
-        <p className={styles.noTiles}>
-          No basemap configured — pins only. Set <code>NEXT_PUBLIC_PMTILES_URL</code>.
+      <div className={styles.corner}>
+        <button className={styles.reset} onClick={resetView} type="button">
+          Whole world
+        </button>
+        {!hasBasemap && (
+          <p className={styles.noTiles}>
+            No basemap yet — pins only.
+          </p>
+        )}
+        <p className={styles.status} aria-live="polite">
+          {loaded === 0 ? "Finding the places…"
+            : loaded < 0 ? "The places didn't load. Reload and they should."
+            : `${loaded.toLocaleString()} places`}
         </p>
-      )}
-      <button className={styles.reset} onClick={resetView} type="button">
-        Whole world
-      </button>
-      <p className={styles.status} aria-live="polite">
-        {loaded === 0 ? "Loading places…"
-          : loaded < 0 ? "Couldn't load places."
-          : `${loaded.toLocaleString()} places`}
-      </p>
+      </div>
     </div>
   );
 }

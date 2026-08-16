@@ -32,15 +32,24 @@ page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 
 await page.goto(URL_, { waitUntil: "networkidle0", timeout: 60000 });
 
-// Wait until every pin is in the source, not merely until the page settled.
+// Wait until the MAP has the pins, not until a label says so. The label is
+// written from our own fetch and was happily reporting 2,095 while the map
+// source held zero features -- which made an earlier version of this script
+// measure an empty map at a confident 60fps.
 const pins = await page.waitForFunction(
   () => {
-    const el = document.querySelector('[aria-live="polite"]');
-    const m = el && /([\d,]+) places/.exec(el.textContent ?? "");
-    return m ? Number(m[1].replace(/,/g, "")) : false;
+    const m = window.__map;
+    if (!m || !m.getSource("places") || !m.isSourceLoaded("places")) return false;
+    const n = m.querySourceFeatures("places").length;
+    return n > 0 ? n : false;
   },
-  { timeout: 60000 }
+  { timeout: 60000, polling: 250 }
 ).then((h) => h.jsonValue());
+
+const rendered = await page.evaluate(() =>
+  window.__map.queryRenderedFeatures({ layers: ["clusters", "pins"] }).length
+);
+if (!rendered) throw new Error("nothing is rendered on screen - refusing to report a frame rate");
 
 // Record frame intervals while the map is driven through a pan and a zoom.
 const result = await page.evaluate(async () => {
@@ -120,7 +129,8 @@ const result = await page.evaluate(async () => {
 });
 
 const pct = (n) => ((n / result.frames) * 100).toFixed(1);
-console.log(`pins loaded            ${pins}`);
+console.log(`source features        ${pins}`);
+console.log(`rendered on screen     ${rendered}`);
 console.log(`frames sampled         ${result.frames}`);
 console.log(`frame interval p50     ${result.p50} ms   (${(1000 / result.p50).toFixed(0)} fps)`);
 console.log(`frame interval p95     ${result.p95} ms   (${(1000 / result.p95).toFixed(0)} fps)`);
