@@ -95,7 +95,9 @@ for (const file of [...new Set(wanted)]) {
       .resize({ width: target, withoutEnlargement: true })
       .webp({ quality: QUALITY })
       .toFile(to);
-    srcset.push({ width: target, src: `/about/opt/${outName}` });
+    // Parameterised like everything else in run(): a hardcoded /about/ here
+    // sent the home set's URLs to a folder its files were never written to.
+    srcset.push({ width: target, src: `/${set.dir}/opt/${outName}` });
     built++;
   }
 

@@ -1,1 +1,13 @@
-{}
+{
+ "bourdain-portrait.jpg": {
+  "width": 806,
+  "height": 1044,
+  "ratio": 0.772,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-portrait-800.webp"
+   }
+  ]
+ }
+}
