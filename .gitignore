@@ -43,3 +43,7 @@ next-env.d.ts
 # build-time artifact, regenerate with scripts/export_map_data.py
 /data/detail.json
 /out
+
+# generated image renditions
+/public/about/opt
+/content/about.generated.json

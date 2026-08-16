@@ -1,14 +1,189 @@
-.about { display: flex; flex-direction: column; gap: var(--s4); max-width: var(--measure); }
-.h1 { font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-4); line-height: 1.05; }
-.h2 { font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-2); margin-top: var(--s4);
-  padding-top: var(--s4); border-top: 1px solid var(--edge); }
-.lede { font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-2); line-height: 1.35; color: var(--paper); }
-.about p { color: var(--paper-dim); line-height: 1.7; }
-.about strong { color: var(--paper); font-weight: 400; }
-.plain { list-style: none; margin: 0; padding: 0;
-  display: flex; flex-direction: column; gap: var(--s3); }
-.plain li { color: var(--paper-dim); line-height: 1.7;
-  padding-left: var(--s4); border-left: 1px solid var(--edge); }
+/* Same object as the rest of the site: every value comes from tokens.css.
+   This is a page in the panel, not a separate CV. */
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
+  max-width: var(--measure);
+}
+
+.h1 {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-4);
+  line-height: 1.05;
+}
+.h2 {
+  font-size: var(--step--1);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+
+/* ------------------------------------------------------------- intro */
+.intro {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: var(--s4);
+  align-items: start;
+}
+.introPhoto {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  object-fit: cover;
+  filter: grayscale(0.15);
+}
+.introText { display: flex; flex-direction: column; gap: var(--s3); }
+.lede {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.35;
+  color: var(--paper);
+}
+
+/* ------------------------------------------------------------ sections */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--edge);
+}
+
+/* --------------------------------------------------------- place grid */
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  /* The panel is ~420px, so this has to stay two-up there rather than
+     collapsing into one enormous photo per row. */
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: var(--s4);
+}
+.card { display: flex; flex-direction: column; gap: var(--s2); margin: 0; }
+.cardPhoto {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  object-fit: cover;
+  /* The photos are the only images on the site; a touch of restraint keeps
+     them from shouting over the type. */
+  filter: grayscale(0.12) contrast(1.02);
+}
+.caption {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--paper-dim);
+}
+.caption a {
+  color: var(--paper);
+  text-decoration-color: var(--edge-strong);
+  text-underline-offset: 3px;
+}
+.caption a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.cardCity {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: var(--track-mid);
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+
+/* -------------------------------------------------------------- tattoo */
+.tattoo { margin: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.tattooPhoto {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------- essay */
+.essay { display: flex; flex-direction: column; gap: var(--s4); }
+.essay p {
+  color: var(--paper-dim);
+  line-height: 1.75;
+  font-size: var(--step-1);
+}
+
+/* ------------------------------------------------- gaps and placeholders */
+/* A missing photo is a marked space, not a broken image and not a silent
+   omission — so it's obvious what still needs doing. */
+.gap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 1px dashed var(--edge-strong);
+  border-radius: 2px;
+  background: var(--raised);
+  color: var(--paper-faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-mid);
+  text-align: center;
+  padding: var(--s3);
+}
+
+.todo { color: var(--paper-faint); }
+.todoTag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  margin-bottom: var(--s2);
+}
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: var(--s4);
+  border: 1px dashed var(--edge-strong);
+  border-radius: 2px;
+  background: var(--raised);
+}
+.placeholderNote {
+  color: var(--paper-faint);
+  font-size: var(--step-0);
+  line-height: 1.65;
+}
+/* Scoped, because a CSS module rejects a bare element selector. */
+.about code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--paper-dim);
+}
+
+/* ------------------------------------------------------ non-negotiables */
+.terms {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--edge);
+}
+.plain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.plain li {
+  color: var(--paper-dim);
+  line-height: 1.7;
+  padding-left: var(--s4);
+  border-left: 1px solid var(--edge);
+}
+.plain strong { color: var(--paper); font-weight: 400; }
+
+@media (max-width: 720px) {
+  .intro { grid-template-columns: 96px 1fr; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+}

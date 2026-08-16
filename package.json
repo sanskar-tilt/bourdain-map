@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prebuild": "node scripts/optimise_photos.mjs",
+    "photos": "node scripts/optimise_photos.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
@@ -25,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.1",
     "puppeteer-core": "^25.7.0",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
