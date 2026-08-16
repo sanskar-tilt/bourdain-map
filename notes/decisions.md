@@ -554,3 +554,36 @@ undated       a_cooks_tour
 - **`notes/refs/home/opening.webm`** — 7.1s, 60fps, 426 frames. Longest
   motionless stretch is **1124ms starting at 3945ms**, which is the deliberate
   hold on his photograph. Nothing else on the timeline stands still.
+
+---
+
+## Wiring audit
+
+`scripts/audit_wiring.py` — checks every module in `lib/` and `app/components/`
+for symbols imported and never referenced, and exports with no call site
+anywhere. It exits non-zero, so it can gate a commit. Three findings, all
+resolved: `MAP_TOKENS` imported into MapView and unused (its last use went
+away when clusters stopped printing counts), and `PMTILES_URL` / `isSmooth`
+exported but only ever used internally or not at all. Audit is now clean.
+
+**Wiring proofs.** One observable per shipped pass, asserted rather than read:
+
+| Pass | Observable |
+|---|---|
+| Lenis | scrollY keeps rising after the wheel event ends (451 → 897) |
+| MaskedText | line wrappers exist that no server HTML contained (5) |
+| Pull-back | `--p` tracks scroll 0 → 1 |
+| Loader | the count climbs across samples (2 → 1333) |
+| Arrival | `data-opening` leaves its pre-state and reaches `done` |
+
+**One throwing subscriber used to kill the whole site's scrolling.** The shared
+rAF loop rescheduled *after* running subscribers, so any exception stopped the
+frame permanently — smooth scroll, the pull-back and every sweep would die
+together, silently, and the page would read as merely stuck. Subscribers are
+now isolated and a thrower is removed and logged.
+
+**Two of the last three "failures" were the harness, not the code.** The
+pull-back proof shared a page with the wheel test, so a coast still in flight
+left the reading frozen at wherever it stopped — a contaminated proof that
+failed against working code. Each proof now gets its own page. Worth
+remembering: when a test disagrees with a standalone probe, suspect the test.

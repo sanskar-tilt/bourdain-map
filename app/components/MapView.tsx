@@ -14,7 +14,7 @@ import {
 } from "maplibre-gl";
 import { Protocol } from "pmtiles";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildBasemapStyle, hasBasemap, MAP_TOKENS } from "../../lib/basemap";
+import { buildBasemapStyle, hasBasemap } from "../../lib/basemap";
 import styles from "./MapView.module.css";
 
 /* Colours are duplicated from app/tokens.css because MapLibre resolves style

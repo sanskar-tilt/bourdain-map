@@ -24,7 +24,18 @@ let reduced = false;
 function frame(time: number) {
   lenis?.raf(time);
   const y = lenis ? lenis.scroll : window.scrollY;
-  for (const s of subs) s(y);
+  // Each subscriber is isolated. The loop reschedules *after* running them,
+  // so one throwing subscriber used to kill the frame permanently — smooth
+  // scrolling, the pull-back and every sweep would stop together, silently,
+  // and the page would look merely "stuck" rather than broken.
+  for (const s of subs) {
+    try {
+      s(y);
+    } catch (err) {
+      subs.delete(s);
+      console.error("[scroll] subscriber threw and was removed", err);
+    }
+  }
   raf = requestAnimationFrame(frame);
 }
 
@@ -48,6 +59,10 @@ export function startScroll(): () => void {
       autoRaf: false,
     });
     document.documentElement.classList.add("lenis");
+    // Exposed for tests and console poking, same as window.__map. A
+    // programmatic window.scrollTo is smoothed like any other scroll, so a
+    // harness that needs to be *somewhere* has to ask Lenis directly.
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
   }
 
   raf = requestAnimationFrame(frame);
@@ -72,6 +87,5 @@ export function onFrame(fn: Sub): () => void {
   return onScroll(fn);
 }
 
-export const isSmooth = () => Boolean(lenis);
 export const stopScroll = () => lenis?.stop();
 export const resumeScroll = () => lenis?.start();

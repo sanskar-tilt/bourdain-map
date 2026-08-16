@@ -18,7 +18,7 @@
 
 import type { StyleSpecification } from "maplibre-gl";
 
-export const MAP_TOKENS = {
+const MAP_TOKENS = {
   land: "#E6E6E1",
   water: "#D8DAD6",
   line: "#C2C2B9",
@@ -31,7 +31,7 @@ export const MAP_TOKENS = {
 
 /** Where the tiles come from. A self-hosted .pmtiles file is the goal: no
  *  key, no per-load billing, and the style is ours rather than rented. */
-export const PMTILES_URL = process.env.NEXT_PUBLIC_PMTILES_URL ?? "";
+const PMTILES_URL = process.env.NEXT_PUBLIC_PMTILES_URL ?? "";
 const PROTOMAPS_KEY = process.env.NEXT_PUBLIC_PROTOMAPS_KEY ?? "";
 
 const GLYPHS = "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf";

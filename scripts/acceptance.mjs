@@ -272,6 +272,114 @@ const browser = await puppeteer.launch({
   await p.close();
 }
 
+/* ==================================================================
+   WIRING PROOFS
+
+   One observable per shipped pass — the single thing the browser can
+   measure that is true only if that code actually runs. Reading the
+   source proved nothing twice this session; these are what replace it.
+   ================================================================== */
+{
+  const p = await browser.newPage();
+  await p.setViewport({ width: 1440, height: 900 });
+
+  /* -- Lenis: the page keeps moving after the wheel event ends. ------ */
+  await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
+  await new Promise((r) => setTimeout(r, 1200));
+  await p.mouse.move(700, 500);
+  await p.mouse.wheel({ deltaY: 900 });
+  await new Promise((r) => setTimeout(r, 80));
+  const early = await p.evaluate(() => window.scrollY);
+  await new Promise((r) => setTimeout(r, 700));
+  const late = await p.evaluate(() => window.scrollY);
+  ok("Lenis: page coasts after the wheel stops",
+     late - early > 50, `${Math.round(early)}px → ${Math.round(late)}px`);
+
+  /* -- MaskedText: line wrappers exist that no server HTML contained. */
+  const built = await p.evaluate(() =>
+    document.querySelectorAll('[class*="lineMask"]').length);
+  ok("MaskedText: splitter built line wrappers at runtime", built > 0, `${built}`);
+
+  await p.close();
+
+  /* -- Pull-back: --p tracks scroll from 0 to 1. ---------------------
+     Its own page. Sharing one with the wheel test left a coast in flight
+     and the reading came back frozen at wherever that coast had stopped —
+     a contaminated proof is worse than none, because it fails against
+     working code.
+
+     Also waits for the scroll to actually arrive rather than sleeping a
+     fixed time: with Lenis a programmatic scrollTo is smoothed like any
+     other, so it is still travelling after the call returns. */
+  const pin = await browser.newPage();
+  await pin.setViewport({ width: 1440, height: 900 });
+  await pin.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
+  await new Promise((r) => setTimeout(r, 1200));
+
+  const settleAt = async (y) => {
+    // Re-issue every poll: a coast still in flight can swallow a single
+    // scrollTo, and then the test silently measures wherever it stopped.
+    for (let i = 0; i < 40; i++) {
+      const cur = await pin.evaluate((t) => {
+        const l = window.__lenis;
+        if (l) l.scrollTo(t, { immediate: true, force: true });
+        else window.scrollTo(0, t);
+        return window.scrollY;
+      }, y);
+      if (Math.abs(cur - y) < 4) return true;
+      await new Promise((r) => setTimeout(r, 80));
+    }
+    throw new Error(`could not scroll to ${y}`);
+  };
+  const readP = () => pin.evaluate(() => {
+    const el = document.querySelector("[data-pin]");
+    return el ? parseFloat(getComputedStyle(el).getPropertyValue("--p")) : NaN;
+  });
+
+  await settleAt(0);
+  await new Promise((r) => setTimeout(r, 250));
+  const pTop = await readP();
+
+  const endY = await pin.evaluate(() => {
+    const el = document.querySelector("[data-pin]");
+    return el.offsetTop + el.getBoundingClientRect().height;
+  });
+  await settleAt(endY);
+  await new Promise((r) => setTimeout(r, 250));
+  const pEnd = await readP();
+
+  ok("Pull-back: --p tracks scroll 0 → 1",
+     pTop < 0.05 && pEnd > 0.9, `${pTop} → ${pEnd}`);
+  await pin.close();
+
+  /* -- Loader: the count strictly increases. ------------------------- */
+  const q = await browser.newPage();
+  await q.setViewport({ width: 1440, height: 900 });
+  await q.goto(`${BASE}/?loader=1`, { waitUntil: "domcontentloaded" });
+  const seen = [];
+  for (let i = 0; i < 20; i++) {
+    const v = await q.evaluate(() => {
+      const el = document.querySelector("[data-loader-count]");
+      return el ? Number(el.textContent.replace(/[^0-9]/g, "")) : null;
+    });
+    if (v !== null) seen.push(v);
+    await new Promise((r) => setTimeout(r, 120));
+  }
+  const rising = seen.length > 3 && seen[seen.length - 1] > seen[0];
+  ok("Loader: the count climbs", rising,
+     seen.length ? `${seen[0]} → ${seen[seen.length - 1]} over ${seen.length} samples` : "never rendered");
+
+  /* -- Arrival: <html data-opening> advances past its pre-state. ----- */
+  const phases = new Set();
+  for (let i = 0; i < 70; i++) {
+    phases.add(await q.evaluate(() => document.documentElement.dataset.opening ?? "(unset)"));
+    await new Promise((r) => setTimeout(r, 120));
+  }
+  ok("Arrival: the timeline leaves its pre-state",
+     phases.has("curtain") && phases.has("done"), [...phases].join(" "));
+  await q.close();
+}
+
 await browser.close();
 console.log(failures ? `\n${failures} failing` : "\nall acceptance checks pass");
 process.exit(failures ? 1 : 0);
