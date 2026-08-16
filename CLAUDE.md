@@ -1,1 +1,86 @@
-@AGENTS.md
+# Project brief
+
+A world map of every place Anthony Bourdain ate, and a way for strangers to
+meet at those places and eat together. Fan-made, non-commercial, personal.
+
+The map is the browsing surface. The **table** is the point: someone picks a
+place, sets a date, opens N seats, strangers take them. After the meal, whoever
+went writes a short piece about who they met. Not a review — a story.
+
+This exists because of one idea of his: people everywhere are broadly the same,
+mostly kind, and everyone has a story worth hearing. The site should make that
+structural rather than say it in an About page.
+
+## Non-negotiables
+
+- **Non-commercial.** No affiliate links, no bookable tours, no ads, no
+  sponsored placement, ever. This is a condition of the data licence.
+- **Attribution.** The seed dataset was compiled by deannd (r/AnthonyBourdain)
+  over two years and used with permission. Credit visibly and permanently, not
+  in a footer nobody reads.
+- **No ratings.** No stars, no scores, no "top 10". A rating field turns this
+  into TripAdvisor within a month.
+- **Copyright.** Facts are fine — he ate here, S5E12, this dish. His prose,
+  the episode scripts, and photographs of him are not ours. Short attributed
+  quotes only, no scraped stills, no transcript dumps.
+- **Not a memorial.** He'd have hated a shrine. Warm, funny, a bit blunt.
+
+## Stack
+
+Next.js (App Router) · MapLibre GL · Supabase (Postgres + PostGIS + auth) ·
+Protomaps tiles · Vercel. Same shape as the london.rent build — reuse the map
+and submission patterns from there where they fit.
+
+Keep it on free tiers. There's no revenue and that's deliberate.
+
+## Data model
+
+See `schema.sql`. Three decisions that matter:
+
+- `places` and `appearances` are separate. The same restaurant appears across
+  multiple shows; the source data has duplicate rows for this reason. One pin,
+  visits listed underneath, episode trail preserved.
+- `places.status` treats `closed` as first-class. Many of these are gone.
+  Render them present-but-greyed — it's the most affecting thing the map does,
+  and it stops people turning up to a shuttered address.
+- `stories.body` has a 100-char minimum and no rating. Makes people write a
+  sentence rather than "great vibes".
+
+## Build order
+
+1. **Import.** Seed `places` + `appearances` from deannd's data. Dedupe on
+   name + coords proximity. Expect messy rows; log what you skip rather than
+   silently dropping it.
+2. **Map.** World view, ~1,500 pins, clustered. Click a pin → place panel:
+   what he ate, which episode, current status.
+3. **Tables.** "Open a table here" → date, seats, blurb. RSVP. Auth via
+   Supabase magic link.
+4. **Stories.** Post-meal writeup, attached to place and gathering.
+5. **Corrections.** Fans will know more than the seed data. Give them a box.
+
+Ship 1–2 before building 3. A map with nothing to do on it still teaches you
+whether anyone cares.
+
+## Design direction
+
+The subject's world is airports, receipts, chalkboards, hand-painted market
+signage, kitchen dupes, customs stamps, cheap paper menus. Pull from that.
+
+Be aware that "Bourdain homage" pattern-matches hard onto a specific look —
+warm cream background, high-contrast serif, terracotta accent. That is the
+default answer, not a chosen one, and it will read as generic. Go elsewhere and
+justify where you land.
+
+Spend the boldness in one place. Candidate signature: the empty seat — every
+open table shows its unfilled chairs, and the map is quietly a picture of how
+many meals are currently waiting for someone.
+
+Copy is sentence case, plain verbs, no filler. Empty states are invitations.
+Nothing announces how much it cares.
+
+## Don't
+
+- Don't add a chat feature. It becomes moderation work immediately.
+- Don't build event infrastructure before the first dinner actually happens.
+- Don't put his face on the landing page.
+- Don't write copy that eulogises. Show the places, let them do it.
