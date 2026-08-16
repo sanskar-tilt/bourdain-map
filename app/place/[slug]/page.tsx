@@ -5,8 +5,9 @@ export function generateStaticParams() {
   return allPlaces().map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const p = placeBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const p = placeBySlug(slug);
   if (!p) return { title: "Not found" };
   return {
     title: `${p.name}${p.city ? ` — ${p.city}` : ""}`,
@@ -14,8 +15,9 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function PlacePage({ params }: { params: { slug: string } }) {
-  const place = placeBySlug(params.slug);
+export default async function PlacePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const place = placeBySlug(slug);
   if (!place) {
     return <p className={styles.missing}>No such place. It may have been merged into another pin.</p>;
   }

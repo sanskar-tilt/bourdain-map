@@ -91,8 +91,19 @@ def extract(payload):
     return city, (cc.upper() if cc else None)
 
 
+# Characters NFKD does not decompose, so they survive into slugs as gaps:
+# Garðabær became "gar-ab-r". Handled before the accent strip.
+XLIT = str.maketrans({
+    'ð': 'd', 'Ð': 'd', 'þ': 'th', 'Þ': 'th', 'æ': 'ae', 'Æ': 'ae',
+    'ø': 'o', 'Ø': 'o', 'œ': 'oe', 'Œ': 'oe', 'ł': 'l', 'Ł': 'l',
+    'đ': 'd', 'Đ': 'd', 'ı': 'i', 'İ': 'i', 'ß': 'ss', 'ħ': 'h',
+    'ŋ': 'n', 'ə': 'e', 'Ə': 'e', 'ʻ': '', 'ʼ': '', '‘': '', '’': '',
+})
+
+
 def slugify(s):
-    s = unicodedata.normalize('NFKD', s or '')
+    s = (s or '').translate(XLIT)
+    s = unicodedata.normalize('NFKD', s)
     s = ''.join(c for c in s if not unicodedata.combining(c))
     s = s.lower().replace('&', ' and ')
     s = re.sub(r"['’]", '', s)

@@ -48,8 +48,19 @@ def fold(s):
     return re.sub(r'\s+', ' ', s).strip()
 
 
+# Characters NFKD does not decompose, so they survive into slugs as gaps:
+# Garðabær became "gar-ab-r". Handled before the accent strip.
+XLIT = str.maketrans({
+    'ð': 'd', 'Ð': 'd', 'þ': 'th', 'Þ': 'th', 'æ': 'ae', 'Æ': 'ae',
+    'ø': 'o', 'Ø': 'o', 'œ': 'oe', 'Œ': 'oe', 'ł': 'l', 'Ł': 'l',
+    'đ': 'd', 'Đ': 'd', 'ı': 'i', 'İ': 'i', 'ß': 'ss', 'ħ': 'h',
+    'ŋ': 'n', 'ə': 'e', 'Ə': 'e', 'ʻ': '', 'ʼ': '', '‘': '', '’': '',
+})
+
+
 def slugify(s):
-    s = unicodedata.normalize('NFKD', s or '')
+    s = (s or '').translate(XLIT)
+    s = unicodedata.normalize('NFKD', s)
     s = ''.join(c for c in s if not unicodedata.combining(c))
     s = s.lower().replace('&', ' and ')
     s = re.sub(r"['’]", '', s)
@@ -99,6 +110,10 @@ def main():
         c = cities.setdefault(ck, {
             'name': name, 'country_code': cc, 'lons': [], 'lats': [],
             'country': addr.get('country'), 'states': set(), 'places': [],
+            # Kept only as a slug fallback for names in non-Latin scripts.
+            # The displayed name always stays the local one.
+            'county': addr.get('county'), 'state': addr.get('state'),
+            'display': (entry or {}).get('display_name') or '',
         })
         c['lons'].append(p['lon'])
         c['lats'].append(p['lat'])
@@ -112,6 +127,24 @@ def main():
     for ck in sorted(cities):
         c = cities[ck]
         base = slugify(c['name'])
+        if not base:
+            # A name written in a non-Latin script slugifies to nothing, which
+            # would give five cities the URL "/city/-cn". Fall back through the
+            # Latin administrative names Nominatim returns alongside it —
+            # ບ້ານຄອຍ becomes luang-prabang-district, not a hash. The city is
+            # still displayed under its own name.
+            for alt in (c.get('county'), c.get('state')):
+                base = slugify(alt or '')
+                if base:
+                    break
+        if not base:
+            # Last resort: the first Latin run in the full display name.
+            for part in (c.get('display') or '').split(','):
+                base = slugify(part)
+                if base:
+                    break
+        if not base:
+            base = 'place'
         cand = f'{base}-{(c["country_code"] or "xx").lower()}'
         taken[cand] += 1
         if taken[cand] > 1:
@@ -220,6 +253,31 @@ def main():
             continue
         idx, kind = eps[0]
         ep = episodes[idx]
+
+        # One matched episode is not the same as one existing episode. No
+        # Reservations has both "New York City" and "New York Outer Boroughs";
+        # only the first folds to our city name, so without this every New
+        # York place would be stamped with S3E8, outer-borough ones included.
+        # Look for any other episode of the same show that *mentions* the city
+        # at all, and if one exists, refuse to pick.
+        # Word-boundary, not substring: otherwise the city of Man matches
+        # "Manila" and "Oman", and Mexico City matches "New Mexico".
+        needle = fold(cities[ck]['name'])
+        rx = re.compile(r'\b' + re.escape(needle) + r'\b') if needle else None
+        mentions = [
+            i for i, e2 in enumerate(episodes)
+            if e2['show'] == show and rx and (
+                rx.search(fold(e2['title']))
+                or any(rx.search(fold(l or '')) for l in (e2.get('locations') or []))
+            )
+        ]
+        if len(mentions) > 1:
+            ambiguous.append(
+                f'CITY_IN_MANY  {cities[ck]["name"]} / {show}: {len(mentions)} episodes '
+                f'mention it ({", ".join("S%sE%s %s" % (episodes[i]["season"], episodes[i]["episode"], episodes[i]["title"]) for i in mentions[:4])}) '
+                f'— only one matched by name, so nothing is backfilled')
+            continue
+
         if kind != 'exact':
             ambiguous.append(
                 f'WEAK_ONLY  {cities[ck]["name"]} / {show}: only a {kind} match '

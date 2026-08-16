@@ -159,6 +159,42 @@ exactly the pirated uploads the brief rules out. Columns ship empty; see
 
 ---
 
+## Episode backfill is a city-level inference, and it needed a second guard
+
+Backfilling `appearances.episode` from a city match asserts something stronger
+than what was matched. What we know is *this city appears in this episode*.
+What the place panel then says is *this place appears in this episode*. That
+holds only if the show visited the city exactly once.
+
+The first version checked whether more than one episode **matched**, which is
+not the same as whether more than one episode **exists**. No Reservations has
+both "New York City" (S3E8) and "New York Outer Boroughs" (S5E19). Only the
+first folds to our city name, so all 60 New York No Reservations appearances
+were stamped S3E8 — outer-borough ones included. That is exactly the false
+precision that looks like data.
+
+Now the matcher also scans every episode of the same show for a
+word-boundary mention of the city, and refuses to pick when more than one
+exists. Word-boundary matters: plain substring made the city of Man collide
+with "Manila" and "Oman".
+
+Backfills dropped from 760 appearances to **690**. The 70 lost are the ones
+that were wrong.
+
+Four cities are now deliberately refused — New York/No Reservations, Mexico
+City on two shows, and Angeles in the Philippines colliding with Los Angeles.
+They keep their `city_episodes` links, so the city page can still list the
+candidate episodes; only the place-level claim is withheld.
+
+Residual known weakness: where a show visited a city exactly once, all of that
+city's places for that show get the episode. For The Layover that is sound —
+it is one city per episode by format. For the others it is an inference that
+happens to be right most of the time. It is not marked as inferred in the UI
+yet; if that matters, the honest fix is a flag on the appearance rather than
+dropping the data.
+
+---
+
 ## Architecture — the database is a compiler
 
 The read path never touches a database. Postgres is the build-time workbench;

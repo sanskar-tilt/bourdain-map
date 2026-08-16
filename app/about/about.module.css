@@ -1,0 +1,14 @@
+.about { display: flex; flex-direction: column; gap: var(--s4); max-width: var(--measure); }
+.h1 { font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-4); line-height: 1.05; }
+.h2 { font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-2); margin-top: var(--s4);
+  padding-top: var(--s4); border-top: 1px solid var(--edge); }
+.lede { font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-2); line-height: 1.35; color: var(--paper); }
+.about p { color: var(--paper-dim); line-height: 1.7; }
+.about strong { color: var(--paper); font-weight: 400; }
+.plain { list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: var(--s3); }
+.plain li { color: var(--paper-dim); line-height: 1.7;
+  padding-left: var(--s4); border-left: 1px solid var(--edge); }

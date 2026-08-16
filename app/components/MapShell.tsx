@@ -71,7 +71,9 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const panelOpen = Boolean(kind && slug);
+  /* Any route other than the map itself renders into the panel — places,
+     cities, and the static pages like /about. */
+  const panelOpen = (path ?? "/") !== "/";
 
   return (
     <div className={styles.shell} data-panel={panelOpen ? "open" : "closed"}>

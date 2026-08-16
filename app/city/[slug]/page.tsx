@@ -5,8 +5,9 @@ export function generateStaticParams() {
   return allCities().map((c) => ({ slug: c.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const c = cityBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const c = cityBySlug(slug);
   if (!c) return { title: "Not found" };
   return {
     title: `${c.name} — where he ate`,
@@ -32,8 +33,9 @@ function elsewhere(city: { name: string }) {
   ];
 }
 
-export default function CityPage({ params }: { params: { slug: string } }) {
-  const city = cityBySlug(params.slug);
+export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const city = cityBySlug(slug);
   if (!city) return <p className={styles.missing}>No such city.</p>;
 
   const gone = city.places.filter((p) => p.status === "closed").length;
