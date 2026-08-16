@@ -41,7 +41,7 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
   const country = regionName(place.cc);
 
   return (
-    <article className={styles.place}>
+    <article className={styles.place} data-gone={gone}>
       <h1 className={styles.name}>{place.name}</h1>
 
       <p className={styles.meta}>
@@ -53,7 +53,7 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
              page. */
           <span>{country ?? "Somewhere unmapped"}</span>
         )}
-        {gone && <span className={styles.gone}>Gone</span>}
+        {gone && <span className={styles.gone}>gone</span>}
       </p>
 
       {place.statusNote && <p className={styles.statusNote}>{place.statusNote}</p>}

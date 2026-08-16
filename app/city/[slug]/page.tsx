@@ -15,11 +15,23 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+/* deannd's own My Maps. The slot is here and deliberately empty until the
+   real URLs arrive — the dataset is hers and the link belongs on every city
+   page, but a fabricated URL is worse than a missing one. */
+const DEANND_MAPS_URL: string | null = null;
+
 /* Where a city already has a good guide elsewhere, link it rather than
    thinning it into a summary. These people did the work. */
 function elsewhere(city: { name: string }) {
   const q = encodeURIComponent(city.name);
   return [
+    ...(DEANND_MAPS_URL
+      ? [{
+          href: DEANND_MAPS_URL,
+          label: "deannd's original maps",
+          what: "Where every place on this site came from",
+        }]
+      : []),
     {
       href: `https://eatlikebourdain.com/?s=${q}`,
       label: "eatlikebourdain.com",
