@@ -7,6 +7,44 @@ entry when it's answered and move the answer to `decisions.md`.
 
 ## Needs your call
 
+**There is no second geocode to reconcile.** Step 0 asked me to reconcile my
+Nominatim run against an offline reverse-geocode "done separately". That
+dataset is not on this machine — `data/` contains only the KMLs, the Wikipedia
+cache, and my Nominatim cache. Nothing was committed to git either.
+
+Your reasoning about it is right and I'd apply it as stated: nearest-populated-
+place always resolves, so 100% coverage with zero failures is guaranteed by
+construction rather than earned, and Nominatim is the truth. If you ran that
+elsewhere, drop the file into `data/` and I'll build the reconciliation exactly
+as specified — Nominatim wins, offline fills nulls, disagreements go to
+`notes/geocode-conflicts.md` with the distance to each candidate, nothing
+auto-resolved.
+
+One clarification on my own run's "0 failed": that counts HTTP failures, not
+resolution. Places that come back without a usable city are counted separately
+and reported as unresolved, so the final number is a real resolution rate.
+
+**Your figures don't match mine, and I don't know where yours came from.** You
+cited 875 cities, ~70% episode coverage and 163 multi-candidate cities. My run
+gives different numbers, and my episode matcher now enforces country agreement
+so its coverage is deliberately lower than a crude title match. Worth
+reconciling when you're back — if those came from a parallel run, it's a
+different pipeline and we should pick one.
+
+**Official video links need a YouTube Data API key.** The rule is official
+uploads only, and I can't tell official from rip for 302 episodes without one.
+Guessing would risk linking exactly the pirated uploads the brief rules out, so
+`cities.video_url` ships empty and the city page says plainly that there's no
+clip rather than showing a dead link. Give me a key, or a channel list, and I'll
+populate it.
+
+**Self-hosted .pmtiles needs a file.** The style is written and the tile source
+is a configurable `NEXT_PUBLIC_PMTILES_URL`, but a planet basemap build is
+~100GB, which is neither a free tier nor a download I should start unasked. The
+realistic options are a z0–z12 extract (a few GB, hostable on R2/B2 free tiers)
+or the hosted Protomaps API with a key. Until one exists the map renders pins on
+a flat ground — a legible degraded state, not a broken one.
+
 **The 24 flagged closures.** `notes/import-skips.log` lists every place whose
 description mentions a closure but whose name doesn't. They split two ways and
 only a human can tell which is which:

@@ -42,10 +42,10 @@
 
   /* ---- type: two families, no more.
           A display face with real character for place and city names,
-          one plain grotesk for everything else.
-          TODO: self-host Instrument Serif as woff2 — see questions.md.
-          Until then this falls back through faces that actually exist
-          on macOS rather than silently landing on Times. ---- */
+          one plain grotesk for everything else. Both are self-hosted by
+          next/font at build time — no CDN request, no FOIT, no silent
+          fallback. The stacks below are the safety net only; the loaded
+          faces arrive as --font-display-loaded / --font-body-loaded. ---- */
   --font-display: "Instrument Serif", Superclarendon, "Iowan Old Style",
                   "Palatino Linotype", Palatino, Georgia, serif;
   --font-body:    "Inter Tight", "Helvetica Neue", Helvetica, Arial,
