@@ -51,14 +51,17 @@ export default function Loader({
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const hold = params.get("loader") === "hold";   // deterministic screenshots
+    const flag = params.get("loader");
+    const hold  = flag === "hold";   // freeze on the resolved frame
+    const force = flag === "1";      // replay, ignoring sessionStorage
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let seen = false;
     try { seen = sessionStorage.getItem("wha:loader") === "1"; } catch {}
 
     // No loader at all under reduced motion, and never on a repeat visit.
-    if (reduced || (seen && !hold)) { setPhase("done"); return; }
-    if (!hold) { try { sessionStorage.setItem("wha:loader", "1"); } catch {} }
+    // Reduced motion: never. Repeat visit: never, unless forced.
+    if (reduced || (seen && !hold && !force)) { setPhase("done"); return; }
+    if (!hold && !force) { try { sessionStorage.setItem("wha:loader", "1"); } catch {} }
 
     setPhase("run");
     document.documentElement.style.overflow = "hidden";

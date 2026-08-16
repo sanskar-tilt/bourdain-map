@@ -503,3 +503,30 @@ undated       a_cooks_tour
   and the shot script drives the pull-back to exact scroll fractions. The whole
   pass runs twice, the second time with reduced motion forced, and asserts the
   pin does not move.
+
+---
+
+## Feel pass — items 1 and 3 only
+
+- **Lenis, driven from one shared rAF loop.** lerp 0.1, wheelMultiplier 1,
+  easing `1.001 − 2^(−10t)`, `syncTouch: false` (the platform's own momentum
+  is better than Lenis on top of it), `autoRaf: false`. Measured: one wheel
+  flick gives 451 → 648 → 759 → 821 → 856 → 876 → 887 → 893 → 896 → 898 → 900
+  and settles. It coasts.
+- **Everything scroll-linked reads the shared frame, not `window.scrollY`.** A
+  native scroll listener fires against the real position while Lenis is still
+  interpolating toward it, so the hero would judder against its own smoothing.
+  `lib/scroll.ts` owns the instance, the loop and the subscriptions; the
+  cursor will ride the same loop when it lands.
+- **No smoothing on map routes.** MapLibre owns the wheel there; two things
+  interpreting the same gesture is worse than one.
+- **Text arrives from behind a mask edge.** `MaskedText` measures the *rendered*
+  line breaks rather than guessing, wraps each line in `overflow: hidden`, and
+  translates the inner span from 100% over 1.2s, 70ms apart. No opacity
+  anywhere in that path. It re-splits on resize and keeps the full string as
+  the element's accessible name — verified: a masked "2,095" still reports
+  `aria-label="2,095"`.
+- **`.reveal` keeps opacity** and is now for non-text blocks only (figures,
+  grids). Anything that reads as language goes through `MaskedText`.
+- **`?loader=1` forces a replay** ignoring sessionStorage; `?loader=hold`
+  freezes the resolved frame.

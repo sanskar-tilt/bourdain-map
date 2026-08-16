@@ -173,3 +173,17 @@ declines to invent the bit we don't know.
 **To fix it properly** we need air dates for A Cook's Tour's 35 episodes. They
 are not on the Wikipedia page we parse. If you want the real range on the front
 door, that is the missing input — otherwise the current line stands.
+
+---
+
+## Not a bug: the loader on repeat visits
+
+Confirmed — the opening was never dropped. It is once per session via
+`sessionStorage["wha:loader"]`, so every reload after the first correctly
+skips it. `?loader=1` now forces a replay without clearing storage by hand,
+and `?loader=hold` freezes the resolved frame.
+
+The real gap is the one identified in review: **there is no arrival after the
+curtain.** The hero is fully rendered underneath and simply gets revealed, so
+the opening stops halfway. That sequence is specified and queued — it is not
+built in this pass, which was scoped to smooth scroll and masked text.

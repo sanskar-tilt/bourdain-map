@@ -89,11 +89,11 @@
   --t-hover-out: 800ms;
 
   /* Nothing else dips below 300ms. Editorial pacing, not UI pacing. */
-  --t-enter:  600ms;
+  --t-enter:  1200ms;   /* text arriving from behind a mask edge */
   --t-move:   800ms;
   --t-slow:  1200ms;
 
-  --stagger: 50ms;   /* per masked line in a quote reveal */
+  --stagger: 70ms;   /* between masked lines */
 
   --z-map: 1; --z-chrome: 10; --z-panel: 20; --z-palette: 40; --z-loader: 90;
 }

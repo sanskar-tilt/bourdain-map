@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import MapShell from "./MapShell";
 import SiteHeader from "./SiteHeader";
+import SmoothScroll from "./SmoothScroll";
 import styles from "./SiteShell.module.css";
 
 /* Two layouts, chosen by route.
@@ -19,10 +20,12 @@ const isMapRoute = (p: string) =>
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() ?? "/";
 
+  // No smoothing on map routes: the map owns the wheel there.
   if (isMapRoute(path)) return <MapShell>{children}</MapShell>;
 
   return (
     <div className={styles.doc}>
+      <SmoothScroll />
       <SiteHeader />
       <main className={styles.main}>{children}</main>
     </div>

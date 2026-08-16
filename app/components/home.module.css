@@ -322,3 +322,20 @@
   z-index: 3;
   opacity: calc(1 - (2 * var(--p, 0)));
 }
+
+
+/* --------------------------------------------------- masked text */
+/* Words rise out of a hard edge. No opacity in this whole block. */
+.masked { display: block; }
+.word { display: inline; }
+.lineMask { display: block; overflow: hidden; }
+.lineMask > span {
+  display: block;
+  transform: translateY(100%);
+  transition: transform var(--t-enter) var(--ease-out);
+}
+.masked.is-in .lineMask > span { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lineMask > span { transform: none; }
+}

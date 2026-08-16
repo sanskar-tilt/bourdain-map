@@ -2,6 +2,7 @@ import Loader from "./components/Loader";
 import Reveal from "./components/Reveal";
 import HeroPullback from "./components/HeroPullback";
 import TrailMap from "./components/TrailMap";
+import MaskedText from "./components/MaskedText";
 import { homeManifest, homePhotos, allCredits, pick } from "../lib/home";
 import { siteStats, n, broadcastLine } from "../lib/stats";
 import { placeBySlug } from "../lib/detail";
@@ -48,7 +49,7 @@ function Shot({
   );
 }
 
-/** A quote as masked lines rising, 50ms apart. */
+/** A quote, arriving from behind a mask edge. Never a fade. */
 function Quote({ text, big }: { text?: string; big?: boolean }) {
   if (!text?.trim()) {
     return (
@@ -58,16 +59,12 @@ function Quote({ text, big }: { text?: string; big?: boolean }) {
       </p>
     );
   }
-  // Split on sentences so each mask holds a whole thought.
-  const lines = text.split(/(?<=[.?!—])\s+/).filter(Boolean);
   return (
-    <blockquote className={big ? s.quoteBig : s.quote}>
-      {lines.map((l, i) => (
-        <span key={i} className="line-mask" style={{ ["--i" as string]: i }}>
-          <span>{l}</span>
-        </span>
-      ))}
-    </blockquote>
+    <MaskedText
+      as="blockquote"
+      text={text}
+      className={big ? s.quoteBig : s.quote}
+    />
   );
 }
 
@@ -126,7 +123,7 @@ export default function Home() {
 
       {/* ------------------------------------------------ the counter */}
       <section className={`${s.section} ${s.counterSection} reveal`}>
-        <p className={s.counter}>{n(stats.places)}</p>
+        <MaskedText as="p" text={n(stats.places)} className={s.counter} />
         <p className="label">places{range ? `, ${range}` : ""}</p>
       </section>
 
@@ -174,9 +171,9 @@ export default function Home() {
 
       {/* --------------------------------------------- the invitation */}
       <section className={`${s.section} ${s.invite} reveal`}>
-        <p className={s.inviteLine}>Pick a city.</p>
-        <p className={s.inviteLine}>Open a table.</p>
-        <p className={s.inviteLine}>Eat with a stranger.</p>
+        <MaskedText as="p" text="Pick a city." className={s.inviteLine} />
+        <MaskedText as="p" text="Open a table." className={s.inviteLine} />
+        <MaskedText as="p" text="Eat with a stranger." className={s.inviteLine} />
         <Link className={s.inviteCta} href="/map/">Open the map</Link>
       </section>
 

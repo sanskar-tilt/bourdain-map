@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { onScroll } from "../../lib/scroll";
 import s from "./home.module.css";
 
 /* One plate, then the whole life.
@@ -47,20 +48,17 @@ export default function HeroPullback({ target, children }: Props) {
     const gate = window.matchMedia("(min-width: 992px)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    let queued = false;
     let active = false;
+    let unsubscribe: (() => void) | null = null;
 
+    // Driven by the shared Lenis frame. A native scroll listener fires
+    // against the real position while Lenis is still interpolating toward
+    // it, which makes the pull-back judder against the smoothing.
     const read = () => {
-      queued = false;
       const r = el.getBoundingClientRect();
       const travel = r.height - window.innerHeight;
       const p = travel > 0 ? Math.min(1, Math.max(0, -r.top / travel)) : 0;
       el.style.setProperty("--p", p.toFixed(4));
-    };
-    const onScroll = () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(read);
     };
 
     const sync = () => {
@@ -69,12 +67,11 @@ export default function HeroPullback({ target, children }: Props) {
       active = on;
       el.dataset.pinned = on ? "true" : "false";
       if (on) {
-        read();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", onScroll, { passive: true });
+        unsubscribe = onScroll(read);
+        window.addEventListener("resize", read, { passive: true });
       } else {
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", onScroll);
+        unsubscribe?.(); unsubscribe = null;
+        window.removeEventListener("resize", read);
         el.style.setProperty("--p", "0");   // settled
       }
     };
@@ -85,8 +82,8 @@ export default function HeroPullback({ target, children }: Props) {
     return () => {
       gate.removeEventListener("change", sync);
       reduced.removeEventListener("change", sync);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      unsubscribe?.();
+      window.removeEventListener("resize", read);
     };
   }, []);
 
