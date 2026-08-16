@@ -14,6 +14,9 @@ export type Appearance = {
   episode: number | null;
   episodeTitle: string | null;
   airDate: string | null;
+  /** How we know the episode. 'matched' is true by the show's format;
+   *  'inferred' is city-level attribution that is usually right. */
+  episodeSource: "matched" | "inferred" | null;
   ate: string | null;
   note: string | null;
   folder: string | null;

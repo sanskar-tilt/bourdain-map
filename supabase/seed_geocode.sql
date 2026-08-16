@@ -20,6 +20,7 @@ update public.places set city='Palermo', country_code='IT', slug='chiesa-del-ges
 update public.places set city='Boston', country_code='US', slug='galley-diner-boston' where id='0165cad8-96c1-531f-9d67-f6189327ef33'::uuid;
 update public.places set city='Cologne', country_code='DE', slug='ox-and-klee-cologne' where id='0190ac0a-9801-5c0e-98ac-8315be24d9dd'::uuid;
 update public.places set city='Charleston', country_code='US', slug='meal-with-locals-charleston' where id='01935b62-8444-563e-89ce-447017fc428e'::uuid;
+update public.places set city=NULL, country_code='AQ', slug='mcmurdo-station-aq' where id='01d36a57-d556-5f0e-93d0-9cd70b4ae20f'::uuid;
 update public.places set city='Nashville', country_code='US', slug='meal-with-locals-nashville' where id='01ee9439-c7c4-5e65-9fef-747b2b55cc90'::uuid;
 update public.places set city='Hong Kong', country_code='CN', slug='victoria-harbour-hong-kong' where id='01eee464-41ab-55da-9d79-eba61402dc0c'::uuid;
 update public.places set city='Taipei', country_code='TW', slug='sakuraoka-hot-springs-resort-taipei' where id='0258a0a6-f187-5381-89cb-723900812caf'::uuid;
@@ -135,6 +136,7 @@ update public.places set city='Town of Marbletown', country_code='US', slug='moh
 update public.places set city='Cleveland', country_code='US', slug='willard-park-cleveland' where id='0fdff966-5eda-518e-b24b-c06ba5e847fb'::uuid;
 update public.places set city='New York', country_code='US', slug='brasserie-les-halles-new-york' where id='0ff1747b-dd84-5a9e-a805-252ee9d498ff'::uuid;
 update public.places set city='Cleveland', country_code='US', slug='edgewater-pier-cleveland' where id='0ff3bb97-58d7-5880-ba26-9b9fa8e1a2ac'::uuid;
+update public.places set city=NULL, country_code='AQ', slug='mount-lister-aq' where id='1039ab97-52b6-554e-833a-3bab483fb880'::uuid;
 update public.places set city='Imperial County', country_code='US', slug='ski-inn-imperial-county' where id='10423d51-8db1-5980-81d2-d358f129181a'::uuid;
 update public.places set city='Lisbon', country_code='PT', slug='sol-e-pesca-lisbon' where id='105c37d7-c458-5a50-8c0d-f6d996d2f6b7'::uuid;
 update public.places set city='New York', country_code='US', slug='burger-joint-new-york' where id='10973ca6-1a08-5363-81ce-e9fa790d3354'::uuid;
@@ -405,7 +407,7 @@ update public.places set city='Paradise', country_code='US', slug='double-down-s
 update public.places set city='Minato', country_code='JP', slug='yasuda-minato' where id='3267b4b8-6c38-56bb-8068-04e3fe79053a'::uuid;
 update public.places set city='Barranco', country_code='PE', slug='pena-don-porfirio-barranco-barranco' where id='32738f16-7be7-54f0-810e-da4a4fc38eb4'::uuid;
 update public.places set city='Zhukovka', country_code='RU', slug='aldo-coppola-zhukovka' where id='32cfb16b-4765-514c-b877-a9e8faa1cbe7'::uuid;
-update public.places set city=NULL, country_code='TR', slug=NULL where id='32f9d5c1-9a24-5b3c-8c4e-9f2a74b77b1f'::uuid;
+update public.places set city=NULL, country_code='TR', slug='princes-islands-tr' where id='32f9d5c1-9a24-5b3c-8c4e-9f2a74b77b1f'::uuid;
 update public.places set city='Taormina', country_code='IT', slug='romisches-amphitheater-taormina-taormina' where id='32fc5211-94cf-56d9-acd4-eb83d621f006'::uuid;
 update public.places set city='Atlanta', country_code='US', slug='star-provisions-market-and-cafe-atlanta' where id='33767355-65d7-5b38-aae6-378c609c35ba'::uuid;
 update public.places set city='Colombo', country_code='LK', slug='the-dutch-burgher-union-of-ceylon-colombo' where id='339cd62d-409b-5112-88f9-0617f78d389e'::uuid;
@@ -1168,6 +1170,7 @@ update public.places set city='Saint Paul', country_code='TH', slug='moo-sa-tae-
 update public.places set city='Tijuana', country_code='MX', slug='terraza-vallarta-tijuana' where id='8daed258-9cd2-501a-b21d-5deb561101f7'::uuid;
 update public.places set city='City of Westminster', country_code='GB', slug='breakfast-at-nigellas-house-city-of-westminster' where id='8df8d38d-7491-50d0-8f3a-20f7bd4be710'::uuid;
 update public.places set city='Ikeja', country_code='NG', slug='new-afrika-shrine-ikeja' where id='8dff041b-6768-5141-9327-d43a6741b9ca'::uuid;
+update public.places set city=NULL, country_code='AQ', slug='galley-aq' where id='8e069501-eade-5e13-b663-d8985616e43f'::uuid;
 update public.places set city='Rio de Janeiro', country_code='BR', slug='bar-e-restaurante-urca-rio-de-janeiro' where id='8e58c3b7-d0a7-596f-b9f0-eb2b403f2ed6'::uuid;
 update public.places set city='Toronto', country_code='CA', slug='tosho-knife-arts-inc-toronto' where id='8e623ee3-8e28-5212-9a81-302eb176eb33'::uuid;
 update public.places set city='Charleston', country_code='US', slug='jestines-kitchen-charleston' where id='8e6b1668-8de6-57cd-b1fe-c4eb08738daf'::uuid;
@@ -1193,6 +1196,7 @@ update public.places set city='Hac Sa Village', country_code='CN', slug='fernand
 update public.places set city='Istanbul', country_code='TR', slug='akar-lokantasi-istanbul' where id='8ff4e41f-e9d9-5e99-9c00-3ab56b4ff82a'::uuid;
 update public.places set city='Berlin', country_code='DE', slug='rogacki-berlin' where id='8ff728d1-b3f0-5895-aecc-e44a2049f2b6'::uuid;
 update public.places set city='Barnegat Light', country_code='US', slug='barnegat-light-barnegat-light' where id='900e8fe1-feeb-509d-8f07-175cb12e51ff'::uuid;
+update public.places set city=NULL, country_code='AQ', slug='cape-royds-adelie-penguin-rookery-aq' where id='901a3ad4-0d07-5499-916a-5008548d2d07'::uuid;
 update public.places set city='Shinjuku', country_code='JP', slug='yakitori-alley-memory-lane-shinjuku' where id='902b5bd9-aa6c-5a2c-86bb-e88c3dc63ae3'::uuid;
 update public.places set city='Salvador', country_code='BR', slug='acaraje-da-dinha-salvador' where id='9033c7a4-7ba4-5377-bfb7-c67026ac933b'::uuid;
 update public.places set city='Shahekou District', country_code='CN', slug='zhaoji-laopu-shahekou-district' where id='9048e738-7cc9-5e74-a31d-e7259a227e87'::uuid;
@@ -1604,6 +1608,7 @@ update public.places set city='San Francisco', country_code='US', slug='polly-an
 update public.places set city='Laredo', country_code='US', slug='laredo-taco-company-laredo' where id='c125644b-48c1-507f-97d3-e6c4276d485c'::uuid;
 update public.places set city='Dubai', country_code='AE', slug='ravi-restaurant-dubai' where id='c14d6718-205a-57ae-8054-eda805966090'::uuid;
 update public.places set city='Yangon City', country_code='MM', slug='seit-tine-kya-yangon-city' where id='c19e3125-9ed1-5b7e-a476-59b491833226'::uuid;
+update public.places set city=NULL, country_code='AQ', slug='lake-hoare-aq' where id='c1a5bd0f-b3b3-59f5-94e7-44b20116046c'::uuid;
 update public.places set city='São Paulo', country_code='BR', slug='izakaya-issa-sao-paulo' where id='c1cd0518-eeea-50e9-8201-8f8542c6b537'::uuid;
 update public.places set city='Dún Laoghaire', country_code='IE', slug='the-forty-foot-dun-laoghaire' where id='c1d8c953-822b-56bf-9781-7bad49b4332e'::uuid;
 update public.places set city='Chicago', country_code='US', slug='silver-palm-chicago' where id='c215c497-66d7-57fe-9a76-e7c67b04a309'::uuid;
@@ -1634,6 +1639,7 @@ update public.places set city='Cotai Landfill Zone', country_code='CN', slug='co
 update public.places set city='Taormina', country_code='IT', slug='spiaggia-libera-di-isola-bella-taormina' where id='c5dad52f-689f-5d2b-a16c-a5e7adc0ede0'::uuid;
 update public.places set city='Villavicencio', country_code='CO', slug='la-vanguardia-airport-villavicencio' where id='c5eb696a-ca70-5e4d-b3c8-c055148663d4'::uuid;
 update public.places set city='Belo Horizonte', country_code='BR', slug='nono-o-rei-do-caldo-de-mocoto-belo-horizonte' where id='c60ee0d0-862b-52d8-a849-a5d0fe6fd735'::uuid;
+update public.places set city=NULL, country_code='AQ', slug='mount-erebus-aq' where id='c6198f29-7246-5682-b33f-4fdc75eabcd5'::uuid;
 update public.places set city='Cartagena', country_code='CO', slug='la-cevicheria-cartagena' where id='c6246ddc-e7bc-55d7-a308-5a7c880a5056'::uuid;
 update public.places set city='New Orleans', country_code='US', slug='the-sazerac-bar-new-orleans' where id='c63a546a-81ef-531f-bae5-3be09a410c79'::uuid;
 update public.places set city='Hong Kong', country_code='CN', slug='aberdeen-fish-market-yee-hope-seafood-restaurant-hong-kong' where id='c65cb9fc-8f84-516b-827c-99ca862d61b1'::uuid;
@@ -2045,6 +2051,7 @@ update public.places set city='Seattle', country_code='US', slug='the-calf-and-k
 update public.places set city='Atlantic City', country_code='US', slug='james-original-salt-water-tfy-atlantic-city' where id='f9faa73e-bb45-5fcc-8a88-c1db4337caac'::uuid;
 update public.places set city='Paris', country_code='FR', slug='cantada-ii-paris' where id='fa22e4f2-9117-5a1c-9f2d-f3b51e13f03b'::uuid;
 update public.places set city='Los Angeles', country_code='US', slug='pinks-hot-dogs-los-angeles' where id='fa4c7e57-1b84-5cd7-a18a-b35636f77aaa'::uuid;
+update public.places set city=NULL, country_code='AQ', slug='south-pole-aq' where id='fa725461-4698-5a9c-b808-647745fd02dc'::uuid;
 update public.places set city='Town of Ulster', country_code='US', slug='rondout-bay-cafe-and-marina-town-of-ulster' where id='fa7ca0a1-b886-5eb7-89ba-2f7d9f1a1078'::uuid;
 update public.places set city='Kansas City', country_code='US', slug='kansas-city-chiefs-football-kansas-city' where id='fa8dbd1b-1fad-59b1-a89e-e3eed908d936'::uuid;
 update public.places set city='Imola', country_code='IT', slug='autodromo-enzo-e-dino-ferrari-imola' where id='fad3a483-c457-5027-aab0-d433f2546469'::uuid;

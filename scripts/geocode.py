@@ -81,14 +81,21 @@ def fetch(lon, lat):
         return json.loads(resp.read().decode('utf-8'))
 
 
-def extract(payload):
-    """Pull city + ISO country out of a Nominatim response."""
-    if not payload or 'error' in payload:
-        return None, None
-    addr = payload.get('address') or {}
+def extract(payload, lat=None):
+    """Pull city + ISO country out of a Nominatim response.
+
+    Antarctica has no administrative city and Nominatim returns no address at
+    all there, which is correct rather than a failure. Latitude below -60 is
+    the Antarctic Treaty boundary, so the country is a geographic fact we can
+    state without guessing. City stays NULL: McMurdo Station is not in one.
+    """
+    addr = (payload or {}).get('address') or {}
     city = next((addr[k] for k in CITY_KEYS if addr.get(k)), None)
     cc = addr.get('country_code')
-    return city, (cc.upper() if cc else None)
+    cc = cc.upper() if cc else None
+    if not cc and lat is not None and lat < -60:
+        cc = 'AQ'
+    return city, cc
 
 
 # Characters NFKD does not decompose, so they survive into slugs as gaps:
@@ -120,14 +127,16 @@ def build_slugs(places, resolved):
     """
     slugs, taken = {}, defaultdict(int)
     for p in sorted(places, key=lambda p: p['id']):
-        city, _ = resolved.get(key_for(p['lon'], p['lat']), (None, None))
-        if not city:
-            continue
+        city, cc = resolved.get(key_for(p['lon'], p['lat']), (None, None))
         base = slugify(p['name'])
         if not base:
             continue
-        city_part = slugify(city)
-        cand = f'{base}-{city_part}' if city_part else base
+        # A place with no city still needs a URL and a search result. These
+        # eight are McMurdo Station, the South Pole, Mount Erebus and their
+        # neighbours -- among the most interesting pins on the map, and they
+        # are not going to be unreachable because Nominatim has no locality.
+        qualifier = slugify(city) if city else (cc or '').lower()
+        cand = f'{base}-{qualifier}' if qualifier else base
         taken[cand] += 1
         if taken[cand] > 1:
             cand = f'{cand}-{taken[cand]}'
@@ -219,7 +228,7 @@ def main():
         if k not in cache:
             unresolved.append(f'NOT_FETCHED  {p["name"]!r}  {k}')
             continue
-        city, cc = extract(cache[k])
+        city, cc = extract(cache[k], p['lat'])
         if not city and not cc:
             unresolved.append(f'NO_ADDRESS   {p["name"]!r}  {k}')
         elif not city:

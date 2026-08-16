@@ -75,7 +75,7 @@ select json_build_object(
   'places', (
     select coalesce(json_agg(json_build_object(
       'id', p.id, 'slug', p.slug, 'name', p.name,
-      'city', c.name, 'citySlug', c.slug,
+      'city', c.name, 'citySlug', c.slug, 'cc', p.country_code,
       'status', p.status, 'kind', p.kind,
       'lon', round(extensions.st_x(p.geog::extensions.geometry)::numeric, 5),
       'lat', round(extensions.st_y(p.geog::extensions.geometry)::numeric, 5)
@@ -108,6 +108,7 @@ select json_build_object(
         select coalesce(json_agg(json_build_object(
           'show', a.show, 'season', a.season, 'episode', a.episode,
           'episodeTitle', a.episode_title, 'airDate', a.air_date,
+          'episodeSource', a.episode_source,
           'ate', a.what_he_ate, 'note', a.note, 'folder', a.source_folder
         ) order by a.show, a.season nulls first), '[]'::json)
         from appearances a where a.place_id = p.id)

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { fold, type SearchIndex } from "../../lib/artifacts";
+import { fold, regionName, type SearchIndex } from "../../lib/artifacts";
 import styles from "./SearchPalette.module.css";
 
 /* 2,095 places and ~875 cities is small enough to fold once, up front, and
@@ -34,7 +34,13 @@ export default function SearchPalette({
     cities: index.cities.map((c) => ({ c, f: fold(c.name) })),
     places: index.places
       .filter((p) => p.slug)
-      .map((p) => ({ p, f: fold(p.name), fc: fold(p.city ?? "") })),
+      .map((p) => ({
+        p,
+        f: fold(p.name),
+        // Cityless places match on their country instead, so searching
+        // "antarctica" finds McMurdo Station.
+        fc: fold(p.city ?? regionName(p.cc) ?? ""),
+      })),
   }), [index]);
 
   const results = useMemo<Row[]>(() => {
@@ -64,7 +70,8 @@ export default function SearchPalette({
       if (!f.includes(needle) && !fc.includes(needle)) continue;
       places.push({
         type: "place", slug: p.slug as string, label: p.name,
-        sub: p.city ?? "—", lon: p.lon, lat: p.lat, zoom: 15.5,
+        sub: p.city ?? regionName(p.cc) ?? "Unmapped",
+        lon: p.lon, lat: p.lat, zoom: 15.5,
         gone: p.status === "closed",
       });
       if (places.length > 60) break;

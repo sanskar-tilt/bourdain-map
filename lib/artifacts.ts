@@ -12,6 +12,7 @@ export type SearchPlace = {
   name: string;
   city: string | null;
   citySlug: string | null;
+  cc: string | null;
   status: string;
   kind: string;
   lon: number;
@@ -45,6 +46,17 @@ export function loadSearchIndex(): Promise<SearchIndex> {
       });
   }
   return cache;
+}
+
+/** A country name for the handful of places that legitimately have no city —
+ *  McMurdo Station, the South Pole, Mount Erebus. */
+export function regionName(cc: string | null): string | null {
+  if (!cc) return null;
+  try {
+    return new Intl.DisplayNames(["en"], { type: "region" }).of(cc) ?? cc;
+  } catch {
+    return cc;
+  }
 }
 
 /** Accent- and case-insensitive fold, so "acaraje" finds "Acarajé da Dinha". */

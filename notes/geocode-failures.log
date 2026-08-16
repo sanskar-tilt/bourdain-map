@@ -1,11 +1,11 @@
 0 request failures, 8 unresolved.
 These keep NULL city/country/slug. Nothing is guessed.
 
-NO_ADDRESS   'Cape Royds Adélie Penguin Rookery'  -77.55448,166.16391
-NO_ADDRESS   'Galley'  -77.84639,166.66802
-NO_ADDRESS   'Lake Hoare'  -77.62847,162.88183
-NO_ADDRESS   'McMurdo Station'  -77.84188,166.68634
-NO_ADDRESS   'Mount Erebus'  -77.52929,167.15231
-NO_ADDRESS   'Mount Lister'  -78.06667,162.68333
-NO_ADDRESS   'South Pole'  -72.29401,0.69619
+NO_CITY      'Cape Royds Adélie Penguin Rookery'  -77.55448,166.16391  (country AQ)
+NO_CITY      'Galley'  -77.84639,166.66802  (country AQ)
+NO_CITY      'Lake Hoare'  -77.62847,162.88183  (country AQ)
+NO_CITY      'McMurdo Station'  -77.84188,166.68634  (country AQ)
+NO_CITY      'Mount Erebus'  -77.52929,167.15231  (country AQ)
+NO_CITY      'Mount Lister'  -78.06667,162.68333  (country AQ)
 NO_CITY      'Princes Islands'  40.85250,29.06167  (country TR)
+NO_CITY      'South Pole'  -72.29401,0.69619  (country AQ)
