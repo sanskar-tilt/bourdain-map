@@ -19,12 +19,15 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   trailingSlash: true,
-  // There is a stray package-lock.json in the home directory, so Turbopack
-  // infers the workspace root as ~ and then 403s every chunk under
-  // /_next/static in dev — MapLibre included, which leaves the map a black
-  // rectangle with no canvas at all. Production builds were unaffected, which
-  // is exactly what makes it easy to miss.
+  // A stray package-lock.json in the home directory makes Turbopack infer the
+  // workspace root as ~ and warn on every start. Pinning it silences that and
+  // keeps module resolution inside the project.
   turbopack: { root: __dirname },
+  // next dev 403s chunk requests whose origin it doesn't recognise, and the
+  // symptom is a blank map rather than anything mentioning permissions —
+  // /_next/static/chunks/*.js simply abort. Both spellings of localhost are
+  // the same machine.
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
 };
 
 export default nextConfig;
