@@ -1,78 +1,114 @@
 /* ------------------------------------------------------------------
-   Design tokens.
+   Design tokens. Every colour, face, step and curve comes from here.
 
-   Every colour, face and step in the product comes from this file.
-   Nothing downstream declares a literal.
+   Palette: cool paper ground, carbon ink, ONE accent. The accent is the
+   pins and nothing else. Ported from notes/refs/direction-1-dupe.html.
 
-   Light direction, ported from notes/refs/direction-1-dupe.html. Chosen
-   over direction 3 because it already has exactly one accent; direction
-   3 spends its whole colour system on four per-show inks, which breaks
-   the rule that the pins are the only saturated thing on the screen.
-
-   Palette rule: cool paper ground, carbon ink, ONE accent. The accent
-   is the pins and nothing else. Closed places are filled paper with a
-   thin ring — absence, not a second colour and not a badge.
-
-   Deliberately NOT warm cream: the ground is grey-green (#E6E6E1) and
-   the accent is a printer-ribbon red, not terracotta.
+   Type and motion numbers follow the discipline measured in
+   notes/refs/nothin-analysis.md — their arithmetic, not their look.
    ------------------------------------------------------------------ */
 
 :root {
-  /* ---- ground: thermal-paper stock, cooled away from cream ---- */
+  /* ---- ground ---- */
   --ground:      #E6E6E1;
   --panel:       #DEDED8;
   --raised:      #D7D7D0;
   --edge:        #C9C9C1;
   --edge-strong: #B3B3A9;
 
-  /* ---- ink: carbon, pulled slightly blue so it reads as printed ---- */
-  --paper:       #16181B;   /* the text colour. Named for its role, not its hue. */
+  /* ---- ink (named for role, not hue) ---- */
+  --paper:       #16181B;
   --paper-dim:   #4B4F55;
   --paper-faint: #75797F;
-  --paper-ring:  #9DA0A5;   /* the ring around a place that is gone */
+  --paper-ring:  #9DA0A5;
 
   /* ---- the one accent ---- */
   --accent:      #B8342A;
   --accent-soft: rgba(184, 52, 42, 0.14);
   --accent-dim:  rgba(184, 52, 42, 0.62);
 
-  /* ---- basemap: everything recedes so the pins are the only
-          saturated thing on the screen ---- */
+  /* ---- basemap ---- */
   --map-land:    #E6E6E1;
   --map-water:   #D8DAD6;
   --map-line:    #C2C2B9;
   --map-road:    #D2D2CA;
   --map-label:   #8A8D93;
 
-  /* ---- type: two families, no more. Self-hosted by next/font. ---- */
+  /* ---- type: two families plus mono for labels ---- */
   --font-display: "Instrument Serif", Superclarendon, "Iowan Old Style",
-                  "Palatino Linotype", Palatino, Georgia, serif;
+                  Palatino, Georgia, serif;
   --font-body:    "Inter Tight", "Helvetica Neue", Helvetica, Arial,
                   system-ui, sans-serif;
   --font-mono:    ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
-  --step--1: 0.75rem;
-  --step-0:  0.875rem;
-  --step-1:  1rem;
-  --step-2:  1.375rem;
-  --step-3:  1.875rem;
-  --step-4:  2.75rem;
+  /* Three weights. Nothing else, anywhere. */
+  --w-regular: 400;
+  --w-medium:  500;
+  --w-bold:    700;
 
-  --track-wide: 0.18em;
-  --track-mid:  0.08em;
+  /* ---- scale, two regimes ----
+     Display steps jump ~1.36×; text steps tighten to ~1.10–1.25×. Big
+     leaps at the top, fine gradations at the bottom, which is what makes
+     a scale read as authored rather than generated. Eleven sizes total.
+     1.5625rem / 25px is the deliberate odd one. */
+  --step--2: 0.625rem;   /* 10 — smallest label            */
+  --step--1: 0.75rem;    /* 12 — every uppercase mono label */
+  --step-0:  0.875rem;   /* 14 — small body                 */
+  --step-1:  1rem;       /* 16 — body                       */
+  --step-2:  1.125rem;   /* 18 — large body                 */
+  --step-3:  1.25rem;    /* 20                              */
+  --step-4:  1.5625rem;  /* 25 — sub-display                */
+  --step-5:  2rem;       /* 32 — display 4        ×1.28     */
+  --step-6:  2.75rem;    /* 44 — display 3        ×1.375    */
+  --step-7:  3.75rem;    /* 60 — display 2        ×1.36     */
+  --step-8:  5rem;       /* 80 — display 1        ×1.33     */
+
+  /* ---- tracking: exactly two values ---- */
+  --track-tight: -0.01em;  /* anything display-sized        */
+  --track-label:  0.03em;  /* 12px uppercase mono, always   */
+
+  /* ---- leading ---- */
+  --lh-solid: 1;      /* everything display-sized, set solid */
+  --lh-tight: 1.2;
+  --lh-body:  1.55;
 
   --measure: 62ch;
 
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 18px; --s5: 28px; --s6: 44px; --s7: 72px;
+  /* ---- space ---- */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 18px; --s5: 28px;
+  --s6: 44px; --s7: 72px; --s8: 100px;
 
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --fast: 140ms;
-  --mid:  240ms;
-  --slow: 300ms;
+  /* ---- motion: two curves for the whole site ----
+     Entrances use the out-curve: fast start, long settle.
+     Symmetric moves use the in-out. Nothing else is permitted. */
+  --ease-out:    cubic-bezier(0.16, 1, 0.30, 1);      /* ≈ power4.out   */
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);      /* ≈ power4.inOut */
 
-  --z-map: 1; --z-chrome: 10; --z-panel: 20; --z-palette: 40;
+  /* Asymmetric hover: quick to acknowledge, slow to let go. */
+  --t-hover-in:  400ms;
+  --t-hover-out: 800ms;
+
+  /* Nothing else dips below 300ms. Editorial pacing, not UI pacing. */
+  --t-enter:  600ms;
+  --t-move:   800ms;
+  --t-slow:  1200ms;
+
+  --stagger: 50ms;   /* per masked line in a quote reveal */
+
+  --z-map: 1; --z-chrome: 10; --z-panel: 20; --z-palette: 40; --z-loader: 90;
 }
 
+/* We handle this everywhere; they handle it nowhere. Settled states, no
+   exceptions — animations resolve to their end state rather than running. */
 @media (prefers-reduced-motion: reduce) {
-  :root { --fast: 0ms; --mid: 0ms; --slow: 0ms; }
+  :root {
+    --t-hover-in: 1ms; --t-hover-out: 1ms;
+    --t-enter: 1ms; --t-move: 1ms; --t-slow: 1ms; --stagger: 0ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
 }

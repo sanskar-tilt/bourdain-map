@@ -371,3 +371,39 @@ Tokyo and searching for it silently flew to Toronto. The metro name comes from
 the state/province where present, and otherwise from the last component of the
 display name before the country. 702 of 746 cities have one, and search
 matches it.
+
+---
+
+## Homepage + retoken
+
+- **Tokens follow noth.in's arithmetic, not their look.** Eleven sizes in two
+  regimes (display steps ~1.28–1.38×, text steps ~1.10–1.25×), three weights,
+  exactly two tracking values: −0.01em on display, +0.03em on 12px uppercase
+  mono. 1.5625rem/25px kept as the deliberate odd step.
+- **Two easing curves for the whole site**, as cubic-beziers in tokens:
+  `--ease-out` (0.16, 1, 0.30, 1) for entrances, `--ease-in-out`
+  (0.76, 0, 0.24, 1) for symmetric moves. Nothing else is permitted.
+- **Asymmetric hover everywhere: 400ms in, 800ms out.** The link underline is
+  anchored right while idle so it wipes in from the left and leaves out the
+  right, never reversing. One `a` rule; there is no second link treatment.
+- **Parenthetical mono labels** are the section-label pattern site-wide, via a
+  global `.label` class with `::before`/`::after` parens.
+- **No GSAP, no Lenis, no three.js, no transition library.** CSS transitions,
+  one IntersectionObserver for entrances, one rAF scroll read for the pin, one
+  rAF loop for the trail canvas. Their 752KB stays theirs.
+- **Map moved to `/map`; the homepage takes `/`.** The map only mounts on map
+  routes — the homepage should not pay for MapLibre. Within map routes it still
+  never unmounts.
+- **Loader counts 000 → 2,095 in 3s on a cubic in-out**, so it dwells at the
+  ends and sprints through the middle; place names flicker behind it every
+  110ms. Exit is a 1.2s full-height wipe up. Once per session via
+  sessionStorage, with an inline head script hiding it before paint on repeat
+  visits. Reduced-motion gets no loader at all.
+- **The pinned hero is the only pin on the page.** Two viewports, photo scales
+  1.3 → 0.5 on one custom property written by a throttled scroll read.
+- **The trail fits its own bounds** rather than sitting on a world projection —
+  60 cities with a dated exact-match episode, in broadcast order, Las Vegas
+  2005 → Newfoundland 2018. Built as a reusable component for the map page.
+- **Every photo entry carries a `credit` field**, rendered beside the image and
+  again in the colophon. A photo without one still renders but the build prints
+  a loud warning and the page shows the gap in accent colour.

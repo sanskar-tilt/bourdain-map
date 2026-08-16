@@ -148,6 +148,25 @@ select json_build_object(
 """
 
 
+TRAIL_SQL = """
+-- The route in broadcast order: every city that has a dated episode, placed
+-- at the first date it was broadcast. Shared by the homepage miniature and
+-- the full version on the map.
+select coalesce(json_agg(t order by t.first_air), '[]'::json) from (
+  select c.slug, c.name,
+         min(e.air_date) as first_air,
+         round(extensions.st_x(c.centroid::extensions.geometry)::numeric, 3) as lon,
+         round(extensions.st_y(c.centroid::extensions.geometry)::numeric, 3) as lat,
+         (select count(*) from places p where p.city_id = c.id) as places
+  from cities c
+  join city_episodes ce on ce.city_id = c.id
+  join episodes e on e.id = ce.episode_id
+  where e.air_date is not null and ce.match_kind = 'exact'
+  group by c.id, c.slug, c.name, c.centroid
+) t;
+"""
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
 
@@ -155,6 +174,11 @@ def main():
     geojson = {'type': 'FeatureCollection', 'features': features}
     with open(os.path.join(OUT, 'places.geojson'), 'w', encoding='utf-8') as f:
         json.dump(geojson, f, ensure_ascii=False, separators=(',', ':'))
+
+    trail = query(TRAIL_SQL) or []
+    with open(os.path.join(OUT, 'trail.json'), 'w', encoding='utf-8') as f:
+        json.dump(trail, f, ensure_ascii=False, separators=(',', ':'))
+    print(f'trail.json      {len(trail)} cities in broadcast order')
 
     search = query(SEARCH_SQL) or {'places': [], 'cities': []}
     with open(os.path.join(OUT, 'search.json'), 'w', encoding='utf-8') as f:

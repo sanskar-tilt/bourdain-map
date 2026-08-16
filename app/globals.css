@@ -7,12 +7,90 @@ html, body {
   color: var(--paper);
   font-family: var(--font-body-loaded), var(--font-body);
   font-size: var(--step-0);
-  line-height: 1.6;
+  font-weight: var(--w-medium);
+  line-height: var(--lh-tight);
   -webkit-font-smoothing: antialiased;
 }
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-h1, h2, h3 { text-wrap: balance; margin: 0; font-weight: 400; }
+h1, h2, h3 { margin: 0; font-weight: var(--w-medium); text-wrap: balance; }
 p { margin: 0; }
+
+/* ------------------------------------------------------------------
+   The site's only link treatment.
+
+   The underline wipes in from the left in 0.4s and leaves out the right
+   in 0.8s — it never reverses back the way it came. Quick to acknowledge
+   you, slow to let go. Applies to every link including the map controls,
+   so there is one hover behaviour on the whole site and no exceptions to
+   remember.
+   ------------------------------------------------------------------ */
+a {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  /* Anchored right while idle, so shrinking exits rightward. */
+  background-position: 100% calc(100% - 0.05em);
+  background-size: 0% 1px;
+  transition: background-size var(--t-hover-out) var(--ease-in-out),
+              color var(--t-hover-out) var(--ease-in-out);
+}
+a:hover,
+a:focus-visible {
+  background-position: 0% calc(100% - 0.05em);
+  background-size: 100% 1px;
+  transition: background-size var(--t-hover-in) var(--ease-out),
+              color var(--t-hover-in) var(--ease-out);
+}
+
+/* ------------------------------------------------------------------
+   The parenthetical mono label. The section-label pattern everywhere:
+   ( 2,095 places ) · ( the first table ) · ( 1999–2018 )
+   ------------------------------------------------------------------ */
+.label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: var(--w-regular);
+  line-height: var(--lh-solid);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+.label::before { content: "( "; }
+.label::after  { content: " )"; }
+
+/* ------------------------------------------------------------------
+   Entrances. Fire once at top 95%, then settle permanently — nothing
+   re-animates when you scroll back up, which is what keeps a page
+   feeling like a document rather than a toy.
+
+   The .reveal class is the settled state; JS adds .is-in.
+   ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--t-enter) var(--ease-out),
+              transform var(--t-enter) var(--ease-out);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* A quote reveals as masked lines rising, 50ms apart. */
+.line-mask { display: block; overflow: hidden; }
+.line-mask > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform var(--t-move) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.is-in .line-mask > span { transform: none; }
+
+/* No-JS and reduced-motion both land on the settled state. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .line-mask > span { transform: none; }
+}
+.no-js .reveal { opacity: 1; transform: none; }
+.no-js .line-mask > span { transform: none; }

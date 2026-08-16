@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Inter_Tight } from "next/font/google";
 import "./tokens.css";
 import "./globals.css";
-import MapShell from "./components/MapShell";
+import SiteShell from "./components/SiteShell";
 
 /* next/font self-hosts these at build time, so there is no runtime request to
    a font CDN and no silent fallback. Two families, no more: a display serif
@@ -28,13 +28,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} no-js`}>
+      <head>
+        {/* Hide the loader before first paint on a repeat visit, so there is
+            no flash of it. Runs ahead of the bundle deliberately. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('wha:loader')==='1'){" +
+              "document.documentElement.setAttribute('data-loader','seen')}}catch(e){}",
+          }}
+        />
+      </head>
       <body>
-        {/* The map is mounted here, above the router, and never unmounts.
-            Navigating to /place/x or /city/y changes what is selected and
-            where the camera is — it does not rebuild the map, so there is no
-            white flash and no tile refetch. */}
-        <MapShell>{children}</MapShell>
+        {/* Map routes get the full-bleed map with a panel over it; every
+            other route is an ordinary document. Within the map routes the
+            map never unmounts, so pin → city → pin costs nothing. */}
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

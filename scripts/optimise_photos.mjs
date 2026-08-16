@@ -19,28 +19,52 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SRC = path.join(ROOT, "public", "about");
-const OUT = path.join(SRC, "opt");
-const MANIFEST = path.join(ROOT, "content", "about.json");
-const GENERATED = path.join(ROOT, "content", "about.generated.json");
+/* Two manifests, one pipeline. Each writes its renditions into its own
+   opt/ folder and its own generated.json. */
+const SETS = [
+  { dir: "about", manifest: "about.json", generated: "about.generated.json" },
+  { dir: "home",  manifest: "home.json",  generated: "home.generated.json"  },
+];
 
 const WIDTHS = [800, 1600];
 const QUALITY = 78;
 
+/** Pull every photo filename out of a manifest, whatever its shape. */
+function photosIn(node, acc = [], credits = []) {
+  if (!node || typeof node !== "object") return { acc, credits };
+  if (Array.isArray(node)) {
+    node.forEach((n) => photosIn(n, acc, credits));
+    return { acc, credits };
+  }
+  if (typeof node.photo === "string" && node.photo.trim()) {
+    acc.push(node.photo.trim());
+    if (!node.credit || !String(node.credit).trim()) credits.push(node.photo.trim());
+  }
+  Object.values(node).forEach((v) => {
+    if (v && typeof v === "object") photosIn(v, acc, credits);
+  });
+  return { acc, credits };
+}
+
+for (const set of SETS) {
+  await run(set);
+}
+
+async function run(set) {
+const SRC = path.join(ROOT, "public", set.dir);
+const OUT = path.join(SRC, "opt");
+const MANIFEST = path.join(ROOT, "content", set.manifest);
+const GENERATED = path.join(ROOT, "content", set.generated);
+
 if (!fs.existsSync(MANIFEST)) {
-  console.log("content/about.json not found — nothing to do.");
-  process.exit(0);
+  console.log(`content/${set.manifest} not found — skipping.`);
+  return;
 }
 
 const manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf-8"));
+const { acc: wanted, credits: uncredited } = photosIn(manifest);
 
-/** Every photo filename the manifest points at, deduplicated. */
-const wanted = [
-  manifest.intro?.photo,
-  manifest.tattoo?.photo,
-  ...(manifest.places ?? []).map((p) => p?.photo),
-].filter((f) => typeof f === "string" && f.trim().length > 0);
-
+fs.mkdirSync(SRC, { recursive: true });
 fs.mkdirSync(OUT, { recursive: true });
 
 const generated = {};
@@ -86,13 +110,19 @@ for (const file of [...new Set(wanted)]) {
 
 fs.writeFileSync(GENERATED, JSON.stringify(generated, null, 1) + "\n");
 
-console.log(`about photos: ${Object.keys(generated).length} processed, ${built} renditions`);
+console.log(`${set.dir} photos: ${Object.keys(generated).length} processed, ${built} renditions`);
 if (missing.length) {
   console.log(
-    `  referenced but not found in public/about/: ${missing.join(", ")}\n` +
+    `  referenced but not found in public/${set.dir}/: ${missing.join(", ")}\n` +
     "  (the page will show a placeholder for these)"
   );
 }
+if (uncredited.length) {
+  // Shipping someone's photograph uncredited is the one thing this project
+  // cannot do, so it is a loud warning rather than a silent omission.
+  console.log(`  !! NO CREDIT SET for: ${uncredited.join(", ")}`);
+}
 if (!wanted.length) {
-  console.log("  no photos referenced yet — edit content/about.json");
+  console.log(`  no photos referenced yet — edit content/${set.manifest}`);
+}
 }

@@ -1,0 +1,217 @@
+/* Homepage. Every value from tokens.css. */
+
+/* ---------------------------------------------------------------- loader */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  background: var(--ground);
+  display: grid;
+  place-items: center;
+  transform: translateY(0);
+}
+/* Exit is a full-height wipe up, not a fade. */
+.loader[data-phase="wipe"] {
+  transform: translateY(-100%);
+  transition: transform var(--t-slow) var(--ease-in-out);
+}
+.loaderInner { display: grid; place-items: center; gap: var(--s3); }
+.loaderWord {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+.loaderCount {
+  min-width: 4.5ch;
+  text-align: center;
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-8);
+  line-height: var(--lh-solid);
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------ pinned hero */
+.pinWrap { height: 200vh; position: relative; }
+.pinSticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+/* --p runs 0 → 1 across the pin; the photo scales 1.3 → 0.5 so leaving the
+   section reads as departure rather than as a slide changing. */
+.heroMedia {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform: scale(calc(1.3 - (0.8 * var(--p, 0))));
+  opacity: calc(1 - (0.55 * var(--p, 0)));
+  will-change: transform;
+}
+.heroMedia figure, .heroMedia > div { width: 100%; height: 100%; margin: 0; }
+.heroImg { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.heroText {
+  position: relative;
+  z-index: 2;
+  max-width: min(46rem, 88vw);
+  text-align: center;
+  display: grid;
+  gap: var(--s4);
+  opacity: calc(1 - (1.4 * var(--p, 0)));
+}
+.heroMark {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+/* ------------------------------------------------------------- sections */
+.section {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: var(--s8) var(--s5);
+  display: grid;
+  gap: var(--s5);
+}
+
+.counterSection { justify-items: center; text-align: center; gap: var(--s3); }
+.counter {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-8);
+  line-height: var(--lh-solid);
+  letter-spacing: var(--track-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The asymmetric split. Not 1:1 — that asymmetry is doing the compositional
+   work, per the noth.in analysis. */
+.pairing { grid-template-columns: .75fr 1fr; align-items: center; gap: var(--s7); }
+.pairImg { width: 100%; height: auto; display: block; object-fit: cover; }
+.pairText { display: grid; gap: var(--s4); }
+
+/* --------------------------------------------------------------- quotes */
+.quote, .quoteBig {
+  font-family: var(--font-display-loaded), var(--font-display);
+  letter-spacing: var(--track-tight);
+  line-height: var(--lh-tight);
+  margin: 0;
+}
+.quote { font-size: var(--step-6); }
+.quoteBig { font-size: var(--step-7); line-height: var(--lh-solid); }
+
+/* --------------------------------------------------------------- trail */
+.trail { display: grid; gap: var(--s3); }
+.trail canvas { display: block; width: 100%; }
+.trailEnd { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s4); }
+.trailLast {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-3);
+}
+
+/* --------------------------------------------------------------- video */
+.video { aspect-ratio: 16 / 9; background: var(--raised); border: 1px solid var(--edge); }
+.video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ---------------------------------------------------------- invitation */
+.invite { justify-items: start; gap: var(--s2); }
+.inviteLine {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-7);
+  line-height: var(--lh-solid);
+  letter-spacing: var(--track-tight);
+}
+.inviteCta {
+  margin-top: var(--s5);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------- shots */
+.shot { margin: 0; display: grid; gap: var(--s2); }
+.credit {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+.needsCredit { color: var(--accent); }
+
+.gap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 1px dashed var(--edge-strong);
+  background: var(--raised);
+  color: var(--paper-faint);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: var(--track-label);
+  text-align: center;
+  padding: var(--s4);
+}
+.todo { color: var(--paper-faint); font-size: var(--step-1); line-height: var(--lh-body); }
+.todo code, .colText code { font-family: var(--font-mono); font-size: 0.9em; }
+
+/* ------------------------------------------------------------ colophon */
+/* Print furniture: rules, small type, everything stated plainly. */
+.colophon {
+  border-top: 1px solid var(--paper);
+  margin: var(--s8) var(--s5) 0;
+  padding: var(--s5) 0 var(--s7);
+}
+.colGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s6);
+  max-width: 78rem;
+  margin: 0 auto;
+}
+.colText {
+  margin-top: var(--s2);
+  font-size: var(--step-0);
+  line-height: var(--lh-body);
+  color: var(--paper-dim);
+  max-width: 34ch;
+}
+.colText strong { color: var(--paper); font-weight: var(--w-medium); }
+.creditList {
+  margin: var(--s2) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--s1);
+  font-size: var(--step-0);
+  color: var(--paper-dim);
+}
+.colRule {
+  max-width: 78rem;
+  margin: var(--s6) auto 0;
+  padding-top: var(--s3);
+  border-top: 1px solid var(--edge);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+
+@media (max-width: 860px) {
+  .pairing { grid-template-columns: 1fr; gap: var(--s5); }
+  .quote, .inviteLine { font-size: var(--step-6); }
+  .quoteBig { font-size: var(--step-6); }
+  .counter, .loaderCount { font-size: var(--step-7); }
+  .section { padding: var(--s7) var(--s4); }
+}

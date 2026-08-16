@@ -1,0 +1,42 @@
+{
+  "_readme": [
+    "The homepage. Edit this, drop images in public/home/, and the page",
+    "updates — no code change needed. Same pipeline as content/about.json.",
+    "",
+    "EVERY PHOTO NEEDS A CREDIT. The `credit` field renders next to the image",
+    "and again in the colophon. A photo with no credit still renders, but the",
+    "build prints a warning, because shipping someone's photograph uncredited",
+    "is the one thing this project cannot do.",
+    "",
+    "Sections left empty render as marked gaps rather than disappearing."
+  ],
+
+  "loader": {
+    "flicker": ["Tokyo", "Hanoi", "Beirut", "West Virginia", "Lagos",
+                "Buenos Aires", "Marseille", "Chengdu", "Porto", "Oaxaca"]
+  },
+
+  "hero": {
+    "photo": "",
+    "alt": "",
+    "credit": "",
+    "quote": ""
+  },
+
+  "pairing": {
+    "photo": "",
+    "alt": "",
+    "credit": "",
+    "quote": ""
+  },
+
+  "video": {
+    "url": "",
+    "title": "",
+    "source": ""
+  },
+
+  "colophon": {
+    "copyright": ""
+  }
+}
