@@ -16,7 +16,7 @@ off the main thread.
 | JS, first load | < 150KB gz | **422KB gz** (253KB is MapLibre) | ✗ over |
 | Pin payload | < 400KB gz, one request | **150KB gz**, one request | ✓ |
 | Time to interactive | < 1.5s on 4G | **3.2s** (4G + 4× CPU throttle) | ✗ over |
-| Pan/zoom | 60fps, all pins | **p50 60fps, p95 54fps, no frame over 33ms** | ✓ |
+| Pan/zoom | 60fps, all pins | **p50 60fps, p95 57fps, no frame over 33ms** | ✓ |
 | Search keystroke → results | < 16ms | not instrumented yet | — |
 | Mobile Safari | 60fps | **untested — needs a device** | — |
 
@@ -79,9 +79,9 @@ frames over 33ms       0    (0.0%)
 > than reporting a frame rate for a blank canvas. Fixed by pinning MapLibre to
 > v5. The numbers above are from a map with pins actually on it.
 
-The 48.4% figure looks alarming and isn't: 16.7ms *is* the vsync interval, so
+The 49.2% figure looks alarming and isn't: 16.7ms *is* the vsync interval, so
 roughly half of a steady 60fps stream lands microseconds either side of it.
-The number that matters is the worst frame — 18.7ms, with nothing over 33ms.
+The number that matters is the worst frame — 17.7ms, with nothing over 33ms.
 Nothing in that run dropped a frame.
 
 ## Where the JS goes
@@ -121,7 +121,7 @@ is a judgement call, not a bug.
 
 ```bash
 npm run build
-python3 /tmp/gzserve.py &                 # a static server that gzips
+python3 scripts/gzserve.py &              # a static server that gzips
 npx lighthouse http://127.0.0.1:8900/ --preset=desktop --only-categories=performance
 npx lighthouse http://127.0.0.1:8900/ --only-categories=performance   # mobile
 node scripts/measure_frames.mjs
