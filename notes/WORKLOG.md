@@ -144,3 +144,27 @@ Three test bugs found while proving it, all mine:
 
 Remaining instant hovers on form buttons (ui.module.css brightness flip) —
 not photographs, not homepage, logged not fixed.
+
+---
+
+## Step 5 — nested parallax  ⛔ BLOCKED
+
+There is no card grid on the site that renders. The only one in the codebase
+is About's places grid, and it renders exclusively from `content/about.json`
+entries — which are empty templates, filtered out on build. The homepage has
+one photo+quote pairing (a single figure, not a grid), and the colophon's
+columns are text, not cards.
+
+The acceptance requires observing real cards at three scroll positions with
+alternating-sign offsets. That is impossible without content, and the run's
+rules are explicit twice over: placeholders are not mine to fill, and a
+blocked step gets logged, not worked around. Injecting fixture cards from the
+test would verify a mechanism against DOM the site never ships — the exact
+class of green-on-fiction this run exists to kill.
+
+**Unblocks with:** one real entry in `about.json`'s `places[]` (or a future
+homepage card grid). The offsets are specified and waiting:
+cards `[80, -150, -100, -160, 100, -90]px`, inner images −5% to −20%, both
+off the shared Lenis frame, linear. I have deliberately not committed a
+half-mechanism that nothing mounts — the wiring audit exists to catch exactly
+that shape of dead code.
