@@ -3,6 +3,7 @@ import Reveal from "./components/Reveal";
 import PinnedHero from "./components/PinnedHero";
 import TrailMap from "./components/TrailMap";
 import { homeManifest, homePhotos, allCredits } from "../lib/home";
+import { siteStats, n, broadcastLine } from "../lib/stats";
 import { usable, srcsetAttr, largest, type PhotoMeta } from "../lib/about";
 import s from "./components/home.module.css";
 import Link from "next/link";
@@ -74,10 +75,12 @@ export default function Home() {
   const photos = homePhotos();
   const credits = allCredits(m);
   const flicker = m.loader?.flicker ?? [];
+  const stats = siteStats();
+  const range = broadcastLine(stats);
 
   return (
     <>
-      <Loader flicker={flicker} />
+      <Loader flicker={flicker} total={stats.places} />
       <Reveal />
 
       {/* ------------------------------------------------ pinned hero */}
@@ -97,8 +100,8 @@ export default function Home() {
 
       {/* ------------------------------------------------ the counter */}
       <section className={`${s.section} ${s.counterSection} reveal`}>
-        <p className={s.counter}>2,095</p>
-        <p className="label">places, 1999–2018</p>
+        <p className={s.counter}>{n(stats.places)}</p>
+        <p className="label">places{range ? `, ${range}` : ""}</p>
       </section>
 
       {/* ------------------------------------------- photo + quote */}
@@ -158,7 +161,7 @@ export default function Home() {
             <p className="label">the places</p>
             <p className={s.colText}>
               Almost every place here comes from a map <strong>deannd</strong>{" "}
-              built on r/AnthonyBourdain over about two years. 2,095 of them.
+              built on r/AnthonyBourdain over about two years. {n(stats.places)} of them.
               Used with permission. Her descriptions appear throughout, quoted
               and credited — they are hers, not ours.
             </p>

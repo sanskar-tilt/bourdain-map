@@ -20,7 +20,7 @@
 .brand { display: flex; flex-direction: column; gap: 1px; }
 .tagline {
   font-size: var(--step--1);
-  color: var(--paper-dim);
+  color: var(--ink-dim);
   letter-spacing: 0.01em;
 }
 @media (max-width: 640px) { .tagline { display: none; } }
@@ -28,25 +28,25 @@
 .wordmark {
   font-family: var(--font-display-loaded), var(--font-display);
   font-size: var(--step-2);
-  color: var(--paper);
+  color: var(--ink);
   text-decoration: none;
   letter-spacing: 0.01em;
 }
-.wordmark:hover { color: var(--accent); }
+
 
 .nav { display: flex; gap: var(--s3); padding-top: 6px; }
 .nav a {
-  color: var(--paper-faint);
+  color: var(--ink-faint);
   text-decoration: none;
   font-size: var(--step--1);
   letter-spacing: var(--track-mid);
 }
-.nav a:hover { color: var(--paper); }
+.nav a:hover { color: var(--ink); }
 
 @media (max-width: 640px) { .nav { display: none; } }
 
 /* This is the primary navigation, not a utility. A first-time visitor
-   looking at 2,095 pins needs a way in, and it is this. */
+   looking at every pin at once needs a way in, and it is this. */
 .searchTrigger {
   margin-left: auto;
   display: flex;
@@ -58,7 +58,7 @@
   border: 1px solid var(--edge-strong);
   border-radius: 3px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-  color: var(--paper-dim);
+  color: var(--ink-dim);
   font: inherit;
   font-size: var(--step-0);
   text-align: left;
@@ -66,14 +66,14 @@
   transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
 }
 .searchTrigger span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.searchTrigger:hover { border-color: var(--accent); color: var(--paper); }
-.searchIcon { width: 15px; height: 15px; flex: none; color: var(--paper-faint); }
+.searchTrigger:hover { border-color: var(--ink); color: var(--ink); }
+.searchIcon { width: 15px; height: 15px; flex: none; color: var(--ink-faint); }
 
 @media (max-width: 640px) { .searchTrigger { width: auto; padding: var(--s2) var(--s3); } }
 .searchTrigger kbd {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--paper-faint);
+  color: var(--ink-faint);
   border: 1px solid var(--edge);
   border-radius: 2px;
   padding: 1px 4px;
@@ -108,13 +108,13 @@
   background: var(--raised);
   border: 1px solid var(--edge);
   border-radius: 2px;
-  color: var(--paper-dim);
+  color: var(--ink-dim);
   font-size: 17px;
   line-height: 1;
   cursor: pointer;
   z-index: 2;
 }
-.close:hover { color: var(--paper); border-color: var(--edge-strong); }
+.close:hover { color: var(--ink); border-color: var(--edge-strong); }
 
 /* Mobile: a bottom sheet, not a panel that eats the screen. */
 @media (max-width: 720px) {

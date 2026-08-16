@@ -413,3 +413,43 @@ matches it.
   the map survives the navigation. Prefetch was never the problem — App Router
   already fetches every in-viewport link's payload on load, so hover adds
   nothing because there is nothing left to fetch.
+
+---
+
+## Pass two — section 0, five defects
+
+- **The underline really does exit right now, and it is CSS-only.** The brief
+  specified an `.is-exiting` class driven by JS. I built that, and it failed
+  its own test: the listener worked under a synthetic event but the class
+  never stuck under a real pointer move. The pure-CSS form is simpler and
+  provably identical — idle and exit anchor the gradient at `100%`, hover
+  anchors at `0%`, and only `background-size` transitions, so the anchor flips
+  instantly and the line always travels one way. Fewer moving parts, works
+  without JS, and passes the specified assertion: **200ms after mouseleave the
+  computed background-position is 100%, not 0%.**
+- **body line-height is `--lh-body` (1.55).** `--lh-tight` is headings only.
+- **The accent is map pins and the loader count. Nothing else.** Sixteen other
+  uses stripped — buttons, focus rings, chairs, hovers, episode numbers — all
+  now ink. Verified by grep as part of the acceptance run.
+- **No count is hardcoded anywhere.** `SITE_STATS` is derived at build time
+  into `content/stats.generated.json` and read through `lib/stats.ts`.
+  Comments that contained figures were genericised too, since a number in a
+  comment is a number waiting to be pasted into markup.
+- **`--paper` renamed to `--ink`.** It was the text colour named after the
+  background, which was going to cause a wrong edit.
+
+### SITE_STATS, derived 2026-08-16
+
+```
+places        2,095
+cities          746
+episodes        302
+appearances   2,135
+closed           53
+broadcast     2005-07-25 → 2018-11-11
+undated       a_cooks_tour
+```
+
+- **The date range was wrong and is now derived.** The stat line said
+  1999–2018; the data cannot support it. See `questions.md` — the line now
+  reads from `broadcastLine()` and says what is true.

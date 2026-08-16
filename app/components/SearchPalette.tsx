@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { fold, regionName, type SearchIndex } from "../../lib/artifacts";
 import styles from "./SearchPalette.module.css";
 
-/* 2,095 places and ~875 cities is small enough to fold once, up front, and
+/* The whole dataset is small enough to fold once, up front, and
    then scan on every keystroke. No library, no network, no debounce — a
    linear pass over 3,000 pre-folded strings lands well inside a frame. */
 

@@ -145,3 +145,31 @@ timings disagree with the extracted CSS, the CSS wins — which only means
 anything if his numbers are actually his.
 
 Paste it and it takes one commit. Everything else in that brief proceeded.
+
+---
+
+## The broadcast date range — what the data actually supports
+
+The stat line claimed **1999–2018**. Nothing in the dataset supports 1999, and
+nothing supports 2002 either. What is there:
+
+| Show | Episodes | Dated | Range |
+|---|---|---|---|
+| A Cook's Tour | 35 | **0** | — |
+| No Reservations | 144 | 144 | 2005-07-25 → 2012-11-05 |
+| The Layover | 20 | 20 | 2011-11-21 → 2013-02-04 |
+| Parts Unknown | 103 | 103 | 2013-04-14 → 2018-11-11 |
+
+**A Cook's Tour carries no air dates at all** — its Wikipedia episode table has
+no date column, which is the same gap noted when the episodes were fetched. So
+the earliest date in our data is No Reservations' first episode, not the
+earliest broadcast. A Cook's Tour aired before it and we cannot prove when from
+what we hold.
+
+Rather than pick a year, the stat line now derives from the data and says:
+**"2,095 places, 2005–2018, and A Cook's Tour before that."** True, and it
+declines to invent the bit we don't know.
+
+**To fix it properly** we need air dates for A Cook's Tour's 35 episodes. They
+are not on the Wikipedia page we parse. If you want the real range on the front
+door, that is the missing input — otherwise the current line stands.

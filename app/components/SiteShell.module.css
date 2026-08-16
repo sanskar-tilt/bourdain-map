@@ -26,9 +26,9 @@
   font-size: var(--step--1);
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--ink-dim);
 }
-.nav a[aria-current="page"] { color: var(--paper); }
+.nav a[aria-current="page"] { color: var(--ink); }
 
 .main { flex: 1; }
 

@@ -4,15 +4,16 @@ html, body {
   height: 100%;
   margin: 0;
   background: var(--ground);
-  color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-body-loaded), var(--font-body);
   font-size: var(--step-0);
   font-weight: var(--w-medium);
-  line-height: var(--lh-tight);
+  line-height: var(--lh-body);   /* body copy. --lh-tight is for headings. */
   -webkit-font-smoothing: antialiased;
 }
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* The accent belongs to map pins and the loader count. Not to focus rings. */
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 h1, h2, h3 { margin: 0; font-weight: var(--w-medium); text-wrap: balance; }
 p { margin: 0; }
@@ -27,27 +28,30 @@ p { margin: 0; }
    remember.
    ------------------------------------------------------------------ */
 a {
-  color: inherit;
+  color: inherit;              /* links are ink; the underline does the work */
   text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
-  /* Anchored right while idle, so shrinking exits rightward. */
+  /* Idle and exiting: anchored RIGHT. Only the width transitions, so the
+     anchor flips instantly at the moment hover changes and the line always
+     travels the same way — in from the left, out through the right. It never
+     retraces to the origin it grew from, which is the whole point. */
   background-position: 100% calc(100% - 0.05em);
   background-size: 0% 1px;
-  transition: background-size var(--t-hover-out) var(--ease-in-out),
-              color var(--t-hover-out) var(--ease-in-out);
+  transition: background-size var(--t-hover-out) var(--ease-in-out);
 }
+
 a:hover,
 a:focus-visible {
+  /* Anchored LEFT while growing. */
   background-position: 0% calc(100% - 0.05em);
   background-size: 100% 1px;
-  transition: background-size var(--t-hover-in) var(--ease-out),
-              color var(--t-hover-in) var(--ease-out);
+  transition: background-size var(--t-hover-in) var(--ease-out);
 }
 
 /* ------------------------------------------------------------------
    The parenthetical mono label. The section-label pattern everywhere:
-   ( 2,095 places ) · ( the first table ) · ( 1999–2018 )
+   Counts always come from SITE_STATS, never from a literal.
    ------------------------------------------------------------------ */
 .label {
   display: inline-block;
@@ -57,7 +61,7 @@ a:focus-visible {
   line-height: var(--lh-solid);
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--paper-faint);
+  color: var(--ink-faint);
 }
 .label::before { content: "( "; }
 .label::after  { content: " )"; }

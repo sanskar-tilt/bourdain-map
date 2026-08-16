@@ -167,6 +167,26 @@ select coalesce(json_agg(t order by t.first_air), '[]'::json) from (
 """
 
 
+STATS_SQL = """
+select json_build_object(
+  'places',   (select count(*) from places),
+  'cities',   (select count(*) from cities),
+  'episodes', (select count(*) from episodes),
+  'closed',   (select count(*) from places where status = 'closed'),
+  'appearances', (select count(*) from appearances),
+  'broadcastFirst', (select min(air_date) from episodes),
+  'broadcastLast',  (select max(air_date) from episodes),
+  -- Shows whose episodes carry no air date at all. A Cook's Tour is one:
+  -- its Wikipedia table has no date column, so the true start of the
+  -- broadcast range is earlier than we can prove.
+  'undatedShows', (select coalesce(json_agg(distinct show), '[]'::json)
+                   from episodes e where not exists (
+                     select 1 from episodes e2
+                     where e2.show = e.show and e2.air_date is not null))
+);
+"""
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
 
@@ -174,6 +194,11 @@ def main():
     geojson = {'type': 'FeatureCollection', 'features': features}
     with open(os.path.join(OUT, 'places.geojson'), 'w', encoding='utf-8') as f:
         json.dump(geojson, f, ensure_ascii=False, separators=(',', ':'))
+
+    stats = query(STATS_SQL) or {}
+    with open(os.path.join(ROOT, 'content', 'stats.generated.json'), 'w', encoding='utf-8') as f:
+        json.dump(stats, f, ensure_ascii=False, indent=1)
+    print('stats           ' + json.dumps(stats))
 
     trail = query(TRAIL_SQL) or []
     with open(os.path.join(OUT, 'trail.json'), 'w', encoding='utf-8') as f:

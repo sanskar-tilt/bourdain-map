@@ -17,7 +17,7 @@
   font-size: var(--step--1);
   letter-spacing: var(--track-wide);
   text-transform: uppercase;
-  color: var(--paper-faint);
+  color: var(--ink-faint);
 }
 
 /* ------------------------------------------------------------- intro */
@@ -39,7 +39,7 @@
   font-family: var(--font-display-loaded), var(--font-display);
   font-size: var(--step-2);
   line-height: 1.35;
-  color: var(--paper);
+  color: var(--ink);
 }
 
 /* ------------------------------------------------------------ sections */
@@ -75,21 +75,21 @@
 .caption {
   font-size: var(--step--1);
   line-height: 1.5;
-  color: var(--paper-dim);
+  color: var(--ink-dim);
 }
 .caption a {
-  color: var(--paper);
+  color: var(--ink);
   text-decoration-color: var(--edge-strong);
   text-underline-offset: 3px;
 }
-.caption a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.caption a:hover { color: var(--ink); }
 .cardCity {
   display: block;
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: var(--track-mid);
   text-transform: uppercase;
-  color: var(--paper-faint);
+  color: var(--ink-faint);
 }
 
 /* -------------------------------------------------------------- tattoo */
@@ -105,7 +105,7 @@
 /* --------------------------------------------------------------- essay */
 .essay { display: flex; flex-direction: column; gap: var(--s4); }
 .essay p {
-  color: var(--paper-dim);
+  color: var(--ink-dim);
   line-height: 1.75;
   font-size: var(--step-1);
 }
@@ -120,7 +120,7 @@
   border: 1px dashed var(--edge-strong);
   border-radius: 2px;
   background: var(--raised);
-  color: var(--paper-faint);
+  color: var(--ink-faint);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: var(--track-mid);
@@ -128,14 +128,14 @@
   padding: var(--s3);
 }
 
-.todo { color: var(--paper-faint); }
+.todo { color: var(--ink-faint); }
 .todoTag {
   display: block;
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: var(--track-wide);
   text-transform: uppercase;
-  color: var(--accent-dim);
+  color: var(--ink-faint);
   margin-bottom: var(--s2);
 }
 .placeholder {
@@ -148,7 +148,7 @@
   background: var(--raised);
 }
 .placeholderNote {
-  color: var(--paper-faint);
+  color: var(--ink-faint);
   font-size: var(--step-0);
   line-height: 1.65;
 }
@@ -156,7 +156,7 @@
 .about code {
   font-family: var(--font-mono);
   font-size: 0.9em;
-  color: var(--paper-dim);
+  color: var(--ink-dim);
 }
 
 /* ------------------------------------------------------ non-negotiables */
@@ -176,12 +176,12 @@
   gap: var(--s3);
 }
 .plain li {
-  color: var(--paper-dim);
+  color: var(--ink-dim);
   line-height: 1.7;
   padding-left: var(--s4);
   border-left: 1px solid var(--edge);
 }
-.plain strong { color: var(--paper); font-weight: 400; }
+.plain strong { color: var(--ink); font-weight: 400; }
 
 @media (max-width: 720px) {
   .intro { grid-template-columns: 96px 1fr; }

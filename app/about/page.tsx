@@ -1,4 +1,5 @@
 import { placeBySlug } from "../../lib/detail";
+import { siteStats, n } from "../../lib/stats";
 import {
   aboutManifest,
   photoMeta,
@@ -60,6 +61,7 @@ function Photo({
 }
 
 export default function About() {
+  const stats = siteStats();
   const m = aboutManifest();
   const photos = photoMeta();
   const places = (m.places ?? []).filter(
@@ -205,8 +207,8 @@ export default function About() {
           <li>
             Almost every place on this map comes from a map{" "}
             <strong>deannd</strong> built on r/AnthonyBourdain over about two
-            years, watching the shows and writing down where he went. 2,095
-            places. Used with permission. Her descriptions appear throughout,
+            years, watching the shows and writing down where he went.{" "}
+            {n(stats.places)} places. Used with permission. Her descriptions appear throughout,
             quoted and credited — they&rsquo;re hers, not mine.
           </li>
           <li>

@@ -1,5 +1,5 @@
 .place { display: flex; flex-direction: column; gap: var(--s4); max-width: var(--measure); }
-.missing { color: var(--paper-dim); }
+.missing { color: var(--ink-dim); }
 
 .name {
   font-family: var(--font-display-loaded), var(--font-display);
@@ -12,17 +12,17 @@
   font-size: var(--step--1);
   letter-spacing: var(--track-mid);
   text-transform: uppercase;
-  color: var(--paper-dim);
+  color: var(--ink-dim);
 }
-.meta a { color: var(--paper-dim); text-decoration-color: var(--edge-strong); }
-.meta a:hover { color: var(--accent); }
+.meta a { color: var(--ink-dim); text-decoration-color: var(--edge-strong); }
+.meta a:hover { color: var(--ink); }
 /* Absence, not a badge. No pill, no border, no colour of its own — the
    name recedes toward the paper and the word sits in the metadata line
    like any other fact about the place. */
-.gone { color: var(--paper-faint); }
+.gone { color: var(--ink-faint); }
 .gone::before { content: "· "; }
-.place[data-gone="true"] .name { color: var(--paper-dim); }
-.statusNote, .unnamed { color: var(--paper-dim); font-size: var(--step-0); }
+.place[data-gone="true"] .name { color: var(--ink-dim); }
+.statusNote, .unnamed { color: var(--ink-dim); font-size: var(--step-0); }
 .unnamed { font-family: var(--font-display-loaded), var(--font-display); font-size: var(--step-1); }
 
 .visits { list-style: none; margin: var(--s3) 0 0; padding: 0;
@@ -32,37 +32,37 @@
 .show {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s3);
   font-size: var(--step--1); letter-spacing: var(--track-wide);
-  text-transform: uppercase; color: var(--paper);
+  text-transform: uppercase; color: var(--ink);
 }
-.se { font-family: var(--font-mono); font-size: 10px; color: var(--paper-faint);
+.se { font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint);
   letter-spacing: var(--track-mid); }
 .epTitle { font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-1); color: var(--paper-dim); }
+  font-size: var(--step-1); color: var(--ink-dim); }
 
 /* An inferred episode is real information held at lower confidence, so it is
    dimmer and carries a qualifier rather than being hidden or asserted. */
 .epTitleSoft { font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-1); color: var(--paper-faint);
+  font-size: var(--step-1); color: var(--ink-faint);
   display: flex; flex-direction: column; gap: 1px; }
 .seSoft { font-family: var(--font-mono); font-size: 10px;
-  color: var(--paper-faint); letter-spacing: var(--track-mid);
+  color: var(--ink-faint); letter-spacing: var(--track-mid);
   border-bottom: 1px dotted var(--edge-strong); }
 .qualifier { font-family: var(--font-body-loaded), var(--font-body);
   font-size: 10.5px; letter-spacing: var(--track-mid);
-  text-transform: uppercase; color: var(--paper-faint); opacity: 0.8; }
+  text-transform: uppercase; color: var(--ink-faint); opacity: 0.8; }
 .ate { font-family: var(--font-display-loaded), var(--font-display);
   font-size: var(--step-2); line-height: 1.25; }
 
 .quote { margin: 0; }
 .quote blockquote { margin: 0; padding-left: var(--s4);
-  border-left: 1px solid var(--edge-strong); color: var(--paper-dim);
+  border-left: 1px solid var(--edge-strong); color: var(--ink-dim);
   font-size: var(--step-0); line-height: 1.65; }
 .quote figcaption { margin-top: var(--s2); padding-left: var(--s4);
   font-family: var(--font-mono); font-size: 9.5px;
   letter-spacing: var(--track-wide); text-transform: uppercase;
-  color: var(--paper-faint); }
+  color: var(--ink-faint); }
 
 .credit { margin-top: var(--s4); padding-top: var(--s4);
-  border-top: 1px solid var(--edge); color: var(--paper-faint);
+  border-top: 1px solid var(--edge); color: var(--ink-faint);
   font-size: var(--step--1); line-height: 1.6; }
-.credit strong { color: var(--paper-dim); font-weight: 400; }
+.credit strong { color: var(--ink-dim); font-weight: 400; }

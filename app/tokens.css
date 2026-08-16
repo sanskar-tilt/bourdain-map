@@ -17,10 +17,10 @@
   --edge-strong: #B3B3A9;
 
   /* ---- ink (named for role, not hue) ---- */
-  --paper:       #16181B;
-  --paper-dim:   #4B4F55;
-  --paper-faint: #75797F;
-  --paper-ring:  #9DA0A5;
+  --ink:       #16181B;
+  --ink-dim:   #4B4F55;
+  --ink-faint: #75797F;
+  --ink-ring:  #9DA0A5;
 
   /* ---- the one accent ---- */
   --accent:      #B8342A;

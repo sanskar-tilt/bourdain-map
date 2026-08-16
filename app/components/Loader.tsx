@@ -3,25 +3,24 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./home.module.css";
 
-/* Counts 000 → 2,095 in about three seconds, with place names flickering
-   behind the number. Non-linear: quick through the middle, slow at both
+/* Counts up to the real place count, with food photographs cycling in the O
+   of BOURDAIN behind it. Non-linear: quick through the middle, slow at both
    ends, so the last few hundred are readable rather than a blur.
 
    Plays once per session. On a repeat visit an inline script in the page
    head has already hidden it before paint, so there is no flash.
    Reduced-motion skips it entirely — no loader at all, not a fast one. */
 
-const TOTAL = 2095;
-const DURATION = 3000;
+const DURATION = 4000;   // 4s, or the object cycle cannot register
 const WIPE = 1200;
 
 /* Ease-in-out on the count itself: dwell at the ends, sprint through the
    middle. A linear counter reads as a progress bar; this reads as someone
    totting something up. */
 const dwell = (t: number) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-export default function Loader({ flicker }: { flicker: string[] }) {
+export default function Loader({ flicker, total }: { flicker: string[]; total: number }) {
   const [n, setN] = useState(0);
   const [word, setWord] = useState(flicker[0] ?? "");
   const [phase, setPhase] = useState<"idle" | "run" | "wipe" | "done">("idle");
@@ -42,7 +41,7 @@ export default function Loader({ flicker }: { flicker: string[] }) {
 
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / DURATION);
-      setN(Math.round(dwell(t) * TOTAL));
+      setN(Math.round(dwell(t) * total));
 
       // The names cycle faster than the eye can settle on them, which is
       // the point: it should read as a lot of places, not as a list.
@@ -65,7 +64,7 @@ export default function Loader({ flicker }: { flicker: string[] }) {
       cancelAnimationFrame(raf.current);
       document.documentElement.style.overflow = "";
     };
-  }, [flicker]);
+  }, [flicker, total]);
 
   if (phase === "done" || phase === "idle") return null;
 
