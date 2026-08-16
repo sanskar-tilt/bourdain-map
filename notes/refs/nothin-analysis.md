@@ -29,9 +29,17 @@ custom GSAP application wearing a Webflow shell. The craft is bought with a
 dedicated developer and 752KB of JavaScript, not with a tool.
 
 **Stack, by occurrence count in the bundle:** GSAP 3.13.0 (65), Observer (16),
-Lenis (14), Flip (10), ScrollTrigger (4), ScrollSmoother (3), a trace of three.js
-(1). Page transitions via Taxi.js (`data-taxi`, `data-taxi-view`,
-`data-taxi-link` on the page).
+Lenis (14), Flip (10), ScrollTrigger (4), ScrollSmoother (3). Page transitions
+via Taxi.js (`data-taxi`, `data-taxi-view`, `data-taxi-link` on the page).
+
+> **Correction (see `nothin-motion.md`).** I originally recorded "a trace of
+> three.js (1)" here. That was wrong: **three.js is fully bundled** —
+> `WebGLRenderer` ×35, `isMesh` ×56, `Quaternion` ×23, `ShaderMaterial` ×16,
+> `BufferGeometry` ×14, and the literal `data-engine three.js r…` string. My
+> count of 1 was a grep for the lowercase word "three", which barely appears
+> in three.js's own source because everything is class names. Counting
+> identifiers in a minified bundle measures what survived minification, not
+> what is there.
 
 ---
 
@@ -179,22 +187,38 @@ scroll listener, no drift.
 
 ---
 
-## 4. The letter split — hand-rolled, not SplitText
+## 4. The letter split — SplitText, with masking
 
-GSAP's SplitText plugin is **not** in the bundle. They wrote their own:
+> **Corrected.** I first concluded they had hand-rolled this because grepping
+> for `SplitText` returned nothing. It returns nothing because the import is
+> minified to a two-letter identifier. The plugin *is* registered, and the
+> config is visible in the bundle:
+>
+> `{ type: "chars", charsClass: "letter-child", mask: "chars", autoSplit: false, aria: "auto" }`
+>
+> `mask`, `autoSplit` and `aria` are all GSAP 3.13 SplitText options, so this
+> is the current plugin, not an imitation of its API.
 
-- `textContent.split("")` for characters
-- `split(" ")` for words (15 occurrences)
-- `createElement("span")` to wrap each fragment
-- results exposed as `.chars`, `.words`, `.lines` — the same API shape as
-  SplitText, so the animation code reads identically
+What that config actually says, and it is the interesting part:
 
-Then `.chars` is staggered at 0.03–0.08s with `power4.out`.
+- **`mask: "chars"`** — SplitText wraps every character in an overflow-hidden
+  parent for free. That is what makes characters rise from behind a clean edge
+  rather than fading in place, and it is a single option rather than a nest of
+  wrapper divs.
+- **`aria: "auto"`** — the split text stays readable to a screen reader. A
+  naive per-character split destroys the accessible string; this restores it.
+  They got that right without appearing to think about it, and it is the one
+  accessibility detail in a bundle with zero `prefers-reduced-motion`.
+- **`autoSplit: false`** — they re-split manually rather than on font load.
 
-Worth noting what that buys and costs: SplitText is a paid GSAP plugin, so
-this is maybe 40 lines to avoid a licence. The line-splitting is the hard part
-(it needs measurement and re-splitting on resize) — and they have
-`ResizeObserver` in the bundle four times, which is where that goes.
+Then `.chars` is staggered at 0.03–0.08s. The `ResizeObserver` ×4 in the
+bundle is where re-splitting on resize lives.
+
+**What this changes for us:** the lesson is not "write your own splitter". It
+is that the masked-line reveal is one option on a mature plugin, and the
+accessible-text handling comes with it. Our CSS `.line-mask` does the same job
+at line granularity with no library — but we split on sentences and keep the
+full string in the DOM, so the accessible text survives for the same reason.
 
 ---
 
