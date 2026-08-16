@@ -113,6 +113,52 @@ voice. Site copy comes from `notes/why.md`.
 
 ---
 
+## Schema — cities, episodes, video
+
+Proposed before migrating, per instruction. Four additions.
+
+**`cities`** — city pages need a stable URL and a flyTo target, and
+`places.city` is raw geocoder output with all its inconsistency ("Yangon
+City", "San Francisco", "City of Westminster"). Keep that text column as
+provenance and add a normalised table beside it.
+
+    cities(id, slug unique, name, country_code, centroid geography,
+           video_url, video_title, video_source, created_at)
+    places.city_id -> cities(id)
+
+Centroid is computed from the places in the city, so flying to a city needs
+one row rather than an aggregate over 2,095.
+
+**`episodes`** — canonical, independent of our places. 302 rows.
+
+    episodes(id, show, season, episode, overall_episode, title, air_date,
+             source_locations text[], unique(show, season, episode))
+
+`source_locations` keeps the raw Wikipedia location strings so a bad match
+can be re-derived later without refetching.
+
+**`city_episodes`** — many-to-many, because the join genuinely is. Some
+cities appear in several episodes across several shows; some episodes cover a
+country and therefore several of our cities.
+
+    city_episodes(city_id, episode_id, match_kind, primary key(city_id, episode_id))
+
+`match_kind` records *how* we matched — `exact` (city name), `country`,
+`region`, `manual` — so a weak match is visibly weak rather than
+indistinguishable from a strong one.
+
+**Backfill rule for `appearances`.** Only where the existing season matches
+or is NULL. A season the KML folders gave us is never overwritten. Conflicts
+are written to `notes/episode-conflicts.log` and left alone.
+
+**Video is a column, not yet a value.** The rule is official uploads only —
+CNN and Zero Point Zero's own channels. I can't determine official-versus-rip
+for 302 episodes without a YouTube Data API key, and guessing risks linking
+exactly the pirated uploads the brief rules out. Columns ship empty; see
+`questions.md`.
+
+---
+
 ## Design
 
 Three directions built as static mockups in `notes/refs/`. All three stay on
