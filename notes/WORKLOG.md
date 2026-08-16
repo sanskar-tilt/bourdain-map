@@ -188,3 +188,62 @@ One more test-vs-code incident, same pattern as every other one this run: the
 scrub test used `el.offsetTop`, which is relative to the nearest positioned
 ancestor, and scrolled to y≈589 instead of y≈2388 — reading progress 0 against
 a mechanism a standalone probe showed working at 0.517. Document-relative now.
+
+---
+
+# Final summary — blunt, as instructed
+
+## What changed
+
+1. Pull-back deleted, cleanly — no `--p`, no orphan subscribers, tests replaced
+   not just removed.
+2. Fluid hero: BOURDAIN over a real stable-fluids sim revealing a build-time
+   PNG of all 2,095 pins. Specified constants, hard gates, static fallback
+   that is a finished frame. Worst frame under load beat the idle baseline.
+3. Duration sweep: everything banded, two curves plus the one sanctioned
+   cursor exception, and **three transitions that had been silently dead for
+   days** (map panel slide included) found and restored.
+4. SIT DOWN pill: lerp 0.09 on the shared loop, 68.9px of measured lag,
+   photographs untouched under it.
+5. **Blocked** — no card grid renders without content. Logged, not faked.
+6. Trail set-piece: the one pin, linear against the scrollbar, gated.
+
+## What I could not verify
+
+- The fluid sim on a real GPU/trackpad. Headless numbers are honest but the
+  *feel* of ink — dissipation rates, splat radius, edge softness — is tuned
+  blind. Look at it before believing it.
+- Real 60fps on battery-throttled hardware or mobile Safari. Same caveat as
+  the map: needs a device.
+- The literal "no frame over 16ms": unmeasurable — the idle compositor alone
+  jitters to 17.6ms. I asserted "no missed vsync" instead and said so.
+- `opening.webm` predates the 1600ms curtain; stale by 400ms of tail.
+
+## What I think is wrong with the result
+
+- **The hero reveal is too subtle.** 2,095 pins across a whole world means
+  the ink mostly reveals empty ground; you have to sweep through Europe or
+  the US seaboard to feel it. Options if you agree: brighten pins in the
+  hero PNG, or crop it to a denser region. One-line regeneration either way.
+- **The homepage is type and simulation with zero photographs** — every pool
+  is empty. The fluid hero carries it for now, but the pairing section is a
+  labelled gap and the loader cycles an empty O. It reads as a beautiful
+  skeleton. Content is the bottleneck now, not build.
+- **1.2s on the map panel slide may be too slow in practice.** It obeys the
+  entrance band, but a panel you open twenty times in a session earns the
+  right to be quicker. Doctrine and usability may collide there; a device
+  session will tell.
+- The cue idle loop (2600ms) and the loader choreography sit outside the
+  duration bands by documented exemption. If the bands are meant as law with
+  no exemptions, say so and I'll fold them in.
+- Step 4's overshoot curve breaking step 3's two-curve rule is resolved by
+  tokenised exception, but it is still three curves on the site. The gate
+  greps would not catch a fourth being added the same way.
+
+## Pattern worth keeping
+
+Six steps produced five harness bugs and three product bugs. Every single
+"failure" that contradicted a standalone probe was the test. Every silent
+green that felt too easy hid something (stale out/, skipped photo check).
+The stale-build guard fired on its first opportunity. Keep the rule: proofs
+on their own pages, and when a test disagrees with a probe, suspect the test.
