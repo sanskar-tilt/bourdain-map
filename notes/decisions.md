@@ -316,3 +316,31 @@ figures everywhere, one accent only, and no gradients.
 **Design tokens live in one place.** Palette, type and spacing are CSS custom
 properties in a single tokens file, never literals in components. Changing
 direction later is a restyle, not a rebuild.
+
+---
+
+## Ship-everything pass
+
+One line each, as agreed — width over depth.
+
+- **Tiles: Protomaps hosted API for launch**, `NEXT_PUBLIC_PROTOMAPS_KEY`. The
+  3.7GB self-hosted z0–z10 extract is built and verified rendering; R2 is a
+  swap of one env var later.
+- **Auth is magic-link only.** No passwords, no OAuth. Profile row is created
+  by the existing trigger; the only editable field is display name.
+- **Gatherings are open/join/see.** No waitlist, no cancellation flow, no
+  email. Seat counts come from `gathering_seats`; the base table stays private.
+- **Added a `host sees guests` policy.** Found by testing rather than reading:
+  `own rsvp` meant a host looking at their own dinner saw one guest, themselves.
+- **Stories publish themselves.** The author flips `published` immediately
+  after insert. No moderation queue.
+- **Corrections are signed-in only.** Anonymous submission would get more
+  corrections and more spam; login is the cheaper default to start with.
+- **The first table is seeded by SQL, not config.** `supabase/first-table.sql`
+  — it needs an `auth.users` row, so it can only run after the host has signed
+  in once. Idempotent.
+- **London is three cities** — "Greater London", "City of Westminster", "City
+  of London" — because that is what Nominatim returns. 26 places between them.
+  Not merged; merging would be guessing at boundaries.
+- **Clusters with tiles under them:** they sit on geography now and read far
+  less like a dashboard than they did on black. Left alone.

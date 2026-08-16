@@ -1,4 +1,5 @@
 import { allPlaces, placeBySlug, SHOW_NAMES } from "../../../lib/detail";
+import PlaceActions from "../../components/PlaceActions";
 import styles from "./place.module.css";
 
 export function generateStaticParams() {
@@ -106,6 +107,8 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
           );
         })}
       </ol>
+
+      <PlaceActions placeId={place.id} placeName={place.name} />
 
       <p className={styles.credit}>
         This place, and what he ate here, comes from the map <strong>deannd</strong>{" "}

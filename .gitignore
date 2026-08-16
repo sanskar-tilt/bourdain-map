@@ -47,3 +47,4 @@ next-env.d.ts
 # generated image renditions
 /public/about/opt
 /content/about.generated.json
+.env.local

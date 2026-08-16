@@ -109,3 +109,17 @@ map goes in.
 lodging` — derived only from No Reservations' folders. If the marker vocabulary
 needs finer distinctions (a bar is not a restaurant; a hot spring is not a
 museum) that needs data we don't have.
+
+---
+
+## Batched from the ship-everything pass
+
+- **deannd's My Maps URL** — still the one missing link. Slot is ready in
+  `app/city/[slug]/page.tsx` (`DEANND_MAPS_URL`).
+- **Luma** — the site's own tables work without it. If you want off-site RSVPs
+  too, that's a link you paste wherever you're sharing, not a code change.
+- **Supabase's built-in email sender is rate-limited** to a few an hour. Fine
+  for the first table; add SMTP (Resend free tier) if it fills.
+- **Anonymous corrections?** Currently signed-in only. Say the word and it's a
+  one-line grant.
+- **Should London's three cities be merged into one page?** Currently three.

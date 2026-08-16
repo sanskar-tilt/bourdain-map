@@ -99,7 +99,7 @@ DETAIL_SQL = """
 select json_build_object(
   'places', (
     select coalesce(json_agg(json_build_object(
-      'slug', p.slug, 'name', p.name, 'status', p.status,
+      'id', p.id, 'slug', p.slug, 'name', p.name, 'status', p.status,
       'statusNote', p.status_note, 'kind', p.kind,
       'city', c.name, 'citySlug', c.slug, 'cc', p.country_code,
       'lon', round(extensions.st_x(p.geog::extensions.geometry)::numeric, 5),
@@ -118,7 +118,7 @@ select json_build_object(
   ),
   'cities', (
     select coalesce(json_agg(json_build_object(
-      'slug', c.slug, 'name', c.name, 'cc', c.country_code,
+      'id', c.id, 'slug', c.slug, 'name', c.name, 'cc', c.country_code,
       'lon', round(extensions.st_x(c.centroid::extensions.geometry)::numeric, 5),
       'lat', round(extensions.st_y(c.centroid::extensions.geometry)::numeric, 5),
       'videoUrl', c.video_url, 'videoTitle', c.video_title,

@@ -23,6 +23,7 @@ export type Appearance = {
 };
 
 export type PlaceDetail = {
+  id: string;
   slug: string;
   name: string;
   status: string;
@@ -46,6 +47,7 @@ export type CityEpisode = {
 };
 
 export type CityDetail = {
+  id: string;
   slug: string;
   name: string;
   cc: string | null;

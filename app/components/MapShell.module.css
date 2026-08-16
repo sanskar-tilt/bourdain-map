@@ -26,6 +26,17 @@
 }
 .wordmark:hover { color: var(--accent); }
 
+.nav { display: flex; gap: var(--s3); }
+.nav a {
+  color: var(--paper-faint);
+  text-decoration: none;
+  font-size: var(--step--1);
+  letter-spacing: var(--track-mid);
+}
+.nav a:hover { color: var(--paper); }
+
+@media (max-width: 640px) { .nav { display: none; } }
+
 .searchTrigger {
   margin-left: auto;
   display: flex;

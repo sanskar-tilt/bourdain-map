@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Where he ate
 
-## Getting Started
+A map of every place Anthony Bourdain ate, and a way to go and eat there with
+someone you haven't met. Fan-made, non-commercial, not affiliated with the
+Bourdain estate, CNN, or Zero Point Zero.
 
-First, run the development server:
+2,095 places · 2,135 appearances · 746 cities · 302 episodes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## How it's put together
+
+**The database is a compiler.** Postgres is the build-time workbench; the site
+reads static artifacts and never queries a database to draw the map.
+
+```
+data/*.kml            deannd's five Google My Maps exports
+  → scripts/import_kml.py        → supabase/seed.sql
+  → scripts/geocode.py           → supabase/seed_geocode.sql   (Nominatim, cached)
+  → scripts/fetch_episodes.py    → data/episodes.json          (Wikipedia, cached)
+  → scripts/build_cities.py      → supabase/seed_cities.sql
+  → scripts/export_map_data.py   → public/data/*.json  +  data/detail.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Every stage is idempotent, offline where it can be, and writes a log to
+`notes/`. Re-run any one of them alone.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**The write path** — sign-in, tables, RSVPs, stories, corrections — is
+client-side Supabase on top of the static pages, gated by RLS. Static export
+works for this: both magic-link flows resolve in the browser. Don't reach for
+`@supabase/ssr`; its cookie session needs a server and would force SSR.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Running it locally
 
-## Learn More
+```bash
+npm install
+supabase start                       # local Postgres + auth, needs Docker
+supabase db reset                    # migrations + all three seed files
+python3 scripts/export_map_data.py   # regenerate the static artifacts
+npm run dev                          # http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+`npm run build` produces a static export in `out/`. It runs
+`scripts/optimise_photos.mjs` first, which resizes the About page's photos.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Copy `.env.example` to `.env.local` for local work, and set the same four in
+Vercel (Project → Settings → Environment Variables, all environments).
 
-## Deploy on Vercel
+| Variable | What it's for | Where to get it |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Auth, tables, stories, corrections | Supabase → Project Settings → Data API |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same | Supabase → Project Settings → API Keys → `anon` / publishable |
+| `NEXT_PUBLIC_PROTOMAPS_KEY` | Basemap tiles | https://protomaps.com → sign up → API key |
+| `NEXT_PUBLIC_PMTILES_URL` | Basemap tiles, self-hosted alternative | A `.pmtiles` URL on R2. Leave unset if using the key above |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All four are `NEXT_PUBLIC_`, so all four end up in the browser bundle. That is
+correct for every one of them: the anon key is designed to be public and is
+useless without the RLS policies, and the tile key is a per-domain read key.
+No secret ever goes in this app — there is no server to keep one on.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Without the tile variables the map still runs: pins on a flat ground, with a
+note in the corner. Without the Supabase ones, the map and every page work and
+the interactive bits say they aren't configured.
+
+## Deploying
+
+See `notes/launch.md` for the click-by-click. Short version:
+
+```bash
+supabase link --project-ref YOUR_REF
+supabase db push                                    # schema
+psql "$DB_URL" -f supabase/seed.sql                 # 2,095 places
+psql "$DB_URL" -f supabase/seed_geocode.sql
+psql "$DB_URL" -f supabase/seed_cities.sql
+vercel --prod
+```
+
+## The parts worth knowing about
+
+- **`notes/decisions.md`** — everything settled and why, including the things
+  that turned out to be wrong.
+- **`notes/questions.md`** — what still needs a human.
+- **`notes/perf.md`** — measured numbers, including two budgets that are missed.
+- **`notes/import-skips.log`**, **`notes/episode-matching.log`**,
+  **`notes/geocode-failures.log`** — what each stage refused to guess at.
+- **`content/about.json`** — the whole About page. Photos and prose slot in
+  without touching code.
+
+## Credit
+
+Almost every place here comes from a map **deannd** built on r/AnthonyBourdain
+over about two years. Used with permission. Her descriptions appear throughout,
+quoted and credited — they're hers, not ours.
+
+This site sells nothing and never will.

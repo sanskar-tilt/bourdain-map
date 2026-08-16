@@ -81,6 +81,12 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
 
       <header className={styles.masthead}>
         <a href="/" className={styles.wordmark}>Where he ate</a>
+        <nav className={styles.nav}>
+          <a href="/tables/">Tables</a>
+          <a href="/stories/">Stories</a>
+          <a href="/about/">About</a>
+          <a href="/account/">You</a>
+        </nav>
         <button
           type="button"
           className={styles.searchTrigger}
