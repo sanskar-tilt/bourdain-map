@@ -2,6 +2,9 @@
 .map { position: absolute; inset: 0; background: var(--map-water); }
 
 /* MapLibre's own chrome, brought into the palette. */
+/* Clear the masthead. */
+.map :global(.maplibregl-ctrl-top-right) { margin-top: 62px; }
+
 .map :global(.maplibregl-ctrl-group) {
   background: var(--panel);
   border: 1px solid var(--edge);
@@ -21,11 +24,15 @@
 .corner {
   position: absolute;
   left: var(--s5); bottom: var(--s4);
+  /* Hard stop clear of the attribution, so nothing added here later can grow
+     into it however long the copy gets. */
+  right: 200px;
   z-index: var(--z-chrome);
   display: flex; flex-direction: column; align-items: flex-start;
   gap: var(--s2);
   pointer-events: none;
 }
+.corner > p { max-width: 100%; overflow-wrap: anywhere; }
 .corner > * { pointer-events: auto; }
 
 .status, .noTiles {

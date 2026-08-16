@@ -85,7 +85,10 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
     // headless perf/diagnostic scripts. Read-only in practice.
     (window as unknown as { __map?: unknown }).__map = m;
 
-    m.addControl(new NavigationControl({ showCompass: false }), "bottom-right");
+    // Top-right, under the masthead. The bottom edge belongs to the status
+    // line and the attribution, and stacking three things into one corner is
+    // how they end up on top of each other.
+    m.addControl(new NavigationControl({ showCompass: false }), "top-right");
 
     m.on("load", () => {
       // Empty source first, so layers exist and the first frame paints before

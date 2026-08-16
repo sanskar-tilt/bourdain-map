@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
   // /_next/static/chunks/*.js simply abort. Both spellings of localhost are
   // the same machine.
   allowedDevOrigins: ["127.0.0.1", "localhost"],
+  // The dev-tools badge defaults to bottom-left, directly on top of the map's
+  // status line. Dev-only, so it never affected production, but it obscured
+  // the empty state during development.
+  devIndicators: { position: "bottom-right" },
 };
 
 export default nextConfig;
