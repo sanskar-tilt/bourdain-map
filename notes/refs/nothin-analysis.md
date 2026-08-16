@@ -277,3 +277,110 @@ copying the volume would wreck the thing that actually matters here.
 The one idea worth stealing outright is **`once: true`**: things settle and
 stay settled. A map that re-animates every time you pan would be intolerable,
 and that principle is free.
+
+---
+
+# Addendum — who built it, and what they publish
+
+Searched 2026-08-16. The short answer: **neither of them publishes code.** No
+GitHub, no CodePen, no CodeSandbox, no cloneable Webflow projects, no technique
+writeups. The work is visible; the method is not. That is itself worth knowing
+before spending more time looking.
+
+## Thomas Carré — development
+
+Carre Studio, freelance creative developer, France. Awwwards **jury member**,
+which is context for the work: he is inside the judging apparatus he wins in.
+
+Twelve credited projects on Awwwards, **six Site of the Day**:
+
+| Project | Award | Date | Credited with |
+|---|---|---|---|
+| NOTHIN' | SOTD | 10 Aug 2026 | Pierre Patrault |
+| RISK | SOTD | 15 Jul 2026 | FLOT NOIR |
+| Detroit Paris | SOTD | 27 Apr 2026 | solo |
+| MERSI | SOTD + Portfolio Honors | Apr / Mar 2026 | FLOT NOIR |
+| Ousmane Dembélé — Ballon d'Or | SOTD | 24 Dec 2025 | FLOT NOIR |
+| House Of Corto | SOTD | 3 Dec 2025 | FLOT NOIR |
+| TRIPLETTA PIZZA | SOTD | 4 Apr 2025 | — |
+| GMB Graphic, Treize Grammes, 30th\|Ibuka, Flaire, Carre Studio | Honorable mentions | 2023–25 | — |
+
+**FLOT NOIR appears on five of them.** The recurring pairing is a design studio
+plus one developer — the same shape as NOTHIN' (Patrault design, Carré dev).
+Worth noting because it means the craft level is a *standing team*, not a
+one-off effort. Five SOTDs in nine months is a production line.
+
+Stated stack across his own portfolio: JavaScript, Three.js, WebGL, Blender,
+React, Ruby, Figma, Webflow. Consistent with what is actually in the NOTHIN'
+bundle.
+
+`carre.studio` is currently a holding page — "2026 temporary portfolio", asking
+you to email for recent work, with the 2023 site parked at `/old-home`. Even the
+portfolio is not really public.
+
+### The one genuinely open artefact
+
+**"Hover Killer"** — his entry in the Webflow × GSAP Community Challenge,
+written up on the Webflow blog (Dec 2025). You type text, then kill it by
+hovering, with sound. Built on **MorphSVG**, and the GSAP team's stated reason
+for picking it was that clean morphs require careful asset preparation rather
+than clever code.
+
+That is the only technique-adjacent thing either of them has published, and the
+lesson in it is not a code pattern — it is that the difficulty was in preparing
+the assets so the interpolation had somewhere good to go.
+
+## Pierre Patrault — design
+
+Paris art director, roughly ten years freelance, principally with the
+communications agency **Adelios**. Visual identity, UI and UX across web and
+mobile; clients listed include Vinci, Etam, AXA. Portfolio on Behance and an
+older Cargo Collective site. Credited as creative director and designer on
+noth.in, for client **Sara Guedj**.
+
+No public code, no process writeups, no open files. Design output only.
+
+## What else is served around nothinv1.netlify.app
+
+Checked only what the page itself advertises — no path enumeration.
+
+| Path | Result |
+|---|---|
+| `/main.js` | 200, 752KB, the bundle |
+| `/` | **404** |
+| `/robots.txt` | **404** |
+| source map | **not published** — no `sourceMappingURL` in the bundle |
+
+So the Netlify site is a single-file delivery endpoint for one script and
+nothing else. There is no dev build, no map, no asset directory. The only URLs
+inside the bundle are GSAP's own internal error-message strings — meaning the
+whole thing is self-contained with no runtime CDN dependencies.
+
+Reading it means reading minified output, which is how I got the numbers in the
+first half of this document. There is no shortcut available and none was left
+lying around.
+
+## What this changes about the earlier conclusion
+
+It sharpens it. The bar in that first section is not one person having a good
+month — it is a repeating design-studio-plus-developer pairing shipping at that
+level roughly every six weeks, with the developer sitting on the Awwwards jury.
+
+Two useful consequences for us:
+
+1. **Stop looking for the trick.** There is no public repo, no cloneable, no
+   writeup, because there is no trick. The numbers in part one — eleven type
+   sizes, two easing curves, 0.6s median, `once: true`, `+0.03em` on 12px
+   labels — *are* the method, and we already have them written down.
+2. **The one published lesson is about preparation, not code.** MorphSVG won
+   because the assets were prepared properly. Our equivalent is already the
+   thing we have spent most of this build on: the import, the dedupe, the
+   geocoding, refusing to guess at episodes. That work is the analogue of clean
+   morph targets, and it is the part that no amount of animation would rescue.
+
+Sources: [Awwwards profile](https://www.awwwards.com/thomas-carre/) ·
+[Carre Studio](https://www.carre.studio/) ·
+[old portfolio](https://www.carre.studio/old-home) ·
+[Webflow × GSAP challenge writeup](https://webflow.com/blog/webflow-gsap-community-challenge-winners) ·
+[NOTHIN' on Awwwards](https://www.awwwards.com/sites/nothin) ·
+[Pierre Patrault on Behance](https://www.behance.net/pierrepatrault)
