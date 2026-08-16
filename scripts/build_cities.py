@@ -86,6 +86,28 @@ def key_for(lon, lat):
     return f'{lat:.5f},{lon:.5f}'
 
 
+POSTCODE = re.compile(r'^[0-9][0-9A-Za-z \-]*$')
+
+
+def metro_from_display(display, city_name):
+    """The metro name a person would actually type.
+
+    Tokyo's wards carry no state or province in Nominatim's address object,
+    but the display name has it: "Nishi-Shinjuku 1, Nishi-Shinjuku, Shinjuku,
+    Tokyo, 160-0023, Japan". So take the last component before the country,
+    skipping postcodes, and skipping the city itself.
+    """
+    parts = [p.strip() for p in (display or '').split(',') if p.strip()]
+    if len(parts) < 3:
+        return None
+    parts = parts[:-1]                                   # drop the country
+    parts = [p for p in parts if not POSTCODE.match(p)]  # drop postcodes
+    for cand in reversed(parts):
+        if fold(cand) and fold(cand) != fold(city_name):
+            return cand
+    return None
+
+
 def main():
     places = json.load(open(os.path.join(DATA, 'places.json'), encoding='utf-8'))
     cache = json.load(open(os.path.join(DATA, 'geocode-cache.json'), encoding='utf-8'))
@@ -113,6 +135,7 @@ def main():
             # Kept only as a slug fallback for names in non-Latin scripts.
             # The displayed name always stays the local one.
             'county': addr.get('county'), 'state': addr.get('state'),
+            'province': addr.get('province'),
             'display': (entry or {}).get('display_name') or '',
         })
         c['lons'].append(p['lon'])
@@ -301,11 +324,18 @@ def main():
            'delete from public.cities;',
            '']
 
-    out.append('insert into public.cities (slug, name, country_code, centroid) values')
+    out.append('insert into public.cities (slug, name, country_code, region, centroid) values')
     rows = []
     for ck in sorted(cities):
         c = cities[ck]
+        # Only worth storing when it differs from the city name, otherwise it
+        # is noise in the search index.
+        region = c.get('state') or c.get('province') or metro_from_display(
+            c.get('display') or '', c['name'])
+        if region and fold(region) == fold(c['name']):
+            region = None
         rows.append(f"  ({sql(c['slug'])}, {sql(c['name'])}, {sql(c['country_code'])}, "
+                    f"{sql(region)}, "
                     f"extensions.st_point({c['centroid'][0]!r}, {c['centroid'][1]!r})::extensions.geography)")
     out.append(',\n'.join(rows) + ';\n')
 

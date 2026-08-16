@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Map as MapLibreMap,
   NavigationControl,
+  Popup,
   addProtocol,
   removeProtocol,
   type GeoJSONSource,
@@ -19,13 +20,14 @@ import styles from "./MapView.module.css";
 /* Colours are duplicated from app/tokens.css because MapLibre resolves style
    JSON outside the CSS cascade. Single source of truth stays the token file;
    these must be changed together. */
-const ACCENT = "#E9A23B";                        /* the one accent: pins only */
-const PAPER_RING = "rgba(232, 228, 218, 0.34)";  /* closed: absence, not a badge */
-const PAPER = "#E8E4DA";
+const ACCENT = "#B8342A";                        /* the one accent: pins only */
+const PAPER_RING = "#9DA0A5";                    /* the ring on a place that is gone */
+const PAPER = "#E6E6E1";   /* the ground; closed pins are filled with it */
+const INK = "#16181B";
 
 /* Above this zoom every pin stands alone. Below it they gather. 7 keeps a
    dense city legible while still collapsing a continent to a constellation. */
-const CLUSTER_MAX_ZOOM = 7;
+const CLUSTER_MAX_ZOOM = 6;
 
 export type PinProps = {
   id: string;
@@ -98,7 +100,7 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         data: { type: "FeatureCollection", features: [] },
         cluster: true,
         clusterMaxZoom: CLUSTER_MAX_ZOOM,
-        clusterRadius: 46,
+        clusterRadius: 20,
         // Carried up into the cluster so a group containing somewhere that is
         // gone can say so without us re-querying the leaves.
         clusterProperties: {
@@ -115,8 +117,8 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         paint: {
           "circle-color": ACCENT,
           "circle-blur": 1,
-          "circle-opacity": 0.28,
-          "circle-radius": ["interpolate", ["linear"], ["zoom"], 6, 4, 12, 11, 16, 18],
+          "circle-opacity": 0.14,
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 6, 4, 12, 10, 16, 16],
         },
       });
 
@@ -132,7 +134,9 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         paint: {
           "circle-color": [
             "case",
-            ["==", ["get", "status"], "closed"], "rgba(0,0,0,0)",
+            // On a light ground absence is a filled paper disc with a thin
+            // ring, not a hole — a hole is invisible against the paper.
+            ["==", ["get", "status"], "closed"], PAPER,
             // A meal with people whose names nobody wrote down: a ring with
             // nothing filled in. Present, lit, unlabelled.
             ["get", "unnamed"], "rgba(0,0,0,0)",
@@ -146,7 +150,7 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
           ],
           "circle-stroke-width": [
             "case",
-            ["==", ["get", "status"], "closed"], 1.3,
+            ["==", ["get", "status"], "closed"], 1.2,
             ["get", "unnamed"], 1.5,
             0,
           ],
@@ -185,7 +189,7 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         source: "places",
         filter: ["==", ["get", "id"], "__none__"],
         paint: {
-          "circle-color": PAPER,
+          "circle-color": INK,
           "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 5, 12, 8, 16, 11],
           "circle-stroke-color": ACCENT,
           "circle-stroke-width": 3,
@@ -194,6 +198,9 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
       });
 
       /* ---- clusters ---------------------------------------------------- */
+      // Not counting-discs. A cluster is one small dot, barely scaled by how
+      // many places it stands for, so the world reads as him everywhere
+      // rather than as data aggregation. The number is on hover.
       m.addLayer({
         id: "clusters",
         type: "circle",
@@ -201,13 +208,13 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         filter: ["has", "point_count"],
         paint: {
           "circle-color": ACCENT,
-          "circle-opacity": 0.16,
-          "circle-stroke-color": ACCENT,
-          "circle-stroke-width": 1,
+          "circle-opacity": 0.9,
+          "circle-stroke-color": PAPER,
+          "circle-stroke-width": 0.6,
           "circle-stroke-opacity": 0.5,
           "circle-radius": [
-            "interpolate", ["linear"], ["get", "point_count"],
-            2, 11, 20, 18, 120, 27, 600, 38,
+            "interpolate", ["linear"], ["sqrt", ["get", "point_count"]],
+            1.4, 2.6, 4.5, 4.2, 11, 6.4, 25, 9,
           ],
           // Radius and opacity ease rather than snapping as clusters merge
           // and split. MapLibre re-clusters per zoom level; the transition is
@@ -216,31 +223,29 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
           "circle-opacity-transition": { duration: 300 },
         },
       });
-      m.addLayer({
-        id: "cluster-count",
-        type: "symbol",
-        source: "places",
-        filter: ["has", "point_count"],
-        layout: {
-          "text-field": ["get", "point_count_abbreviated"],
-          "text-font": ["Noto Sans Medium"],
-          "text-size": ["interpolate", ["linear"], ["get", "point_count"], 2, 10, 200, 13],
-        },
-        paint: {
-          "text-color": PAPER,
-          "text-halo-color": MAP_TOKENS.water,
-          "text-halo-width": 1,
-        },
-      });
-
       /* ---- interaction -------------------------------------------------- */
       const hit = ["pins", "pin-repeat"];
       hit.forEach((id) => {
         m.on("mouseenter", id, () => { m.getCanvas().style.cursor = "pointer"; });
         m.on("mouseleave", id, () => { m.getCanvas().style.cursor = ""; });
       });
-      m.on("mouseenter", "clusters", () => { m.getCanvas().style.cursor = "pointer"; });
-      m.on("mouseleave", "clusters", () => { m.getCanvas().style.cursor = ""; });
+      const countPopup = new Popup({
+        closeButton: false, closeOnClick: false, offset: 10, className: "count-popup",
+      });
+      m.on("mousemove", "clusters", (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
+        m.getCanvas().style.cursor = "pointer";
+        const f = e.features?.[0];
+        if (!f) return;
+        const n = f.properties?.point_count as number;
+        countPopup
+          .setLngLat((f.geometry as GeoJSON.Point).coordinates as [number, number])
+          .setText(`${n} place${n === 1 ? "" : "s"}`)
+          .addTo(m);
+      });
+      m.on("mouseleave", "clusters", () => {
+        m.getCanvas().style.cursor = "";
+        countPopup.remove();
+      });
 
       m.on("click", "pins", (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
         const f = e.features?.[0] as MapGeoJSONFeature | undefined;

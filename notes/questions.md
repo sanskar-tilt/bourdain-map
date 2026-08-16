@@ -123,3 +123,7 @@ museum) that needs data we don't have.
 - **Anonymous corrections?** Currently signed-in only. Say the word and it's a
   one-line grant.
 - **Should London's three cities be merged into one page?** Currently three.
+- **Searching "Tokyo" lands on a ward** (`/city/minato-jp/`, 5 places) rather
+  than on all ~20 Tokyo places. The city unit is whatever the geocoder returned,
+  and merging wards into metros is a judgement call per city. Same for London's
+  three. Worth a metro-level page eventually.

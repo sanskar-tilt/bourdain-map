@@ -12,7 +12,7 @@
   border-radius: 2px;
 }
 .map :global(.maplibregl-ctrl-group button + button) { border-top-color: var(--edge); }
-.map :global(.maplibregl-ctrl-icon) { filter: invert(0.78) sepia(0.1); }
+.map :global(.maplibregl-ctrl-icon) { filter: none; opacity: 0.62; }
 .map :global(.maplibregl-ctrl-attrib) {
   background: color-mix(in srgb, var(--ground) 82%, transparent);
   color: var(--paper-faint);
@@ -58,3 +58,18 @@
   transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
 }
 .reset:hover { color: var(--paper); border-color: var(--edge-strong); }
+
+/* The cluster count, on hover only. */
+.map :global(.count-popup .maplibregl-popup-content) {
+  background: var(--panel);
+  border: 1px solid var(--edge-strong);
+  border-radius: 2px;
+  padding: 3px 8px;
+  box-shadow: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-mid);
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.map :global(.count-popup .maplibregl-popup-tip) { display: none; }

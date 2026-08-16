@@ -344,3 +344,30 @@ One line each, as agreed — width over depth.
   Not merged; merging would be guessing at boundaries.
 - **Clusters with tiles under them:** they sit on geography now and read far
   less like a dashboard than they did on black. Left alone.
+
+---
+
+## Light direction
+
+**Ported direction 1 (Dupe), not 3.** Direction 1 already has exactly one
+accent on cool paper; direction 3 spends its whole colour system on four
+per-show inks, which breaks the rule that the pins are the only saturated
+thing. Colour values ported; the Instrument Serif / Inter Tight pairing stays.
+Ground is grey-green #E6E6E1 and the accent is a printer red #B8342A —
+deliberately not the warm-cream-and-terracotta default CLAUDE.md warns about.
+
+**Closed places on light are filled paper with a thin ring.** A hollow pin is
+invisible against paper, so absence had to invert: the disc is the ground
+colour, the ring is what you see.
+
+**Clusters are dots, not counting-discs.** One small dot per cluster, radius
+on sqrt(count) so it barely scales, count on hover only. Cluster radius
+dropped 46 → 20 and max zoom 7 → 6 so there are more, tighter dots. The world
+should read as him everywhere, not as aggregation.
+
+**`cities.region` exists because Tokyo didn't.** Nominatim returns Tokyo as
+its wards — Minato, Shinjuku, Chuo, Chiyoda — so there was no city called
+Tokyo and searching for it silently flew to Toronto. The metro name comes from
+the state/province where present, and otherwise from the last component of the
+display name before the country. 702 of 746 cities have one, and search
+matches it.

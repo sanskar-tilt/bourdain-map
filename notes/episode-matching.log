@@ -2,7 +2,7 @@ cities derived            746
 places with no city       8
 episodes                  302
 episodes matched to >=1 city  202 (67%)
-city-episode links        1183  {'country': 804, 'exact': 110, 'region': 269}
+city-episode links        1183  {'country': 809, 'exact': 110, 'region': 264}
 cities with any episode   572
   of those, with an EXACT link  73
 (city, show) pairs with >1 candidate  153  (stored, never picked)
@@ -288,7 +288,7 @@ appearance backfills      80 (exact only, season never overwritten)
   WEAK_ONLY  Amar Sagar / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
   WEAK_ONLY  Amar Sagar / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
   WEAK_ONLY  Amritsar / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
-  WEAK_ONLY  Amritsar / parts_unknown: only a region match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Amritsar / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
   WEAK_ONLY  Andrés / no_reservations: only a country match (S9E9 Dominican Republic) — not backfilled
   WEAK_ONLY  Angeles / no_reservations: only a country match (S5E7 Philippines) — not backfilled
   WEAK_ONLY  Antananarivo / parts_unknown: only a country match (S5E5 Madagascar) — not backfilled

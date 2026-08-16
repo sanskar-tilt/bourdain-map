@@ -1,51 +1,50 @@
 /* ------------------------------------------------------------------
    Design tokens.
 
-   Every colour, face, step and easing in the product comes from this
-   file. Nothing downstream declares a literal. Swapping to one of the
-   other directions in notes/refs/ means replacing values here, not
-   touching components.
+   Every colour, face and step in the product comes from this file.
+   Nothing downstream declares a literal.
 
-   Palette rule: near-black ground, off-white paper, ONE accent. The
-   accent is the pins and nothing else. Closed places are paper with a
-   ring — absence, not a second bright colour and not a status badge.
+   Light direction, ported from notes/refs/direction-1-dupe.html. Chosen
+   over direction 3 because it already has exactly one accent; direction
+   3 spends its whole colour system on four per-show inks, which breaks
+   the rule that the pins are the only saturated thing on the screen.
+
+   Palette rule: cool paper ground, carbon ink, ONE accent. The accent
+   is the pins and nothing else. Closed places are filled paper with a
+   thin ring — absence, not a second colour and not a badge.
+
+   Deliberately NOT warm cream: the ground is grey-green (#E6E6E1) and
+   the accent is a printer-ribbon red, not terracotta.
    ------------------------------------------------------------------ */
 
 :root {
-  /* ---- ground: near-black, cooled slightly toward the accent's
-          opposite so it reads as chosen rather than #111 ---- */
-  --ground:      #0B0F13;
-  --panel:       #10161C;
-  --raised:      #161E26;
-  --edge:        #1F2A34;
-  --edge-strong: #2C3A46;
+  /* ---- ground: thermal-paper stock, cooled away from cream ---- */
+  --ground:      #E6E6E1;
+  --panel:       #DEDED8;
+  --raised:      #D7D7D0;
+  --edge:        #C9C9C1;
+  --edge-strong: #B3B3A9;
 
-  /* ---- paper: off-white, the only text colour and the colour of
-          absence ---- */
-  --paper:       #E8E4DA;
-  --paper-dim:   rgba(232, 228, 218, 0.62);
-  --paper-faint: rgba(232, 228, 218, 0.38);
-  --paper-ring:  rgba(232, 228, 218, 0.34);
+  /* ---- ink: carbon, pulled slightly blue so it reads as printed ---- */
+  --paper:       #16181B;   /* the text colour. Named for its role, not its hue. */
+  --paper-dim:   #4B4F55;
+  --paper-faint: #75797F;
+  --paper-ring:  #9DA0A5;   /* the ring around a place that is gone */
 
   /* ---- the one accent ---- */
-  --accent:      #E9A23B;
-  --accent-soft: rgba(233, 162, 59, 0.20);
-  --accent-dim:  rgba(233, 162, 59, 0.55);
+  --accent:      #B8342A;
+  --accent-soft: rgba(184, 52, 42, 0.14);
+  --accent-dim:  rgba(184, 52, 42, 0.62);
 
-  /* ---- basemap: everything recedes so the pins are the only bright
-          thing on the screen ---- */
-  --map-land:    #0E141A;
-  --map-water:   #080C10;
-  --map-line:    #1B242D;
-  --map-road:    #141C24;
-  --map-label:   #4E5F6D;
+  /* ---- basemap: everything recedes so the pins are the only
+          saturated thing on the screen ---- */
+  --map-land:    #E6E6E1;
+  --map-water:   #D8DAD6;
+  --map-line:    #C2C2B9;
+  --map-road:    #D2D2CA;
+  --map-label:   #8A8D93;
 
-  /* ---- type: two families, no more.
-          A display face with real character for place and city names,
-          one plain grotesk for everything else. Both are self-hosted by
-          next/font at build time — no CDN request, no FOIT, no silent
-          fallback. The stacks below are the safety net only; the loaded
-          faces arrive as --font-display-loaded / --font-body-loaded. ---- */
+  /* ---- type: two families, no more. Self-hosted by next/font. ---- */
   --font-display: "Instrument Serif", Superclarendon, "Iowan Old Style",
                   "Palatino Linotype", Palatino, Georgia, serif;
   --font-body:    "Inter Tight", "Helvetica Neue", Helvetica, Arial,
@@ -62,12 +61,10 @@
   --track-wide: 0.18em;
   --track-mid:  0.08em;
 
-  --measure: 62ch;   /* deannd's prose never runs wider than this */
+  --measure: 62ch;
 
-  /* ---- space: density is the aesthetic, but the panel breathes ---- */
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 18px; --s5: 28px; --s6: 44px; --s7: 72px;
 
-  /* ---- motion: one curve, defined once ---- */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --fast: 140ms;
   --mid:  240ms;

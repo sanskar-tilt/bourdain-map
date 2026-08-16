@@ -19,14 +19,14 @@
 import type { StyleSpecification } from "maplibre-gl";
 
 export const MAP_TOKENS = {
-  land: "#0D131A",
-  water: "#070B0F",
-  line: "#1C2833",
-  lineStrong: "#243544",
-  road: "#16202A",
-  label: "#55697A",
-  labelBright: "#7A8EA0",
-  halo: "#070B0F",
+  land: "#E6E6E1",
+  water: "#D8DAD6",
+  line: "#C2C2B9",
+  lineStrong: "#B0B0A6",
+  road: "#D2D2CA",
+  label: "#8A8D93",
+  labelBright: "#6E7178",
+  halo: "#E6E6E1",
 } as const;
 
 /** Where the tiles come from. A self-hosted .pmtiles file is the goal: no
@@ -90,7 +90,8 @@ export function buildBasemapStyle(): StyleSpecification {
       },
 
       // ---- water -----------------------------------------------------
-      // Darker than land, so coastlines read without needing a stroke.
+      // Slightly darker and cooler than the paper, so the coast reads as an
+      // edge rather than needing a heavy stroke.
       {
         id: "water",
         type: "fill",

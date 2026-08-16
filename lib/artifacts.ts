@@ -23,6 +23,8 @@ export type SearchCity = {
   slug: string;
   name: string;
   cc: string | null;
+  /** Metro/state alias — "Tokyo" for its wards. */
+  region: string | null;
   places: number;
   lon: number;
   lat: number;

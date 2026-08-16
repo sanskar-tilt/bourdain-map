@@ -31,7 +31,8 @@ export default function SearchPalette({
   useEffect(() => { inputRef.current?.focus(); }, []);
 
   const folded = useMemo(() => ({
-    cities: index.cities.map((c) => ({ c, f: fold(c.name) })),
+    // Match the metro alias too, so "Tokyo" finds Shinjuku and Minato.
+    cities: index.cities.map((c) => ({ c, f: fold(c.name), fr: fold(c.region ?? "") })),
     places: index.places
       .filter((p) => p.slug)
       .map((p) => ({
@@ -55,12 +56,13 @@ export default function SearchPalette({
       }));
     }
     const cities: Row[] = [];
-    for (const { c, f } of folded.cities) {
-      const i = f.indexOf(needle);
-      if (i < 0) continue;
+    for (const { c, f, fr } of folded.cities) {
+      if (!f.includes(needle) && !(fr && fr.includes(needle))) continue;
       cities.push({
         type: "city", slug: c.slug, label: c.name,
-        sub: `${c.places} place${c.places === 1 ? "" : "s"}`,
+        sub: c.region && fold(c.region) !== fold(c.name)
+          ? `${c.region} · ${c.places} place${c.places === 1 ? "" : "s"}`
+          : `${c.places} place${c.places === 1 ? "" : "s"}`,
         lon: c.lon, lat: c.lat, zoom: 12,
       });
       if (cities.length > 40) break;
@@ -127,7 +129,7 @@ export default function SearchPalette({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           onKeyDown={onKey}
-          placeholder="A city, or somewhere he ate"
+          placeholder="Try a city — Tokyo, Lagos, Buenos Aires"
           aria-label="Search places and cities"
           autoComplete="off"
           spellCheck={false}

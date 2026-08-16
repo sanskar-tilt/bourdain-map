@@ -80,7 +80,12 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
       <MapView onSelect={onSelect} selectedId={selectedId} flyTo={camera} />
 
       <header className={styles.masthead}>
-        <a href="/" className={styles.wordmark}>Where he ate</a>
+        <div className={styles.brand}>
+          <a href="/" className={styles.wordmark}>Where he ate</a>
+          <p className={styles.tagline}>
+            Every place Anthony Bourdain ate. Pick a city.
+          </p>
+        </div>
         <nav className={styles.nav}>
           <a href="/tables/">Tables</a>
           <a href="/stories/">Stories</a>
@@ -92,7 +97,11 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
           className={styles.searchTrigger}
           onClick={() => setPaletteOpen(true)}
         >
-          <span>Search places and cities</span>
+          <svg className={styles.searchIcon} viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.4" />
+            <path d="M10.5 10.5 L14 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+          </svg>
+          <span>Try a city — Tokyo, Lagos, Buenos Aires</span>
           <kbd>⌘K</kbd>
         </button>
       </header>

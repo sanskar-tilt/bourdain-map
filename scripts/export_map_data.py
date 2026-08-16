@@ -84,7 +84,7 @@ select json_build_object(
   ),
   'cities', (
     select coalesce(json_agg(json_build_object(
-      'slug', c.slug, 'name', c.name, 'cc', c.country_code,
+      'slug', c.slug, 'name', c.name, 'cc', c.country_code, 'region', c.region,
       'places', (select count(*) from places p where p.city_id = c.id),
       'lon', round(extensions.st_x(c.centroid::extensions.geometry)::numeric, 5),
       'lat', round(extensions.st_y(c.centroid::extensions.geometry)::numeric, 5)
