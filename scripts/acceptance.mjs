@@ -257,18 +257,27 @@ const browser = await puppeteer.launch({
   await new Promise((r) => setTimeout(r, 1500));
   const loader = await p.$("[data-loader-count]");
   ok("reduced motion renders no loader", loader === null);
+  await p.close();
+}
 
-  const p0 = await p.evaluate(() => {
-    const el = document.querySelector("[data-pin]");
-    return el ? getComputedStyle(el).getPropertyValue("--p").trim() : "none";
-  });
-  await p.evaluate(() => window.scrollTo(0, window.innerHeight));
-  await new Promise((r) => setTimeout(r, 500));
-  const p1 = await p.evaluate(() => {
-    const el = document.querySelector("[data-pin]");
-    return el ? getComputedStyle(el).getPropertyValue("--p").trim() : "none";
-  });
-  ok("reduced motion does not drive the pin", p0 === p1, `${p0} → ${p1}`);
+/* ------------------------------------------------------------------ */
+/* The pull-back is gone. Nothing may still write --p or carry data-pin
+   until the trail set-piece reintroduces exactly one pin, deliberately. */
+{
+  const p = await browser.newPage();
+  await p.setViewport({ width: 1440, height: 900 });
+  await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
+  await new Promise((r) => setTimeout(r, 1200));
+  await p.evaluate(() => window.scrollTo(0, 600));
+  await new Promise((r) => setTimeout(r, 600));
+  const left = await p.evaluate(() => ({
+    pins: document.querySelectorAll("[data-pin]").length,
+    withP: [...document.querySelectorAll("body *")].filter(
+      (el) => el.style.getPropertyValue("--p") !== ""
+    ).length,
+  }));
+  ok("no pull-back remnants: zero [data-pin], zero inline --p",
+     left.pins === 0 && left.withP === 0, JSON.stringify(left));
   await p.close();
 }
 
@@ -301,56 +310,6 @@ const browser = await puppeteer.launch({
   ok("MaskedText: splitter built line wrappers at runtime", built > 0, `${built}`);
 
   await p.close();
-
-  /* -- Pull-back: --p tracks scroll from 0 to 1. ---------------------
-     Its own page. Sharing one with the wheel test left a coast in flight
-     and the reading came back frozen at wherever that coast had stopped —
-     a contaminated proof is worse than none, because it fails against
-     working code.
-
-     Also waits for the scroll to actually arrive rather than sleeping a
-     fixed time: with Lenis a programmatic scrollTo is smoothed like any
-     other, so it is still travelling after the call returns. */
-  const pin = await browser.newPage();
-  await pin.setViewport({ width: 1440, height: 900 });
-  await pin.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
-  await new Promise((r) => setTimeout(r, 1200));
-
-  const settleAt = async (y) => {
-    // Re-issue every poll: a coast still in flight can swallow a single
-    // scrollTo, and then the test silently measures wherever it stopped.
-    for (let i = 0; i < 40; i++) {
-      const cur = await pin.evaluate((t) => {
-        const l = window.__lenis;
-        if (l) l.scrollTo(t, { immediate: true, force: true });
-        else window.scrollTo(0, t);
-        return window.scrollY;
-      }, y);
-      if (Math.abs(cur - y) < 4) return true;
-      await new Promise((r) => setTimeout(r, 80));
-    }
-    throw new Error(`could not scroll to ${y}`);
-  };
-  const readP = () => pin.evaluate(() => {
-    const el = document.querySelector("[data-pin]");
-    return el ? parseFloat(getComputedStyle(el).getPropertyValue("--p")) : NaN;
-  });
-
-  await settleAt(0);
-  await new Promise((r) => setTimeout(r, 250));
-  const pTop = await readP();
-
-  const endY = await pin.evaluate(() => {
-    const el = document.querySelector("[data-pin]");
-    return el.offsetTop + el.getBoundingClientRect().height;
-  });
-  await settleAt(endY);
-  await new Promise((r) => setTimeout(r, 250));
-  const pEnd = await readP();
-
-  ok("Pull-back: --p tracks scroll 0 → 1",
-     pTop < 0.05 && pEnd > 0.9, `${pTop} → ${pEnd}`);
-  await pin.close();
 
   /* -- Loader: the count strictly increases. ------------------------- */
   const q = await browser.newPage();

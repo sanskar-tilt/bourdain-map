@@ -1,6 +1,5 @@
 import Loader from "./components/Loader";
 import Reveal from "./components/Reveal";
-import HeroPullback from "./components/HeroPullback";
 import TrailMap from "./components/TrailMap";
 import MaskedText from "./components/MaskedText";
 import { homeManifest, homePhotos, allCredits, pick } from "../lib/home";
@@ -95,10 +94,6 @@ export default function Home() {
   if (hero?.placeSlug && !heroPlace) {
     console.warn(`[home] content/home.json: no place with slug "${hero.placeSlug}"`);
   }
-  if (hero?.photo && !hero.placeSlug) {
-    console.warn("[home] hero photo has no placeSlug — the pull-back cannot land on the map");
-  }
-  const target = heroPlace ? { lon: heroPlace.lon, lat: heroPlace.lat } : null;
   const pairQuote = pick((m.pairing?.quotes ?? []).filter(Boolean));
 
   return (
@@ -106,17 +101,9 @@ export default function Home() {
       <Loader objects={objects} portrait={portrait} total={stats.places} />
       <Reveal />
 
-      {/* ------------------------------------------------ pinned hero */}
-      <HeroPullback target={target}>
-        <Shot
-          file={hero?.photo} meta={hero?.meta}
-          alt={hero?.alt} credit={hero?.credit}
-          className={s.heroImg} ratio={1.6} sizes="100vw"
-        />
-      </HeroPullback>
-
-      {/* The mark and the sentence sit under the photograph, not over it.
-          These lines belong to the opening timeline, not to the observer. */}
+      {/* The scroll-driven pull-back is gone; the fluid hero replaces it in
+          the next step. These lines belong to the opening timeline, not to
+          the observer. */}
       <section className={`${s.section} ${s.heroText}`}>
         <MaskedText as="p" text="Where he ate" className={s.heroMark} arrival />
         {heroQuote ? (

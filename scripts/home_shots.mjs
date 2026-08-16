@@ -33,20 +33,10 @@ async function pass(reduced) {
   await new Promise((r) => setTimeout(r, 2900));
   await p.screenshot({ path: `${OUT}/${tag}02-loader-final.png` });
 
-  // the pull-back, at known scroll fractions
+  // the hero, settled
   await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
   await new Promise((r) => setTimeout(r, 1200));
-  const stops = [["03-hero-fullbleed", 0], ["04-hero-half", 0.5], ["05-hero-landed", 1]];
-  for (const [name, frac] of stops) {
-    await p.evaluate((f) => {
-      const el = document.querySelector("[data-pin]");
-      if (!el) return;
-      const travel = el.getBoundingClientRect().height - window.innerHeight;
-      window.scrollTo(0, Math.max(0, el.offsetTop + travel * f));
-    }, frac);
-    await new Promise((r) => setTimeout(r, 700));
-    await p.screenshot({ path: `${OUT}/${tag}${name}.png` });
-  }
+  await p.screenshot({ path: `${OUT}/${tag}03-hero.png` });
 
   // each section, settled
   const names = ["06-quote", "07-counter", "08-pairing", "09-trail", "10-invitation"];
@@ -66,14 +56,17 @@ async function pass(reduced) {
   await new Promise((r) => setTimeout(r, 900));
   await p.screenshot({ path: `${OUT}/${tag}11-colophon.png` });
 
-  // does anything still move?
+  // Under reduced motion, nothing on the page may still be mid-transition:
+  // sample every masked inner and reveal twice, 400ms apart.
   const moved = await p.evaluate(async () => {
-    const el = document.querySelector("[data-pin]");
-    const before = el ? getComputedStyle(el).getPropertyValue("--p") : "";
+    const read = () =>
+      [...document.querySelectorAll('[class*="lineMask"] > span, .reveal')]
+        .map((el) => getComputedStyle(el).transform + getComputedStyle(el).opacity)
+        .join("|");
+    const before = read();
     window.scrollTo(0, 400);
     await new Promise((r) => setTimeout(r, 400));
-    const after = el ? getComputedStyle(el).getPropertyValue("--p") : "";
-    return before !== after;
+    return before !== read();
   });
   await p.close();
   return moved;
@@ -81,8 +74,8 @@ async function pass(reduced) {
 
 const movedNormal = await pass(false);
 const movedReduced = await pass(true);
-console.log(`normal pass: pin ${movedNormal ? "moves" : "static"}`);
-console.log(`reduced-motion pass: pin ${movedReduced ? "MOVES — should not" : "static, correct"}`);
+console.log(`normal pass: page ${movedNormal ? "animates" : "static"}`);
+console.log(`reduced-motion pass: page ${movedReduced ? "MOVES — should not" : "static, correct"}`);
 console.log("shots:", fs.readdirSync(OUT).length);
 await b.close();
 process.exit(movedReduced ? 1 : 0);
