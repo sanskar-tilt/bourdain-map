@@ -17,6 +17,33 @@ const BASE = process.argv[2] ?? "http://127.0.0.1:8900";
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 const stats = JSON.parse(fs.readFileSync("content/stats.generated.json", "utf-8"));
+
+/* A failed build leaves the previous out/ in place, and this suite once ran
+   green against it while the real build was broken. Refuse to test anything
+   older than the newest source file. */
+{
+  const newest = (dir, exts) => {
+    let t = 0;
+    const walk = (d) => {
+      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+        if (e.name === "node_modules" || e.name.startsWith(".")) continue;
+        const full = `${d}/${e.name}`;
+        if (e.isDirectory()) walk(full);
+        else if (exts.some((x) => e.name.endsWith(x))) {
+          t = Math.max(t, fs.statSync(full).mtimeMs);
+        }
+      }
+    };
+    walk(dir);
+    return t;
+  };
+  const srcTime = Math.max(newest("app", [".tsx", ".ts", ".css"]), newest("lib", [".ts"]));
+  const outTime = fs.existsSync("out/index.html") ? fs.statSync("out/index.html").mtimeMs : 0;
+  if (outTime < srcTime) {
+    console.error("STALE BUILD: out/ is older than the newest source file. Run npm run build.");
+    process.exit(2);
+  }
+}
 let failures = 0;
 
 const ok = (name, pass, detail = "") => {
@@ -398,6 +425,96 @@ const browser = await puppeteer.launch({
        res.worst < 25,
        `median ${res.median}ms, worst ${res.worst}ms over ${res.frames} frames (idle baseline worst: 17.6ms)`);
   }
+  await p.close();
+}
+
+/* ==================================================================
+   THE CURSOR — pill follows with lag; the photograph never reacts.
+   ================================================================== */
+{
+  const p = await browser.newPage();
+  await p.setViewport({ width: 1440, height: 900 });
+  await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
+  await new Promise((r) => setTimeout(r, 1200));
+
+  // Scroll a photograph target into view, then re-measure once the scroll
+  // has actually settled — measuring in the same tick reads pre-scroll
+  // coordinates.
+  const SEL = "figure[data-cursor], li[data-cursor], div[data-cursor]";
+  await p.evaluate((sel) => {
+    const t = document.querySelector(sel) ?? document.querySelector("[data-cursor]");
+    t?.scrollIntoView({ block: "center" });
+  }, SEL);
+  await new Promise((r) => setTimeout(r, 900));
+  const box = await p.evaluate((sel) => {
+    const t = document.querySelector(sel) ?? document.querySelector("[data-cursor]");
+    if (!t) return null;
+    const r = t.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width };
+  }, SEL);
+  if (!box) {
+    ok("cursor: a [data-cursor] target exists", false, "none found");
+  } else {
+    // Land ON the target, hold, then read state and pill lag while still on
+    // it — the pill must be active and mid-glide, never 1:1.
+    await p.mouse.move(box.x, box.y, { steps: 8 });
+    await new Promise((r) => setTimeout(r, 300));
+    const onTarget = await p.evaluate(() => {
+      const pill = document.querySelector("[data-cursor-pill]");
+      const r = pill.getBoundingClientRect();
+      return { active: pill.dataset.active, x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+
+    // Sweep within the target while sampling per frame.
+    // Horizontal only: a vertical component walks out of short targets.
+    const dx = Math.min(box.w * 0.35, 120);
+    const sweepEnd = { x: box.x + dx, y: box.y };
+    const sampler = p.evaluate(() => new Promise((resolve) => {
+      const pill = document.querySelector("[data-cursor-pill]");
+      const frames = [];
+      let n = 0;
+      (function tick() {
+        const r = pill.getBoundingClientRect();
+        frames.push({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+        if (++n < 25) requestAnimationFrame(tick);
+        else resolve(frames);
+      })();
+    }));
+    await p.mouse.move(sweepEnd.x, sweepEnd.y, { steps: 15 });
+    // Read the pill the moment the sweep ends — waiting for the sampler
+    // first gives the lerp ~400ms to catch up and the lag reads as zero.
+    const mid = await p.evaluate(() => {
+      const pill = document.querySelector("[data-cursor-pill]");
+      const r = pill.getBoundingClientRect();
+      return { active: pill.dataset.active, x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+    const frames = await sampler;
+
+    const updates = frames.filter((f, i) => i > 0 &&
+      (Math.abs(f.x - frames[i - 1].x) > 0.2 || Math.abs(f.y - frames[i - 1].y) > 0.2)).length;
+    const lag = Math.hypot(mid.x - sweepEnd.x, mid.y - sweepEnd.y);
+    ok("cursor: pill is active over a photograph and updates per frame",
+       onTarget.active === "true" && mid.active === "true" && updates >= 10,
+       `active=${onTarget.active}→${mid.active}, ${updates}/24 frames moved`);
+    ok("cursor: pill trails the pointer (lag > 0, lerp not 1:1)",
+       lag > 2 && lag < 400, `${lag.toFixed(1)}px behind immediately after the sweep`);
+  }
+
+  // The pill is the entire hover state: hovering a photograph must not
+  // transform or filter the image itself.
+  const photo = await p.evaluate(() => {
+    const img =
+      document.querySelector("[data-cursor] img") ??
+      document.querySelector("div[data-cursor]");   // the placeholder IS the zone
+    if (!img) return null;
+    const cs = getComputedStyle(img);
+    return { transform: cs.transform, filter: cs.filter };
+  });
+  // A missing photograph is a failure, not a skip — a silent skip is how a
+  // check stops existing.
+  ok("cursor: hovered photograph keeps transform:none",
+     photo !== null && photo.transform === "none",
+     photo ? JSON.stringify(photo) : "no photograph found to check");
   await p.close();
 }
 

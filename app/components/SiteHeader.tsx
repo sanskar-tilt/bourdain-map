@@ -23,7 +23,13 @@ export default function SiteHeader() {
       </Link>
       <nav className={styles.nav}>
         {NAV.map((n) => (
-          <Link key={n.href} href={n.href} aria-current={path.startsWith(n.href) ? "page" : undefined}>
+          <Link
+            key={n.href}
+            href={n.href}
+            aria-current={path.startsWith(n.href) ? "page" : undefined}
+            // Map links carry the pill; everything else keeps its cursor.
+            {...(n.href === "/map/" ? { "data-cursor": "sit" } : {})}
+          >
             {n.label}
           </Link>
         ))}

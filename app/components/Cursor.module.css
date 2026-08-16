@@ -1,0 +1,33 @@
+/* The SIT DOWN pill. The only thing on the site allowed under 300ms, and
+   the only curve outside the two in tokens — both sanctioned there. */
+
+.pill {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-palette);
+  pointer-events: none;
+  padding: var(--s2) var(--s3);
+  background: var(--ink);
+  color: var(--ground);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: var(--track-label);
+  border-radius: 999px;
+  white-space: nowrap;
+  scale: 0;
+  transition: scale var(--t-cursor-out) var(--ease-cursor-out);
+  will-change: transform;
+}
+.pill[data-active="true"] {
+  scale: 1;
+  transition: scale var(--t-cursor-in) var(--ease-cursor-in);
+}
+
+/* The native cursor hides only over targets, and only when the pill can
+   actually exist — the html class is set by the component behind the same
+   gates it uses itself, so the two can never disagree. */
+:global(html.cursor-on) :global([data-cursor]),
+:global(html.cursor-on) :global([data-cursor]) * {
+  cursor: none;
+}

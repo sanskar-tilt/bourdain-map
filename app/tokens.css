@@ -88,6 +88,14 @@
   --t-hover-in:  400ms;
   --t-hover-out: 800ms;
 
+  /* The cursor is the one sanctioned exception to both rules: the only
+     thing under 300ms, and the only curve outside the two above — a
+     slight overshoot so the pill lands like something physical. */
+  --ease-cursor-in:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-cursor-out: cubic-bezier(0.40, 0.00, 1.00, 1.00);
+  --t-cursor-in:  600ms;
+  --t-cursor-out: 380ms;
+
   /* Nothing else dips below 300ms. Editorial pacing, not UI pacing.
      Bands: entrances 1.0–1.2s, signature moves 1.4–1.8s. */
   --t-enter:      1200ms;   /* entrances: text from behind a mask edge   */

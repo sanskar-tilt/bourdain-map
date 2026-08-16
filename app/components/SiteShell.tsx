@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import MapShell from "./MapShell";
 import SiteHeader from "./SiteHeader";
 import SmoothScroll from "./SmoothScroll";
+import Cursor from "./Cursor";
 import styles from "./SiteShell.module.css";
 
 /* Two layouts, chosen by route.
@@ -34,6 +35,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.doc}>
       <SmoothScroll />
+      <Cursor />
       <SiteHeader />
       <main className={styles.main}>{children}</main>
     </div>

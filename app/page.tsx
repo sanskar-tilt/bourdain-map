@@ -26,13 +26,19 @@ function Shot({
 }) {
   if (!file || !usable(meta)) {
     return (
-      <div className={`${s.gap} ${className ?? ""}`} style={{ aspectRatio: String(ratio) }}>
+      // The placeholder is the photograph's zone, so the pill behaves the
+      // same before and after the real image lands.
+      <div
+        className={`${s.gap} ${className ?? ""}`}
+        style={{ aspectRatio: String(ratio) }}
+        data-cursor="sit"
+      >
         <span>{file ? `${file} — not in public/home/` : "photo"}</span>
       </div>
     );
   }
   return (
-    <figure className={s.shot}>
+    <figure className={s.shot} data-cursor="sit">
       <img
         className={className}
         src={largest(meta)} srcSet={srcsetAttr(meta)} sizes={sizes}
@@ -169,7 +175,7 @@ export default function Home() {
         <MaskedText as="p" text="Pick a city." className={s.inviteLine} />
         <MaskedText as="p" text="Open a table." className={s.inviteLine} />
         <MaskedText as="p" text="Eat with a stranger." className={s.inviteLine} />
-        <Link className={s.inviteCta} href="/map/">Open the map</Link>
+        <Link className={s.inviteCta} href="/map/" data-cursor="sit">Open the map</Link>
       </section>
 
       {/* ------------------------------------------------- colophon */}

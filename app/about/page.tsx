@@ -118,7 +118,7 @@ export default function About() {
               }
               const caption = p.caption?.trim() || place?.name || null;
               return (
-                <li key={i} className={styles.card}>
+                <li key={i} className={styles.card} data-cursor="sit">
                   <Photo
                     file={p.photo}
                     meta={p.photo ? photos[p.photo] : undefined}
@@ -151,7 +151,7 @@ export default function About() {
       {/* ----------------------------------------------------- the tattoo */}
       <section className={styles.section}>
         <h2 className={styles.h2}>The tattoo</h2>
-        <figure className={styles.tattoo}>
+        <figure className={styles.tattoo} data-cursor="sit">
           <Photo
             file={m.tattoo?.photo}
             meta={m.tattoo?.photo ? photos[m.tattoo.photo] : undefined}

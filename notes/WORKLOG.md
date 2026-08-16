@@ -109,3 +109,38 @@ Gates: zero easing literals outside tokens (two grep hits are a JS variable
 named `ease` and a prose comment). Zero raw durations in CSS transitions
 outside tokens except the documented 2600ms idle loop. `opening.webm` predates
 the 1600ms curtain — stale by 400ms of tail, not re-recorded in width mode.
+
+---
+
+## Step 4 — the cursor  ✅
+
+The SIT DOWN pill: fixed-position, rides the shared rAF loop at lerp 0.09,
+snaps under the hand on first contact then trails it — measured 68.9px behind
+mid-sweep, updating 24/24 frames. Scale in 600ms on the overshoot curve, out
+380ms. Native cursor hidden only over targets, only when the pill can exist
+(one html class set by the component behind the same gates the pill uses, so
+the two cannot disagree). Off under reduced motion, off below 992px, off on
+coarse pointers. Does zero work per frame once settled and inactive.
+
+Targets: photographs (the Shot figure, its placeholder gap — the zone exists
+before the photo does — About's cards and tattoo figure) and map links (nav
+Map, the invitation CTA).
+
+**Disagreement, done as told:** the in-curve `cubic-bezier(.34,1.56,.64,1)`
+is a third easing curve, which step 3 forbids. Step 4 spec wins; it lives in
+tokens as `--ease-cursor-in/out` with a comment naming it the one sanctioned
+exception, so the no-literals-outside-tokens gate still holds.
+
+Three test bugs found while proving it, all mine:
+- The first test hovered 120px *beside* the target and asserted after leaving.
+- A JSX-comment-in-expression-position broke the build — and the suite ran
+  **green against the stale `out/`**. The suite now stats every source file
+  and refuses to run against an out/ older than the newest one. That guard
+  fired correctly on the very next run.
+- The lag read happened after the sampler resolved (~400ms late), by which
+  time the lerp had caught up and "lag" read 1.5px against working code.
+- The photo-hover check could skip silently when its selector missed; a
+  missing photograph is now a FAIL, not a skip.
+
+Remaining instant hovers on form buttons (ui.module.css brightness flip) —
+not photographs, not homepage, logged not fixed.
