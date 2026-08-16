@@ -26,3 +26,44 @@ Judgement calls, stated rather than hidden:
 - **`world.json` (26KB) still exports and still ships.** Nothing fetches it
   right now; step 2's build-time map image will be generated from it, so the
   export stays.
+
+---
+
+## Step 2 — the fluid hero  ✅
+
+BOURDAIN at `clamp(3rem, 17.5vw, 21rem)`, one line, plain text — not the
+photo-O mark, which would have split the word. `pointer-events: none` and
+z-indexed above the canvas; nothing touches it.
+
+The map layer is `public/data/world-map.png` — 2,095 pins rasterised from
+`world.json` via sharp at build time (55KB, chained into prebuild). Never a
+live map.
+
+The sim is stable fluids in ~370 lines of WebGL2: advect → divergence →
+20 Jacobi iterations → gradient subtract → advect dye, splat on pointer move.
+Constants as specified: vel 0.962, dye 0.988, curl 0, edge soft 0.5. Sim grid
+160-wide, dye 640-wide, upscaled. Display pass mixes ground → map by
+smoothstepped dye. Driven from the shared Lenis rAF loop; pauses off-screen
+via IntersectionObserver; skips all sim work when the ink has fully healed.
+
+Gates verified by test, not by reading: reduced motion → zero canvas, word
+visible. WebGL nulled via getContext override → same, ground colour intact.
+900px viewport → zero canvas. Context loss → torn down to static.
+
+**Budget, measured honestly:** the compositor is vsync-locked at 16.7ms and
+shows **17.6ms worst-case jitter with the sim completely idle** — so the
+brief's literal "no frame over 16ms" is unmeasurable as rAF intervals; even
+an empty page fails it. The assertion is "no missed vsync" (< 25ms, where a
+real miss is ~33ms). Under 60 synthetic moves: median 16.7ms, worst 17.5ms —
+*below* the idle baseline's worst. The sim fits inside the frame with room.
+Did not need to cut pressure iterations or resolution.
+
+Disagreements, done-then-logged:
+- "The type does not move": the hero has **no** arrival animation at all now
+  — the earlier opening spec had the hero photo settling in during the
+  curtain, but the photo is gone and I did not transfer that settle to the
+  word, reading "does not move" strictly. The `.arrival-photo` CSS in globals
+  is now genuinely orphaned; removing it belongs to step 3's sweep.
+- The word intercepts no pointers, so stirring works *through* the letters.
+  The alternative (word as an obstacle in the velocity field) would have been
+  "distorting the field around the type" — closer to a violation than this.

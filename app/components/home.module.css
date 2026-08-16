@@ -265,6 +265,45 @@
   .lineMask > span { transform: none; }
 }
 
-/* .scrollCue returns with the fluid hero in the next step; it lived inside
-   the deleted pull-back, so for this one commit the arrival's "cue" phase
-   has no element. Noted in the worklog. */
+/* ---------------------------------------------------- fluid hero */
+/* The word above, the canvas below, the ground colour between them.
+   The canvas only exists when every gate passes; without it this is
+   still a finished frame — the word over the ground. */
+.fluidHero {
+  position: relative;
+  height: 100vh;
+  min-height: 520px;
+  background: var(--ground);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.fluidCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* Never distorted, never masked, never pushed around. Above the canvas,
+   transparent to the pointer so the water underneath still stirs. */
+.heroWord {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-weight: var(--w-regular);
+  font-size: clamp(3rem, 17.5vw, 21rem);
+  line-height: var(--lh-solid);
+  letter-spacing: var(--track-tight);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s5);
+  transform: translateX(-50%);
+  z-index: 3;
+}

@@ -1,4 +1,5 @@
 import Loader from "./components/Loader";
+import FluidHero from "./components/FluidHero";
 import Reveal from "./components/Reveal";
 import TrailMap from "./components/TrailMap";
 import MaskedText from "./components/MaskedText";
@@ -101,9 +102,11 @@ export default function Home() {
       <Loader objects={objects} portrait={portrait} total={stats.places} />
       <Reveal />
 
-      {/* The scroll-driven pull-back is gone; the fluid hero replaces it in
-          the next step. These lines belong to the opening timeline, not to
-          the observer. */}
+      {/* -------------------------------------------------- the hero */}
+      <FluidHero />
+
+      {/* The mark and the sentence sit under the hero. These lines belong to
+          the opening timeline, not to the observer. */}
       <section className={`${s.section} ${s.heroText}`}>
         <MaskedText as="p" text="Where he ate" className={s.heroMark} arrival />
         {heroQuote ? (
