@@ -130,35 +130,78 @@ def main():
         for st in c['states']:
             by_state[fold(st)].append(ck)
 
+    # Every country and state name our own data knows about. An episode's
+    # wikilinks are matched against these to find what it corroborates.
+    known_countries = {fold(c['country']) for c in cities.values() if c['country']}
+    known_states = set(by_state)
+    country_by_fold = defaultdict(set)
+    for c in cities.values():
+        if c['country']:
+            country_by_fold[fold(c['country'])].add(fold(c['country']))
+
     links = {}           # (ck, epi_index) -> match_kind
     matched_eps = set()
     unmatched_eps = []
+    rejected = []        # name matched but the country actively disagreed
+
+    ORDER = {'exact': 0, 'name_only': 1, 'region': 2, 'country': 3, 'manual': 4}
 
     for idx, ep in enumerate(episodes):
-        hits = {}
+        # Every location token the episode offers, including the halves of
+        # "Koreatown, Los Angeles" and "Pailin, Cambodia".
+        tokens = set()
         for loc in ep.get('locations') or []:
-            f = fold(loc)
-            if not f:
+            if not loc:
                 continue
-            for ck in by_city_name.get(f, []):
-                hits.setdefault(ck, 'exact')
-            for ck in by_state.get(f, []):
+            tokens.add(fold(loc))
+            for part in loc.split(','):
+                tokens.add(fold(part))
+        tokens.discard('')
+
+        # What does this episode say about where it is? A bare "Naples" says
+        # nothing; "Naples" alongside [[Italy]] says a great deal.
+        ep_countries = tokens & known_countries
+        ep_states = tokens & known_states
+
+        hits = {}
+        for tok in tokens:
+            for ck in by_city_name.get(tok, []):
+                c = cities[ck]
+                cfold = fold(c['country']) if c['country'] else None
+                if ep_countries:
+                    if cfold in ep_countries:
+                        hits[ck] = min(hits.get(ck, 'exact'), 'exact', key=ORDER.get)
+                    else:
+                        # Naples the episode vs Naples, Florida. Actively wrong.
+                        rejected.append(
+                            f'REJECTED   {c["name"]}, {c["country"]} '
+                            f'!= {ep["show"]} S{ep["season"]}E{ep["episode"]} '
+                            f'{ep["title"]!r} (episode country: {sorted(ep_countries)})')
+                        continue
+                elif ep_states and c['states'] and {fold(s) for s in c['states']} & ep_states:
+                    hits[ck] = min(hits.get(ck, 'exact'), 'exact', key=ORDER.get)
+                elif len(by_city_name.get(tok, [])) == 1:
+                    # The episode names a bare city and we hold exactly one
+                    # city by that name. "Amsterdam" can only mean Amsterdam.
+                    # The Naples-versus-Naples-Florida risk only exists when
+                    # our own data holds two, which is the branch below.
+                    hits[ck] = min(hits.get(ck, 'exact'), 'exact', key=ORDER.get)
+                else:
+                    # Several of our cities share this name and nothing in the
+                    # episode says which. Real match, genuinely unproven.
+                    hits[ck] = min(hits.get(ck, 'name_only'), 'name_only', key=ORDER.get)
+            for ck in by_state.get(tok, []):
                 hits.setdefault(ck, 'region')
-            for ck in by_country.get(f, []):
+            for ck in by_country.get(tok, []):
                 hits.setdefault(ck, 'country')
-            # "Koreatown, Los Angeles" — try the trailing component too
-            if ',' in loc:
-                tail = fold(loc.split(',')[-1])
-                for ck in by_city_name.get(tail, []):
-                    hits.setdefault(ck, 'exact')
+
         if not hits:
             unmatched_eps.append(ep)
             continue
         matched_eps.add(idx)
         for ck, kind in hits.items():
             prev = links.get((ck, idx))
-            order = {'exact': 0, 'region': 1, 'country': 2, 'manual': 3}
-            if prev is None or order[kind] < order[prev]:
+            if prev is None or ORDER[kind] < ORDER[prev]:
                 links[(ck, idx)] = kind
 
     # ---- 3. appearance backfill, only where it is unambiguous -------------
@@ -252,6 +295,8 @@ def main():
     kinds = defaultdict(int)
     for k in links.values():
         kinds[k] += 1
+    multi_candidate = sum(1 for (ck, show), eps in per_city_show.items() if len(eps) > 1)
+    exact_cities = {ck for (ck, _), k in links.items() if k == 'exact'}
     log.append(f'cities derived            {len(cities)}')
     log.append(f'places with no city       {len(no_city)}')
     log.append(f'episodes                  {len(episodes)}')
@@ -259,7 +304,22 @@ def main():
                f'({100 * len(matched_eps) / len(episodes):.0f}%)')
     log.append(f'city-episode links        {len(links)}  {dict(kinds)}')
     log.append(f'cities with any episode   {len({ck for ck, _ in links})}')
-    log.append(f'appearance backfills      {n_backfill} (exact matches only)')
+    log.append(f'  of those, with an EXACT link  {len(exact_cities)}')
+    log.append(f'(city, show) pairs with >1 candidate  {multi_candidate}  (stored, never picked)')
+    log.append(f'name matched but country disagreed    {len(rejected)}  (dropped)')
+    log.append(f'appearance backfills      {n_backfill} (exact only, season never overwritten)')
+    log.append('')
+    log.append('--- least confident: name matched, nothing corroborated the country ---')
+    weak = [(ck, idx) for (ck, idx), k in links.items() if k == 'name_only']
+    for ck, idx in sorted(weak, key=lambda t: cities[t[0]]['name'])[:25]:
+        ep = episodes[idx]
+        log.append(f'  {cities[ck]["name"]}, {cities[ck]["country"]} <- '
+                   f'{ep["show"]} S{ep["season"]}E{ep["episode"]} {ep["title"]!r}')
+    if len(weak) > 25:
+        log.append(f'  ... and {len(weak) - 25} more')
+    log.append('')
+    log.append('--- rejected on country disagreement ---')
+    log.extend('  ' + r for r in sorted(set(rejected))[:40])
     log.append('')
     log.append('--- episodes that matched nothing ---')
     for ep in unmatched_eps:

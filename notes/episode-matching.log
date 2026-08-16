@@ -1,0 +1,1634 @@
+cities derived            528
+places with no city       847
+episodes                  302
+episodes matched to >=1 city  200 (66%)
+city-episode links        871  {'country': 598, 'exact': 106, 'region': 167}
+cities with any episode   413
+  of those, with an EXACT link  69
+(city, show) pairs with >1 candidate  114  (stored, never picked)
+name matched but country disagreed    0  (dropped)
+appearance backfills      80 (exact only, season never overwritten)
+
+--- least confident: name matched, nothing corroborated the country ---
+
+--- rejected on country disagreement ---
+
+--- episodes that matched nothing ---
+  parts_unknown    S1E5   'Morocco (Tangier)'  locations=['Morocco (Tangier)']
+  parts_unknown    S1E8   'Congo'  locations=['Congo']
+  parts_unknown    S2E1   'Prime Cuts: Season One'  locations=['TV Guide']
+  parts_unknown    S2E8   'Tokyo'  locations=['Tokyo']
+  parts_unknown    S3E1   'Prime Cuts: Season Two'  locations=['Prime Cuts: Season Two']
+  parts_unknown    S3E7   'Mississippi Delta'  locations=['Mississippi Delta']
+  parts_unknown    S4E1   'Prime Cuts: Season Three'  locations=['Prime Cuts: Season Three']
+  parts_unknown    S4E3   'The Bronx'  locations=['The Bronx']
+  parts_unknown    S5E1   'Prime Cuts: Season Four'  locations=['Prime Cuts: Season Four']
+  parts_unknown    S5E2   'Korea'  locations=['Korea']
+  parts_unknown    S6E1   'Prime Cuts: Season Five'  locations=['Prime Cuts: Season Five']
+  parts_unknown    S6E5   'Bay Area'  locations=['Bay Area']
+  parts_unknown    S6E7   'Borneo'  locations=['Borneo']
+  parts_unknown    S7E1   'Prime Cuts: Season Six'  locations=['Prime Cuts: Season Six']
+  parts_unknown    S7E4   'The Greek Islands'  locations=['The Greek Islands']
+  parts_unknown    S8E1   'Prime Cuts: Season Seven'  locations=['Prime Cuts: Season Seven']
+  parts_unknown    S8E2   'Hanoi'  locations=['Hanoi']
+  parts_unknown    S8E5   'London'  locations=['London']
+  parts_unknown    S8E7   'Japan with Masa'  locations=['Japan with Masa']
+  parts_unknown    S9E1   'Prime Cuts: Season Eight'  locations=['Prime Cuts: Season Eight']
+  parts_unknown    S9E5   'Queens'  locations=['Queens']
+  parts_unknown    S9E6   'Antarctica'  locations=['Antarctica']
+  parts_unknown    S9E8   'Trinidad'  locations=['Trinidad']
+  parts_unknown    S10E2   'French Alps'  locations=['French Alps']
+  parts_unknown    S10E8   'Southern Italy'  locations=['Southern Italy']
+  parts_unknown    S11E3   'Newfoundland'  locations=['Newfoundland']
+  parts_unknown    S11E7   'Cajun Mardi Gras'  locations=['Cajun Mardi Gras']
+  parts_unknown    S12E4   "Tony's Impact"  locations=["Tony's Impact"]
+  parts_unknown    S12E5   'Far West Texas'  locations=['West Texas']
+  parts_unknown    S12E6   'Under the Tarp'  locations=['Under the Tarp']
+  parts_unknown    S12E7   'Lower East Side'  locations=['Lower East Side']
+  no_reservations  S1E1   "Paris: Why the French Don't Suck"  locations=["Paris: Why the French Don't Suck"]
+  no_reservations  S1E2   'Iceland: Hello Darkness My Old Friend'  locations=['Iceland: Hello Darkness My Old Friend']
+  no_reservations  S1E4   'Vietnam: The Island of Mr. Sang'  locations=['Vietnam: The Island of Mr. Sang']
+  no_reservations  S1E5   'Malaysia: Into the Jungle'  locations=['Malaysia: Into the Jungle']
+  no_reservations  S1E9   'New Zealand: Down Under the Down Under'  locations=['New Zealand: Down Under the Down Under']
+  no_reservations  S2E13  'Leftovers'  locations=['Leftovers']
+  no_reservations  S2E1   'Asia Special: China & Japan'  locations=['Asia Special: China & Japan']
+  no_reservations  S2E2   'South Florida'  locations=['South Florida']
+  no_reservations  S2E8   'U.S./Mexico Border'  locations=['U.S./Mexico Border']
+  no_reservations  S2E9   'India (Rajasthan)'  locations=['India (Rajasthan)']
+  no_reservations  S2E10  'India (Kolkata/Mumbai)'  locations=['India (Kolkata/Mumbai)']
+  no_reservations  S2E11  'Korea'  locations=['Korea']
+  no_reservations  S2E14  'Decoding Ferran Adria'  locations=['Ferran Adria']
+  no_reservations  S2E15  'Anthony Bourdain in Beirut'  locations=['Anthony Bourdain in Beirut']
+  no_reservations  S3E16  'Leftovers 2'  locations=['Leftovers 2']
+  no_reservations  S3E3   'Pacific Northwest'  locations=['Pacific Northwest']
+  no_reservations  S3E7   'From Shanghai to Shangri-la'  locations=['From Shanghai to Shangri-la']
+  no_reservations  S3E17  'Holiday Special: Connecticut'  locations=['Holiday Special: Connecticut']
+  no_reservations  S4E4   'Greek Islands'  locations=['Greek Islands']
+  no_reservations  S4E6   'London/Edinburgh'  locations=['London/Edinburgh']
+  no_reservations  S4E10  'Into the Fire NY'  locations=['Into the Fire NY']
+  no_reservations  S4E15  'U.S. Southwest'  locations=['U.S. Southwest']
+  no_reservations  S4E16  'Tokyo'  locations=['Tokyo']
+  no_reservations  S4E19  'So Long, Summer'  locations=['So Long, Summer']
+  no_reservations  S4E20  'At the Table with Anthony Bourdain'  locations=['At the Table with Anthony Bourdain']
+  no_reservations  S5E4   'Azores'  locations=['Azores']
+  no_reservations  S5E6   'Food Porn'  locations=['Food Porn']
+  no_reservations  S5E8   'Disappearing Manhattan'  locations=['Disappearing Manhattan']
+  no_reservations  S5E10  "Vietnam: There's No Place Like Home"  locations=["Vietnam: There's No Place Like Home"]
+  no_reservations  S5E13  'Rust Belt'  locations=['Rust Belt']
+  no_reservations  S5E14  'Down on the Street'  locations=['Down on the Street']
+  no_reservations  S5E18  'Burning Questions'  locations=['Burning Questions']
+  no_reservations  S5E19  'New York Outer Boroughs'  locations=['New York Outer Boroughs']
+  no_reservations  S6E5   'Hudson Valley, NY'  locations=['Hudson Valley, NY']
+  no_reservations  S6E7   'Obsessed'  locations=['Obsessed']
+  no_reservations  S6E9   'Provence'  locations=['Provence']
+  no_reservations  S6E10  'Vietnam: Central Highlands'  locations=['Vietnam: Central Highlands']
+  no_reservations  S6E11  'Techniques Special'  locations=['Techniques Special']
+  no_reservations  S6E13  'Food Porn 2'  locations=['Food Porn 2']
+  no_reservations  S6E14  'Caribbean Island Hopping'  locations=['Caribbean Island Hopping']
+  no_reservations  S6E15  'US Heartland'  locations=['US Heartland']
+  no_reservations  S6E18  'Where It All Began'  locations=['Where It All Began']
+  no_reservations  S6E21  'Back to Beirut'  locations=['Back to Beirut']
+  no_reservations  S6E22  'Making of India'  locations=['Making of India']
+  no_reservations  S6E23  'What Were We Thinking Special'  locations=['What Were We Thinking Special']
+  no_reservations  S6E24  '100th Episode - Paris'  locations=['100th Episode - Paris']
+  no_reservations  S6E26  'Holiday Special'  locations=['Holiday Special']
+  no_reservations  S7E5   'Ozarks'  locations=['Ozarks']
+  no_reservations  S7E6   'Brazil (the Amazon)'  locations=['Brazil (the Amazon)']
+  no_reservations  S7E8   'Japan: Hokkaido'  locations=['Japan: Hokkaido']
+  no_reservations  S7E11  'Naples'  locations=['Naples']
+  no_reservations  S7E12  'El Bulli'  locations=['El Bulli']
+  no_reservations  S7E13  'US Desert'  locations=['US Desert']
+  no_reservations  S7E15  'Kurdistan'  locations=['Kurdistan']
+  no_reservations  S7E16  'Cajun Country'  locations=['Cajun Country']
+  no_reservations  S7E17  'Holiday Special 2011'  locations=['Holiday Special 2011']
+  no_reservations  S8E3   'Croatian Coast'  locations=['Croatian Coast']
+  no_reservations  S8E5   'Japan: Cook It Raw'  locations=['Japan: Cook It Raw']
+  no_reservations  S8E7   'Baja'  locations=['Baja']
+  no_reservations  S9E3   'Sex, Drugs And Rock & Roll'  locations=['Sex, Drugs And Rock & Roll']
+  no_reservations  S9E5   'Burgundy'  locations=['Burgundy']
+  no_reservations  S9E6   'Seven Deadly Sins'  locations=['Seven Deadly Sins']
+  no_reservations  S9E7   'Rio'  locations=['Rio']
+  no_reservations  S9E8   'Off The Charts'  locations=['Off The Charts']
+  no_reservations  S9E10  'Brooklyn'  locations=['Brooklyn']
+  no_reservations  S9E11  'No Reservations: Iceland: Special Edition'  locations=['No Reservations: Iceland: Special Edition']
+  no_reservations  S9E12  "What's Your Trip with Anthony Bourdain"  locations=["What's Your Trip with Anthony Bourdain"]
+  a_cooks_tour     S1E1   'A Taste of Tokyo'  locations=['Tokyo']
+  a_cooks_tour     S1E2   'Dining with Geishas'  locations=['Atami', 'Tokyo']
+  a_cooks_tour     S1E22  'A Pleasing Palate'  locations=['London']
+  the_layover      S1E9   'London'  locations=['London']
+
+--- not backfilled (ambiguous or weak) ---
+  AMBIGUOUS  Almeria / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Arcachon / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Atxondo / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Auxerre / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Avilés / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Bai Chay Ward / a_cooks_tour: 3 episodes (S1E3 Cobra Heart - Foods That Make You Manly, S1E4 Eating on the Mekong, S2E12 My Friend Linh)
+  AMBIGUOUS  Ban On Klang / a_cooks_tour: 2 episodes (S2E11 Let's Get Lost, S2E13 Thailand: One Night in Bangkok)
+  AMBIGUOUS  Bangkok / a_cooks_tour: 2 episodes (S2E11 Let's Get Lost, S2E13 Thailand: One Night in Bangkok)
+  AMBIGUOUS  Barcelona / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Belo Horizonte / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Belém / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Berlin / parts_unknown: 2 episodes (S7E8 Cologne, Germany, S11E6 Berlin)
+  AMBIGUOUS  Bordeaux / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Breves / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Brumadinho / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Cabrales / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Cancale / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Casablanca / a_cooks_tour: 2 episodes (S1E11 A Desert Feast, S1E12 Traditional Tastes)
+  AMBIGUOUS  Chamonix-Mont-Blanc / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Chaves / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Chiang Mai City Municipality / a_cooks_tour: 2 episodes (S2E11 Let's Get Lost, S2E13 Thailand: One Night in Bangkok)
+  AMBIGUOUS  Cotai Landfill Zone / no_reservations: 2 episodes (S6E8 Harbin, China, S7E10 Macau)
+  AMBIGUOUS  Cuernavaca / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Curac / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Ensenada / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Errenteria / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Fez / a_cooks_tour: 2 episodes (S1E11 A Desert Feast, S1E12 Traditional Tastes)
+  AMBIGUOUS  Figueres / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Fortaleza / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Granada / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Hac Sa Village / no_reservations: 2 episodes (S6E8 Harbin, China, S7E10 Macau)
+  AMBIGUOUS  Hiva Oa / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Ho Chi Minh City / a_cooks_tour: 3 episodes (S1E3 Cobra Heart - Foods That Make You Manly, S1E4 Eating on the Mekong, S2E12 My Friend Linh)
+  AMBIGUOUS  Hoi An / a_cooks_tour: 3 episodes (S1E3 Cobra Heart - Foods That Make You Manly, S1E4 Eating on the Mekong, S2E12 My Friend Linh)
+  AMBIGUOUS  Hong Kong / no_reservations: 2 episodes (S3E12 Hong Kong, S6E8 Harbin, China)
+  AMBIGUOUS  Huamantla / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Hà Nội / a_cooks_tour: 3 episodes (S1E3 Cobra Heart - Foods That Make You Manly, S1E4 Eating on the Mekong, S2E12 My Friend Linh)
+  AMBIGUOUS  Illescas / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Itaboraí / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Jajouka جهجوكة / a_cooks_tour: 2 episodes (S1E11 A Desert Feast, S1E12 Traditional Tastes)
+  AMBIGUOUS  Kep / a_cooks_tour: 2 episodes (S1E5 Wild Delicacies, S1E6 Eating on the Edge of Nowhere)
+  AMBIGUOUS  Kep Quarter / a_cooks_tour: 2 episodes (S1E5 Wild Delicacies, S1E6 Eating on the Edge of Nowhere)
+  AMBIGUOUS  Khan Daun Penh / a_cooks_tour: 2 episodes (S1E5 Wild Delicacies, S1E6 Eating on the Edge of Nowhere)
+  AMBIGUOUS  La Cadière-d'Azur / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  La Teste-de-Buch / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Le Bélon / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Lisbon / a_cooks_tour: 2 episodes (S1E7 Cod Crazy, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Los Angeles / parts_unknown: 2 episodes (S1E2 Koreatown, Los Angeles, S9E2 Los Angeles)
+  AMBIGUOUS  Lyon / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Lyon / parts_unknown: 2 episodes (S3E4 Lyon, S6E3 Marseille, France)
+  AMBIGUOUS  Lège-Cap-Ferret / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Macau / no_reservations: 2 episodes (S6E8 Harbin, China, S7E10 Macau)
+  AMBIGUOUS  Madrid / no_reservations: 2 episodes (S4E17 Spain, S6E25 Madrid)
+  AMBIGUOUS  Madrid / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Marigot / a_cooks_tour: 3 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig, S2E1 Food Tastes Better with Sand Between Your Toes)
+  AMBIGUOUS  Marseille / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Matosinhos / a_cooks_tour: 2 episodes (S1E7 Cod Crazy, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Mexico City / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Mieres / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Monterrey / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Municipio de Ensenada / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Municipio de Tijuana / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Neak Loeung / a_cooks_tour: 2 episodes (S1E5 Wild Delicacies, S1E6 Eating on the Edge of Nowhere)
+  AMBIGUOUS  New York / a_cooks_tour: 3 episodes (S1E19 My Hometown Favorites, S1E20 My Life as a Cook, S2E5 Elements of a Great Bar)
+  AMBIGUOUS  Noyers / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Nîmes / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Oaxaca City / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Ojinaga / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Ouro Preto / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Papeete / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Paris / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Pasaia / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Pertuis / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Phú Xuân Ward / a_cooks_tour: 3 episodes (S1E3 Cobra Heart - Foods That Make You Manly, S1E4 Eating on the Mekong, S2E12 My Friend Linh)
+  AMBIGUOUS  Ponta Delgada / a_cooks_tour: 2 episodes (S1E7 Cod Crazy, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Porto / a_cooks_tour: 2 episodes (S1E7 Cod Crazy, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Povoação / a_cooks_tour: 2 episodes (S1E7 Cod Crazy, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Pushkin / a_cooks_tour: 2 episodes (S1E13 The Cook Who Came in From the Cold, S1E14 So Much Vodka, So Little Time)
+  AMBIGUOUS  Rennes / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Ribeira Grande (Matriz) / a_cooks_tour: 2 episodes (S1E7 Cod Crazy, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Rio de Janeiro / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Saint Paul / a_cooks_tour: 2 episodes (S2E11 Let's Get Lost, S2E13 Thailand: One Night in Bangkok)
+  AMBIGUOUS  Saint Petersburg / a_cooks_tour: 2 episodes (S1E13 The Cook Who Came in From the Cold, S1E14 So Much Vodka, So Little Time)
+  AMBIGUOUS  Saint-Jouan-des-Guérets / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Saint-Méloir-des-Ondes / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Saint-Ouen-sur-Seine / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Saint-Père / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Saint-Rémy-de-Provence / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Saint-Satur / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Salvador / a_cooks_tour: 2 episodes (S2E3 A Mystical World, S2E4 How to Be a Carioca)
+  AMBIGUOUS  Salvador / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  San Antonio Arrazola / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  San Sebastián / parts_unknown: 3 episodes (S2E3 Spain, S9E3 San Sebastian, S12E2 Asturias, Spain)
+  AMBIGUOUS  Siem Reap / a_cooks_tour: 2 episodes (S1E5 Wild Delicacies, S1E6 Eating on the Edge of Nowhere)
+  AMBIGUOUS  Singapore / a_cooks_tour: 2 episodes (S2E10 Singapore: New York in Twenty Years, S2E13 Thailand: One Night in Bangkok)
+  AMBIGUOUS  Sovann Sakor / a_cooks_tour: 2 episodes (S1E5 Wild Delicacies, S1E6 Eating on the Edge of Nowhere)
+  AMBIGUOUS  Sydney / no_reservations: 2 episodes (S5E12 Australia, S9E2 Sydney)
+  AMBIGUOUS  São Paulo / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  São Sebastião / parts_unknown: 2 episodes (S3E9 Bahia, Brazil, S8E9 Minas Gerais, Brazil)
+  AMBIGUOUS  Sông Mã / a_cooks_tour: 3 episodes (S1E3 Cobra Heart - Foods That Make You Manly, S1E4 Eating on the Mekong, S2E12 My Friend Linh)
+  AMBIGUOUS  Tangier / a_cooks_tour: 2 episodes (S1E11 A Desert Feast, S1E12 Traditional Tastes)
+  AMBIGUOUS  Tecamachalco / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Thuận Hóa Ward / a_cooks_tour: 3 episodes (S1E3 Cobra Heart - Foods That Make You Manly, S1E4 Eating on the Mekong, S2E12 My Friend Linh)
+  AMBIGUOUS  Tijuana / a_cooks_tour: 2 episodes (S1E15 Tamales and Iguana, Oaxacan Style, S1E16 Puebla, Where the Good Cooks Are From)
+  AMBIGUOUS  Tolosa / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Town of Marbletown / a_cooks_tour: 3 episodes (S1E19 My Hometown Favorites, S1E20 My Life as a Cook, S2E5 Elements of a Great Bar)
+  AMBIGUOUS  Town of New Baltimore / a_cooks_tour: 3 episodes (S1E19 My Hometown Favorites, S1E20 My Life as a Cook, S2E5 Elements of a Great Bar)
+  AMBIGUOUS  Ustaritz / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Vallorcine / a_cooks_tour: 2 episodes (S1E9 Childhood Flavors, S1E10 Stuffed Like a Pig)
+  AMBIGUOUS  Vilassar de Mar / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Vilches / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  Villaviciosa / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  el Borràs / parts_unknown: 2 episodes (S2E3 Spain, S12E2 Asturias, Spain)
+  AMBIGUOUS  บางกะพร้อม / a_cooks_tour: 2 episodes (S2E11 Let's Get Lost, S2E13 Thailand: One Night in Bangkok)
+  WEAK_ONLY  Aau / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Aau / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Accra / no_reservations: only a country match (S3E2 Ghana) — not backfilled
+  WEAK_ONLY  Agena / parts_unknown: only a country match (S6E6 Ethiopia) — not backfilled
+  WEAK_ONLY  Akowonjo / parts_unknown: only a country match (S10E3 Lagos, Nigeria) — not backfilled
+  WEAK_ONLY  Albuquerque / parts_unknown: only a region match (S2E4 New Mexico) — not backfilled
+  WEAK_ONLY  Almeria / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Almeria / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Aluva / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Aluva / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Amar Sagar / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Amar Sagar / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Amritsar / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Amritsar / parts_unknown: only a region match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Andrés / no_reservations: only a country match (S9E9 Dominican Republic) — not backfilled
+  WEAK_ONLY  Angeles / no_reservations: only a country match (S5E7 Philippines) — not backfilled
+  WEAK_ONLY  Angeles / parts_unknown: only a country match (S7E2 Manila, Philippines) — not backfilled
+  WEAK_ONLY  Antananarivo / parts_unknown: only a country match (S5E5 Madagascar) — not backfilled
+  WEAK_ONLY  Arcachon / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Ariylai South West / no_reservations: only a country match (S5E9 Sri Lanka) — not backfilled
+  WEAK_ONLY  Ariylai South West / parts_unknown: only a country match (S10E5 Sri Lanka) — not backfilled
+  WEAK_ONLY  Asbury Park / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Asbury Park / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Asuncion / parts_unknown: only a country match (S4E4 Paraguay) — not backfilled
+  WEAK_ONLY  Atlanta / parts_unknown: only a region match (S7E6 Tbilisi, Georgia) — not backfilled
+  WEAK_ONLY  Atlantic City / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Atlantic City / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Atxondo / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Atxondo / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Auxerre / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Avilés / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Avilés / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Bai Chay Ward / parts_unknown: only a country match (S4E5 Vietnam) — not backfilled
+  WEAK_ONLY  Bajura / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Bajura / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Ban On Klang / no_reservations: only a country match (S5E16 Thailand) — not backfilled
+  WEAK_ONLY  Ban On Klang / parts_unknown: only a country match (S3E8 Thailand) — not backfilled
+  WEAK_ONLY  Bangkok / no_reservations: only a country match (S5E16 Thailand) — not backfilled
+  WEAK_ONLY  Bangkok / parts_unknown: only a country match (S3E8 Thailand) — not backfilled
+  WEAK_ONLY  Barbour County / parts_unknown: only a region match (S11E1 West Virginia) — not backfilled
+  WEAK_ONLY  Barcelona / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Barcelona / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Barnegat Light / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Barnegat Light / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Barrio Pueblo / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Barrio Pueblo / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Bashura / parts_unknown: only a region match (S5E9 Beirut) — not backfilled
+  WEAK_ONLY  Batumi / parts_unknown: only a country match (S7E6 Tbilisi, Georgia) — not backfilled
+  WEAK_ONLY  Beaufort County / no_reservations: only a region match (S3E14 South Carolina) — not backfilled
+  WEAK_ONLY  Beijing / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Beira / no_reservations: only a country match (S8E1 Mozambique) — not backfilled
+  WEAK_ONLY  Bekasi / no_reservations: only a country match (S2E12 Indonesia) — not backfilled
+  WEAK_ONLY  Bekasi / parts_unknown: only a country match (S12E3 Indonesia) — not backfilled
+  WEAK_ONLY  Bellevue / no_reservations: only a region match (S5E3 Washington, D.C.) — not backfilled
+  WEAK_ONLY  Belmar / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Belmar / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Belo Horizonte / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Belo Horizonte / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Belém / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Belém / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Bernalillo County / parts_unknown: only a region match (S2E4 New Mexico) — not backfilled
+  WEAK_ONLY  Bezur_Kuenzangdrag / parts_unknown: only a country match (S11E8 Bhutan) — not backfilled
+  WEAK_ONLY  Big Horn County / no_reservations: only a region match (S5E17 Montana) — not backfilled
+  WEAK_ONLY  Big Horn County / parts_unknown: only a region match (S7E5 Montana) — not backfilled
+  WEAK_ONLY  Biratori / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Biratori / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Bloomfield / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Bloomfield / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Bloomington / a_cooks_tour: only a region match (S2E6 The Struggle for the Soul of America) — not backfilled
+  WEAK_ONLY  Bogota / no_reservations: only a country match (S4E12 Colombia) — not backfilled
+  WEAK_ONLY  Bogota / parts_unknown: only a country match (S1E3 Colombia) — not backfilled
+  WEAK_ONLY  Bole / parts_unknown: only a country match (S6E6 Ethiopia) — not backfilled
+  WEAK_ONLY  Bologna / no_reservations: only a region match (S9E4 Emilia Romagna) — not backfilled
+  WEAK_ONLY  Bordeaux / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Boston / a_cooks_tour: only a region match (S1E20 My Life as a Cook) — not backfilled
+  WEAK_ONLY  Boston / parts_unknown: only a region match (S4E8 Massachusetts) — not backfilled
+  WEAK_ONLY  Breves / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Breves / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Brighton / no_reservations: only a country match (S5E12 Australia) — not backfilled
+  WEAK_ONLY  Bronte / no_reservations: only a region match (S1E6 Sicily) — not backfilled
+  WEAK_ONLY  Bronte / parts_unknown: only a region match (S2E6 Sicily) — not backfilled
+  WEAK_ONLY  Brookline / a_cooks_tour: only a region match (S1E20 My Life as a Cook) — not backfilled
+  WEAK_ONLY  Brookline / parts_unknown: only a region match (S4E8 Massachusetts) — not backfilled
+  WEAK_ONLY  Brumadinho / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Brumadinho / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Buenos Aires / no_reservations: only a country match (S3E13 Argentina) — not backfilled
+  WEAK_ONLY  Bungendore / no_reservations: only a country match (S5E12 Australia) — not backfilled
+  WEAK_ONLY  Butte / no_reservations: only a region match (S5E17 Montana) — not backfilled
+  WEAK_ONLY  Butte / parts_unknown: only a region match (S7E5 Montana) — not backfilled
+  WEAK_ONLY  Cabrales / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Cabrales / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Cairo / no_reservations: only a country match (S4E18 Egypt) — not backfilled
+  WEAK_ONLY  Camden / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Camden / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Cancale / no_reservations: only a region match (S6E3 Brittany) — not backfilled
+  WEAK_ONLY  Cancale / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Carrara / no_reservations: only a region match (S3E15 Tuscany) — not backfilled
+  WEAK_ONLY  Cartagena / no_reservations: only a country match (S4E12 Colombia) — not backfilled
+  WEAK_ONLY  Cartagena / parts_unknown: only a country match (S1E3 Colombia) — not backfilled
+  WEAK_ONLY  Catania / no_reservations: only a region match (S1E6 Sicily) — not backfilled
+  WEAK_ONLY  Catania / parts_unknown: only a region match (S2E6 Sicily) — not backfilled
+  WEAK_ONLY  Cawdor / a_cooks_tour: only a region match (S1E21 Highland Grub) — not backfilled
+  WEAK_ONLY  Cawdor / parts_unknown: only a region match (S5E4 Scotland) — not backfilled
+  WEAK_ONLY  Chamblee / parts_unknown: only a region match (S7E6 Tbilisi, Georgia) — not backfilled
+  WEAK_ONLY  Chamonix-Mont-Blanc / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Changning District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Changning District / parts_unknown: only a region match (S4E2 Shanghai) — not backfilled
+  WEAK_ONLY  Charleston / no_reservations: only a region match (S3E14 South Carolina) — not backfilled
+  WEAK_ONLY  Chaves / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Chaves / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Chiang Mai City Municipality / no_reservations: only a country match (S5E16 Thailand) — not backfilled
+  WEAK_ONLY  Chiang Mai City Municipality / parts_unknown: only a country match (S3E8 Thailand) — not backfilled
+  WEAK_ONLY  Chiclayo / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Chiclayo / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Chimbacalle / no_reservations: only a country match (S6E6 Ecuador) — not backfilled
+  WEAK_ONLY  Chinchero / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Chinchero / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Cholón / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Cholón / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Chornobyl / no_reservations: only a country match (S7E14 Ukraine) — not backfilled
+  WEAK_ONLY  Chuo / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Chuo / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Cieneguilla / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Cieneguilla / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  City of Edinburgh / a_cooks_tour: only a region match (S1E21 Highland Grub) — not backfilled
+  WEAK_ONLY  City of Edinburgh / parts_unknown: only a region match (S5E4 Scotland) — not backfilled
+  WEAK_ONLY  Colombo / no_reservations: only a country match (S5E9 Sri Lanka) — not backfilled
+  WEAK_ONLY  Colombo / parts_unknown: only a country match (S10E5 Sri Lanka) — not backfilled
+  WEAK_ONLY  Cuernavaca / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Cuernavaca / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Curac / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Dakar / parts_unknown: only a country match (S7E7 Senegal) — not backfilled
+  WEAK_ONLY  Dat Hayl / parts_unknown: only a country match (S9E7 Oman) — not backfilled
+  WEAK_ONLY  Delmas, Ouest / no_reservations: only a country match (S7E1 Haiti) — not backfilled
+  WEAK_ONLY  Dilijan / parts_unknown: only a country match (S11E4 Armenia) — not backfilled
+  WEAK_ONLY  Discovery Bay / no_reservations: only a country match (S4E7 Jamaica) — not backfilled
+  WEAK_ONLY  Discovery Bay / parts_unknown: only a country match (S4E9 Jamaica) — not backfilled
+  WEAK_ONLY  Dongcheng District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Doraville / parts_unknown: only a region match (S7E6 Tbilisi, Georgia) — not backfilled
+  WEAK_ONLY  Dorogobuzhsky District / no_reservations: only a country match (S3E5 Russia) — not backfilled
+  WEAK_ONLY  Dorogobuzhsky District / parts_unknown: only a country match (S3E6 Russia) — not backfilled
+  WEAK_ONLY  Dublin / no_reservations: only a country match (S3E1 Ireland) — not backfilled
+  WEAK_ONLY  Déni Guedj / parts_unknown: only a country match (S7E7 Senegal) — not backfilled
+  WEAK_ONLY  East Honolulu / no_reservations: only a region match (S4E9 Hawaii) — not backfilled
+  WEAK_ONLY  East Honolulu / parts_unknown: only a region match (S5E8 Hawaii) — not backfilled
+  WEAK_ONLY  Edgewater / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Edgewater / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Ensenada / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Ensenada / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Errenteria / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Errenteria / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Fairy Hill / no_reservations: only a country match (S4E7 Jamaica) — not backfilled
+  WEAK_ONLY  Fairy Hill / parts_unknown: only a country match (S4E9 Jamaica) — not backfilled
+  WEAK_ONLY  Figueres / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Figueres / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Fort Lee / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Fort Lee / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Fortaleza / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Fortaleza / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Garut / no_reservations: only a country match (S2E12 Indonesia) — not backfilled
+  WEAK_ONLY  Garut / parts_unknown: only a country match (S12E3 Indonesia) — not backfilled
+  WEAK_ONLY  George Town / no_reservations: only a region match (S8E8 Penang) — not backfilled
+  WEAK_ONLY  Glasgow / a_cooks_tour: only a region match (S1E21 Highland Grub) — not backfilled
+  WEAK_ONLY  Glasgow / parts_unknown: only a region match (S5E4 Scotland) — not backfilled
+  WEAK_ONLY  Gorki / no_reservations: only a country match (S3E5 Russia) — not backfilled
+  WEAK_ONLY  Gorki / parts_unknown: only a country match (S3E6 Russia) — not backfilled
+  WEAK_ONLY  Granada / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Granada / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Greenfield / a_cooks_tour: only a region match (S1E20 My Life as a Cook) — not backfilled
+  WEAK_ONLY  Greenfield / parts_unknown: only a region match (S4E8 Massachusetts) — not backfilled
+  WEAK_ONLY  Greve in Chianti / no_reservations: only a region match (S3E15 Tuscany) — not backfilled
+  WEAK_ONLY  Guavate / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Guavate / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Guayaquil / no_reservations: only a country match (S6E6 Ecuador) — not backfilled
+  WEAK_ONLY  Gurunagar / no_reservations: only a country match (S5E9 Sri Lanka) — not backfilled
+  WEAK_ONLY  Gurunagar / parts_unknown: only a country match (S10E5 Sri Lanka) — not backfilled
+  WEAK_ONLY  Hamilton Mountain / no_reservations: only a country match (S4E7 Jamaica) — not backfilled
+  WEAK_ONLY  Hamilton Mountain / parts_unknown: only a country match (S4E9 Jamaica) — not backfilled
+  WEAK_ONLY  Hardap / no_reservations: only a country match (S3E4 Namibia) — not backfilled
+  WEAK_ONLY  Harris Township / a_cooks_tour: only a region match (S2E6 The Struggle for the Soul of America) — not backfilled
+  WEAK_ONLY  Harrison County / parts_unknown: only a region match (S11E1 West Virginia) — not backfilled
+  WEAK_ONLY  Hato Nuevo / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Hato Nuevo / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Hausjärvi / no_reservations: only a country match (S8E6 Finland) — not backfilled
+  WEAK_ONLY  Havana / no_reservations: only a country match (S7E9 Cuba) — not backfilled
+  WEAK_ONLY  Havana / parts_unknown: only a country match (S6E2 Cuba) — not backfilled
+  WEAK_ONLY  Helsinki / no_reservations: only a country match (S8E6 Finland) — not backfilled
+  WEAK_ONLY  Highland / a_cooks_tour: only a region match (S1E21 Highland Grub) — not backfilled
+  WEAK_ONLY  Highland / parts_unknown: only a region match (S5E4 Scotland) — not backfilled
+  WEAK_ONLY  Hiva Oa / no_reservations: only a region match (S3E10 French Polynesia) — not backfilled
+  WEAK_ONLY  Hiva Oa / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Ho Chi Minh City / parts_unknown: only a country match (S4E5 Vietnam) — not backfilled
+  WEAK_ONLY  Hoi An / parts_unknown: only a country match (S4E5 Vietnam) — not backfilled
+  WEAK_ONLY  Holland Township / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Holland Township / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Honolulu / no_reservations: only a region match (S4E9 Hawaii) — not backfilled
+  WEAK_ONLY  Honolulu / parts_unknown: only a region match (S5E8 Hawaii) — not backfilled
+  WEAK_ONLY  Houaynokhom / no_reservations: only a country match (S4E11 Laos) — not backfilled
+  WEAK_ONLY  Houaynokhom / parts_unknown: only a country match (S9E4 Laos) — not backfilled
+  WEAK_ONLY  Howth / no_reservations: only a country match (S3E1 Ireland) — not backfilled
+  WEAK_ONLY  Huacrachuco / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Huacrachuco / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Huamantla / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Huamantla / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Hà Nội / parts_unknown: only a country match (S4E5 Vietnam) — not backfilled
+  WEAK_ONLY  Ikeja / parts_unknown: only a country match (S10E3 Lagos, Nigeria) — not backfilled
+  WEAK_ONLY  Ilha de Mocambique / no_reservations: only a country match (S8E1 Mozambique) — not backfilled
+  WEAK_ONLY  Illescas / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Illescas / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Imola / no_reservations: only a region match (S9E4 Emilia Romagna) — not backfilled
+  WEAK_ONLY  Isabel II / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Isabel II / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Isfahan / parts_unknown: only a country match (S4E7 Iran) — not backfilled
+  WEAK_ONLY  Itaboraí / a_cooks_tour: only a region match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Itaboraí / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Jaffna / no_reservations: only a country match (S5E9 Sri Lanka) — not backfilled
+  WEAK_ONLY  Jaffna / parts_unknown: only a country match (S10E5 Sri Lanka) — not backfilled
+  WEAK_ONLY  Jambiani / parts_unknown: only a country match (S4E6 Tanzania) — not backfilled
+  WEAK_ONLY  Jariștea / no_reservations: only a country match (S4E8 Romania) — not backfilled
+  WEAK_ONLY  Jing'an District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Jing'an District / parts_unknown: only a region match (S4E2 Shanghai) — not backfilled
+  WEAK_ONLY  Jinjiang District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Jinjiang District / parts_unknown: only a region match (S8E4 Sichuan) — not backfilled
+  WEAK_ONLY  Jizzakh / no_reservations: only a country match (S1E8 Uzbekistan) — not backfilled
+  WEAK_ONLY  Johannesburg Ward 123 / parts_unknown: only a country match (S2E7 South Africa) — not backfilled
+  WEAK_ONLY  Johannesburg Ward 66 / parts_unknown: only a country match (S2E7 South Africa) — not backfilled
+  WEAK_ONLY  Kanazawa / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Kanazawa / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Kep / no_reservations: only a country match (S7E2 Cambodia) — not backfilled
+  WEAK_ONLY  Kep Quarter / no_reservations: only a country match (S7E2 Cambodia) — not backfilled
+  WEAK_ONLY  Kera / parts_unknown: only a country match (S6E6 Ethiopia) — not backfilled
+  WEAK_ONLY  Khan Daun Penh / no_reservations: only a country match (S7E2 Cambodia) — not backfilled
+  WEAK_ONLY  Kingston / no_reservations: only a region match (S5E3 Washington, D.C.) — not backfilled
+  WEAK_ONLY  Kisima ward / parts_unknown: only a country match (S12E1 Kenya) — not backfilled
+  WEAK_ONLY  Kiso / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Kiso / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Kolaghat / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Kolaghat / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Kolkata / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Kolkata / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Koto / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Koto / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Kyiv / no_reservations: only a country match (S7E14 Ukraine) — not backfilled
+  WEAK_ONLY  Kyoto / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Kyoto / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  La Cadière-d'Azur / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  La Teste-de-Buch / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  La Victoria / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  La Victoria / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Lago Argentino / no_reservations: only a country match (S3E13 Argentina) — not backfilled
+  WEAK_ONLY  Laikipia North / parts_unknown: only a country match (S12E1 Kenya) — not backfilled
+  WEAK_ONLY  Lalaua / no_reservations: only a country match (S8E1 Mozambique) — not backfilled
+  WEAK_ONLY  Lampedusa / no_reservations: only a region match (S1E6 Sicily) — not backfilled
+  WEAK_ONLY  Lampedusa / parts_unknown: only a region match (S2E6 Sicily) — not backfilled
+  WEAK_ONLY  Le Bélon / no_reservations: only a region match (S6E3 Brittany) — not backfilled
+  WEAK_ONLY  Le Bélon / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Leawood / a_cooks_tour: only a region match (S2E7 The BBQ Triangle) — not backfilled
+  WEAK_ONLY  Leawood / no_reservations: only a region match (S8E2 Kansas City) — not backfilled
+  WEAK_ONLY  Lebu / parts_unknown: only a country match (S6E6 Ethiopia) — not backfilled
+  WEAK_ONLY  Lel Yar / parts_unknown: only a country match (S1E1 Myanmar) — not backfilled
+  WEAK_ONLY  Lima / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Lima / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Lince / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Lince / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Lisbon / parts_unknown: only a country match (S9E9 Porto, Portugal) — not backfilled
+  WEAK_ONLY  Livingston / no_reservations: only a region match (S5E17 Montana) — not backfilled
+  WEAK_ONLY  Livingston / parts_unknown: only a region match (S7E5 Montana) — not backfilled
+  WEAK_ONLY  Longueuil / no_reservations: only a region match (S2E4 Quebec) — not backfilled
+  WEAK_ONLY  Longueuil / parts_unknown: only a region match (S1E4 Quebec) — not backfilled
+  WEAK_ONLY  Luleå / no_reservations: only a country match (S2E5 Sweden) — not backfilled
+  WEAK_ONLY  Lège-Cap-Ferret / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Machupicchu / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Machupicchu / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Madrid / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Makati / no_reservations: only a country match (S5E7 Philippines) — not backfilled
+  WEAK_ONLY  Makati / parts_unknown: only a country match (S7E2 Manila, Philippines) — not backfilled
+  WEAK_ONLY  Makoko / parts_unknown: only a country match (S10E3 Lagos, Nigeria) — not backfilled
+  WEAK_ONLY  Maldonado / no_reservations: only a country match (S4E14 Uruguay) — not backfilled
+  WEAK_ONLY  Maldonado / parts_unknown: only a country match (S11E2 Uruguay) — not backfilled
+  WEAK_ONLY  Man / parts_unknown: only a region match (S11E1 West Virginia) — not backfilled
+  WEAK_ONLY  Managua / no_reservations: only a country match (S7E3 Nicaragua) — not backfilled
+  WEAK_ONLY  Manakara / parts_unknown: only a country match (S5E5 Madagascar) — not backfilled
+  WEAK_ONLY  Manaure / no_reservations: only a country match (S4E12 Colombia) — not backfilled
+  WEAK_ONLY  Manaure / parts_unknown: only a country match (S1E3 Colombia) — not backfilled
+  WEAK_ONLY  Manila / no_reservations: only a country match (S5E7 Philippines) — not backfilled
+  WEAK_ONLY  Maputo / no_reservations: only a country match (S8E1 Mozambique) — not backfilled
+  WEAK_ONLY  Mar Mikhael / parts_unknown: only a region match (S5E9 Beirut) — not backfilled
+  WEAK_ONLY  Mar Nicolas / parts_unknown: only a region match (S5E9 Beirut) — not backfilled
+  WEAK_ONLY  Marigot / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Mashimoni / parts_unknown: only a country match (S12E1 Kenya) — not backfilled
+  WEAK_ONLY  Mate Yehuda Regional Council / parts_unknown: only a region match (S2E2 Jerusalem) — not backfilled
+  WEAK_ONLY  Matosinhos / parts_unknown: only a country match (S9E9 Porto, Portugal) — not backfilled
+  WEAK_ONLY  Matrah / parts_unknown: only a country match (S9E7 Oman) — not backfilled
+  WEAK_ONLY  Maui County / no_reservations: only a region match (S4E9 Hawaii) — not backfilled
+  WEAK_ONLY  Maui County / parts_unknown: only a region match (S5E8 Hawaii) — not backfilled
+  WEAK_ONLY  Medianía Alta / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Medianía Alta / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Meguro / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Meguro / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Melbourne / no_reservations: only a country match (S5E12 Australia) — not backfilled
+  WEAK_ONLY  Merawala / no_reservations: only a country match (S5E9 Sri Lanka) — not backfilled
+  WEAK_ONLY  Merawala / parts_unknown: only a country match (S10E5 Sri Lanka) — not backfilled
+  WEAK_ONLY  Mieres / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Mieres / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Milo / no_reservations: only a region match (S6E12 Maine) — not backfilled
+  WEAK_ONLY  Minas / no_reservations: only a country match (S4E14 Uruguay) — not backfilled
+  WEAK_ONLY  Minas / parts_unknown: only a country match (S11E2 Uruguay) — not backfilled
+  WEAK_ONLY  Minato / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Minato / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Minhang District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Minhang District / parts_unknown: only a region match (S4E2 Shanghai) — not backfilled
+  WEAK_ONLY  Mirabel / no_reservations: only a region match (S2E4 Quebec) — not backfilled
+  WEAK_ONLY  Mirabel / parts_unknown: only a region match (S1E4 Quebec) — not backfilled
+  WEAK_ONLY  Miraflores / no_reservations: only a country match (S4E12 Colombia) — not backfilled
+  WEAK_ONLY  Miraflores / parts_unknown: only a country match (S1E3 Colombia) — not backfilled
+  WEAK_ONLY  Misrata / parts_unknown: only a country match (S1E6 Libya) — not backfilled
+  WEAK_ONLY  Missoula / no_reservations: only a region match (S5E17 Montana) — not backfilled
+  WEAK_ONLY  Missoula / parts_unknown: only a region match (S7E5 Montana) — not backfilled
+  WEAK_ONLY  Mkunazini / parts_unknown: only a country match (S4E6 Tanzania) — not backfilled
+  WEAK_ONLY  Monrovia / no_reservations: only a country match (S6E16 Liberia) — not backfilled
+  WEAK_ONLY  Monterrey / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Monterrey / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Montevideo / no_reservations: only a country match (S4E14 Uruguay) — not backfilled
+  WEAK_ONLY  Montevideo / parts_unknown: only a country match (S11E2 Uruguay) — not backfilled
+  WEAK_ONLY  Montreal / no_reservations: only a region match (S2E4 Quebec) — not backfilled
+  WEAK_ONLY  Montreal / parts_unknown: only a region match (S1E4 Quebec) — not backfilled
+  WEAK_ONLY  Moscow / no_reservations: only a country match (S3E5 Russia) — not backfilled
+  WEAK_ONLY  Moscow / parts_unknown: only a country match (S3E6 Russia) — not backfilled
+  WEAK_ONLY  Mount Pleasant / no_reservations: only a region match (S3E14 South Carolina) — not backfilled
+  WEAK_ONLY  Mtende / parts_unknown: only a country match (S4E6 Tanzania) — not backfilled
+  WEAK_ONLY  Municipio de Ensenada / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Municipio de Ensenada / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Municipio de Tijuana / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Municipio de Tijuana / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Naha / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Naha / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Nanhu District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Nasangveuy / no_reservations: only a country match (S4E11 Laos) — not backfilled
+  WEAK_ONLY  Nasangveuy / parts_unknown: only a country match (S9E4 Laos) — not backfilled
+  WEAK_ONLY  Nasr City / no_reservations: only a country match (S4E18 Egypt) — not backfilled
+  WEAK_ONLY  Nasrah / parts_unknown: only a region match (S5E9 Beirut) — not backfilled
+  WEAK_ONLY  Nasu / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Nasu / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Neak Loeung / no_reservations: only a country match (S7E2 Cambodia) — not backfilled
+  WEAK_ONLY  Ngorongoro / parts_unknown: only a country match (S4E6 Tanzania) — not backfilled
+  WEAK_ONLY  Nishinomiya / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Nishinomiya / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Nonantola / no_reservations: only a region match (S9E4 Emilia Romagna) — not backfilled
+  WEAK_ONLY  Noyers / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Nîmes / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Oaxaca City / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Oaxaca City / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Ojinaga / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Ojinaga / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Oracabessa / no_reservations: only a country match (S4E7 Jamaica) — not backfilled
+  WEAK_ONLY  Oracabessa / parts_unknown: only a country match (S4E9 Jamaica) — not backfilled
+  WEAK_ONLY  Osaka / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Osaka / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Ouro Preto / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  Ouro Preto / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Palermo / no_reservations: only a region match (S1E6 Sicily) — not backfilled
+  WEAK_ONLY  Palermo / parts_unknown: only a region match (S2E6 Sicily) — not backfilled
+  WEAK_ONLY  Papeete / no_reservations: only a region match (S3E10 French Polynesia) — not backfilled
+  WEAK_ONLY  Papeete / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Paris / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Pasaia / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Pasaia / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Pasay / no_reservations: only a country match (S5E7 Philippines) — not backfilled
+  WEAK_ONLY  Pasay / parts_unknown: only a country match (S7E2 Manila, Philippines) — not backfilled
+  WEAK_ONLY  Pertuis / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Phú Xuân Ward / parts_unknown: only a country match (S4E5 Vietnam) — not backfilled
+  WEAK_ONLY  Pisa / no_reservations: only a region match (S3E15 Tuscany) — not backfilled
+  WEAK_ONLY  Pisano / no_reservations: only a region match (S1E6 Sicily) — not backfilled
+  WEAK_ONLY  Pisano / parts_unknown: only a region match (S2E6 Sicily) — not backfilled
+  WEAK_ONLY  Polesine Parmense / no_reservations: only a region match (S9E4 Emilia Romagna) — not backfilled
+  WEAK_ONLY  Ponta Delgada / parts_unknown: only a country match (S9E9 Porto, Portugal) — not backfilled
+  WEAK_ONLY  Port-au-Prince Arrondissement / no_reservations: only a country match (S7E1 Haiti) — not backfilled
+  WEAK_ONLY  Portland / no_reservations: only a region match (S6E12 Maine) — not backfilled
+  WEAK_ONLY  Povoação / parts_unknown: only a country match (S9E9 Porto, Portugal) — not backfilled
+  WEAK_ONLY  Provincetown / parts_unknown: only a region match (S4E8 Massachusetts) — not backfilled
+  WEAK_ONLY  Pueblo Libre / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Pueblo Libre / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Puerto López / no_reservations: only a country match (S6E6 Ecuador) — not backfilled
+  WEAK_ONLY  Puerto Montt / no_reservations: only a country match (S5E11 Chile) — not backfilled
+  WEAK_ONLY  Puerto Varas / no_reservations: only a country match (S5E11 Chile) — not backfilled
+  WEAK_ONLY  Punta Del Este / no_reservations: only a country match (S4E14 Uruguay) — not backfilled
+  WEAK_ONLY  Punta Del Este / parts_unknown: only a country match (S11E2 Uruguay) — not backfilled
+  WEAK_ONLY  Pushkin / no_reservations: only a country match (S3E5 Russia) — not backfilled
+  WEAK_ONLY  Pushkin / parts_unknown: only a country match (S3E6 Russia) — not backfilled
+  WEAK_ONLY  Qingyang District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Qingyang District / parts_unknown: only a region match (S8E4 Sichuan) — not backfilled
+  WEAK_ONLY  Quezon City / no_reservations: only a country match (S5E7 Philippines) — not backfilled
+  WEAK_ONLY  Quezon City / parts_unknown: only a country match (S7E2 Manila, Philippines) — not backfilled
+  WEAK_ONLY  Quito / no_reservations: only a country match (S6E6 Ecuador) — not backfilled
+  WEAK_ONLY  Rasnov / no_reservations: only a country match (S4E8 Romania) — not backfilled
+  WEAK_ONLY  Reasi / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Reasi / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Rennes / no_reservations: only a region match (S6E3 Brittany) — not backfilled
+  WEAK_ONLY  Rennes / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Renton / no_reservations: only a region match (S5E3 Washington, D.C.) — not backfilled
+  WEAK_ONLY  Ribeira Grande (Matriz) / parts_unknown: only a country match (S9E9 Porto, Portugal) — not backfilled
+  WEAK_ONLY  Rio Arriba County / parts_unknown: only a region match (S2E4 New Mexico) — not backfilled
+  WEAK_ONLY  Rio de Janeiro / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Riohacha / no_reservations: only a country match (S4E12 Colombia) — not backfilled
+  WEAK_ONLY  Riohacha / parts_unknown: only a country match (S1E3 Colombia) — not backfilled
+  WEAK_ONLY  Riyadh / no_reservations: only a country match (S4E13 Saudi Arabia) — not backfilled
+  WEAK_ONLY  Rocha / no_reservations: only a country match (S4E14 Uruguay) — not backfilled
+  WEAK_ONLY  Rocha / parts_unknown: only a country match (S11E2 Uruguay) — not backfilled
+  WEAK_ONLY  Rímac / no_reservations: only a country match (S2E3 Peru) — not backfilled
+  WEAK_ONLY  Rímac / parts_unknown: only a country match (S1E7 Peru) — not backfilled
+  WEAK_ONLY  Saint Paul / no_reservations: only a country match (S5E16 Thailand) — not backfilled
+  WEAK_ONLY  Saint Paul / parts_unknown: only a country match (S3E8 Thailand) — not backfilled
+  WEAK_ONLY  Saint Petersburg / no_reservations: only a country match (S3E5 Russia) — not backfilled
+  WEAK_ONLY  Saint Petersburg / parts_unknown: only a country match (S3E6 Russia) — not backfilled
+  WEAK_ONLY  Saint-Jouan-des-Guérets / no_reservations: only a region match (S6E3 Brittany) — not backfilled
+  WEAK_ONLY  Saint-Jouan-des-Guérets / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Saint-Louis / parts_unknown: only a country match (S7E7 Senegal) — not backfilled
+  WEAK_ONLY  Saint-Méloir-des-Ondes / no_reservations: only a region match (S6E3 Brittany) — not backfilled
+  WEAK_ONLY  Saint-Méloir-des-Ondes / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Saint-Ouen-sur-Seine / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Saint-Père / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Saint-Rémy-de-Provence / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Saint-Satur / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Salvador / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  Samana / no_reservations: only a country match (S9E9 Dominican Republic) — not backfilled
+  WEAK_ONLY  San Antonio Arrazola / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  San Antonio Arrazola / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  San Juan / no_reservations: only a country match (S5E7 Philippines) — not backfilled
+  WEAK_ONLY  San Juan / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  San Juan / parts_unknown: only a country match (S7E2 Manila, Philippines) — not backfilled
+  WEAK_ONLY  San Juan / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  San Miguel County / parts_unknown: only a region match (S2E4 New Mexico) — not backfilled
+  WEAK_ONLY  San Sebastián / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Santa Ana / no_reservations: only a region match (S6E1 Panama) — not backfilled
+  WEAK_ONLY  Santa Fe / parts_unknown: only a region match (S2E4 New Mexico) — not backfilled
+  WEAK_ONLY  Santiago / no_reservations: only a country match (S5E11 Chile) — not backfilled
+  WEAK_ONLY  Santiago de Cuba / no_reservations: only a country match (S7E9 Cuba) — not backfilled
+  WEAK_ONLY  Santiago de Cuba / parts_unknown: only a country match (S6E2 Cuba) — not backfilled
+  WEAK_ONLY  Santo Domingo / no_reservations: only a country match (S9E9 Dominican Republic) — not backfilled
+  WEAK_ONLY  Sapporo / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Sapporo / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  SeaTac / no_reservations: only a region match (S5E3 Washington, D.C.) — not backfilled
+  WEAK_ONLY  Seattle / no_reservations: only a region match (S5E3 Washington, D.C.) — not backfilled
+  WEAK_ONLY  Secteur Minet El Hosn / parts_unknown: only a region match (S5E9 Beirut) — not backfilled
+  WEAK_ONLY  Seenigama / no_reservations: only a country match (S5E9 Sri Lanka) — not backfilled
+  WEAK_ONLY  Seenigama / parts_unknown: only a country match (S10E5 Sri Lanka) — not backfilled
+  WEAK_ONLY  Setagaya / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Setagaya / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Shanghai / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Shangzhi / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Shibuya / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Shibuya / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Shimla (urban) / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Shimla (urban) / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Shinjuku / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Shinjuku / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Shizhong / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Shizhong / parts_unknown: only a region match (S8E4 Sichuan) — not backfilled
+  WEAK_ONLY  Siem Reap / no_reservations: only a country match (S7E2 Cambodia) — not backfilled
+  WEAK_ONLY  South Jakarta / no_reservations: only a country match (S2E12 Indonesia) — not backfilled
+  WEAK_ONLY  South Jakarta / parts_unknown: only a country match (S12E3 Indonesia) — not backfilled
+  WEAK_ONLY  South Yarra / no_reservations: only a country match (S5E12 Australia) — not backfilled
+  WEAK_ONLY  Sovann Sakor / no_reservations: only a country match (S7E2 Cambodia) — not backfilled
+  WEAK_ONLY  Spanish Town / no_reservations: only a country match (S4E7 Jamaica) — not backfilled
+  WEAK_ONLY  Spanish Town / parts_unknown: only a country match (S4E9 Jamaica) — not backfilled
+  WEAK_ONLY  Stafford Township / no_reservations: only a region match (S1E3 New Jersey) — not backfilled
+  WEAK_ONLY  Stafford Township / parts_unknown: only a region match (S5E6 New Jersey) — not backfilled
+  WEAK_ONLY  Stockholm / no_reservations: only a country match (S2E5 Sweden) — not backfilled
+  WEAK_ONLY  Sumida / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Sumida / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Suq al Khamis / parts_unknown: only a country match (S1E6 Libya) — not backfilled
+  WEAK_ONLY  Swakopmund / no_reservations: only a country match (S3E4 Namibia) — not backfilled
+  WEAK_ONLY  São Paulo / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  São Paulo / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  São Sebastião / a_cooks_tour: only a country match (S2E4 How to Be a Carioca) — not backfilled
+  WEAK_ONLY  São Sebastião / no_reservations: only a country match (S3E9 Brazil) — not backfilled
+  WEAK_ONLY  São Sebastião / the_layover: only a region match (S2E4 São Paulo) — not backfilled
+  WEAK_ONLY  Sông Mã / parts_unknown: only a country match (S4E5 Vietnam) — not backfilled
+  WEAK_ONLY  Săpânța / no_reservations: only a country match (S4E8 Romania) — not backfilled
+  WEAK_ONLY  Taito / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Taito / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Takamori / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Takamori / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Tashkent / no_reservations: only a country match (S1E8 Uzbekistan) — not backfilled
+  WEAK_ONLY  Tecamachalco / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Tecamachalco / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Tehran / parts_unknown: only a country match (S4E7 Iran) — not backfilled
+  WEAK_ONLY  Thimphu / parts_unknown: only a country match (S11E8 Bhutan) — not backfilled
+  WEAK_ONLY  Thuận Hóa Ward / parts_unknown: only a country match (S4E5 Vietnam) — not backfilled
+  WEAK_ONLY  Tijuana / no_reservations: only a country match (S5E1 Mexico) — not backfilled
+  WEAK_ONLY  Tijuana / parts_unknown: only a country match (S3E5 Mexico) — not backfilled
+  WEAK_ONLY  Tolosa / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Tolosa / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Toro Negro / no_reservations: only a region match (S2E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Toro Negro / parts_unknown: only a region match (S10E6 Puerto Rico) — not backfilled
+  WEAK_ONLY  Torpè / no_reservations: only a region match (S5E20 Sardinia) — not backfilled
+  WEAK_ONLY  Town of Marbletown / no_reservations: only a region match (S3E8 New York City) — not backfilled
+  WEAK_ONLY  Town of Marbletown / the_layover: only a region match (S1E2 New York City) — not backfilled
+  WEAK_ONLY  Town of New Baltimore / no_reservations: only a region match (S3E8 New York City) — not backfilled
+  WEAK_ONLY  Town of New Baltimore / the_layover: only a region match (S1E2 New York City) — not backfilled
+  WEAK_ONLY  Tripoli / parts_unknown: only a country match (S1E6 Libya) — not backfilled
+  WEAK_ONLY  Tshwane Ward 54 / parts_unknown: only a country match (S2E7 South Africa) — not backfilled
+  WEAK_ONLY  Tuusula / no_reservations: only a country match (S8E6 Finland) — not backfilled
+  WEAK_ONLY  Ubud District / no_reservations: only a country match (S2E12 Indonesia) — not backfilled
+  WEAK_ONLY  Ubud District / parts_unknown: only a country match (S12E3 Indonesia) — not backfilled
+  WEAK_ONLY  Udaipur / no_reservations: only a country match (S6E17 Kerala, India) — not backfilled
+  WEAK_ONLY  Udaipur / parts_unknown: only a country match (S3E2 Punjab, India) — not backfilled
+  WEAK_ONLY  Unga L.T.D / parts_unknown: only a country match (S4E6 Tanzania) — not backfilled
+  WEAK_ONLY  Uruma / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Uruma / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Ustaritz / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Vallorcine / parts_unknown: only a country match (S6E3 Marseille, France) — not backfilled
+  WEAK_ONLY  Valparaíso / no_reservations: only a country match (S5E11 Chile) — not backfilled
+  WEAK_ONLY  Viangxai / no_reservations: only a country match (S4E11 Laos) — not backfilled
+  WEAK_ONLY  Viangxai / parts_unknown: only a country match (S9E4 Laos) — not backfilled
+  WEAK_ONLY  Vilassar de Mar / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Vilassar de Mar / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Vilches / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Vilches / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Villa General Eugenio Necochea / no_reservations: only a country match (S3E13 Argentina) — not backfilled
+  WEAK_ONLY  Villa General Eugenio Necochea / parts_unknown: only a region match (S8E8 Buenos Aires) — not backfilled
+  WEAK_ONLY  Villavicencio / no_reservations: only a country match (S4E12 Colombia) — not backfilled
+  WEAK_ONLY  Villavicencio / parts_unknown: only a country match (S1E3 Colombia) — not backfilled
+  WEAK_ONLY  Villaviciosa / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  Villaviciosa / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  Waiale‘e / no_reservations: only a region match (S4E9 Hawaii) — not backfilled
+  WEAK_ONLY  Waiale‘e / parts_unknown: only a region match (S5E8 Hawaii) — not backfilled
+  WEAK_ONLY  Welch / parts_unknown: only a region match (S11E1 West Virginia) — not backfilled
+  WEAK_ONLY  Wenzhou / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  West Cork / no_reservations: only a country match (S3E1 Ireland) — not backfilled
+  WEAK_ONLY  West Gonja Municipal District / no_reservations: only a country match (S3E2 Ghana) — not backfilled
+  WEAK_ONLY  Westmount / no_reservations: only a region match (S2E4 Quebec) — not backfilled
+  WEAK_ONLY  Westmount / parts_unknown: only a region match (S1E4 Quebec) — not backfilled
+  WEAK_ONLY  Winthrop / a_cooks_tour: only a region match (S1E20 My Life as a Cook) — not backfilled
+  WEAK_ONLY  Winthrop / parts_unknown: only a region match (S4E8 Massachusetts) — not backfilled
+  WEAK_ONLY  Wuhou District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Wuhou District / parts_unknown: only a region match (S8E4 Sichuan) — not backfilled
+  WEAK_ONLY  Xanghay / no_reservations: only a country match (S4E11 Laos) — not backfilled
+  WEAK_ONLY  Xanghay / parts_unknown: only a country match (S9E4 Laos) — not backfilled
+  WEAK_ONLY  Xiangfang District / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+  WEAK_ONLY  Yangon City / parts_unknown: only a country match (S1E1 Myanmar) — not backfilled
+  WEAK_ONLY  Yerevan / parts_unknown: only a country match (S11E4 Armenia) — not backfilled
+  WEAK_ONLY  Yufu / no_reservations: only a country match (S2E7 Japan) — not backfilled
+  WEAK_ONLY  Yufu / parts_unknown: only a country match (S6E4 Okinawa, Japan) — not backfilled
+  WEAK_ONLY  Zhukovka / no_reservations: only a country match (S3E5 Russia) — not backfilled
+  WEAK_ONLY  Zhukovka / parts_unknown: only a country match (S3E6 Russia) — not backfilled
+  WEAK_ONLY  el Borràs / a_cooks_tour: only a country match (S1E8 San Sebastian: A Food Lover's Town) — not backfilled
+  WEAK_ONLY  el Borràs / no_reservations: only a country match (S4E17 Spain) — not backfilled
+  WEAK_ONLY  บางกะพร้อม / no_reservations: only a country match (S5E16 Thailand) — not backfilled
+  WEAK_ONLY  บางกะพร้อม / parts_unknown: only a country match (S3E8 Thailand) — not backfilled
+  WEAK_ONLY  叶西村 / no_reservations: only a country match (S6E8 Harbin, China) — not backfilled
+
+--- places the geocoder gave no city ---
+  Cape Royds Adélie Penguin Rookery
+  Galley
+  Lake Hoare
+  McMurdo Station
+  Mount Erebus
+  Mount Lister
+  Máximo Bistrot
+  Nagorno-Karabakh
+  Naschmarkt
+  Nasi Lemak Antarabangsa
+  Nasushiobara
+  National Palace Museum
+  Natraj Restaurant Udaipur (Dining Hall/Rajasthani Thali/Gujarati Thali)
+  Ndutu Camp
+  Necromance
+  Nefertiti
+  Neighbourgoods Market
+  Neir's Tavern
+  Nelum Kole Restaurant
+  Neon Museum
+  Neoria Fish Tavern
+  New Afrika Shrine
+  New Alexandria Lions Club Demolition Derby
+  New Lane Street Foodstalls
+  New Orleans Original Daiquiris
+  New Territories
+  New York Café
+  New York-New York Hotel & Casino
+  Ngorongoro Crater
+  Nhà Hàng Thái Hưng Lâu
+  Nhà hàng Duyên Anh
+  Nikkey Palace Hotel
+  Nippon Budokan
+  Niseko Ski Lodge - Hirafu ニセコスキーロッジ - ひらふ
+  No. 16, Lane 38, Section 3, Zhinan Road
+  No. 60, Fuguo Road
+  No.3 Affiliated Hospital of Beijing University of Chinese Medicine
+  Noma
+  Nono - O Rei do Caldo de Mocotó
+  Noodle Loft
+  Nor Joe Import Company
+  North Star Diner & Shanghai Room
+  Northern China Eatery
+  Noryangjin Fisheries Wholesale Market
+  Noyers
+  Nyeri Shuttle Matatu Stage
+  Náttúrufræðistofnun Íslands
+  O Senhor Ramos
+  O Trevo
+  O'Donovans Newsagents
+  OZONE
+  Oarhouse Pub of Manila
+  Obelisco
+  Ocean Drive
+  Ocho
+  Octane Coffee Bar
+  Octopus Bar
+  Odd Duck
+  Ogden Museum of Southern Art
+  Oki Dog
+  Old Bagan
+  Old Butcher Cecchini
+  Old Colony Tap
+  Old Kőrössy Fish Restaurant
+  Old Town Ale House
+  One Eyed Jacks
+  Onno Bistro - Bourj Hammoud
+  Ono Seafood
+  Oolite Restaurant
+  Open Museum of Urban Art of São Paulo - SP-MAAU
+  Original Dampkring
+  Orphan Boy Mine
+  Oscar's Steakhouse
+  Oshetu Community Market
+  Ostalapia
+  Osteria Al Ponte del Diavolo
+  Osteria Nero d'Avola
+  Osteria dal 1931
+  Osu Night Market
+  Oudongk
+  Outram Park Fried Kway Teow Mee
+  Ox & Klee
+  Pa Daeng Jin Tup
+  Pacific Inn Pub
+  Packard Automotive Plant
+  Paesano's
+  Palacio Nacional
+  Paladar Los Amigos
+  Palazzo Margherita Hotel
+  Palazzo dei Congressi
+  Paloquemao
+  Pancakehouse Upstairs
+  Pantelleria
+  Pantheon
+  Papaya King
+  Pappacarbone
+  Pappy & Harriet's
+  Parador La Huella
+  Paradox
+  Paraguay River
+  Parco dei Nebrodi
+  Parklab Junction Food Truck Lane
+  Parque Centenario
+  Pasar Air Itam Laksa
+  Pascucci
+  Paseo Ahumada
+  Paseo Fremont
+  Patachou
+  Patara Khurvaleti
+  Paul Bocuse Restaurant
+  PeaK PC Bang Yeoksam
+  Peace Casino
+  Pearl Garden Hotel
+  Pelela Pass
+  Pelham Bay Park
+  Pelicano Restaurante.
+  Peloton de gendarmerie de haute montagne (PGHM)
+  Pen & Pencil Club
+  Penida Island
+  Pension Temetiu Village
+  Pepito's Plaza
+  Pepper & Spice Restaurant London
+  Pepper Pot
+  Peppermill Fireside Lounge
+  Perla's
+  Pesce Fritto E Baccala'
+  Peter Café Sport
+  Peter Welch's Gym
+  Petropavlovskaya Krepost'
+  Petrossian Boutique & Cafe
+  Peña Don Porfirio, Barranco
+  Phallus Centre Shop
+  Pheasant's Tears Winery
+  Philadelphia's Magic Gardens
+  Philippe The Original
+  Phnom Penh
+  Phnom Penh Night Market
+  Phnom Penh Shooting Range Cambodia
+  Pho 75
+  Pho Quynh Anh
+  Pho Tau Bay Restaurant
+  Phonsavang Market
+  Phosy Market
+  Picateria el Hueco
+  Piccolo
+  Picholine
+  Picnic Dodol Garut
+  Pico Island
+  Piedras Negras
+  Pier 23 Cafe Restaurant & Bar
+  Pier 3 Bar & Restaurant
+  Piggy's Jerk Centre
+  Pike Place Market
+  Pinewood Social
+  Ping Kee Noodles
+  Pink's Hot Dogs
+  Pinky's Cafe
+  Pirate Cat Cafe
+  Piroshky Piroshky
+  Pittsburgh
+  Pivovar U Medvídků
+  Pivovarský klub
+  Pizzarium
+  Pizzeria Pellone
+  Plant It Forward (Warehouse)
+  Playa Rincon
+  Plaza Botero - Medellín, Antioquia
+  Plaza De Mercado De Cartagena
+  Plaza Minorista José María Villa
+  Please Don't Tell
+  Pochero Kinaraan
+  Podvor'ye
+  Pok Pok NY
+  Polly Ann Ice Cream
+  Polonia Restaurant
+  Ponce
+  Popotla
+  Porchetta & Co.
+  Porter House Bar and Grill
+  Porteño
+  Porto di Cetara
+  Poulet D' Orleans
+  Poutini’s House of Poutine
+  Poyraz Sahil Balık Restaurant
+  Pozo de Jacinto
+  Praia do Rio Vermelho
+  Pretoria
+  Primo Restaurant
+  Primorski Restaurant
+  Princes Islands
+  Princess Victoria
+  Pritam Dhaba
+  Pronto Pesce
+  Prune
+  Pryp'yat'
+  Pubbelly Sushi
+  Public Kitchen
+  Publican Quality Meats
+  Pucusana
+  Puebla
+  Puerto de Vieques
+  Puka Dog Hawaiian Style Hot Dogs
+  Pulquería Las Duelistas
+  Punta del Este
+  Pupuseria Y Restaurante Salvadoreno
+  Pâtisserie Pinaud Pascal
+  Qardaran Tea Shop
+  Qingshui River
+  Quadrilatero
+  Quaker Creek Store
+  Quality Seafood Market
+  Quapaw Canoe Company
+  Queareparaenamorart
+  Queen Victoria Market
+  Queen's Park Savannah
+  Quencher Tavern
+  Quick-fried Tripe Zhang
+  Quincaillerie Dante
+  Quinn's Pub
+  Quán bánh O Lé
+  Quán Ốc Chi Mập
+  R & G Lounge
+  R & O Restaurant and Catering
+  R Bar
+  Racks City
+  Radio Beirut
+  Radisson Blu Al Mahary Hotel
+  Raffles Grand Hotel d'Angkor
+  Rainier Restaurant and BBQ
+  Raku
+  Rakuichi Soba
+  Ralph Gracie Jiu Jitsu
+  Ramallah
+  Ramiro
+  Rancho de la Luna
+  Randazzo's Clam Bar
+  Ranomafana National Park
+  Raohe Night Market
+  Ravi Restaurant
+  Ray's Candy Store
+  Ray's Happy Birthday Bar
+  Raymonds Restaurant
+  Raíces
+  Real Companhia Velha
+  Recover Project
+  Red Garden Food Paradise
+  Red Indian Lake
+  Red Medicine
+  Red's Java House
+  Relais des Grands Crus
+  Restaurant Andalus
+  Restaurant Au Passage
+  Restaurant Blauw aan de Wal
+  Restaurant Chez Yvette
+  Restaurant Fémina
+  Restaurant Gordon Ramsay
+  Restaurant Marven's
+  Restaurant Pelikan
+  Restaurant Pizzeria Zum Tor
+  Restaurant Plan Joran
+  Restaurant Poloz Mukuch
+  Restaurant SONIA
+  Restaurant le BAZOFF
+  Restaurante Casa Aleixo
+  Restaurante Casa Salvador
+  Restaurante Güeyu Mar
+  Restaurante La Calderada
+  Restaurante Oliver
+  Restaurante Rogério do Redondo
+  Restaurante Tien Tan
+  Restaurante Tlamanalli
+  Restoran "Balaklava"
+  Restoran Nasi Kandar Line Clear
+  Restoran Seetharam Family Curry House
+  Revel
+  Reynon
+  Riad Dar Cordoba
+  Ricciolandia
+  Ricobene's
+  Riesen-Hot-Dog Bratwürstel
+  Rifka Catering Company
+  Rio Chama
+  Rizk Chicken
+  Robert et Louise
+  Roberta's Pizza & Bakery
+  Robertsport
+  Robot Restaurant
+  Rochelle Canteen
+  Rocinha
+  Rock & Roll Hall of Fame
+  Rock 'N' Bowl
+  Rogacki
+  Rogano
+  Rokkokuda Temple
+  Roma
+  Roma Sparita
+  Rondo's Submarine Sandwiches
+  Rondout Bay Cafe & Marina
+  Ronnie's Local 069
+  Roosevelt Av - Jackson Heights
+  Roscioli Salumeria con Cucina
+  Roscoe's Chicken & Waffles - Hollywood
+  Rosedale Bar-B-Q
+  Rotisserie Romados
+  Rovinj
+  Rowan Oak
+  Royal Mail Hotel, Dunkeld
+  Rua Oscar Freire
+  Rudloe Arms Hotel By Marco Pierre White
+  Rudy's
+  Rue Montorgueil
+  Rue Mouffetard
+  Rue80
+  Rumah Makan SURYA Masakan Padang
+  Rumeli Kale Cafe & Restaurant
+  Rumi Brunswick
+  Rumors Cocktail Lounge
+  Rungis International Market
+  Russ & Daughters Cafe
+  Russkiy, Restoran
+  Rusty Star BBQ
+  Ryokan Sekiyou
+  Römisches Amphitheater Taormina
+  S&S Diner
+  SERRA by Birreria
+  SPIN Toronto
+  STEEL HOUSE
+  Sabar Menanti II
+  Sahambavy train station
+  Sahara Desert Morocco
+  Saigon Cafe
+  Saint John Restaurant
+  Saint Pierre and Miquelon
+  Saint-Pierre-de-Chandieu
+  Sak Yant Tattoo
+  Sakagura
+  Sakai City Industrial Promotion Center
+  Sake Bar Hagi46
+  Salt Museum
+  Salty's on Alki Beach
+  Salumeria Rosi
+  Salumeria Volpetti
+  Salumi
+  Salvation Mountain
+  Salvemos a Playuela
+  Samarkand
+  Samut Songkhram
+  Samy's Curry Restaurant
+  San Carlos de Bariloche
+  San Domenico
+  San Mamés
+  Sana Sana Las Palmeras
+  Sandwichería SIBARÍTICO
+  Sant Shree Asharam ji Bapu Ashram, Pal goan, Jodhpur
+  Sant'Erasmo
+  Santa Fe Plaza Inc
+  Santa Lucía
+  Santa Monica Farmers Market
+  Santy Pescador
+  Sapp Coffee Shop 泰国船面
+  Sarabha Restaurant
+  Sarashina Horii Azabujūban Honten
+  Sardar Patel Stadium
+  Satin Dolls
+  Satsuma Cafe
+  Sauna Arla
+  Sausage Shoppe
+  Save On Meats
+  Saveur de Poisson
+  Savoy Grill
+  Sazandari
+  Scarpetta
+  Schaller & Weber
+  Schoolcraft College
+  Schwabl's
+  Schwartz's Deli - Sandwiches - Steaks
+  Schönbrunn Palace
+  Scott’s Bar-B-Que
+  Sea Shore Restaurant
+  Seafood Market and Restaurant
+  Seatown Market Diner
+  Seattle Ferry Terminal
+  Seit Tine Kya
+  Septime
+  Sevicheria Guapi
+  Sewers Museum
+  Shady Glen
+  Shake Shack
+  Shakespeare & Company
+  Shanghai Tunnels/Portland Underground Tour
+  Shark Dive Xtreme
+  Sharqiya Sands
+  Shazhutian
+  Shelburne Falls Bowling Alley
+  Sher-E-Punjab
+  Sheridans Cheesemongers
+  Shields Date Garden
+  Shimla
+  Shoreline Sightseeing Michigan Ave Dock
+  Shorty's
+  Siberia New York
+  Side Street Inn On Da Strip
+  Sidrería Asturias
+  Sighetu Marmației
+  Silver Dollar Saloon
+  Silver Palm
+  Silverton Hotel
+  Simon's Tavern
+  Simply Market
+  Simpson Sin Tailors
+  Sinbad’s Pier 2 Restaurant
+  Sing Heung Yuen
+  Singapore Botanic Gardens
+  Singapore Flyer
+  Singapore River Cruise
+  Sinigama
+  Sizzler
+  Ski Inn
+  Sky Village Outdoor Marketplace
+  SkyPark
+  Skylark
+  Skyline Chili
+  Slattery's
+  Smithfield Market
+  Smithfield Market
+  Smiths of Smithfield
+  Snake & Jake's Christmas Club Lounge
+  Sneaky Dee's
+  Soap Plant / Wacko
+  Sobrecueva
+  Social Club Los Amigos
+  Sociedad Aizepe
+  Sofaer & Co
+  Sofia Melnikovas Fantastiuri Duqani
+  Sofitel Legend Metropole Hanoi
+  Soft Tofu
+  Sokolowski's University Inn
+  Sol e Pesca
+  Song Que
+  Sooke Harbour House Hotel & Resort
+  Sophie's
+  Sorgente Su Gologone
+  Sorolo
+  Sorriso da Dadá
+  Sorveteria da Ribeira
+  Souk El Tayeb
+  Soul Wired Cafe
+  Souq Minara - سوق المنارة‎
+  South Boston Candlepin
+  South Pole
+  Southwark Restaurant
+  Souvenirs Shop
+  Souvlucky
+  Soweto
+  Special Happy Pizza
+  Spiaggia libera di Isola Bella
+  Spiritus Pizza
+  Spoon
+  Spring City Shrimp Fishing Restaurant
+  Spårakoff Tram Tour
+  Square Pie
+  Squirrel Hill Cafe
+  St John Bread and Wine
+  St John Restaurant
+  St-Viateur Bagel Shop
+  St. Lawrence Market
+  Star Provisions Market & Cafe
+  Stateside Vodka Bar
+  Stella Maris
+  Stellas Kitchen
+  Stockholms Glasbruk
+  Stone Town
+  Strand Book Store
+  Street & Co
+  Street Foods
+  Streetside bar in Pelourinho
+  Subway Inn
+  Sucrerie de la Montagne
+  Sugimura
+  Suire's Grocery & Restaurant
+  Sullivan Street Bakery and Pizza
+  Sun Beach & Eat Seckie & Vanessa
+  Sun Hing Restaurant
+  Sun Liquor Distillery
+  Sundays Well Boating & Tennis Club
+  Sundial Herbal Product
+  Sungei Road Flea Market
+  Sunny's
+  Super Six
+  Superior Motors
+  Supermarché Magasin Général
+  Sur Ocakbaşı
+  Sushi Sebo
+  Sushi Yasuda
+  Swadesh Restaurant and Grocery Store
+  Swan Oyster Depot
+  Sweatman's Barbeque
+  Sweet Auburn Market
+  Sweet Maple Cafe
+  Sweetings
+  Sydney Olympic Park
+  Sympathy's Restaurant
+  Sze Chuan Cuisine
+  São Joaquim Market
+  São Jorge
+  TACOS LILY
+  TB's Bar & Grill
+  TSUKIJI FISH MARKET
+  Ta Eou Restaurant
+  Taberna La Tana
+  Taceaux Loceaux
+  Tacos El Huequito
+  Tacos Indiana
+  Tacos Villa Corona
+  Tactical Edge
+  Tadich Grill
+  Tai Lei Loi Kei
+  Tai Po Cooked Food Centre & Podium Garden
+  Tail o' the Pup
+  Taipei 101
+  Taj Lake Palace
+  Taj Stores
+  Takashi
+  Takinoya Bekkan Tamanoyu Ryokan
+  Taling Chan
+  Tamales Mi Lupitas
+  Tambopata River
+  Tammany Hall
+  Tangier
+  Tanglin Halt Food Centre
+  Tank Noodle
+  Tante Pearls Resturant
+  Taqueria El Asadero- Chicago
+  Taqueria El Compadre
+  Tasca do Chico
+  Tasty Crust Restaurant
+  Taung Htate Pan Street
+  Taverna Platanos
+  Tawlet
+  Taylor Shellfish Oyster Bar
+  Tea Stall And Snacks Stall
+  Tee-Eva's
+  Tehran
+  Tekka Centre
+  Temple Street Night Market
+  Tempo Doeloe
+  Tent City
+  Terminal de Autobuses Mercado Roberto Huembes
+  Terraza Vallarta
+  Tetsuya's Restaurant
+  Texas Chili Parlor
+  That's It
+  The 8 Restaurant (Grand Lisboa)
+  The Alembic
+  The Atlanta Beltline Start
+  The Atlantic Restaurant
+  The Banana Leaf Apollo
+  The Belleview Tavern
+  The Big R Restaurant
+  The Big Texan Steak Ranch & Brewery
+  The Burger's Priest
+  The Cake Cafe
+  The Calf & Kid
+  The Campbell
+  The Castro Theatre
+  The Catbird Seat
+  The Champ De Mars
+  The Chophouse
+  The Cliff Preserve
+  The Cobblestone
+  The Cock Tavern
+  The Coffee Shop
+  The College of Physicians of Philadelphia
+  The Colonnade
+  The Crown & Two Chairmen
+  The Crown Liquor Saloon
+  The Culinary Institute of America
+  The DOJO bar
+  The Dakota Tavern
+  The Davenport Hotel
+  The Drake Hotel
+  The Dutch Burgher Union of Ceylon
+  The EARL
+  The Edgewater Hotel
+  The Famous Owl of Minerva
+  The Foie Gras Farm
+  The Forty Foot
+  The French Laundry
+  The Fullerton Hotel Singapore
+  The Garden Of Memory
+  The Georgian Terrace
+  The Green Mill
+  The Griffon
+  The Harbor
+  The Heathman Hotel
+  The Heidelberg Project
+  The Hideout
+  The High Line
+  The Historic Murray Hotel
+  The Hollingsworth Cannabis Company
+  The House of Roosevelt
+  The Hunter S
+  The Ivory Tower
+  The Jetty Food Court
+  The King Eddy
+  The Kitchin
+  The Little Duke
+  The Little Tart Bakeshop
+  The Lodge at Mudbrick
+  The Loft Club
+  The Long Hall
+  The Lunch Lady (Nguyen Thi Thanh)
+  The Milling Room
+  The Moscow Kremlin
+  The Mutiny
+  The Ocean Club
+  The Old Saloon
+  The Outback
+  The Oxford Bar
+  The Palace Bar
+  The Patterson House
+  The Pit Authentic Barbecue
+  The Point
+  The Porter Beer Bar
+  The Prince
+  The Publican
+  The Raleigh Hotel
+  The Residences
+  The Restaurant at Lord Dudley
+  The Rittenhouse Hotel
+  The Ritz-Carlton, New Orleans
+  The River Seafood Oyster Bar
+  The Room Café And Bar
+  The Roost
+  The Rub BBQ
+  The Sazerac Bar
+  The Second City
+  The Senator's Place
+  The Spotted Pig
+  The State Tretyakov Gallery
+  The Tamerlane's Gates
+  The University Cafe
+  The Varnish
+  The Walrus and the Carpenter
+  The Whiskey Bar
+  The Yeoville Dinner Club
+  Third Man Records
+  Thirsty and Miserable
+  Three Little Bottles
+  Three Muses
+  Tian Jin Hai Seafood International Pte. Ltd.
+  Tian Tian Hainanese Chicken Rice
+  Tiananmen Square
+  Tiantian Restaurant
+  Tianxia Di Yiwei
+  Tickets
+  Tierra Bomba
+  Tilikum Place Cafe
+  Tim Ho Wan
+  Tiong Bahru Food Centre
+  Tipitina's
+  Tivoli Gardens
+  To Hyang
+  Toddy Shop
+  Toi Main Market
+  Tojo's Restaurant
+  Tom Lowe Trap, Skeet, And Sporting Clays Range
+  Tom Tom Tamale
+  Tonga Room & Hurricane Bar
+  Tony & Ruth Steaks
+  Tony's Baltimore Grill
+  Tonys oyster shack
+  Topnaars Trail
+  Topo Gigio Ristorante
+  Toriki
+  Toronado
+  Torrisi
+  Toshima City
+  Tosho Knife Arts Inc.
+  Town
+  Town Hall Kebab
+  Town Topic Hamburgers Baltimore
+  Trader Vic's Emeryville
+  Trapeze School New York - Pier 40
+  Trattoria A Casa Di Rita
+  Trattoria Fita
+  Trattoria Il Timoniere Roma
+  Trattoria Morgana
+  Trattoria Piccolo Napoli
+  Trattoria San Basilio
+  Trattoria Settimio
+  Trattoria Sora Lella
+  Trattoria da Romano
+  Tre Monti Azienda Agricola srl
+  Trejo's Cantina - Hollywood
+  Trident Hotel
+  Tripoli
+  Tripoli Libia
+  Trisha's
+  Troisgros
+  Trongsa
+  Tropical Park
+  Trugo
+  Tsui Wah Restaurant
+  Tung Po Kitchen
+  Turners Falls Schuetzen Verein
+  Txikito
+  Tábula
+  U Mio Paese
+  UCC Craighton Estates
+  UXO Lao
+  Uccellina
+  Uerige
+  Ulrich's 1868 Tavern
+  Ulysses Rare Books Ltd
+  Unagi Hosakaya
+  Under Bridge Spicy Crab
+  Unknown small restaurants
+  Uptown Fountain
+  Urbanek
+  Urfa Durum
+  Urizun
+  Uruguay Tent
+  VILLA 32
+  VOX Brasserie & Bar
+  Vadorin Maurice
+  Vaho tradicional
+  Valadares
+  Valois Restaurant
+  Vancouver Film Studios
+  Vashon Island
+  Vaughan's Lounge
+  Vega Central
+  Velveteria: The Museum of Velvet Art
+  Venetian
+  Ver-o-Peso Market
+  Verre
+  Verti Marte
+  Veselka
+  Vic's Kangaroo Cafe
+  Victor Churchill
+  Victoria Harbour
+  Victory Sandwich Bar
+  Viennese Giant Ferris Wheel
+  Vij's
+  Vila Madalena
+  Villa Ban Lao Hotel
+  Vincent A Restaurant
+  Vinet Park
+  Viña Casa Silva
+  Vondelpark
+  Voodoo Doughnut
+  Voyenno-Istoricheskiy Muzey Fortifikatsionnykh Sooruzheniy
+  Vézelay Abbey
+  Vígszínház Street
+  W Taipei
+  WHEELERS OF ST JAMES OYSTER BAR
+  WOOBAR
+  WRKO
+  WVRST
+  Waffle Factory Bordeaux
+  Waffle House
+  Wakakoma Restaurant
+  Warung Spang Makandra
+  Weingut & Heuriger Zahel
+  Wellawatte Railway Station
+  Wenceslas Square
+  West Bank
+  West Plains
+  West Side Market
+  Western Wailling Wall
+  Westside Rifle & Pistol Range
+  White Buffalo Bar
+  White Castle
+  Wilensky's Light Lunch Inc
+  Willard Park
+  Willie Mae's Scotch House
+  Wong Ah Wah Restaurant
+  Woodyard Bar-B-Que
+  World Trade Center
+  Wright Brothers Borough Market
+  Wujiang Road
+  Wynwood Art District
+  X2O Xaviars on the Hudson
+  XEX
+  Xiaomingtang Dandantian Shuimian
+  Ximen Mango Shaved Ice
+  Xinglong Park
+  Xochimilco
+  Yabuli Ski Resort
+  Yakitori Alley
+  Yakitori Alley, Memory Lane
+  Yakitori Ton Ton
+  Yakitori Torimatsu
+  Yakoyo Food Restaurant
+  Yamanaka Onsen
+  Yamanoo
+  Yang's Dumpling
+  Yangambi
+  Yangcheng Lake Hairy Crab
+  Yangon
+  Yankee Stadium
+  Yardbird Southern Table and Bar
+  Yasuda
+  Yat Lok Roast Goose
+  Ybbsitz
+  Yew Tree Inn
+  Yongkang Street
+  Yornik
+  Yu Garden Dumplings
+  Yu Zhilan Restaurant
+  Yuchun Restaurant
+  Z Carniceria
+  Zahav
+  Zakinthos
+  Zam Zam
+  Zam's Swamp Tour
+  Zeitgeist
+  Zhangfei Braised Pork
+  Zhaoji Laopu
+  Zhuji Pie Chinese Type Fast-food
+  Zia Forica
+  Zona Colonial
+  Zoom Bar
+  Zubal Books
+  Zum Schusterjungen
+  Zur Currywurst
+  andBeyond Ngorongoro Crater Lodge
+  burger joint
+  eat.
+  minibar by José Andrés
+  urbanbelly
+  wd~50
+  Çiçek Pasajı
+  Östermalms saluhall
+  Þrír frakkar
+  ámaZ Restaurante
+  é by José Andrés
+  Ōmichō Market
+  Μαρίνα Νάξου / Naxos Dock
+  Вернисаж в Измайлово
+  Ресторан Идиотъ
+  מידס‎
+  مطعم بركودا 1‎
+  にびき
+  櫻崗溫泉會館 (Sakuraoka Hot Springs Resort)
+  田川
