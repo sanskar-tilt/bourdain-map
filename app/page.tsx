@@ -2,7 +2,7 @@ import Loader from "./components/Loader";
 import Reveal from "./components/Reveal";
 import PinnedHero from "./components/PinnedHero";
 import TrailMap from "./components/TrailMap";
-import { homeManifest, homePhotos, allCredits } from "../lib/home";
+import { homeManifest, homePhotos, allCredits, pick } from "../lib/home";
 import { siteStats, n, broadcastLine } from "../lib/stats";
 import { usable, srcsetAttr, largest, type PhotoMeta } from "../lib/about";
 import s from "./components/home.module.css";
@@ -74,27 +74,41 @@ export default function Home() {
   const m = homeManifest();
   const photos = homePhotos();
   const credits = allCredits(m);
-  const flicker = m.loader?.flicker ?? [];
   const stats = siteStats();
   const range = broadcastLine(stats);
 
+  // Attach the build-time image metadata to each manifest entry once.
+  const withMeta = <T extends { photo?: string }>(e?: T) =>
+    e ? { ...e, meta: e.photo ? photos[e.photo] : undefined } : undefined;
+
+  const objects = (m.loader?.objects ?? [])
+    .filter((o) => o?.photo)
+    .map((o) => withMeta(o)!);
+  const portrait = withMeta(m.loader?.portrait) ?? null;
+
+  // Never the same twice: one photo and one quote drawn per visit.
+  const hero = withMeta(pick(m.hero?.photos));
+  const heroQuote = pick((m.hero?.quotes ?? []).filter(Boolean));
+  const pair = withMeta(pick(m.pairing?.photos));
+  const pairQuote = pick((m.pairing?.quotes ?? []).filter(Boolean));
+
   return (
     <>
-      <Loader flicker={flicker} total={stats.places} />
+      <Loader objects={objects} portrait={portrait} total={stats.places} />
       <Reveal />
 
       {/* ------------------------------------------------ pinned hero */}
       <PinnedHero>
         <div className={s.heroMedia}>
           <Shot
-            file={m.hero?.photo} meta={m.hero?.photo ? photos[m.hero.photo] : undefined}
-            alt={m.hero?.alt} credit={m.hero?.credit}
+            file={hero?.photo} meta={hero?.meta}
+            alt={hero?.alt} credit={hero?.credit}
             className={s.heroImg} ratio={1.6} sizes="100vw"
           />
         </div>
         <div className={s.heroText}>
           <p className={s.heroMark}>Where he ate</p>
-          <Quote text={m.hero?.quote} big />
+          <Quote text={heroQuote} big />
         </div>
       </PinnedHero>
 
@@ -108,13 +122,13 @@ export default function Home() {
       <section className={`${s.section} ${s.pairing} reveal`}>
         <div>
           <Shot
-            file={m.pairing?.photo} meta={m.pairing?.photo ? photos[m.pairing.photo] : undefined}
-            alt={m.pairing?.alt} credit={m.pairing?.credit}
+            file={pair?.photo} meta={pair?.meta}
+            alt={pair?.alt} credit={pair?.credit}
             className={s.pairImg} ratio={0.8} sizes="(max-width: 860px) 100vw, 40vw"
           />
         </div>
         <div className={s.pairText}>
-          <Quote text={m.pairing?.quote} />
+          <Quote text={pairQuote} />
         </div>
       </section>
 

@@ -1,41 +1,67 @@
 {
   "_readme": [
-    "The homepage. Edit this, drop images in public/home/, and the page",
-    "updates — no code change needed. Same pipeline as content/about.json.",
+    "The homepage. Edit this, drop images in public/home/, and the page updates",
+    "— no code change needed. Same pipeline as content/about.json.",
     "",
-    "EVERY PHOTO NEEDS A CREDIT. The `credit` field renders next to the image",
-    "and again in the colophon. A photo with no credit still renders, but the",
-    "build prints a warning, because shipping someone's photograph uncredited",
-    "is the one thing this project cannot do.",
+    "EVERY PHOTO NEEDS A CREDIT. The `credit` field renders next to the image and",
+    "again in the colophon. A photo with no credit still renders, but the build",
+    "prints a warning, because shipping someone's photograph uncredited is the one",
+    "thing this project cannot do.",
+    "",
+    "LOADER: loader.objects[] are overhead shots of FOOD — bowls, plates, a glass",
+    "from above. Round subjects, centred, identical zoom, so nothing jumps inside",
+    "the letter O. loader.portrait is the ONE photograph of Bourdain: it appears",
+    "once, at the end, when the count lands. Do not put him in objects[].",
+    "",
+    "POOLS: hero.photos[] and hero.quotes[] are pools — one of each is chosen at",
+    "random per visit, so the page is never the same twice. Same for pairing.",
     "",
     "Sections left empty render as marked gaps rather than disappearing."
   ],
-
   "loader": {
-    "flicker": ["Tokyo", "Hanoi", "Beirut", "West Virginia", "Lagos",
-                "Buenos Aires", "Marseille", "Chengdu", "Porto", "Oaxaca"]
+    "objects": [
+      {
+        "photo": "",
+        "alt": "",
+        "credit": ""
+      }
+    ],
+    "portrait": {
+      "photo": "",
+      "alt": "",
+      "credit": ""
+    }
   },
-
   "hero": {
-    "photo": "",
-    "alt": "",
-    "credit": "",
-    "quote": ""
+    "photos": [
+      {
+        "photo": "",
+        "alt": "",
+        "credit": "",
+        "placeSlug": ""
+      }
+    ],
+    "quotes": [
+      ""
+    ]
   },
-
   "pairing": {
-    "photo": "",
-    "alt": "",
-    "credit": "",
-    "quote": ""
+    "photos": [
+      {
+        "photo": "",
+        "alt": "",
+        "credit": ""
+      }
+    ],
+    "quotes": [
+      ""
+    ]
   },
-
   "video": {
     "url": "",
     "title": "",
     "source": ""
   },
-
   "colophon": {
     "copyright": ""
   }

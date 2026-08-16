@@ -1,0 +1,53 @@
+import type { PhotoMeta } from "../../lib/photo";
+import { usable, srcsetAttr, largest } from "../../lib/photo";
+import s from "./home.module.css";
+
+/* BOURDAIN, with the O as a circular photo window.
+
+   The loader teaches the mark by cycling food through the O; afterwards the
+   same lockup is the nav logo at small size. One component so they cannot
+   drift apart.
+
+   "Where he ate" is deliberately *not* part of it. The mark can be a flex;
+   the sentence explaining what the site is cannot. */
+
+export default function BourdainMark({
+  photo, meta, alt, small, isFinal, probe, sizes = "80px",
+}: {
+  photo?: string;
+  meta?: PhotoMeta;
+  alt?: string;
+  small?: boolean;
+  isFinal?: boolean;
+  /** Only the loader's mark carries the test hooks. The nav wears the same
+   *  component, and without this both answer the same querySelector. */
+  probe?: boolean;
+  sizes?: string;
+}) {
+  return (
+    <span className={small ? s.markSmall : s.mark} aria-label="Bourdain">
+      <span aria-hidden="true">B</span>
+      <span className={s.markO} aria-hidden="true">
+        {usable(meta) ? (
+          <img
+            {...(probe ? { "data-loader-object": "", "data-final": isFinal ? "true" : "false" } : {})}
+            src={largest(meta)}
+            srcSet={srcsetAttr(meta)}
+            sizes={sizes}
+            alt=""
+            decoding="async"
+          />
+        ) : (
+          /* No photo yet: the O stays an O rather than a broken frame. */
+          <span
+            className={s.markOEmpty}
+            {...(probe ? { "data-loader-object": "", "data-final": isFinal ? "true" : "false" } : {})}
+            title={photo ? `${photo} — not in public/home/` : undefined}
+          />
+        )}
+      </span>
+      <span aria-hidden="true">URDAIN</span>
+      <span className={s.srOnly}>{alt ?? ""}</span>
+    </span>
+  );
+}

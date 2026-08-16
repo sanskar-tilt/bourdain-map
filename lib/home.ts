@@ -11,13 +11,20 @@ export type HomePhoto = {
   quote?: string;
 };
 
+export type LoaderEntry = { photo?: string; alt?: string; credit?: string };
+
 export type HomeManifest = {
-  loader?: { flicker?: string[] };
-  hero?: HomePhoto;
-  pairing?: HomePhoto;
+  loader?: { objects?: LoaderEntry[]; portrait?: LoaderEntry };
+  /** Pools — one is chosen at random per visit, so no two loads match. */
+  hero?: { photos?: (HomePhoto & { placeSlug?: string })[]; quotes?: string[] };
+  pairing?: { photos?: HomePhoto[]; quotes?: string[] };
   video?: { url?: string; title?: string; source?: string };
   colophon?: { copyright?: string };
 };
+
+/** Deterministic per render, random per visit. */
+export const pick = <T,>(pool: T[] | undefined): T | undefined =>
+  pool && pool.length ? pool[Math.floor(Math.random() * pool.length)] : undefined;
 
 function readJson<T>(p: string, fallback: T): T {
   try { return JSON.parse(fs.readFileSync(p, "utf-8")) as T; }
@@ -31,13 +38,16 @@ export const homePhotos = () =>
   readJson<Record<string, PhotoMeta>>(
     path.join(process.cwd(), "content", "home.generated.json"), {});
 
-/** Every credit line on the page, for the colophon. */
+/** Every credit line the manifest carries, for the colophon. Everything that
+ *  ships gets credited, whether or not this visit happened to show it. */
 export function allCredits(m: HomeManifest): { photo: string; credit: string }[] {
   const out: { photo: string; credit: string }[] = [];
-  for (const node of [m.hero, m.pairing]) {
-    if (node?.photo && node.credit?.trim()) {
-      out.push({ photo: node.photo, credit: node.credit.trim() });
-    }
-  }
-  return out;
+  const add = (e?: { photo?: string; credit?: string }) => {
+    if (e?.photo && e.credit?.trim()) out.push({ photo: e.photo, credit: e.credit.trim() });
+  };
+  (m.loader?.objects ?? []).forEach(add);
+  add(m.loader?.portrait);
+  (m.hero?.photos ?? []).forEach(add);
+  (m.pairing?.photos ?? []).forEach(add);
+  return out.filter((c, i, a) => a.findIndex((x) => x.photo === c.photo) === i);
 }

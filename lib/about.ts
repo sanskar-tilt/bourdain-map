@@ -10,13 +10,9 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export type Rendition = { width: number; src: string };
-export type PhotoMeta = {
-  width: number | null;
-  height: number | null;
-  ratio: number | null;
-  srcset: Rendition[];
-};
+export type { Rendition, PhotoMeta } from "./photo";
+export { usable, srcsetAttr, largest } from "./photo";
+import type { PhotoMeta } from "./photo";
 
 export type AboutManifest = {
   intro?: { photo?: string; alt?: string; text?: string };
@@ -47,16 +43,3 @@ export function photoMeta(): Record<string, PhotoMeta> {
   );
 }
 
-/** A photo is only usable if it was found on disk and actually resized. */
-export function usable(meta: PhotoMeta | undefined): meta is PhotoMeta {
-  return Boolean(meta && meta.srcset && meta.srcset.length > 0);
-}
-
-export function srcsetAttr(meta: PhotoMeta): string {
-  return meta.srcset.map((r) => `${r.src} ${r.width}w`).join(", ");
-}
-
-/** Largest rendition, used as the plain src fallback. */
-export function largest(meta: PhotoMeta): string {
-  return meta.srcset[meta.srcset.length - 1].src;
-}

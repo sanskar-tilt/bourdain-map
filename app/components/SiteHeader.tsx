@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import BourdainMark from "./BourdainMark";
 import styles from "./SiteShell.module.css";
 
 const NAV = [
@@ -16,7 +17,10 @@ export default function SiteHeader() {
   return (
     <header className={styles.header}>
       {/* next/link prefetches on hover by default in production builds. */}
-      <Link href="/" className={styles.wordmark}>Where he ate</Link>
+      <Link href="/" className={styles.wordmark} aria-label="Where he ate — home">
+        <BourdainMark small />
+        <span className={styles.sentence}>Where he ate</span>
+      </Link>
       <nav className={styles.nav}>
         {NAV.map((n) => (
           <Link key={n.href} href={n.href} aria-current={path.startsWith(n.href) ? "page" : undefined}>

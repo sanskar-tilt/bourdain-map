@@ -453,3 +453,29 @@ undated       a_cooks_tour
 - **The date range was wrong and is now derived.** The stat line said
   1999–2018; the data cannot support it. See `questions.md` — the line now
   reads from `broadcastLine()` and says what is true.
+
+---
+
+## Pass two — section 1, the loader
+
+- **The mark is BOURDAIN with the O as a circular photo window**, one
+  `BourdainMark` component used at two sizes so the loader and the nav logo
+  cannot drift apart. "Where he ate" stays a plain sentence beside it — the
+  mark can be a flex, the sentence saying what the site is cannot.
+- **It resolves.** Food cycles through the O on `90 + 420·(1 − sin(πt))` ms —
+  slow at both ends, fastest mid-count. When the count lands the cycling stops
+  and the O becomes the one photograph of him, held 1s, then the curtain. He
+  is never a frame in the shuffle: arriving at him once is a sentence, and it
+  spends one licensed photo instead of a dozen.
+- **Counter is 000 → SITE_STATS.places over 4000ms**, easeInOutQuad,
+  zero-padded, thousands separator only once there is a thousand. Asserted
+  against the derived stat, not a literal.
+- **`?loader=hold`** freezes it at the resolved frame for deterministic
+  screenshots. Reduced motion renders no loader at all.
+- **Pure photo helpers moved to `lib/photo.ts`.** `lib/about.ts` imports
+  `node:fs`, so a client component importing its helpers dragged fs into the
+  browser bundle and the build failed outright — which is the good failure
+  mode, but the split is the fix.
+- **Only the loader's mark carries the test hooks.** The nav wears the same
+  component, and without a `probe` flag both answered the same
+  `querySelector` — which made a passing loader look broken for three runs.
