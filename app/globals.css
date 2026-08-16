@@ -121,18 +121,8 @@ html.lenis, html.lenis body { height: auto; }
 /* Scroll is locked only until the curtain begins moving. */
 html.is-locked, html.is-locked body { overflow: hidden; }
 
-/* --- the photograph: settles into place rather than appearing --- */
-html[data-opening="pending"] .arrival-photo,
-html[data-opening="curtain"] .arrival-photo {
-  opacity: 0;
-  transform: scale(1.06);
-}
-.arrival-photo {
-  opacity: 1;
-  transform: none;
-  transition: opacity var(--t-enter) var(--ease-out),
-              transform 1800ms var(--ease-out);
-}
+/* .arrival-photo is gone: the hero photograph it animated was deleted with
+   the pull-back, and the fluid hero's type does not move — not even once. */
 
 /* --- the nav: last, quietly, never first --- */
 html[data-opening="pending"] .arrival-nav,
@@ -141,7 +131,7 @@ html[data-opening="photo"] .arrival-nav,
 html[data-opening="text"] .arrival-nav { opacity: 0; }
 .arrival-nav {
   opacity: 1;
-  transition: opacity 800ms var(--ease-out);
+  transition: opacity var(--t-move) var(--ease-out);
 }
 
 /* --- the scroll cue: arrives, then breathes --- */
@@ -152,8 +142,10 @@ html[data-opening="text"] .arrival-cue,
 html[data-opening="nav"] .arrival-cue { opacity: 0; }
 .arrival-cue {
   opacity: 1;
-  transition: opacity 800ms var(--ease-out);
+  transition: opacity var(--t-move) var(--ease-out);
 }
+/* An idle loop, not a move — outside the duration bands the way the cursor
+   is, and off entirely under reduced motion. */
 html[data-opening="cue"] .arrival-cue span,
 html[data-opening="done"] .arrival-cue span {
   animation: cue-drift 2600ms var(--ease-in-out) infinite;
@@ -164,6 +156,6 @@ html[data-opening="done"] .arrival-cue span {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .arrival-photo, .arrival-nav, .arrival-cue { opacity: 1; transform: none; }
+  .arrival-nav, .arrival-cue { opacity: 1; transform: none; }
   html[data-opening] .arrival-cue span { animation: none; }
 }

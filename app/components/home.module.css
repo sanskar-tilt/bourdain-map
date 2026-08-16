@@ -13,7 +13,7 @@
 /* Exit is a full-height wipe up, not a fade. */
 .loader[data-phase="wipe"] {
   transform: translateY(-100%);
-  transition: transform var(--t-slow) var(--ease-in-out);
+  transition: transform var(--t-signature) var(--ease-in-out);
 }
 .loaderInner { display: grid; place-items: center; gap: var(--s3); }
 .loaderWord {

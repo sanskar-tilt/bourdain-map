@@ -67,3 +67,45 @@ Disagreements, done-then-logged:
 - The word intercepts no pointers, so stirring works *through* the letters.
   The alternative (word as an obstacle in the velocity field) would have been
   "distorting the field around the type" — closer to a violation than this.
+
+---
+
+## Step 3 — duration sweep  ✅
+
+Every duration, before → after:
+
+| What | Before | After | Band |
+|---|---|---|---|
+| Link underline in | 400ms `--ease-out` | unchanged | hover in |
+| Link underline out | 800ms `--ease-in-out` | unchanged | hover out |
+| Masked-line entrance | 1200ms `--ease-out` | unchanged | entrance |
+| `.reveal` entrance | 1200ms `--ease-out` | unchanged | entrance |
+| Line stagger | 70ms delay | unchanged | (delay, not a duration) |
+| Curtain wipe | 1200ms `--t-slow` | **1600ms `--t-signature`** | signature 1.4–1.8s |
+| Loader `WIPE` (JS, must match curtain) | 1200 | **1600** | signature |
+| Arrival nav fade | **800ms literal** | `var(--t-move)` (800ms) | opening beat |
+| Arrival cue fade | **800ms literal** | `var(--t-move)` (800ms) | opening beat |
+| `.arrival-photo` (opacity 1200 / transform **1800ms literal**) | existed, orphaned | **deleted** | — |
+| Map panel slide | `var(--slow) var(--ease)` — **both undefined, transition silently dead** | 1200ms `--t-enter` `--ease-in-out` | entrance |
+| Search trigger hover | `var(--fast) var(--ease)` — **dead** | 400/800 asymmetric | hover |
+| Map reset-button hover | `var(--fast) var(--ease)` — **dead** | 400/800 asymmetric | hover |
+| Cue idle drift | 2600ms loop | unchanged | exempt: idle loop, like the cursor |
+| Loader count / hold | 4000 / 1000 | unchanged | loader choreography, spec'd |
+| Loader swap interval | 90–510ms formula | unchanged | spec'd formula |
+| TrailMap draw | 5200ms time-based | unchanged | becomes scroll-linked in step 6 |
+
+The real finding: **three transitions referenced tokens deleted in the
+retoken** (`--fast`, `--slow`, `--ease`) and had been silently doing nothing —
+including the map panel slide, which has been snapping open for days. Invalid
+`var()` in a transition doesn't error; it just drops the transition. These are
+map *chrome* CSS fixes; no map behaviour, layers, or page structure touched,
+which I read as within the do-not-touch line. Say if not.
+
+MapLibre's paint transitions (240/300ms in MapView) and `["linear"]`
+interpolations are map-page styling — excluded by the run's rules, listed here
+so the exemption is visible rather than silent.
+
+Gates: zero easing literals outside tokens (two grep hits are a JS variable
+named `ease` and a prose comment). Zero raw durations in CSS transitions
+outside tokens except the documented 2600ms idle loop. `opening.webm` predates
+the 1600ms curtain — stale by 400ms of tail, not re-recorded in width mode.

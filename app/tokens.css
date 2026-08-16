@@ -88,10 +88,11 @@
   --t-hover-in:  400ms;
   --t-hover-out: 800ms;
 
-  /* Nothing else dips below 300ms. Editorial pacing, not UI pacing. */
-  --t-enter:  1200ms;   /* text arriving from behind a mask edge */
-  --t-move:   800ms;
-  --t-slow:  1200ms;
+  /* Nothing else dips below 300ms. Editorial pacing, not UI pacing.
+     Bands: entrances 1.0–1.2s, signature moves 1.4–1.8s. */
+  --t-enter:      1200ms;   /* entrances: text from behind a mask edge   */
+  --t-move:        800ms;   /* choreography beats inside the opening     */
+  --t-signature:  1600ms;   /* the curtain, and nothing that is not one  */
 
   --stagger: 70ms;   /* between masked lines */
 
@@ -103,7 +104,7 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --t-hover-in: 1ms; --t-hover-out: 1ms;
-    --t-enter: 1ms; --t-move: 1ms; --t-slow: 1ms; --stagger: 0ms;
+    --t-enter: 1ms; --t-move: 1ms; --t-signature: 1ms; --stagger: 0ms;
   }
   *, *::before, *::after {
     animation-duration: 1ms !important;

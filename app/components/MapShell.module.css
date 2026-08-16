@@ -63,10 +63,18 @@
   font-size: var(--step-0);
   text-align: left;
   cursor: pointer;
-  transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+  /* --fast/--ease died in the retoken; this transition had been silently
+     dropped. The site's one hover physics: quick in, slow out. */
+  transition: border-color var(--t-hover-out) var(--ease-in-out),
+              color var(--t-hover-out) var(--ease-in-out);
 }
 .searchTrigger span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.searchTrigger:hover { border-color: var(--ink); color: var(--ink); }
+.searchTrigger:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  transition: border-color var(--t-hover-in) var(--ease-out),
+              color var(--t-hover-in) var(--ease-out);
+}
 .searchIcon { width: 15px; height: 15px; flex: none; color: var(--ink-faint); }
 
 @media (max-width: 640px) { .searchTrigger { width: auto; padding: var(--s2) var(--s3); } }
@@ -91,7 +99,9 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   transform: translateX(100%);
-  transition: transform var(--slow) var(--ease);
+  /* --slow/--ease died in the retoken, so the panel had been snapping open
+     with no transition at all. An entrance, so the entrance band. */
+  transition: transform var(--t-enter) var(--ease-in-out);
 }
 .shell[data-panel="open"] .panel { transform: translateX(0); }
 .panel[aria-hidden="true"] { pointer-events: none; }

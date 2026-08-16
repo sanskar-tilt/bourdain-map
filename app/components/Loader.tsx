@@ -28,7 +28,7 @@ export type LoaderPhoto = { photo?: string; alt?: string; meta?: PhotoMeta };
 
 const DURATION = 4000;   // 4s, or the object cycle cannot register
 const HOLD = 1000;       // the man, alone, before the curtain
-const WIPE = 1200;
+const WIPE = 1600;       // must match --t-signature: the curtain's CSS transition
 
 /* easeInOutQuad — dwell at the ends, sprint through the middle. */
 const ease = (t: number) =>

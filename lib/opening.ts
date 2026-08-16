@@ -21,11 +21,11 @@ export type OpeningMode = "full" | "arrival" | "none";
 /** Offsets in ms from the start of the run. */
 const FULL = {
   curtain: 5100,   // count (4000) + hold (1000) + one beat before it starts
-  photo:   5500,   // 400ms into a 1200ms curtain — still moving
+  photo:   5500,   // 400ms into a 1600ms curtain — still moving
   text:    5700,
   nav:     6300,
   cue:     6500,
-  done:    8400,
+  done:    8400,   // comfortably after the curtain lands at 6700
 };
 
 /** Repeat visit: no loader, but the site still never simply appears. */
