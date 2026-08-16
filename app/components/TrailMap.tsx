@@ -1,26 +1,42 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { onScroll } from "../../lib/scroll";
 import s from "./home.module.css";
 
 /* The route drawing itself across a small world, in broadcast order.
-
-   Reusable: the homepage renders it small and once; the full map page can
-   render it large with `interactive`. Canvas rather than SVG because it is
-   a generative line, and 60 cities of animated stroke is cheaper to redraw
-   than to re-tessellate as DOM.
-
-   Reduced-motion draws the finished route immediately. */
+ *
+ * Two modes:
+ *
+ * setPiece — the homepage's one sticky moment besides the hero. The section
+ * pins for two viewport heights and the trail draws LINEARLY against scroll:
+ * the scrollbar is the pen, so there is no easing anywhere near it. 992px+
+ * and fine motion only; below the gate it renders in normal flow and draws
+ * on a timer like before. Exactly one of these may exist per page.
+ *
+ * plain — enters the viewport, draws once over ~5s, settles. Kept for reuse
+ * on the map page.
+ *
+ * Reduced motion draws the finished route immediately in both modes.
+ */
 
 type Stop = { slug: string; name: string; first_air: string; lon: number; lat: number };
 
 const DRAW_MS = 5200;
 
-export default function TrailMap({ height = 320 }: { height?: number }) {
+export default function TrailMap({
+  height = 320,
+  setPiece = false,
+}: {
+  height?: number;
+  setPiece?: boolean;
+}) {
+  const wrap = useRef<HTMLDivElement>(null);
   const holder = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   const [stops, setStops] = useState<Stop[]>([]);
   const [last, setLast] = useState<Stop | null>(null);
+  const [pinned, setPinned] = useState(false);
 
   useEffect(() => {
     fetch("/data/trail.json").then((r) => r.json()).then((d: Stop[]) => {
@@ -28,6 +44,21 @@ export default function TrailMap({ height = 320 }: { height?: number }) {
       setLast(d[d.length - 1] ?? null);
     }).catch(() => {});
   }, []);
+
+  /* The pin gate, evaluated client-side so SSR renders unpinned. */
+  useEffect(() => {
+    if (!setPiece) return;
+    const wide = window.matchMedia("(min-width: 992px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setPinned(wide.matches && !reduced.matches);
+    sync();
+    wide.addEventListener("change", sync);
+    reduced.addEventListener("change", sync);
+    return () => {
+      wide.removeEventListener("change", sync);
+      reduced.removeEventListener("change", sync);
+    };
+  }, [setPiece]);
 
   useEffect(() => {
     const el = holder.current, canvas = cv.current;
@@ -37,10 +68,10 @@ export default function TrailMap({ height = 320 }: { height?: number }) {
 
     const style = getComputedStyle(document.documentElement);
     const accent = style.getPropertyValue("--accent").trim() || "#B8342A";
-    const line = style.getPropertyValue("--edge-strong").trim() || "#B3B3A9";
 
     let raf = 0;
     let started = 0;
+    let lastP = -1;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const size = () => {
@@ -112,18 +143,35 @@ export default function TrailMap({ height = 320 }: { height?: number }) {
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
-      void line;
     };
 
+    if (reduced) { draw(1); return; }
+
+    /* ---- set-piece: the scrollbar is the pen. Linear, no easing. ---- */
+    if (pinned && wrap.current) {
+      const pinEl = wrap.current;
+      const read = () => {
+        const r = pinEl.getBoundingClientRect();
+        const travel = r.height - window.innerHeight;
+        const p = travel > 0 ? Math.min(1, Math.max(0, -r.top / travel)) : 1;
+        if (Math.abs(p - lastP) < 0.0005) return;
+        lastP = p;
+        pinEl.dataset.progress = p.toFixed(3);
+        draw(p);
+      };
+      const stop = onScroll(read);
+      const onResize = () => { lastP = -1; read(); };
+      window.addEventListener("resize", onResize);
+      return () => { stop(); window.removeEventListener("resize", onResize); };
+    }
+
+    /* ---- plain: enter the viewport, draw once over time, settle. ---- */
     const run = (now: number) => {
       if (!started) started = now;
       const t = Math.min(1, (now - started) / DRAW_MS);
       draw(t);
       if (t < 1) raf = requestAnimationFrame(run);
     };
-
-    if (reduced) { draw(1); return; }
-
     const io = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         io.disconnect();
@@ -136,9 +184,9 @@ export default function TrailMap({ height = 320 }: { height?: number }) {
     const onResize = () => draw(started ? 1 : 0);
     window.addEventListener("resize", onResize);
     return () => { io.disconnect(); cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); };
-  }, [stops, height]);
+  }, [stops, height, pinned]);
 
-  return (
+  const inner = (
     <div ref={holder} className={s.trail}>
       <canvas ref={cv} />
       {last && (
@@ -147,6 +195,14 @@ export default function TrailMap({ height = 320 }: { height?: number }) {
           <span className={s.trailLast}>{last.name}, {last.first_air.slice(0, 4)}</span>
         </p>
       )}
+    </div>
+  );
+
+  if (!setPiece || !pinned) return inner;
+
+  return (
+    <div ref={wrap} className={s.trailPin} data-pin data-progress="0">
+      <div className={s.trailStage}>{inner}</div>
     </div>
   );
 }

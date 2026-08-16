@@ -168,3 +168,23 @@ cards `[80, -150, -100, -160, 100, -90]px`, inner images −5% to −20%, both
 off the shared Lenis frame, linear. I have deliberately not committed a
 half-mechanism that nothing mounts — the wiring audit exists to catch exactly
 that shape of dead code.
+
+---
+
+## Step 6 — the trail set-piece  ✅
+
+TrailMap gains a `setPiece` mode: 200vh wrapper, sticky 100vh stage, and the
+trail draws **linearly against scroll** — progress measured at 0.013 / 0.505 /
+1.0 across 0 / 0.5 / 1 of the travel. The scrollbar is the pen; no easing
+touches it. Reads the shared Lenis frame, writes straight to canvas, exposes
+`data-progress` for the tests. Below 992px or under reduced motion it renders
+in normal flow (timer draw / drawn-complete respectively). The plain mode is
+kept for the map page.
+
+Asserted: exactly one `[data-pin]` on the homepage with a real
+`position:sticky` child, zero below 992px, zero surviving inline `--p`.
+
+One more test-vs-code incident, same pattern as every other one this run: the
+scrub test used `el.offsetTop`, which is relative to the nearest positioned
+ancestor, and scrolled to y≈589 instead of y≈2388 — reading progress 0 against
+a mechanism a standalone probe showed working at 0.517. Document-relative now.

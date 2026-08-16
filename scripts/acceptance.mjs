@@ -288,23 +288,63 @@ const browser = await puppeteer.launch({
 }
 
 /* ------------------------------------------------------------------ */
-/* The pull-back is gone. Nothing may still write --p or carry data-pin
-   until the trail set-piece reintroduces exactly one pin, deliberately. */
+/* Exactly one sticky set-piece: the trail. No inline --p survives from
+   the pull-back era, and the pin count is one on desktop, zero below
+   the 992px gate. */
 {
   const p = await browser.newPage();
   await p.setViewport({ width: 1440, height: 900 });
   await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
-  await new Promise((r) => setTimeout(r, 1200));
-  await p.evaluate(() => window.scrollTo(0, 600));
-  await new Promise((r) => setTimeout(r, 600));
-  const left = await p.evaluate(() => ({
+  await new Promise((r) => setTimeout(r, 1500));
+  const desk = await p.evaluate(() => ({
     pins: document.querySelectorAll("[data-pin]").length,
+    sticky: [...document.querySelectorAll("[data-pin] *")].some(
+      (el) => getComputedStyle(el).position === "sticky"),
     withP: [...document.querySelectorAll("body *")].filter(
       (el) => el.style.getPropertyValue("--p") !== ""
     ).length,
   }));
-  ok("no pull-back remnants: zero [data-pin], zero inline --p",
-     left.pins === 0 && left.withP === 0, JSON.stringify(left));
+  ok("exactly one pinned element on the homepage, none of the old --p",
+     desk.pins === 1 && desk.sticky && desk.withP === 0, JSON.stringify(desk));
+
+  /* The scrollbar is the pen: progress tracks scroll linearly. */
+  const scrub = async (frac) => {
+    return p.evaluate(async (f) => {
+      const el = document.querySelector("[data-pin]");
+      const r = el.getBoundingClientRect();
+      const travel = r.height - window.innerHeight;
+      // Document-relative, NOT offsetTop: offsetTop is relative to the
+      // nearest positioned ancestor and pointed this test at nowhere.
+      const docTop = r.top + window.scrollY;
+      const y = docTop + travel * f;
+      for (let i = 0; i < 30; i++) {
+        const l = window.__lenis;
+        if (l) l.scrollTo(y, { immediate: true, force: true });
+        else window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 60));
+        if (Math.abs(window.scrollY - y) < 4) break;
+      }
+      await new Promise((r) => setTimeout(r, 150));
+      return parseFloat(el.dataset.progress ?? "-1");
+    }, frac);
+  };
+  const p0 = await scrub(0);
+  const pHalf = await scrub(0.5);
+  const p1 = await scrub(1);
+  ok("trail set-piece draws linearly against scroll",
+     p0 < 0.05 && Math.abs(pHalf - 0.5) < 0.1 && p1 > 0.95,
+     `progress at 0/0.5/1 of travel: ${p0} / ${pHalf} / ${p1}`);
+  await p.close();
+}
+
+/* Below the gate: no pin at all. */
+{
+  const p = await browser.newPage();
+  await p.setViewport({ width: 900, height: 900 });
+  await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
+  await new Promise((r) => setTimeout(r, 1200));
+  const pins = await p.evaluate(() => document.querySelectorAll("[data-pin]").length);
+  ok("trail set-piece: no pin below 992px", pins === 0, `${pins}`);
   await p.close();
 }
 

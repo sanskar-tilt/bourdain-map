@@ -142,10 +142,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ------------------------------------------------- the trail */}
+      {/* ---------------------------------------------------- the trail
+          The one sticky set-piece besides the hero: pins for two viewports
+          while the route draws itself against the scrollbar. */}
       <section className={`${s.section} reveal`}>
         <p className="label">the trail</p>
-        <TrailMap height={340} />
+        <TrailMap height={420} setPiece />
       </section>
 
       {/* ------------------------------------------------- the video */}

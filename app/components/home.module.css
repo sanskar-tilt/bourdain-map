@@ -87,6 +87,17 @@
 .quoteBig { font-size: var(--step-7); line-height: var(--lh-solid); }
 
 /* --------------------------------------------------------------- trail */
+/* The one sticky set-piece besides the hero. Two viewports of travel; the
+   trail draws linearly against scroll while the stage holds still. */
+.trailPin { height: 200vh; position: relative; }
+.trailStage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: center;
+}
+
 .trail { display: grid; gap: var(--s3); }
 .trail canvas { display: block; width: 100%; }
 .trailEnd { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s4); }
