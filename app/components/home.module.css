@@ -269,3 +269,56 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* --------------------------------------------------- hero pull-back */
+/* One plate, then the whole life. 250vh of travel, one sticky stage.
+   Linear in scroll — easing belongs to entrances, not to the scrollbar. */
+.pullback { height: 250vh; position: relative; }
+.pullStage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--ground);
+}
+
+/* The world fades up as the photograph pulls away from you. */
+.pullWorld {
+  position: absolute;
+  inset: 0;
+  opacity: calc((var(--p, 0) - 0.45) * 2.4);
+  transition: none;
+}
+.pullWorld canvas { display: block; width: 100%; height: 100%; }
+
+/* 1 → 0.04: full bleed down to the size of a pin. */
+.pullPhoto {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform: scale(calc(1 - (0.96 * var(--p, 0))));
+  will-change: transform;
+}
+.pullPhoto figure, .pullPhoto > div { width: 100%; height: 100%; margin: 0; }
+.pullPhoto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* The credit has no business shrinking to nothing with the photograph. */
+.pullPhoto figcaption { display: none; }
+
+/* Not pinned: no travel, no transform, photograph sits at a sane height. */
+.pullback[data-pinned="false"] { height: auto; }
+.pullback[data-pinned="false"] .pullStage { position: static; height: auto; }
+.pullback[data-pinned="false"] .pullPhoto { position: static; transform: none; }
+.pullback[data-pinned="false"] .pullPhoto img { height: 70vh; }
+.pullback[data-pinned="false"] .pullWorld { display: none; }
+.pullback[data-pinned="false"] .pullPhoto figcaption { display: block; }
+
+.pullCredit {
+  position: absolute;
+  left: var(--s5);
+  bottom: var(--s4);
+  z-index: 3;
+  opacity: calc(1 - (2 * var(--p, 0)));
+}

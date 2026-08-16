@@ -1,0 +1,156 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import s from "./home.module.css";
+
+/* One plate, then the whole life.
+ *
+ * Opens on a single photograph, full bleed, no caption. Scrolling pulls it
+ * back until it is one pin among two thousand on a world map. It explains the
+ * site with no copy and hands you into /map.
+ *
+ * The scale is LINEAR in scroll. Easing belongs to entrances; anything tied
+ * to the scrollbar has to track the finger, and an eased scrub feels broken.
+ *
+ * One passive listener, rAF-throttled, one getBoundingClientRect, writing
+ * only custom properties that feed transform and opacity. Nothing reads
+ * layout per frame.
+ *
+ * Gated behind 992px: below that there is no pin at all and the hero renders
+ * settled. Same under reduced motion.
+ */
+
+type Props = {
+  /** Real coordinates for the photographed place, so the pin lands where it
+   *  actually is. Null means we don't know, and we say so instead of faking. */
+  target: { lon: number; lat: number } | null;
+  children: React.ReactNode;
+};
+
+export default function HeroPullback({ target, children }: Props) {
+  const wrap = useRef<HTMLDivElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const [pts, setPts] = useState<[number, number][]>([]);
+
+  useEffect(() => {
+    fetch("/data/world.json")
+      .then((r) => r.json())
+      .then(setPts)
+      .catch(() => setPts([]));
+  }, []);
+
+  /* ---- the scroll driver ------------------------------------------- */
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el) return;
+
+    const gate = window.matchMedia("(min-width: 992px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let queued = false;
+    let active = false;
+
+    const read = () => {
+      queued = false;
+      const r = el.getBoundingClientRect();
+      const travel = r.height - window.innerHeight;
+      const p = travel > 0 ? Math.min(1, Math.max(0, -r.top / travel)) : 0;
+      el.style.setProperty("--p", p.toFixed(4));
+    };
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(read);
+    };
+
+    const sync = () => {
+      const on = gate.matches && !reduced.matches;
+      if (on === active) return;
+      active = on;
+      el.dataset.pinned = on ? "true" : "false";
+      if (on) {
+        read();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+      } else {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
+        el.style.setProperty("--p", "0");   // settled
+      }
+    };
+
+    sync();
+    gate.addEventListener("change", sync);
+    reduced.addEventListener("change", sync);
+    return () => {
+      gate.removeEventListener("change", sync);
+      reduced.removeEventListener("change", sync);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  /* ---- the world it lands in --------------------------------------- */
+  useEffect(() => {
+    const cv = canvas.current;
+    if (!cv || pts.length === 0) return;
+    const ctx = cv.getContext("2d");
+    if (!ctx) return;
+
+    const style = getComputedStyle(document.documentElement);
+    const accent = style.getPropertyValue("--accent").trim() || "#B8342A";
+
+    const draw = () => {
+      const r = cv.parentElement!.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      cv.width = r.width * dpr;
+      cv.height = r.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, r.width, r.height);
+
+      // Equirectangular, cropped to inhabited latitudes.
+      const project = (lon: number, lat: number): [number, number] => [
+        ((lon + 180) / 360) * r.width,
+        ((78 - lat) / 140) * r.height,
+      ];
+
+      ctx.fillStyle = accent;
+      ctx.globalAlpha = 0.55;
+      for (const [lon, lat] of pts) {
+        const [x, y] = project(lon, lat);
+        ctx.beginPath();
+        ctx.arc(x, y, 1.1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (target) {
+        const [x, y] = project(target.lon, target.lat);
+        ctx.globalAlpha = 1;
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    draw();
+    window.addEventListener("resize", draw);
+    return () => window.removeEventListener("resize", draw);
+  }, [pts, target]);
+
+  return (
+    <section ref={wrap} className={s.pullback} data-pin data-pinned="false">
+      <div className={s.pullStage}>
+        <div className={s.pullWorld} aria-hidden="true">
+          <canvas ref={canvas} />
+        </div>
+        <div className={s.pullPhoto}>{children}</div>
+      </div>
+    </section>
+  );
+}

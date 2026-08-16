@@ -200,6 +200,20 @@ def main():
         json.dump(stats, f, ensure_ascii=False, indent=1)
     print('stats           ' + json.dumps(stats))
 
+    # A compact world scatter for the homepage hero: every place, one decimal,
+    # ~20KB. The homepage should not have to load the full search index just to
+    # draw the pull-back.
+    world = query("""
+      select json_agg(json_build_array(
+        round(extensions.st_x(geog::extensions.geometry)::numeric, 1),
+        round(extensions.st_y(geog::extensions.geometry)::numeric, 1)))
+      from places;
+    """) or []
+    with open(os.path.join(OUT, 'world.json'), 'w', encoding='utf-8') as f:
+        json.dump(world, f, separators=(',', ':'))
+    print(f'world.json      {len(world)} points  '
+          f'{os.path.getsize(os.path.join(OUT, "world.json")) / 1024:.0f} KB')
+
     trail = query(TRAIL_SQL) or []
     with open(os.path.join(OUT, 'trail.json'), 'w', encoding='utf-8') as f:
         json.dump(trail, f, ensure_ascii=False, separators=(',', ':'))

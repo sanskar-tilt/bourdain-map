@@ -1,9 +1,10 @@
 import Loader from "./components/Loader";
 import Reveal from "./components/Reveal";
-import PinnedHero from "./components/PinnedHero";
+import HeroPullback from "./components/HeroPullback";
 import TrailMap from "./components/TrailMap";
 import { homeManifest, homePhotos, allCredits, pick } from "../lib/home";
 import { siteStats, n, broadcastLine } from "../lib/stats";
+import { placeBySlug } from "../lib/detail";
 import { usable, srcsetAttr, largest, type PhotoMeta } from "../lib/about";
 import s from "./components/home.module.css";
 import Link from "next/link";
@@ -90,6 +91,17 @@ export default function Home() {
   const hero = withMeta(pick(m.hero?.photos));
   const heroQuote = pick((m.hero?.quotes ?? []).filter(Boolean));
   const pair = withMeta(pick(m.pairing?.photos));
+
+  // Where the photographed plate actually is. Null means we do not know, and
+  // the hero says so rather than dropping a pin somewhere plausible.
+  const heroPlace = hero?.placeSlug ? placeBySlug(hero.placeSlug) : null;
+  if (hero?.placeSlug && !heroPlace) {
+    console.warn(`[home] content/home.json: no place with slug "${hero.placeSlug}"`);
+  }
+  if (hero?.photo && !hero.placeSlug) {
+    console.warn("[home] hero photo has no placeSlug — the pull-back cannot land on the map");
+  }
+  const target = heroPlace ? { lon: heroPlace.lon, lat: heroPlace.lat } : null;
   const pairQuote = pick((m.pairing?.quotes ?? []).filter(Boolean));
 
   return (
@@ -98,19 +110,19 @@ export default function Home() {
       <Reveal />
 
       {/* ------------------------------------------------ pinned hero */}
-      <PinnedHero>
-        <div className={s.heroMedia}>
-          <Shot
-            file={hero?.photo} meta={hero?.meta}
-            alt={hero?.alt} credit={hero?.credit}
-            className={s.heroImg} ratio={1.6} sizes="100vw"
-          />
-        </div>
-        <div className={s.heroText}>
-          <p className={s.heroMark}>Where he ate</p>
-          <Quote text={heroQuote} big />
-        </div>
-      </PinnedHero>
+      <HeroPullback target={target}>
+        <Shot
+          file={hero?.photo} meta={hero?.meta}
+          alt={hero?.alt} credit={hero?.credit}
+          className={s.heroImg} ratio={1.6} sizes="100vw"
+        />
+      </HeroPullback>
+
+      {/* The mark and the sentence sit under the photograph, not over it. */}
+      <section className={`${s.section} ${s.heroText} reveal`}>
+        <p className={s.heroMark}>Where he ate</p>
+        <Quote text={heroQuote} big />
+      </section>
 
       {/* ------------------------------------------------ the counter */}
       <section className={`${s.section} ${s.counterSection} reveal`}>

@@ -479,3 +479,27 @@ undated       a_cooks_tour
 - **Only the loader's mark carries the test hooks.** The nav wears the same
   component, and without a `probe` flag both answered the same
   `querySelector` — which made a passing loader look broken for three runs.
+
+---
+
+## Pass two — section 2, the hero pull-back
+
+- **One plate, then the whole life.** 250vh wrapper, one sticky stage, the
+  photograph scaling 1 → 0.04 until it is one pin among 2,095 on a world
+  scatter. No copy explains it.
+- **Linear in scroll, deliberately.** Easing belongs to entrances; anything
+  tied to the scrollbar has to track the finger. One passive listener,
+  rAF-throttled, a single `getBoundingClientRect`, writing one custom property.
+- **Gated at 992px and under reduced motion**, where `data-pinned="false"`
+  turns the whole thing into a settled photograph — no travel, no transform,
+  and the credit reappears.
+- **`public/data/world.json`** is a 26KB scatter of all 2,095 coordinates at
+  one decimal, so the homepage does not load the 561KB search index to draw a
+  background.
+- **The pin lands on real coordinates** looked up from the photo's `placeSlug`.
+  No slug or an unknown one logs a build warning and the world renders without
+  a highlighted pin — it does not drop one somewhere plausible.
+- **Screenshots are deterministic**: `?loader=hold` freezes the resolved frame,
+  and the shot script drives the pull-back to exact scroll fractions. The whole
+  pass runs twice, the second time with reduced motion forced, and asserts the
+  pin does not move.
