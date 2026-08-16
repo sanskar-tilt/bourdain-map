@@ -407,3 +407,9 @@ matches it.
 - **Every photo entry carries a `credit` field**, rendered beside the image and
   again in the colophon. A photo without one still renders but the build prints
   a loud warning and the page shows the gap in accent colour.
+- **Internal links are `next/link`, external stay `<a>`.** Verifying prefetch
+  turned up a worse bug: the place panel's city link was a plain anchor, so
+  clicking it did a full page load and rebuilt the map. Now client-side, and
+  the map survives the navigation. Prefetch was never the problem — App Router
+  already fetches every in-viewport link's payload on load, so hover adds
+  nothing because there is nothing left to fetch.

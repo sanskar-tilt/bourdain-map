@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase, supabaseConfigured, useAuth } from "../../lib/supabase";
 import s from "./ui.module.css";
+import Link from "next/link";
 
 /* Everything you can do at a place: open a table, take a seat, write a
    story, flag something wrong. Client-side against Supabase, sitting on a
@@ -152,7 +153,7 @@ export default function PlaceActions({ placeId, placeName }: { placeId: string; 
                   {going ? "Give up my seat" : free === 0 ? "Full" : "Take a seat"}
                 </button>
               ) : (
-                <p className={s.note}><a href="/account/">Sign in</a> to take a seat.</p>
+                <p className={s.note}><Link href="/account/">Sign in</Link> to take a seat.</p>
               )}
             </div>
           );
@@ -165,7 +166,7 @@ export default function PlaceActions({ placeId, placeName }: { placeId: string; 
           <TableForm placeId={placeId} onDone={() => { setOpen("none"); void load(); }} />
         )}
         {!user && ready && (
-          <p className={s.note}><a href="/account/">Sign in</a> to open one.</p>
+          <p className={s.note}><Link href="/account/">Sign in</Link> to open one.</p>
         )}
       </section>
 
@@ -202,7 +203,7 @@ export default function PlaceActions({ placeId, placeName }: { placeId: string; 
           </button>
         ) : (
           <p className={s.note}>
-            <a href="/account/">Sign in</a> to flag a closed place or a wrong pin.
+            <Link href="/account/">Sign in</Link> to flag a closed place or a wrong pin.
           </p>
         )}
       </section>

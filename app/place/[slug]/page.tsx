@@ -1,6 +1,7 @@
 import { allPlaces, placeBySlug, SHOW_NAMES } from "../../../lib/detail";
 import PlaceActions from "../../components/PlaceActions";
 import styles from "./place.module.css";
+import Link from "next/link";
 
 export function generateStaticParams() {
   return allPlaces().map((p) => ({ slug: p.slug }));
@@ -47,7 +48,7 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
 
       <p className={styles.meta}>
         {place.citySlug ? (
-          <a href={`/city/${place.citySlug}/`}>{place.city}</a>
+          <Link href={`/city/${place.citySlug}/`}>{place.city}</Link>
         ) : (
           /* McMurdo Station is not in a city, and that is the correct answer
              rather than missing data. It still gets a name, a country and a

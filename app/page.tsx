@@ -5,6 +5,7 @@ import TrailMap from "./components/TrailMap";
 import { homeManifest, homePhotos, allCredits } from "../lib/home";
 import { usable, srcsetAttr, largest, type PhotoMeta } from "../lib/about";
 import s from "./components/home.module.css";
+import Link from "next/link";
 
 export const metadata = {
   title: "Where he ate",
@@ -147,7 +148,7 @@ export default function Home() {
         <p className={s.inviteLine}>Pick a city.</p>
         <p className={s.inviteLine}>Open a table.</p>
         <p className={s.inviteLine}>Eat with a stranger.</p>
-        <a className={s.inviteCta} href="/map/">Open the map</a>
+        <Link className={s.inviteCta} href="/map/">Open the map</Link>
       </section>
 
       {/* ------------------------------------------------- colophon */}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase, supabaseConfigured } from "../../lib/supabase";
 import { loadSearchIndex, type SearchPlace } from "../../lib/artifacts";
 import s from "./ui.module.css";
+import Link from "next/link";
 
 /* Every upcoming table, everywhere. The place names come from the static
    search index rather than a join, because the read path is artifacts. */
@@ -94,7 +95,7 @@ export default function UpcomingTables() {
               <span>{p?.city ?? ""}</span>
             </div>
             {p?.slug ? (
-              <a className={s.tableWhen} href={`/place/${p.slug}/`}>{p.name}</a>
+              <Link className={s.tableWhen} href={`/place/${p.slug}/`}>{p.name}</Link>
             ) : (
               <span className={s.tableWhen}>a place on the map</span>
             )}

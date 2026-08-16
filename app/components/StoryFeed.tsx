@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase, supabaseConfigured } from "../../lib/supabase";
 import { loadSearchIndex, type SearchPlace } from "../../lib/artifacts";
 import s from "./ui.module.css";
+import Link from "next/link";
 
 type Row = {
   id: string; place_id: string; body: string; visited_on: string; created_at: string;
@@ -51,7 +52,7 @@ export default function StoryFeed() {
         return (
           <article key={r.id} className={s.story}>
             <p className={s.storyMeta}>
-              {p?.slug ? <a href={`/place/${p.slug}/`}>{p.name}</a> : "a place"}
+              {p?.slug ? <Link href={`/place/${p.slug}/`}>{p.name}</Link> : "a place"}
               {p?.city ? ` · ${p.city}` : ""} · {r.visited_on}
             </p>
             <p className={s.storyBody}>{r.body}</p>

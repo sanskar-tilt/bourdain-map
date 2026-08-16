@@ -1,5 +1,6 @@
 import { allCities, cityBySlug, SHOW_NAMES } from "../../../lib/detail";
 import styles from "./city.module.css";
+import Link from "next/link";
 
 export function generateStaticParams() {
   return allCities().map((c) => ({ slug: c.slug }));
@@ -107,7 +108,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
           {city.places.map((p) => (
             <li key={p.slug ?? p.name} data-gone={p.status === "closed"}>
               {p.slug ? (
-                <a className={styles.placeName} href={`/place/${p.slug}/`}>{p.name}</a>
+                <Link className={styles.placeName} href={`/place/${p.slug}/`}>{p.name}</Link>
               ) : (
                 <span className={styles.placeName}>{p.name}</span>
               )}
