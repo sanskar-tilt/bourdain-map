@@ -220,3 +220,17 @@ Related discovery: **some accounts disable embedding entirely** — a live
 `scripts/reels_acceptance.mjs` looks inside the iframes and fails if a
 manifest entry is embed-disabled, so you find out at acceptance time, not
 from readers.
+
+---
+
+## The SOUND pill spec isn't where the brief said it is
+
+The instruction was "add the SOUND pill per notes/refs/nothin-motion.md" —
+but that file (Viktor's motion pass plus my reconciliation) contains no
+mention of a sound pill, audio, mute, or any video control. Nothing matching
+in `nothin-analysis.md` either. The pill was built to the inline spec in the
+same instruction — appears with the section, knob slides 0.3s on click,
+toggles the player's mute/unMute, muted always the default — which was
+sufficient. If there's a fuller passage somewhere (dimensions, placement,
+copy), paste it and I'll reconcile; the current pill is mono "SOUND" +
+sliding knob, bottom-left of the stage, and it never shrinks with the frame.

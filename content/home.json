@@ -1,68 +1,86 @@
 {
-  "_readme": [
-    "The homepage. Edit this, drop images in public/home/, and the page updates",
-    "— no code change needed. Same pipeline as content/about.json.",
-    "",
-    "EVERY PHOTO NEEDS A CREDIT. The `credit` field renders next to the image and",
-    "again in the colophon. A photo with no credit still renders, but the build",
-    "prints a warning, because shipping someone's photograph uncredited is the one",
-    "thing this project cannot do.",
-    "",
-    "LOADER: loader.objects[] are overhead shots of FOOD — bowls, plates, a glass",
-    "from above. Round subjects, centred, identical zoom, so nothing jumps inside",
-    "the letter O. loader.portrait is the ONE photograph of Bourdain: it appears",
-    "once, at the end, when the count lands. Do not put him in objects[].",
-    "",
-    "POOLS: hero.photos[] and hero.quotes[] are pools — one of each is chosen at",
-    "random per visit, so the page is never the same twice. Same for pairing.",
-    "",
-    "Sections left empty render as marked gaps rather than disappearing."
+ "_readme": [
+  "The homepage. Edit this, drop images in public/home/, and the page updates",
+  "— no code change needed. Same pipeline as content/about.json.",
+  "",
+  "EVERY PHOTO NEEDS A CREDIT. The `credit` field renders next to the image and",
+  "again in the colophon. A photo with no credit still renders, but the build",
+  "prints a warning, because shipping someone's photograph uncredited is the one",
+  "thing this project cannot do.",
+  "",
+  "LOADER: loader.objects[] are overhead shots of FOOD — bowls, plates, a glass",
+  "from above. Round subjects, centred, identical zoom, so nothing jumps inside",
+  "the letter O. loader.portrait is the ONE photograph of Bourdain: it appears",
+  "once, at the end, when the count lands. Do not put him in objects[].",
+  "",
+  "POOLS: hero.photos[] and hero.quotes[] are pools — one of each is chosen at",
+  "random per visit, so the page is never the same twice. Same for pairing.",
+  "",
+  "Sections left empty render as marked gaps rather than disappearing.",
+  "",
+  "PULLBACK: the set-piece under the hero quote. pullback.videoId is the",
+  "11-character id from a YouTube URL (youtube.com/watch?v=THIS-BIT) —",
+  "OFFICIAL UPLOADS ONLY, same rule as cities.video_url. It autoplays muted",
+  "while the section is on screen and pauses off it; the SOUND pill is the",
+  "only way to hear it. pullback.start is optional seconds to skip in.",
+  "pullback.background is the full-bleed photograph of the room behind the",
+  "shrinking frame — same pipeline as every other photo (file in",
+  "public/home/, credit REQUIRED). Both render as marked gaps until set."
+ ],
+ "loader": {
+  "objects": [
+   {
+    "photo": "",
+    "alt": "",
+    "credit": ""
+   }
   ],
-  "loader": {
-    "objects": [
-      {
-        "photo": "",
-        "alt": "",
-        "credit": ""
-      }
-    ],
-    "portrait": {
-      "photo": "bourdain-portrait.jpg",
-      "alt": "Anthony Bourdain, arms crossed on a table, looking into the camera",
-      "credit": ""
-    }
-  },
-  "hero": {
-    "photos": [
-      {
-        "photo": "",
-        "alt": "",
-        "credit": "",
-        "placeSlug": ""
-      }
-    ],
-    "quotes": [
-      ""
-    ]
-  },
-  "pairing": {
-    "photos": [
-      {
-        "photo": "",
-        "alt": "",
-        "credit": ""
-      }
-    ],
-    "quotes": [
-      ""
-    ]
-  },
-  "video": {
-    "url": "",
-    "title": "",
-    "source": ""
-  },
-  "colophon": {
-    "copyright": ""
+  "portrait": {
+   "photo": "bourdain-portrait.jpg",
+   "alt": "Anthony Bourdain, arms crossed on a table, looking into the camera",
+   "credit": ""
   }
+ },
+ "hero": {
+  "photos": [
+   {
+    "photo": "",
+    "alt": "",
+    "credit": "",
+    "placeSlug": ""
+   }
+  ],
+  "quotes": [
+   ""
+  ]
+ },
+ "pullback": {
+  "videoId": "",
+  "start": 0,
+  "background": {
+   "photo": "",
+   "alt": "",
+   "credit": ""
+  }
+ },
+ "pairing": {
+  "photos": [
+   {
+    "photo": "",
+    "alt": "",
+    "credit": ""
+   }
+  ],
+  "quotes": [
+   ""
+  ]
+ },
+ "video": {
+  "url": "",
+  "title": "",
+  "source": ""
+ },
+ "colophon": {
+  "copyright": ""
+ }
 }

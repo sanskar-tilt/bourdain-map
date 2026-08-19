@@ -17,6 +17,13 @@ export type HomeManifest = {
   loader?: { objects?: LoaderEntry[]; portrait?: LoaderEntry };
   /** Pools — one is chosen at random per visit, so no two loads match. */
   hero?: { photos?: (HomePhoto & { placeSlug?: string })[]; quotes?: string[] };
+  /** The pull-back set-piece: a YouTube video (official uploads only) in the
+   *  shrinking frame, a full-bleed photograph of the room behind it. */
+  pullback?: {
+    videoId?: string;
+    start?: number;
+    background?: HomePhoto;
+  };
   pairing?: { photos?: HomePhoto[]; quotes?: string[] };
   video?: { url?: string; title?: string; source?: string };
   colophon?: { copyright?: string };
@@ -48,6 +55,7 @@ export function allCredits(m: HomeManifest): { photo: string; credit: string }[]
   (m.loader?.objects ?? []).forEach(add);
   add(m.loader?.portrait);
   (m.hero?.photos ?? []).forEach(add);
+  add(m.pullback?.background);
   (m.pairing?.photos ?? []).forEach(add);
   return out.filter((c, i, a) => a.findIndex((x) => x.photo === c.photo) === i);
 }

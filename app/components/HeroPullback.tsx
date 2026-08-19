@@ -2,13 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { onScroll } from "../../lib/scroll";
+import PullbackVideo from "./PullbackVideo";
 import s from "./home.module.css";
 
 /* One plate, then the whole life.
  *
- * Opens on a single photograph, full bleed, no caption. Scrolling pulls it
- * back until it is one pin among two thousand on a world map. It explains the
- * site with no copy and hands you into /map.
+ * Opens full bleed on the frame's content — a muted video where the manifest
+ * supplies one, the marked gap where it doesn't. Scrolling pulls it back
+ * until it is one pin among two thousand on a world map, while the room
+ * photograph behind scales the opposite way (1.05 → 1), so the shrink reads
+ * as a dolly-out. It explains the site with no copy and hands you into /map.
  *
  * The scale is LINEAR in scroll. Easing belongs to entrances; anything tied
  * to the scrollbar has to track the finger, and an eased scrub feels broken.
@@ -25,10 +28,17 @@ type Props = {
   /** Real coordinates for the photographed place, so the pin lands where it
    *  actually is. Null means we don't know, and we say so instead of faking. */
   target: { lon: number; lat: number } | null;
-  children: React.ReactNode;
+  /** The video that fills the shrinking frame. Null → children (the marked
+   *  gap) fill it instead, exactly as the photograph used to. */
+  video?: { videoId: string; start?: number } | null;
+  /** Full-bleed photograph of the room behind the frame. It scales 1.05 → 1
+   *  against the same scroll, opposite the frame, so the shrink reads as a
+   *  dolly-out rather than a zoom on a flat card. */
+  background?: React.ReactNode;
+  children?: React.ReactNode;
 };
 
-export default function HeroPullback({ target, children }: Props) {
+export default function HeroPullback({ target, video, background, children }: Props) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const [pts, setPts] = useState<[number, number][]>([]);
@@ -149,10 +159,19 @@ export default function HeroPullback({ target, children }: Props) {
     // The scroll cue is NOT here any more — FluidHero owns it now.
     <section ref={wrap} className={s.pullback} data-pinned="false">
       <div className={s.pullStage}>
+        {background && (
+          <div className={s.pullRoom} aria-hidden="true">
+            {background}
+          </div>
+        )}
         <div className={s.pullWorld} aria-hidden="true">
           <canvas ref={canvas} />
         </div>
-        <div className={s.pullPhoto}>{children}</div>
+        {video?.videoId ? (
+          <PullbackVideo videoId={video.videoId} start={video.start} />
+        ) : (
+          <div className={s.pullPhoto}>{children}</div>
+        )}
       </div>
     </section>
   );

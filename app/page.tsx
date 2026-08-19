@@ -111,6 +111,17 @@ export default function Home() {
   const target = heroPlace ? { lon: heroPlace.lon, lat: heroPlace.lat } : null;
   const pairQuote = pick((m.pairing?.quotes ?? []).filter(Boolean));
 
+  // The pull-back's frame and room. Empty videoId → the marked gap; a photo
+  // without a credit still ships but says so loudly, here and in the build.
+  const pullbackVideo = m.pullback?.videoId?.trim()
+    ? { videoId: m.pullback.videoId.trim(), start: m.pullback.start }
+    : null;
+  const room = m.pullback?.background;
+  const roomMeta = room?.photo ? photos[room.photo] : undefined;
+  if (room?.photo && !room.credit?.trim()) {
+    console.warn("[home] pullback.background has no credit — set it in content/home.json");
+  }
+
   return (
     <>
       <Loader objects={objects} portrait={portrait} total={stats.places} />
@@ -131,16 +142,43 @@ export default function Home() {
       </section>
 
       {/* ---------------------------------------------- the pull-back
-          One plate, then the whole life: the photograph shrinks with the
-          scrollbar until it is a single pin among all the others. Restored
-          below the quote by request; it takes the page's one pin, which the
-          trail yielded back. */}
-      <HeroPullback target={target}>
-        <Shot
-          file={hero?.photo} meta={hero?.meta}
-          alt={hero?.alt} credit={hero?.credit}
-          ratio={1.6} sizes="100vw"
-        />
+          One plate, then the whole life: the frame shrinks with the
+          scrollbar until it is a single pin among all the others. The frame
+          now holds a video (official uploads only, muted, playing only while
+          the section is on screen) over a full-bleed photograph of the room,
+          both from content/home.json → pullback. Still the page's one pin. */}
+      <HeroPullback
+        target={target}
+        video={pullbackVideo}
+        background={
+          room?.photo && usable(roomMeta) ? (
+            <>
+              <img
+                src={largest(roomMeta)}
+                srcSet={srcsetAttr(roomMeta)}
+                sizes="100vw"
+                alt={room.alt ?? ""}
+              />
+              <span className={s.roomCredit}>
+                {room.credit?.trim() ||
+                  "credit required — set it in content/home.json"}
+              </span>
+            </>
+          ) : (
+            <div className={`${s.gap} ${s.roomGapFill}`}>
+              <span>
+                background photograph — content/home.json → pullback.background
+              </span>
+            </div>
+          )
+        }
+      >
+        <div className={`${s.gap} ${s.videoGapFill}`}>
+          <span>
+            video — content/home.json → pullback.videoId. Official uploads
+            only.
+          </span>
+        </div>
       </HeroPullback>
 
       {/* ------------------------------------------------ the counter */}

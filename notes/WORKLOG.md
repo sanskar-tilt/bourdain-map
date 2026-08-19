@@ -309,3 +309,39 @@ entries, a deliberately dead URL) and asserts the lot, including that the
 bottom entry stays uninjected until scrolled. The embeds are the one place
 the type rules don't reach inside; the frame, caption, labels and the
 colophon ("this site hosts nothing") are the site's.
+
+## The pull-back takes a video (user request)
+
+Status check first, as asked: the set-piece exists — `HeroPullback`, below
+the hero quote, 250vh with a sticky stage, content scaling 1 → 0.04 linearly
+against `--p`. Built homepage: zero `data-pin` in the static HTML (the
+attribute is toggled client-side so the census stays truthful), exactly one
+at runtime ≥992px, zero below. Pin count unchanged by this work, so the
+one-pin acceptance stands as written.
+
+The swap: the frame's content slot is now a YouTube video via the IFrame
+API — the API and not a bare iframe because the point is mute control.
+Manifest-driven: `content/home.json → pullback { videoId, start?,
+background }`, marked gaps until supplied, official uploads only per the
+readme. Autoplays muted while the section is on screen, pauses off it, and
+**muted is re-asserted on every re-entry** — autoplay with sound is blocked
+by every browser, so the default has to be muted every time, not just the
+first. The SOUND pill (mono label + 300ms knob) lives in the stage, one
+layer out from the scaled frame, so it never shrinks with it. Behind, the
+room photograph scales 1.05 → 1 against the same scroll — the dolly-out.
+Reduced motion and below 992px: no pin, no autoplay, no player until the
+labelled frame's play button is pressed.
+
+The hero photo pool no longer renders in the frame; its placeSlug still
+chooses where the pin lands. The pull-back background photo rides the same
+sharp pipeline and credit rules as everything else (colophon included).
+
+One spec gap, logged in questions.md: the brief pointed at
+`notes/refs/nothin-motion.md` for the SOUND pill and that file contains no
+such passage — built to the inline spec instead.
+
+`scripts/pullback_acceptance.mjs`: 15 assertions, all green — playing+muted
+mid-pin asserted via the player's own `isMuted()`, pill toggles both ways,
+paused past the pin, re-muted on return, reduced motion loads nothing. The
+fixture video (CNN's Parts Unknown trailer, verified official via oEmbed)
+exists only inside the test run; the shipped manifest keeps the marked gap.
