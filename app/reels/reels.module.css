@@ -1,0 +1,160 @@
+/* Same object as the rest of the site: every value comes from tokens.css.
+   The one licensed exception is inside the platform iframes — Instagram and
+   TikTok own their player chrome — so the job here is the consistent frame
+   around them, not reaching in. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
+  max-width: var(--measure);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+}
+.h1 {
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-4);
+  line-height: 1.05;
+}
+
+/* ---------------------------------------------------------------- feed */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s7);
+}
+
+.reel {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+/* The frame. Both platforms hand back an iframe of their own proportions;
+   the frame holds space before that happens (reels run tall) and keeps a
+   consistent edge around whatever arrives. 540px is Instagram's natural
+   maximum and comfortably above TikTok's 325px minimum. */
+.frame {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  border: 1px solid var(--edge);
+  border-radius: 2px;
+  background: var(--panel);
+  padding: var(--s2);
+  /* Unconditional, not just while loading: if the reservation dropped when an
+     embed hydrates, the page would shrink for the instant the platform's
+     iframe is still at its initial height, and that jump momentarily pulls
+     entries below into the lazy-load margin. Embeds only ever grow this. */
+  min-height: 480px;
+}
+.holding {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+/* Without JS the holding text never resolves, so the link replaces it. */
+:global(.no-js) .holding { display: none; }
+.noscriptLink {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--ink-dim);
+  font-size: var(--step-0);
+  text-underline-offset: 3px;
+}
+
+/* The platforms' blockquote fallback (visible only until embed.js runs, or
+   forever without JS) — kept quiet and legible rather than styled away. */
+.frame :global(blockquote) {
+  margin: 0;
+  min-height: 120px;
+  font-size: var(--step-0);
+}
+.frame :global(blockquote a) {
+  color: var(--ink-dim);
+  text-underline-offset: 3px;
+}
+.frame :global(iframe) {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.caption {
+  max-width: 540px;
+  font-size: var(--step-0);
+  line-height: var(--lh-body);
+  color: var(--ink-dim);
+}
+
+/* ------------------------------------------------- gone, and never-was */
+/* The marked-gap pattern from the photo gaps: a dashed space that says what
+   is missing, never a broken iframe. */
+.goneFrame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  width: 100%;
+  max-width: 540px;
+  border: 1px dashed var(--edge-strong);
+  border-radius: 2px;
+  background: var(--raised);
+  padding: var(--s4);
+}
+.goneTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.goneNote {
+  font-size: var(--step-0);
+  line-height: var(--lh-body);
+  color: var(--ink-dim);
+}
+.goneNote a {
+  color: var(--ink-dim);
+  text-underline-offset: 3px;
+}
+
+.emptyGap {
+  display: grid;
+  place-items: center;
+  max-width: 540px;
+  min-height: 200px;
+  border: 1px dashed var(--edge-strong);
+  border-radius: 2px;
+  background: var(--raised);
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-label);
+  text-align: center;
+  padding: var(--s4);
+}
+
+/* ------------------------------------------------------------ colophon */
+.colophon {
+  padding-top: var(--s5);
+  border-top: 1px solid var(--edge);
+}
+.colophon p {
+  max-width: var(--measure);
+  font-size: var(--step-0);
+  line-height: var(--lh-body);
+  color: var(--ink-faint);
+}

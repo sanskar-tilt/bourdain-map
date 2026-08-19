@@ -187,3 +187,36 @@ The real gap is the one identified in review: **there is no arrival after the
 curtain.** The hero is fully rendered underneath and simply gets revealed, so
 the opening stops halfway. That sequence is specified and queued — it is not
 built in this pass, which was scoped to smooth scroll and masked text.
+
+---
+
+## Reels — both platforms verified under the static export; one nuance
+
+The brief said to verify Instagram and TikTok embeds hydrate under
+`output: 'export'` before building the page around them. Verified, in a real
+headless Chrome against a static page doing exactly what the built page does
+(inject the official blockquote client-side when the entry nears the
+viewport, then load the platform's embed.js):
+
+- **Instagram**: hydrates. A live reel renders fully; a dead one never gets
+  `.instagram-media-rendered` and its iframe stays 2px tall — a clean signal,
+  so the page detects it (15s deadline) and swaps in the site's own marked
+  "no longer available" state. Fully to spec.
+- **TikTok**: hydrates. embed.js exposes no `process()` API, so each new
+  batch of blockquotes is picked up by re-appending the script (HTTP-cached,
+  one scan per batch). One quirk: their embed player refuses the headless
+  Chrome user agent — affects tests only, never readers.
+
+**The nuance needing your eyes**: a dead TikTok still hydrates — into
+TikTok's own compact "Video currently unavailable" card inside the iframe.
+Cross-origin, so the page can't see that text to replace it with our marked
+state; the card sits inside our frame with our caption below, which is
+contained, not broken — but it's their wording, not ours. Detection would
+need TikTok's oEmbed endpoint, which rejected every request I sent it
+(400 even for live videos). If their card offends, that's the missing input.
+
+Related discovery: **some accounts disable embedding entirely** — a live
+`@people` (People magazine) TikTok renders the same "unavailable" card.
+`scripts/reels_acceptance.mjs` looks inside the iframes and fails if a
+manifest entry is embed-disabled, so you find out at acceptance time, not
+from readers.

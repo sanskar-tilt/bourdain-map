@@ -274,3 +274,38 @@ to invent, least of all for a professional portrait.
 Note: the stale-build guard blocked the acceptance run against an old out/
 for the second time (missing import broke tsc). Both times it fired, it was
 right.
+
+## /reels — a feed of embedded clips, manifest-driven (user request)
+
+Additive only: `content/reels.json` in, `/reels/` out, "Reels" in the nav.
+Paste a URL, rebuild, done — `lib/reels.ts` validates entries at build time
+(host allowlist, TikTok video id) and skips bad ones with a warning, never a
+broken frame.
+
+**Verified before building, as briefed.** A spike in headless Chrome proved
+both platforms' official blockquote + embed.js patterns hydrate markup
+injected client-side — the static-export situation — and that nothing is
+fetched until an entry nears the viewport. Findings that shaped the page:
+
+- Instagram signals a dead reel cleanly (no `.instagram-media-rendered`,
+  iframe stays 2px), so the page swaps in its own marked "no longer
+  available" state after a 15s deadline. TikTok hydrates dead videos into
+  its own compact unavailable card — cross-origin, undetectable, but
+  contained in our frame with our caption. Nuance logged in questions.md.
+- Some accounts disable embedding entirely (a live People-magazine TikTok
+  renders the same card). The acceptance script looks inside the iframes so
+  a bad manifest entry fails at acceptance time, not in front of readers.
+- TikTok's player refuses the headless UA; tests strip "Headless" from it.
+
+**Two real bugs the acceptance run caught.** React reused the frame div when
+swapping to the gone state, carrying the dead iframe with it — distinct keys
+force the remount. And the frame's min-height reservation used to drop at
+hydration while TikTok's iframe was still 310px, so the page shrank for an
+instant and yanked entries below into the lazy-load margin — the
+reservation is now unconditional; embeds only grow it.
+
+`scripts/reels_acceptance.mjs` builds three ways (empty manifest, live
+entries, a deliberately dead URL) and asserts the lot, including that the
+bottom entry stays uninjected until scrolled. The embeds are the one place
+the type rules don't reach inside; the frame, caption, labels and the
+colophon ("this site hosts nothing") are the site's.
