@@ -27,6 +27,14 @@ structural rather than say it in an About page.
   quotes only, no scraped stills, no transcript dumps.
 - **Not a memorial.** He'd have hated a shrine. Warm, funny, a bit blunt.
 
+## Verification policy
+
+No acceptance suites, no test runs, no verification passes during
+iteration. Ever. While working: typecheck and build only. Content-only
+changes: not even that. The full suite runs exactly once, immediately
+before a commit, and never mid-flight. If something feels risky enough to
+check mid-work, ask me instead of running anything.
+
 ## Stack
 
 Next.js (App Router) · MapLibre GL · Supabase (Postgres + PostGIS + auth) ·
