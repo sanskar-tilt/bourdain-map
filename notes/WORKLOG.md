@@ -394,3 +394,38 @@ one line — on ENDED, `getDuration() === 0` means blocked — unverified,
 because verification now happens once per batch, not mid-flight. Committed
 with the owner's knowledge. Everything else in both suites was green on
 their last runs.
+
+## The clip comes home: pullback.file, hosted with permission (user request)
+
+The embed path was a dead end — the chosen Short forbids embedded playback
+(error 150) — and the owner came back with permission from its creator to
+host the file. So the pull-back gains a second source: `pullback.file`, a
+self-hosted clip in public/home/ played by a native <video>, which makes
+the mute problem trivial (it's a property, not an API). File wins over
+videoId. Same contract as the YouTube path: muted autoplay only while the
+section is on screen, paused off it, re-muted on every re-entry, the SOUND
+pill the one control, static labelled frame with a play button where the
+pin doesn't run. window.__whaPlayer is now either the YT player or a
+same-shaped shim over the element, so the acceptance asserts one interface.
+
+Credit is required like every photograph — on the frame, in the colophon —
+and the readme confines pullback.file to clips with the creator's written
+permission. The grant (MANIFESTO, 2026-08-20, reported by the owner) and
+its two caveats are recorded in decisions.md. dont-be-afraid.mp4 is 2.3MB,
+inside free-tier comfort.
+
+**Pill redesign + the room slot (user request).** The SOUND pill moves to
+the noth.in reference: top-centre of the video frame, dark rounded ground,
+riding the shrinking frame's top edge (top = 50vh·0.96·p) without shrinking
+with it, visible whenever the section is on screen rather than only once
+playing. The suite had caught the visibility gap honestly — a local file
+reaches "playing" faster than the pill's 800ms fade, so the assertion now
+polls. The shipped file-mode path is fully green (12/12).
+pullback.background points at pullback-kitchen.jpg — the supplied photo
+arrived as a paste that exists nowhere on disk (portrait precedent), so the
+manifest names it, the build warns, and the frame keeps its marked gap
+until the file lands in public/home/. Credit empty, not mine to invent.
+Still known-red, unverified by the once-per-commit rule: the YT blocked
+fixture (2b) — YouTube reports a real duration even for refused videos, so
+detection now keys on getCurrentTime() at ENDED (~0 = refusal); next run
+will tell.

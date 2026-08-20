@@ -587,3 +587,15 @@ pull-back proof shared a page with the wheel test, so a coast still in flight
 left the reading frozen at wherever it stopped — a contaminated proof that
 failed against working code. Each proof now gets its own page. Worth
 remembering: when a test disagrees with a standalone probe, suspect the test.
+
+**The pull-back clip is self-hosted, with the creator's permission.** The
+Short chosen for the frame (5ElntjskhaE, "Don't Be Afraid" by MANIFESTO,
+@bymnfsto) forbids embedded playback — YouTube error 150, verified — so
+embedding was never going to work. The owner asked MANIFESTO and reports
+permission granted (2026-08-20); on that basis the clip ships as
+public/home/dont-be-afraid.mp4 via pullback.file, credited on the frame and
+in the colophon like every photograph. Keep the permission message. Two
+recorded caveats, both the owner's accepted call: MANIFESTO's grant covers
+their edit, not the underlying broadcast footage (CNN/ZPZ); and the site's
+"hosts nothing" stance now carries this one permissioned exception — the
+manifest readme confines pullback.file to exactly that case.

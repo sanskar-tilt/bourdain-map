@@ -18,6 +18,9 @@
   "",
   "Sections left empty render as marked gaps rather than disappearing.",
   "",
+  "pullback.file is a self-hosted clip in public/home/ and WINS over",
+  "videoId. Only for video you have the creator's written permission to",
+  "host — keep the message. credit is REQUIRED, like every photo.",
   "PULLBACK: the set-piece under the hero quote. pullback.videoId is the",
   "11-character id from a YouTube URL (youtube.com/watch?v=THIS-BIT) —",
   "OFFICIAL UPLOADS ONLY, same rule as cities.video_url. It autoplays muted",
@@ -60,12 +63,14 @@
   ]
  },
  "pullback": {
+  "file": "dont-be-afraid.mp4",
+  "credit": "Clip by MANIFESTO (@bymnfsto), used with permission",
   "videoId": "",
   "start": 0,
-  "vertical": false,
+  "vertical": true,
   "background": {
-   "photo": "",
-   "alt": "",
+   "photo": "pullback-kitchen.jpg",
+   "alt": "A small commercial kitchen — steel counters, ovens and a griddle, terracotta tile floor",
    "credit": ""
   }
  },

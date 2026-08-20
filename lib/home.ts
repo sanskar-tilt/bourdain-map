@@ -20,6 +20,11 @@ export type HomeManifest = {
   /** The pull-back set-piece: a YouTube video (official uploads only) in the
    *  shrinking frame, a full-bleed photograph of the room behind it. */
   pullback?: {
+    /** A self-hosted clip in public/home/ — used with the creator's written
+     *  permission, credited like every photo. Takes priority over videoId. */
+    file?: string;
+    /** Credit for the self-hosted clip. Required when file is set. */
+    credit?: string;
     videoId?: string;
     start?: number;
     /** True for Shorts and other 9:16 video — the frame becomes a
@@ -59,6 +64,8 @@ export function allCredits(m: HomeManifest): { photo: string; credit: string }[]
   add(m.loader?.portrait);
   (m.hero?.photos ?? []).forEach(add);
   add(m.pullback?.background);
+  // The self-hosted clip is credited exactly like a photograph.
+  add({ photo: m.pullback?.file, credit: m.pullback?.credit });
   (m.pairing?.photos ?? []).forEach(add);
   return out.filter((c, i, a) => a.findIndex((x) => x.photo === c.photo) === i);
 }

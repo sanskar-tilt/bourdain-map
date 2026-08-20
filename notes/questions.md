@@ -235,19 +235,7 @@ sufficient. If there's a fuller passage somewhere (dimensions, placement,
 copy), paste it and I'll reconcile; the current pill is mono "SOUND" +
 sliding knob, bottom-left of the stage, and it never shrinks with the frame.
 
-**The pull-back video you supplied cannot be embedded — a new ID is needed.**
-5ElntjskhaE ("Don't Be Afraid - Anthony Bourdain") returns YouTube error 150:
-its owner forbids playback in embedded players, on any site. Verified twice
-in a real browser (clean UA both times) against a control video that plays
-fine in the identical harness. No architecture works around this — it's the
-uploader's setting. The manifest is back to the marked gap, and the player
-now degrades any future error-150 video to a marked card instead of a black
-erroring frame.
-
-Two things while choosing a replacement: it must allow embedding (paste the
-ID and `node scripts/pullback_acceptance.mjs` will tell you), and note this
-one was also not an official upload — MANIFESTO (@bymnfsto) is a
-motivational-clips channel, which sits against your own official-uploads
-rule. The CNN Parts Unknown trailer (hF2V-5lBWoo) is verified working and
-official, if you want something in the frame today. Vertical Shorts are
-supported either way (`pullback.vertical: true`).
+**The pull-back clip: resolved — see decisions.md.** Permission from
+MANIFESTO reported and recorded; the clip ships self-hosted with credit.
+Still open here: the background room photograph, and an official-uploads
+answer if you ever want the YouTube path used again.

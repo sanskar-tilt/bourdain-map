@@ -54,7 +54,7 @@ try {
   /* ----------------------------------------- 1. blanked-videoId fixture */
   console.log("\n1. fixture — videoId blanked, the marked gap");
   const blanked = JSON.parse(real);
-  blanked.pullback = { ...blanked.pullback, videoId: "" };
+  blanked.pullback = { ...blanked.pullback, file: "", videoId: "" };
   fs.writeFileSync(MANIFEST, JSON.stringify(blanked, null, 1));
   build();
   const html = fs.readFileSync("out/index.html", "utf-8");
@@ -66,9 +66,10 @@ try {
   }
 
   /* --------------------------------------- 2. the video that ships */
-  const shippedId = JSON.parse(real).pullback?.videoId?.trim();
+  const shippedPb = JSON.parse(real).pullback ?? {};
+  const shippedId = shippedPb.file?.trim() || shippedPb.videoId?.trim();
   console.log(
-    `\n2. ${shippedId ? `shipped videoId (${shippedId})` : "fallback fixture videoId"}`
+    `\n2. ${shippedId ? `shipped video (${shippedId})` : "fallback fixture videoId"}`
   );
   if (shippedId) {
     fs.writeFileSync(MANIFEST, real);
@@ -135,12 +136,18 @@ try {
       )
     );
 
-    // The SOUND pill, both directions, asserted via isMuted().
-    const pillVisible = await p.evaluate(() => {
-      const pill = document.querySelector("[data-sound-pill]");
-      return pill && parseFloat(getComputedStyle(pill).opacity) > 0.5;
-    });
-    ok("SOUND pill is visible with the section", !!pillVisible);
+    // The SOUND pill, both directions, asserted via isMuted(). Visibility
+    // is polled — the fade-in runs --t-move and a local file reaches
+    // "playing" before it finishes.
+    const pillVisible = await until(
+      p,
+      () => {
+        const pill = document.querySelector("[data-sound-pill]");
+        return !!pill && parseFloat(getComputedStyle(pill).opacity) > 0.5;
+      },
+      10000
+    );
+    ok("SOUND pill is visible with the section", pillVisible);
     await p.click("[data-sound-pill]");
     await new Promise((r) => setTimeout(r, 600));
     ok("pill unmutes — isMuted() false", (await isMuted()) === false);
@@ -184,6 +191,7 @@ try {
     const blockedFx = JSON.parse(real);
     blockedFx.pullback = {
       ...blockedFx.pullback,
+      file: "", // the file wins over videoId — clear it so the YT path runs
       videoId: "5ElntjskhaE",
       vertical: true,
     };

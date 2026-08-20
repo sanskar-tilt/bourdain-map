@@ -28,9 +28,16 @@ type Props = {
   /** Real coordinates for the photographed place, so the pin lands where it
    *  actually is. Null means we don't know, and we say so instead of faking. */
   target: { lon: number; lat: number } | null;
-  /** The video that fills the shrinking frame. Null → children (the marked
-   *  gap) fill it instead, exactly as the photograph used to. */
-  video?: { videoId: string; start?: number; vertical?: boolean } | null;
+  /** The video that fills the shrinking frame — a self-hosted file (wins)
+   *  or a YouTube id. Null → children (the marked gap) fill it instead,
+   *  exactly as the photograph used to. */
+  video?: {
+    file?: string;
+    credit?: string;
+    videoId?: string;
+    start?: number;
+    vertical?: boolean;
+  } | null;
   /** Full-bleed photograph of the room behind the frame. It scales 1.05 → 1
    *  against the same scroll, opposite the frame, so the shrink reads as a
    *  dolly-out rather than a zoom on a flat card. */
@@ -167,8 +174,10 @@ export default function HeroPullback({ target, video, background, children }: Pr
         <div className={s.pullWorld} aria-hidden="true">
           <canvas ref={canvas} />
         </div>
-        {video?.videoId ? (
+        {video && (video.file || video.videoId) ? (
           <PullbackVideo
+            file={video.file}
+            credit={video.credit}
             videoId={video.videoId}
             start={video.start}
             vertical={video.vertical}

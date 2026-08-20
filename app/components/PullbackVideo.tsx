@@ -3,24 +3,31 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./home.module.css";
 
-/* The pull-back's content: a YouTube video where the photograph was.
+/* The pull-back's content: a video where the photograph was.
  *
- * The IFrame API rather than a bare iframe, because the whole point is mute
- * control: autoplay with sound is blocked by every browser, so the video
- * arrives muted, plays only while the section is in the viewport, pauses the
- * moment it leaves, and the SOUND pill is the one way to hear it. Muted is
- * always the default — re-asserted on every re-entry, so autoplay never
- * fires with sound no matter what the visitor did last pass.
+ * Two sources. `file` is a self-hosted clip in public/home/ — used with the
+ * creator's written permission, credited like every photograph — played by
+ * a native <video>, which gives mute control for free. `videoId` is a
+ * YouTube embed via the IFrame API — the API and not a bare iframe because
+ * mute control is the whole point. File wins when both are set.
+ *
+ * Shared behaviour, either source: autoplay with sound is blocked by every
+ * browser, so the video arrives muted, plays only while the section is in
+ * the viewport, pauses the moment it leaves, and the SOUND pill is the one
+ * way to hear it. Muted is always the default — re-asserted on every
+ * re-entry, so autoplay never fires with sound no matter what the visitor
+ * did last pass.
  *
  * Two modes, decided by the same gates as the pin (992px, reduced motion):
  *   auto   — chrome-less player scaling with the pull-back, sound pill in
  *            the stage corner. The pill does not shrink with the frame.
  *   static — no pin anywhere near this: a labelled frame with a play button,
- *            and YouTube's own controls once started. Nothing autoplays.
+ *            and player controls once started. Nothing autoplays.
  *
  * The wrapper carries data-video-state / data-video-muted for acceptance,
- * and the player is exposed as window.__whaPlayer so isMuted() itself can
- * be asserted rather than our mirror of it. */
+ * and the player is exposed as window.__whaPlayer — the YT player itself,
+ * or a same-shaped shim over the <video> — so isMuted() itself can be
+ * asserted rather than our mirror of it. */
 
 type YTPlayer = {
   playVideo(): void;
@@ -29,6 +36,8 @@ type YTPlayer = {
   unMute(): void;
   isMuted(): boolean;
   getPlayerState(): number;
+  getDuration(): number;
+  getCurrentTime(): number;
   destroy(): void;
 };
 
@@ -75,9 +84,222 @@ function loadYT(): Promise<void> {
   return ytLoading;
 }
 
-type Props = { videoId: string; start?: number; vertical?: boolean };
+type Props = {
+  file?: string;
+  credit?: string;
+  videoId?: string;
+  start?: number;
+  vertical?: boolean;
+};
 
-export default function PullbackVideo({ videoId, start, vertical }: Props) {
+export default function PullbackVideo({ file, credit, videoId, start, vertical }: Props) {
+  if (file) {
+    return <LocalPullback file={file} credit={credit} start={start} vertical={vertical} />;
+  }
+  if (!videoId) return null; // the page renders the marked gap instead
+  return <YouTubePullback videoId={videoId} start={start} vertical={vertical} />;
+}
+
+/* Both sources share the mode gate: mirrors HeroPullback's pin exactly. */
+function usePinGate(): boolean {
+  const [auto, setAuto] = useState(false);
+  useEffect(() => {
+    const gate = window.matchMedia("(min-width: 992px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setAuto(gate.matches && !reduced.matches);
+    sync();
+    gate.addEventListener("change", sync);
+    reduced.addEventListener("change", sync);
+    return () => {
+      gate.removeEventListener("change", sync);
+      reduced.removeEventListener("change", sync);
+    };
+  }, []);
+  return auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* The self-hosted clip. A native <video>: mute is a property, autoplay
+   muted is allowed everywhere, and there is no third party to time out
+   on — "blocked" only means the file itself failed to load. */
+function LocalPullback({
+  file,
+  credit,
+  start,
+  vertical,
+}: {
+  file: string;
+  credit?: string;
+  start?: number;
+  vertical?: boolean;
+}) {
+  const auto = usePinGate();
+  const [started, setStarted] = useState(false); // static mode, after click
+  const [state, setState] = useState<
+    "none" | "ready" | "playing" | "paused" | "blocked"
+  >("none");
+  const [muted, setMuted] = useState(true);
+  const [live, setLive] = useState(false);
+  const vid = useRef<HTMLVideoElement>(null);
+  const layer = useRef<HTMLDivElement>(null);
+  const src = `/home/${file}`;
+
+  useEffect(() => {
+    if (!auto) return;
+    const el = vid.current;
+    const box = layer.current;
+    if (!el || !box) return;
+
+    // The same handle the YouTube path exposes, so acceptance asserts one
+    // interface — isMuted() reads the element, not our mirror of it.
+    window.__whaPlayer = {
+      playVideo: () => void el.play().catch(() => setState("blocked")),
+      pauseVideo: () => el.pause(),
+      mute: () => { el.muted = true; },
+      unMute: () => { el.muted = false; },
+      isMuted: () => el.muted,
+      getPlayerState: () => (el.ended ? 0 : el.paused ? 2 : 1),
+      getDuration: () => el.duration || 0,
+      getCurrentTime: () => el.currentTime || 0,
+      destroy: () => {},
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const on = entries.some((e) => e.isIntersecting);
+        setLive(on);
+        if (on) {
+          // Muted is the default on every arrival, not just the first.
+          el.muted = true;
+          setMuted(true);
+          if (el.ended) el.currentTime = start ?? 0;
+          void el.play().catch(() => setState("blocked"));
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(box);
+    return () => {
+      io.disconnect();
+      el.pause();
+      delete window.__whaPlayer;
+    };
+    // file/start are baked at build time; auto is the only live input.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto]);
+
+  const toggle = () => {
+    const el = vid.current;
+    if (!el) return;
+    el.muted = !el.muted;
+    setMuted(el.muted);
+  };
+
+  const creditLine = credit?.trim() || "credit required — set it in content/home.json";
+
+  const videoEl = (controls: boolean) => (
+    <video
+      ref={vid}
+      src={src}
+      muted
+      playsInline
+      controls={controls}
+      preload="metadata"
+      onLoadedMetadata={() => {
+        if (start && vid.current) vid.current.currentTime = start;
+        setState((st) => (st === "none" ? "ready" : st));
+      }}
+      onPlaying={() => setState("playing")}
+      onPause={() => setState("paused")}
+      onEnded={() => setState("paused")}
+      onError={() => setState("blocked")}
+      className={
+        controls
+          ? `${s.videoBox} ${vertical ? s.videoBoxVertical : ""}`
+          : undefined
+      }
+    />
+  );
+
+  const missingCard = (
+    <div className={s.videoBlocked} data-video-blocked>
+      <span className={s.videoBlockedTag}>Video file missing</span>
+      <span className={s.videoBlockedNote}>
+        <code>public/home/{file}</code> didn&rsquo;t load — is it there?
+      </span>
+    </div>
+  );
+
+  if (!auto) {
+    return (
+      <div className={s.videoStatic} data-video-static>
+        <p className="label">watch</p>
+        {state === "blocked" ? (
+          missingCard
+        ) : started ? (
+          videoEl(true)
+        ) : (
+          <button
+            type="button"
+            className={`${s.videoPlay} ${vertical ? s.videoBoxVertical : ""}`}
+            onClick={() => setStarted(true)}
+            data-video-play
+          >
+            <span className={s.playTri} aria-hidden="true" />
+            <span className="label">play</span>
+          </button>
+        )}
+        <p className={s.videoCreditLine}>{creditLine}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={layer}
+      className={s.videoLayer}
+      data-video-state={state}
+      data-video-muted={muted ? "true" : "false"}
+      // On screen → pill. Not "once playing": the reference keeps it there
+      // the whole time the video is, and only a blocked frame drops it.
+      data-live={live && state !== "blocked" ? "true" : "false"}
+    >
+      <div className={s.videoScaled}>
+        <div className={`${s.videoCover} ${vertical ? s.videoCoverVertical : ""}`}>
+          {videoEl(false)}
+        </div>
+        {state === "blocked" && missingCard}
+      </div>
+      <span className={s.roomCredit}>{creditLine}</span>
+      <button
+        type="button"
+        className={s.soundPill}
+        data-sound-pill
+        data-on={muted ? "false" : "true"}
+        aria-pressed={!muted}
+        onClick={toggle}
+      >
+        <span className={s.pillWord}>sound</span>
+        <span className={s.pillTrack} aria-hidden="true">
+          <span className={s.pillKnob} />
+        </span>
+      </button>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+function YouTubePullback({
+  videoId,
+  start,
+  vertical,
+}: {
+  videoId: string;
+  start?: number;
+  vertical?: boolean;
+}) {
   // SSR renders the static frame; the effect below promotes to auto where
   // the pin is real. Same shape as the pin's own data-pinned flip.
   const [auto, setAuto] = useState(false);
@@ -166,14 +388,19 @@ export default function PullbackVideo({ videoId, start, vertical }: Props) {
             setState("playing");
           } else if (e.data === YT.PlayerState.PAUSED) {
             clearTimeout(deadline.current);
-            setState("paused");
+            // A trailing PAUSED after the instant ENDED of a restricted
+            // video must not overwrite the blocked verdict (observed).
+            if (!blocked.current) setState("paused");
           } else if (e.data === YT.PlayerState.ENDED) {
             clearTimeout(deadline.current);
-            // A restricted video "ends" instantly without ever playing —
-            // observed as the only signal in-page for error-150 videos
-            // (their onError does not arrive here). Ended-before-played
-            // is blocked; ended-after-played is just finished.
-            if (everPlayed.current) {
+            // A restricted (error-150) video "ends" instantly in-page: the
+            // API can emit a momentary PLAYING, no onError, and even a real
+            // duration (metadata survives the refusal — observed). The tell
+            // that remains is the clock: a genuine finish ends at its
+            // duration, a refusal ends at ~zero.
+            const dur = p.getDuration?.() ?? 0;
+            const ct = p.getCurrentTime?.() ?? 0;
+            if (everPlayed.current && dur > 0 && ct > 1) {
               setState("paused");
             } else {
               blocked.current = true;
@@ -311,7 +538,7 @@ export default function PullbackVideo({ videoId, start, vertical }: Props) {
       className={s.videoLayer}
       data-video-state={state}
       data-video-muted={muted ? "true" : "false"}
-      data-live={live && state !== "none" && state !== "blocked" ? "true" : "false"}
+      data-live={live && state !== "blocked" ? "true" : "false"}
     >
       <div className={s.videoScaled}>
         {/* The cover stays mounted even when blocked — YT owns its iframe

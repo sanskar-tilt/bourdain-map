@@ -111,15 +111,22 @@ export default function Home() {
   const target = heroPlace ? { lon: heroPlace.lon, lat: heroPlace.lat } : null;
   const pairQuote = pick((m.pairing?.quotes ?? []).filter(Boolean));
 
-  // The pull-back's frame and room. Empty videoId → the marked gap; a photo
-  // without a credit still ships but says so loudly, here and in the build.
-  const pullbackVideo = m.pullback?.videoId?.trim()
-    ? {
-        videoId: m.pullback.videoId.trim(),
-        start: m.pullback.start,
-        vertical: m.pullback.vertical,
-      }
-    : null;
+  // The pull-back's frame and room. A self-hosted file wins over a YouTube
+  // id; neither → the marked gap. Anything without a credit still ships but
+  // says so loudly, here and in the build.
+  const pullbackVideo =
+    m.pullback?.file?.trim() || m.pullback?.videoId?.trim()
+      ? {
+          file: m.pullback?.file?.trim() || undefined,
+          credit: m.pullback?.credit,
+          videoId: m.pullback?.videoId?.trim() || undefined,
+          start: m.pullback?.start,
+          vertical: m.pullback?.vertical,
+        }
+      : null;
+  if (pullbackVideo?.file && !pullbackVideo.credit?.trim()) {
+    console.warn("[home] pullback.file has no credit — set it in content/home.json");
+  }
   const room = m.pullback?.background;
   const roomMeta = room?.photo ? photos[room.photo] : undefined;
   if (room?.photo && !room.credit?.trim()) {
