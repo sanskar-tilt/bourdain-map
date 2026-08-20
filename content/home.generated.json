@@ -9,5 +9,16 @@
     "src": "/home/opt/bourdain-portrait-800.webp"
    }
   ]
+ },
+ "pullback-kitchen.jpg": {
+  "width": 890,
+  "height": 596,
+  "ratio": 1.4933,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/pullback-kitchen-800.webp"
+   }
+  ]
  }
 }
