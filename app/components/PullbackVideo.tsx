@@ -28,6 +28,7 @@ type YTPlayer = {
   mute(): void;
   unMute(): void;
   isMuted(): boolean;
+  getPlayerState(): number;
   destroy(): void;
 };
 
@@ -40,6 +41,7 @@ type YTNamespace = {
       events?: {
         onReady?: () => void;
         onStateChange?: (e: { data: number }) => void;
+        onError?: (e: { data: number }) => void;
       };
     }
   ) => YTPlayer;
@@ -73,14 +75,16 @@ function loadYT(): Promise<void> {
   return ytLoading;
 }
 
-type Props = { videoId: string; start?: number };
+type Props = { videoId: string; start?: number; vertical?: boolean };
 
-export default function PullbackVideo({ videoId, start }: Props) {
+export default function PullbackVideo({ videoId, start, vertical }: Props) {
   // SSR renders the static frame; the effect below promotes to auto where
   // the pin is real. Same shape as the pin's own data-pinned flip.
   const [auto, setAuto] = useState(false);
   const [started, setStarted] = useState(false); // static mode, after click
-  const [state, setState] = useState<"none" | "ready" | "playing" | "paused">("none");
+  const [state, setState] = useState<
+    "none" | "ready" | "playing" | "paused" | "blocked"
+  >("none");
   const [muted, setMuted] = useState(true);
   const [live, setLive] = useState(false); // section in view, pill showable
 
@@ -88,6 +92,33 @@ export default function PullbackVideo({ videoId, start }: Props) {
   const layer = useRef<HTMLDivElement>(null);
   const player = useRef<YTPlayer | null>(null);
   const inView = useRef(false);
+  const blocked = useRef(false);
+  const everPlayed = useRef(false);
+  const deadline = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  /* Belt and braces around a flaky event: a video whose owner forbids
+     embedding errors with code 150 — but the IFrame API does not reliably
+     deliver onError in every context (verified: same video, same vars, the
+     event arrives in an isolated harness and not in the full page). So every
+     playVideo() we issue also arms a deadline: still not playing, paused or
+     buffering after 12s → blocked. A late PLAYING un-blocks. */
+  const graces = useRef(0);
+  const armDeadline = () => {
+    clearTimeout(deadline.current);
+    deadline.current = setTimeout(() => {
+      const st = player.current?.getPlayerState?.();
+      if (st === 1 || st === 2) return; // playing / paused — alive
+      // "Buffering" gets one grace period, not infinite ones — a blocked
+      // video can sit in buffering forever in some contexts.
+      if (st === 3 && graces.current < 1) {
+        graces.current += 1;
+        armDeadline();
+        return;
+      }
+      blocked.current = true;
+      setState("blocked");
+    }, 12000);
+  };
 
   /* Mode: mirrors HeroPullback's gate exactly. */
   useEffect(() => {
@@ -121,12 +152,42 @@ export default function PullbackVideo({ videoId, start }: Props) {
           p.mute();
           setMuted(true);
           setState("ready");
-          if (controls === 0 && inView.current) p.playVideo();
+          if (controls === 0 && inView.current) {
+            p.playVideo();
+            armDeadline();
+          }
         },
         onStateChange: (e) => {
-          if (e.data === YT.PlayerState.PLAYING) setState("playing");
-          else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED)
+          if (e.data === YT.PlayerState.PLAYING) {
+            clearTimeout(deadline.current);
+            blocked.current = false; // a late start beats a wrong verdict
+            graces.current = 0;
+            everPlayed.current = true;
+            setState("playing");
+          } else if (e.data === YT.PlayerState.PAUSED) {
+            clearTimeout(deadline.current);
             setState("paused");
+          } else if (e.data === YT.PlayerState.ENDED) {
+            clearTimeout(deadline.current);
+            // A restricted video "ends" instantly without ever playing —
+            // observed as the only signal in-page for error-150 videos
+            // (their onError does not arrive here). Ended-before-played
+            // is blocked; ended-after-played is just finished.
+            if (everPlayed.current) {
+              setState("paused");
+            } else {
+              blocked.current = true;
+              setState("blocked");
+            }
+          }
+        },
+        // 101/150: the owner forbids embedded playback (usual on fan edits
+        // with claimed music). 100: gone or private. Either way the frame
+        // degrades to a marked card, never a black erroring player.
+        onError: () => {
+          clearTimeout(deadline.current);
+          blocked.current = true;
+          setState("blocked");
         },
       },
     });
@@ -153,13 +214,15 @@ export default function PullbackVideo({ videoId, start }: Props) {
         inView.current = on;
         setLive(on);
         const p = player.current;
-        if (!p) return;
+        if (!p || blocked.current) return;
         if (on) {
           // Muted is the default on every arrival, not just the first.
           p.mute();
           setMuted(true);
           p.playVideo();
+          armDeadline();
         } else {
+          clearTimeout(deadline.current);
           p.pauseVideo();
         }
       },
@@ -170,6 +233,7 @@ export default function PullbackVideo({ videoId, start }: Props) {
     return () => {
       cancelled = true;
       io.disconnect();
+      clearTimeout(deadline.current);
       player.current?.destroy();
       player.current = null;
       delete window.__whaPlayer;
@@ -199,16 +263,35 @@ export default function PullbackVideo({ videoId, start }: Props) {
     });
   };
 
+  const blockedCard = (
+    <div className={s.videoBlocked} data-video-blocked>
+      <span className={s.videoBlockedTag}>This clip won&rsquo;t embed</span>
+      <span className={s.videoBlockedNote}>
+        Its owner doesn&rsquo;t allow playback outside YouTube.{" "}
+        <a href={`https://www.youtube.com/watch?v=${videoId}`} rel="noopener" target="_blank">
+          Watch it there
+        </a>
+      </span>
+    </div>
+  );
+
   if (!auto) {
     return (
       <div className={s.videoStatic} data-video-static>
         <p className="label">watch</p>
-        {started ? (
-          <div className={s.videoBox}>
+        {state === "blocked" ? (
+          blockedCard
+        ) : started ? (
+          <div className={`${s.videoBox} ${vertical ? s.videoBoxVertical : ""}`}>
             <div ref={host} />
           </div>
         ) : (
-          <button type="button" className={s.videoPlay} onClick={play} data-video-play>
+          <button
+            type="button"
+            className={`${s.videoPlay} ${vertical ? s.videoBoxVertical : ""}`}
+            onClick={play}
+            data-video-play
+          >
             <span className={s.playTri} aria-hidden="true" />
             <span className="label">play</span>
           </button>
@@ -228,12 +311,15 @@ export default function PullbackVideo({ videoId, start }: Props) {
       className={s.videoLayer}
       data-video-state={state}
       data-video-muted={muted ? "true" : "false"}
-      data-live={live && state !== "none" ? "true" : "false"}
+      data-live={live && state !== "none" && state !== "blocked" ? "true" : "false"}
     >
       <div className={s.videoScaled}>
-        <div className={s.videoCover}>
+        {/* The cover stays mounted even when blocked — YT owns its iframe
+            and unmounting mid-error risks a race; CSS hides it instead. */}
+        <div className={`${s.videoCover} ${vertical ? s.videoCoverVertical : ""}`}>
           <div ref={host} />
         </div>
+        {state === "blocked" && blockedCard}
       </div>
       <button
         type="button"

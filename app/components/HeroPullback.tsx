@@ -30,7 +30,7 @@ type Props = {
   target: { lon: number; lat: number } | null;
   /** The video that fills the shrinking frame. Null → children (the marked
    *  gap) fill it instead, exactly as the photograph used to. */
-  video?: { videoId: string; start?: number } | null;
+  video?: { videoId: string; start?: number; vertical?: boolean } | null;
   /** Full-bleed photograph of the room behind the frame. It scales 1.05 → 1
    *  against the same scroll, opposite the frame, so the shrink reads as a
    *  dolly-out rather than a zoom on a flat card. */
@@ -168,7 +168,11 @@ export default function HeroPullback({ target, video, background, children }: Pr
           <canvas ref={canvas} />
         </div>
         {video?.videoId ? (
-          <PullbackVideo videoId={video.videoId} start={video.start} />
+          <PullbackVideo
+            videoId={video.videoId}
+            start={video.start}
+            vertical={video.vertical}
+          />
         ) : (
           <div className={s.pullPhoto}>{children}</div>
         )}

@@ -1,15 +1,16 @@
 /**
  * Acceptance for the pull-back's video. Two builds:
  *
- *   1. the real manifest (videoId empty) — builds, frame is the marked gap
- *   2. a fixture with a known official upload (CNN's Parts Unknown trailer,
- *      hF2V-5lBWoo, verified via YouTube oEmbed) — never shipped:
+ *   1. a fixture with videoId blanked — builds, frame is the marked gap
+ *   2. the real manifest, whatever video it ships:
  *        - mid-pin: playing AND muted, muted asserted via the player's own
  *          isMuted(), not our mirror of it
  *        - SOUND pill toggles unMute/mute, isMuted() asserted both ways
  *        - scrolled past the section: paused
  *        - reduced motion: no autoplay, no player — a static labelled frame
  *          with a play button
+ *      (If the manifest ships no video, this phase falls back to the CNN
+ *      Parts Unknown trailer, hF2V-5lBWoo, official and oEmbed-verified.)
  *
  * The real manifest is restored and rebuilt at the end, whatever happens.
  * Run from the repo root:  node scripts/pullback_acceptance.mjs
@@ -50,22 +51,32 @@ let server;
 try {
   process.on("uncaughtExceptionMonitor", () => fs.writeFileSync(MANIFEST, real));
 
-  /* -------------------------------------------- 1. empty videoId (real) */
-  console.log("\n1. real manifest — videoId empty");
+  /* ----------------------------------------- 1. blanked-videoId fixture */
+  console.log("\n1. fixture — videoId blanked, the marked gap");
+  const blanked = JSON.parse(real);
+  blanked.pullback = { ...blanked.pullback, videoId: "" };
+  fs.writeFileSync(MANIFEST, JSON.stringify(blanked, null, 1));
   build();
   const html = fs.readFileSync("out/index.html", "utf-8");
   ok("builds with an empty videoId", true);
   ok("frame is the marked gap", html.includes("pullback.videoId"));
-  ok(
-    "background gap is marked too",
-    html.includes("pullback.background")
-  );
+  const bgEmpty = !JSON.parse(real).pullback?.background?.photo;
+  if (bgEmpty) {
+    ok("background gap is marked too", html.includes("pullback.background"));
+  }
 
-  /* ------------------------------------------------------- 2. fixture */
-  console.log("\n2. fixture videoId (official upload, test-only)");
-  const fixture = JSON.parse(real);
-  fixture.pullback = { ...fixture.pullback, videoId: TEST_VIDEO, start: 0 };
-  fs.writeFileSync(MANIFEST, JSON.stringify(fixture, null, 1));
+  /* --------------------------------------- 2. the video that ships */
+  const shippedId = JSON.parse(real).pullback?.videoId?.trim();
+  console.log(
+    `\n2. ${shippedId ? `shipped videoId (${shippedId})` : "fallback fixture videoId"}`
+  );
+  if (shippedId) {
+    fs.writeFileSync(MANIFEST, real);
+  } else {
+    const fixture = JSON.parse(real);
+    fixture.pullback = { ...fixture.pullback, videoId: TEST_VIDEO, start: 0 };
+    fs.writeFileSync(MANIFEST, JSON.stringify(fixture, null, 1));
+  }
   build();
 
   server = spawn("python3", ["scripts/gzserve.py"], { stdio: "ignore" });
@@ -165,6 +176,69 @@ try {
     await p.close();
   }
 
+  /* ---- a video whose owner forbids embedding degrades, never errors ----
+     5ElntjskhaE is a known error-150 Short (fan edit, claimed music) —
+     exactly the class of video the manifest warns about. */
+  {
+    console.log("\n2b. blocked-video fixture (error 150 degrade)");
+    const blockedFx = JSON.parse(real);
+    blockedFx.pullback = {
+      ...blockedFx.pullback,
+      videoId: "5ElntjskhaE",
+      vertical: true,
+    };
+    fs.writeFileSync(MANIFEST, JSON.stringify(blockedFx, null, 1));
+    build();
+
+    const p = await browser.newPage();
+    await p.setViewport({ width: 1440, height: 900 });
+    await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle2" });
+    await p.evaluate(() => {
+      const el = document.querySelector("[data-pin]");
+      const r = el.getBoundingClientRect();
+      const y = r.top + window.scrollY + (r.height - window.innerHeight) * 0.5;
+      const l = window.__lenis;
+      if (l) l.scrollTo(y, { immediate: true, force: true });
+      else window.scrollTo(0, y);
+    });
+    // The deadline is 12s with one buffering grace — up to ~24s to a verdict.
+    const degraded = await until(
+      p,
+      () => document.querySelector("[data-video-state]")?.dataset.videoState === "blocked",
+      40000
+    );
+    ok(
+      "blocked video reaches the blocked state",
+      degraded,
+      degraded
+        ? ""
+        : `stuck at ${await p.evaluate(() => ({
+            ds: document.querySelector("[data-video-state]")?.dataset.videoState,
+            yt: window.__whaPlayer?.getPlayerState?.(),
+          })).then(JSON.stringify)}`
+    );
+    // the pill fades out over --t-move once blocked; let it finish
+    await new Promise((r) => setTimeout(r, 1500));
+    const card = await p.evaluate(() => ({
+      card: !!document.querySelector("[data-video-blocked]"),
+      coverHidden: (() => {
+        const iframe = [...document.querySelectorAll("iframe")].find((f) =>
+          f.src.includes("youtube")
+        );
+        return !iframe || iframe.getBoundingClientRect().width === 0;
+      })(),
+      pillOpacity: (() => {
+        const pill = document.querySelector("[data-sound-pill]");
+        return pill ? parseFloat(getComputedStyle(pill).opacity) : 0;
+      })(),
+    }));
+    ok("marked card renders, erroring player hidden", card.card && card.coverHidden,
+      JSON.stringify(card));
+    ok("SOUND pill stays hidden on a blocked video", card.pillOpacity < 0.05,
+      `opacity ${card.pillOpacity}`);
+    await p.close();
+  }
+
   /* ---- reduced motion: static frame, no autoplay, no player ---- */
   {
     const p = await browser.newPage();
@@ -199,9 +273,14 @@ try {
   console.log("\n3. real manifest restored");
   fs.writeFileSync(MANIFEST, real);
   build();
+  const shipped = fs.readFileSync("out/index.html", "utf-8");
   ok(
-    "shipped homepage carries the marked gap",
-    fs.readFileSync("out/index.html", "utf-8").includes("pullback.videoId")
+    shippedId
+      ? "shipped homepage carries the video frame"
+      : "shipped homepage carries the marked gap",
+    shippedId
+      ? shipped.includes("data-video-static")
+      : shipped.includes("pullback.videoId")
   );
 } finally {
   fs.writeFileSync(MANIFEST, real);

@@ -22,6 +22,9 @@ export type HomeManifest = {
   pullback?: {
     videoId?: string;
     start?: number;
+    /** True for Shorts and other 9:16 video — the frame becomes a
+     *  full-height vertical panel instead of a 16:9 cover crop. */
+    vertical?: boolean;
     background?: HomePhoto;
   };
   pairing?: { photos?: HomePhoto[]; quotes?: string[] };

@@ -345,6 +345,15 @@
   aspect-ratio: 16 / 9;
   background: var(--raised);
 }
+/* Vertical clips (Shorts): a 16:9 cover would pillarbox them in black bars
+   or crop to a middle slice. Instead the frame is a full-height 9:16 panel,
+   centred, the room photograph showing either side — a phone clip standing
+   in the room, which is what it is. */
+.videoCoverVertical {
+  width: auto;
+  height: 100%;
+  aspect-ratio: 9 / 16;
+}
 .videoCover iframe {
   width: 100%;
   height: 100%;
@@ -355,6 +364,47 @@
   pointer-events: none;
 }
 .videoGapFill { width: 100%; height: 100%; }
+
+/* A video whose owner forbids embedded playback (YT error 150) degrades to
+   a marked card, never a black erroring player. Same family as the gaps. */
+.videoLayer[data-video-state="blocked"] .videoCover { display: none; }
+.videoBlocked {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  max-width: 420px;
+  width: calc(100% - 2 * var(--s5));
+  border: 1px dashed var(--edge-strong);
+  border-radius: 2px;
+  background: var(--raised);
+  padding: var(--s4);
+  pointer-events: auto;
+}
+.videoStatic .videoBlocked {
+  position: static;
+  transform: none;
+  margin: 0 auto;
+}
+.videoBlockedTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.videoBlockedNote {
+  font-size: var(--step-0);
+  line-height: var(--lh-body);
+  color: var(--ink-dim);
+}
+.videoBlockedNote a {
+  color: var(--ink-dim);
+  text-underline-offset: 3px;
+}
 
 /* The SOUND pill. Muted is always the default — browsers block autoplay
    with sound, which is why this toggle exists at all. The knob slide is
@@ -419,6 +469,12 @@
   margin: 0 auto;
 }
 .videoBox { aspect-ratio: 16 / 9; width: 100%; background: var(--raised); }
+.videoBoxVertical {
+  aspect-ratio: 9 / 16;
+  width: auto;
+  height: 70vh;
+  margin: 0 auto;
+}
 .videoBox iframe { width: 100%; height: 100%; display: block; border: 0; }
 .videoPlay {
   aspect-ratio: 16 / 9;

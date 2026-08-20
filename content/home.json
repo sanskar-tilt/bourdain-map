@@ -23,6 +23,11 @@
   "OFFICIAL UPLOADS ONLY, same rule as cities.video_url. It autoplays muted",
   "while the section is on screen and pauses off it; the SOUND pill is the",
   "only way to hear it. pullback.start is optional seconds to skip in.",
+  "pullback.vertical: true for Shorts/9:16 clips — a full-height vertical",
+  "frame instead of a 16:9 cover crop.",
+  "NOTE: the video must allow embedding — many fan edits don't (YouTube",
+  "error 150, usually music claims). The player degrades to a marked card",
+  "if so, and scripts/pullback_acceptance.mjs will fail on it loudly.",
   "pullback.background is the full-bleed photograph of the room behind the",
   "shrinking frame — same pipeline as every other photo (file in",
   "public/home/, credit REQUIRED). Both render as marked gaps until set."
@@ -57,6 +62,7 @@
  "pullback": {
   "videoId": "",
   "start": 0,
+  "vertical": false,
   "background": {
    "photo": "",
    "alt": "",

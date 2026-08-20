@@ -345,3 +345,52 @@ mid-pin asserted via the player's own `isMuted()`, pill toggles both ways,
 paused past the pin, re-muted on return, reduced motion loads nothing. The
 fixture video (CNN's Parts Unknown trailer, verified official via oEmbed)
 exists only inside the test run; the shipped manifest keeps the marked gap.
+
+## The supplied video refuses to embed; the player learns to say so (user request)
+
+The requested pull-back video (5ElntjskhaE, a vertical Short) returns
+YouTube error 150 — its owner forbids playback in embedded players, on any
+site. Proven in isolation against a control video that plays in the same
+harness, twice, clean UA both times. Not our code, not fixable by
+architecture. The manifest is back to the marked gap and the choice is back
+with the owner, evidence in questions.md (it was also a fan-edit channel,
+against the official-uploads rule).
+
+What the attempt bought anyway: `pullback.vertical` for Shorts — a
+full-height 9:16 frame over the room instead of a 16:9 cover that would
+pillarbox or slice them — and an onError degrade: any video that errors
+(150s most commonly arrive later, when music gets claimed) becomes a marked
+"this clip won't embed" card with the YouTube link, never a black erroring
+player, pill hidden. Acceptance grew a blocked-video phase pinned to the
+exact Short that taught us, and the phase-3 assertion now reads a rendered
+marker rather than the RSC payload (unused gap JSX used to leak
+"pullback.videoId" into the flight data — children are no longer passed
+when a video ships).
+
+Also, by request: the /reels colophon paragraph ("this site hosts nothing")
+is removed, with its acceptance assertion flipped to keep it removed.
+
+## Reels lose their labels; TikTok loses its chrome (user request)
+
+The "( instagram )/( tiktok )" mono labels are gone from /reels. TikTok
+moves from the blockquote + embed.js card (caption, like counts, comment
+row) to the official Embed Player — player/v1, a plain iframe, description
+and music rows switched off. What remains inside (creator name, TikTok
+mark, and a cookie banner for first-time visitors) is their player chrome
+and not removable from outside. No script needed any more for TikTok; the
+iframe src loads lazily exactly as before, and a dead video still shows
+their compact card in our frame.
+
+Instagram is the honest no: there is no chromeless Instagram embed. The
+header, like/comment row and caption live inside their iframe, no official
+option removes them, and cropping their player is both against their terms
+and brittle. What ships is already their minimal form.
+
+**Known-red at commit time, by instruction:** the blocked-video degrade
+phase of `scripts/pullback_acceptance.mjs` (3 assertions). In the full page
+YouTube emits a momentary PLAYING before instantly ENDING a restricted
+video, which defeats the ended-before-ever-playing rule. The likely fix is
+one line — on ENDED, `getDuration() === 0` means blocked — unverified,
+because verification now happens once per batch, not mid-flight. Committed
+with the owner's knowledge. Everything else in both suites was green on
+their last runs.

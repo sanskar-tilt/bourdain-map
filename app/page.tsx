@@ -114,7 +114,11 @@ export default function Home() {
   // The pull-back's frame and room. Empty videoId → the marked gap; a photo
   // without a credit still ships but says so loudly, here and in the build.
   const pullbackVideo = m.pullback?.videoId?.trim()
-    ? { videoId: m.pullback.videoId.trim(), start: m.pullback.start }
+    ? {
+        videoId: m.pullback.videoId.trim(),
+        start: m.pullback.start,
+        vertical: m.pullback.vertical,
+      }
     : null;
   const room = m.pullback?.background;
   const roomMeta = room?.photo ? photos[room.photo] : undefined;
@@ -173,12 +177,16 @@ export default function Home() {
           )
         }
       >
-        <div className={`${s.gap} ${s.videoGapFill}`}>
-          <span>
-            video — content/home.json → pullback.videoId. Official uploads
-            only.
-          </span>
-        </div>
+        {/* Children are the no-video gap. Not passed when a video ships —
+            unused JSX still serializes into the page payload otherwise. */}
+        {pullbackVideo ? null : (
+          <div className={`${s.gap} ${s.videoGapFill}`}>
+            <span>
+              video — content/home.json → pullback.videoId. Official uploads
+              only.
+            </span>
+          </div>
+        )}
       </HeroPullback>
 
       {/* ------------------------------------------------ the counter */}

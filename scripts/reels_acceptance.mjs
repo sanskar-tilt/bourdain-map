@@ -151,8 +151,8 @@ try {
     els.map((el) => el.src)
   );
   ok(
-    "both TikTok embeds hydrate to iframes",
-    ttFrames.filter((s) => /tiktok\.com\/embed/.test(s)).length === 2,
+    "both TikTok players hydrate to iframes",
+    ttFrames.filter((s) => /tiktok\.com\/player\/v1/.test(s)).length === 2,
     ttFrames.join(" | ")
   );
 
@@ -160,7 +160,7 @@ try {
   // but to TikTok's "unavailable" card — that would mean a bad manifest entry.
   let ttPlayable = 0;
   for (const f of page.frames()) {
-    if (!/tiktok\.com\/embed/.test(f.url())) continue;
+    if (!/tiktok\.com\/player\/v1/.test(f.url())) continue;
     const text = await f
       .evaluate(() => document.body?.innerText ?? "")
       .catch(() => "");
@@ -194,7 +194,13 @@ try {
   build();
   const html = fs.readFileSync("out/reels/index.html", "utf-8");
   ok("3-count label", html.includes("3 reels"));
-  ok("colophon present", html.includes("This site hosts nothing"));
+  // The colophon paragraph was removed at the owner's request (2026-08-20).
+  // Assert on the paragraph's own words — the page <meta> description also
+  // happens to say "hosts nothing" and is not what was removed.
+  ok(
+    "colophon paragraph stays removed",
+    !html.includes("no video is downloaded, copied or rehosted")
+  );
   ok("nav has Reels", fs.readFileSync("out/index.html", "utf-8").includes("/reels/"));
 } finally {
   fs.writeFileSync(MANIFEST, real);

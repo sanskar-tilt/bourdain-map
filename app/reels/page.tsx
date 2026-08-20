@@ -36,14 +36,6 @@ export default function Reels() {
         </div>
       )}
 
-      <footer className={styles.colophon}>
-        <p>
-          Every clip here belongs to whoever made it and plays through
-          Instagram and TikTok&rsquo;s own embeds. This site hosts nothing —
-          no video is downloaded, copied or rehosted, and a clip pulled from
-          its platform disappears from here too.
-        </p>
-      </footer>
     </article>
   );
 }
