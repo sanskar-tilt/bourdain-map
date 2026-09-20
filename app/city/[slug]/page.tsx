@@ -1,5 +1,5 @@
 import { allCities, cityBySlug, SHOW_NAMES } from "../../../lib/detail";
-import { cityQuote, cityClip } from "../../../lib/cityQuotes";
+import { cityQuoteBest, cityClipBest, clipFitsEpisode } from "../../../lib/cityQuotes";
 import { youtubeId, youtubeThumb, youtubeWatch } from "../../../lib/youtube";
 import styles from "./city.module.css";
 import Link from "next/link";
@@ -56,10 +56,14 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
   const gone = city.places.filter((p) => p.status === "closed").length;
   const episodes = city.episodes.filter((e) => e.match === "exact");
   const looser = city.episodes.filter((e) => e.match !== "exact");
-  const quote = cityQuote(city.slug);
-  const clip = cityClip(city.slug);
+  const quote = cityQuoteBest(city.slug);
+  const clip = cityClipBest(city.slug);
   const yt = clip?.id ?? youtubeId(city.videoUrl);
   const ytTitle = clip?.title ?? city.videoTitle ?? "Official clip";
+  const listed = episodes.length > 0 ? episodes : looser;
+  const epClipId = (title: string) =>
+    clip && clipFitsEpisode(title, clip) ? clip.id : null;
+  const clipOnEpisode = listed.some((e) => epClipId(e.title));
 
   return (
     <article className={styles.city}>
@@ -78,26 +82,60 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </section>
       )}
 
-      {episodes.length > 0 && (
+      {(episodes.length > 0 || looser.length > 0) && (
         <section className={styles.section}>
-          <h2 className={styles.h2}>He filmed here</h2>
+          <h2 className={styles.h2}>
+            {episodes.length > 0 ? "He filmed here" : "Episodes that may cover this"}
+          </h2>
           <ul className={styles.eps}>
-            {episodes.map((e, i) => (
-              <li key={i}>
-                <span className={styles.epShow}>{SHOW_NAMES[e.show] ?? e.show}</span>
-                <span className={styles.epNum}>
-                  {e.season != null && `S${e.season}`}
-                  {e.episode != null && `E${e.episode}`}
-                </span>
-                <span className={styles.epTitle}>{e.title}</span>
-                {e.airDate && <span className={styles.epDate}>{e.airDate}</span>}
-              </li>
-            ))}
+            {listed.map((e, i) => {
+              const id = epClipId(e.title);
+              const meta = (
+                <>
+                  <span className={styles.epShow}>{SHOW_NAMES[e.show] ?? e.show}</span>
+                  <span className={styles.epNum}>
+                    {e.season != null && `S${e.season}`}
+                    {e.episode != null && `E${e.episode}`}
+                  </span>
+                  <span className={styles.epTitle}>{e.title}</span>
+                  {e.airDate && <span className={styles.epDate}>{e.airDate}</span>}
+                </>
+              );
+              return (
+                <li key={i}>
+                  {id ? (
+                    <a
+                      className={styles.epCard}
+                      href={youtubeWatch(id)}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <img
+                        className={styles.ytThumb}
+                        src={youtubeThumb(id)}
+                        alt=""
+                        width={480}
+                        height={360}
+                      />
+                      <span className={styles.epMeta}>{meta}</span>
+                    </a>
+                  ) : (
+                    <div className={styles.epMeta}>{meta}</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
+          {episodes.length === 0 && (
+            <p className={styles.empty}>
+              Matched on country or region rather than by name, so this is
+              not stated as fact.
+            </p>
+          )}
         </section>
       )}
 
-      {yt ? (
+      {!clipOnEpisode && yt ? (
         <section className={styles.section}>
           <h2 className={styles.h2}>Watch</h2>
           <a
@@ -121,7 +159,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             </span>
           </a>
         </section>
-      ) : city.videoUrl ? (
+      ) : !clipOnEpisode && city.videoUrl ? (
         <section className={styles.section}>
           <h2 className={styles.h2}>Watch</h2>
           <a className={styles.video} href={city.videoUrl} rel="noreferrer" target="_blank">
@@ -169,7 +207,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </ul>
       </section>
 
-      {looser.length > 0 && (
+      {episodes.length > 0 && looser.length > 0 && (
         <p className={styles.looser}>
           {looser.length} other episode{looser.length === 1 ? "" : "s"} may cover
           this city — matched on country or region rather than by name, so

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { fold, regionName, type SearchIndex } from "../../lib/artifacts";
+import { fold, foldedHits, foldedRank, regionName, type SearchIndex } from "../../lib/artifacts";
 import styles from "./MapSearch.module.css";
 
 type Row =
@@ -24,7 +24,12 @@ export default function MapSearch({
   const input = useRef<HTMLInputElement>(null);
 
   const folded = useMemo(() => ({
-    cities: index.cities.map((c) => ({ c, f: fold(c.name), fr: fold(c.region ?? "") })),
+    cities: index.cities.map((c) => ({
+      c,
+      f: fold(c.name),
+      fr: fold(c.region ?? ""),
+      fs: fold(c.slug.replace(/-[a-z]{2}$/i, "").replace(/-/g, " ")),
+    })),
     places: index.places
       .filter((p) => p.slug)
       .map((p) => ({
@@ -46,8 +51,8 @@ export default function MapSearch({
       }));
     }
     const cities: Row[] = [];
-    for (const { c, f, fr } of folded.cities) {
-      if (!f.includes(needle) && !(fr && fr.includes(needle))) continue;
+    for (const { c, f, fr, fs } of folded.cities) {
+      if (!foldedHits(f, needle) && !(fr && foldedHits(fr, needle)) && !foldedHits(fs, needle)) continue;
       cities.push({
         type: "city", slug: c.slug, label: c.name,
         sub: c.region && fold(c.region) !== fold(c.name)
@@ -59,7 +64,7 @@ export default function MapSearch({
     }
     const places: Row[] = [];
     for (const { p, f, fc } of folded.places) {
-      if (!f.includes(needle) && !fc.includes(needle)) continue;
+      if (!foldedHits(f, needle) && !foldedHits(fc, needle)) continue;
       places.push({
         type: "place", slug: p.slug as string, label: p.name,
         sub: p.city ?? regionName(p.cc) ?? "Unmapped",
@@ -68,10 +73,7 @@ export default function MapSearch({
       });
       if (places.length > 16) break;
     }
-    const rank = (r: Row) => {
-      const f = fold(r.label);
-      return f === needle ? 0 : f.startsWith(needle) ? 1 : 2;
-    };
+    const rank = (r: Row) => foldedRank(fold(r.label), needle);
     cities.sort((a, b) => rank(a) - rank(b));
     places.sort((a, b) => rank(a) - rank(b));
     return [...cities.slice(0, 5), ...places.slice(0, 12)];

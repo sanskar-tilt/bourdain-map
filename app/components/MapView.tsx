@@ -10,11 +10,11 @@ import {
   type GeoJSONSource,
   type MapGeoJSONFeature,
   type MapMouseEvent,
-  type StyleSpecification,
 } from "maplibre-gl";
 import { Protocol } from "pmtiles";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { buildBasemapStyle, hasBasemap } from "../../lib/basemap";
+import type { SearchCity } from "../../lib/artifacts";
 import styles from "./MapView.module.css";
 
 /* Colours are duplicated from app/tokens.css because MapLibre resolves style
@@ -43,14 +43,23 @@ export type PinProps = {
 
 type Props = {
   onSelect: (p: PinProps, lngLat: [number, number]) => void;
+  onSelectCity?: (slug: string, lngLat: [number, number]) => void;
   selectedId?: string | null;
+  selectedCitySlug?: string | null;
+  cities?: SearchCity[] | null;
   /** Set by the search palette and by routing; the map flies here. */
   flyTo?: { lon: number; lat: number; zoom?: number; id?: string } | null;
 };
 
-export default function MapView({ onSelect, selectedId, flyTo }: Props) {
+export default function MapView({
+  onSelect, onSelectCity, selectedId, selectedCitySlug, cities, flyTo,
+}: Props) {
   const holder = useRef<HTMLDivElement>(null);
   const map = useRef<MapLibreMap | null>(null);
+  const onSelectRef = useRef(onSelect);
+  const onSelectCityRef = useRef(onSelectCity);
+  onSelectRef.current = onSelect;
+  onSelectCityRef.current = onSelectCity;
   const [ready, setReady] = useState(false);
   const [loaded, setLoaded] = useState(0);
   const reduced = useRef(false);
@@ -114,6 +123,10 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         clusterProperties: {
           gone: ["+", ["case", ["==", ["get", "status"], "closed"], 1, 0]],
         },
+      });
+      m.addSource("cities", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
       });
 
       /* ---- the lamp glow under every lit pin -------------------------- */
@@ -253,8 +266,67 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         },
       });
 
+      /* ---- cities ------------------------------------------------------
+         Quiet marks, never the accent (that's for pins). They fade as you
+         drop into a city so a click at world scale is a city, and a click
+         at street scale is a kitchen. */
+      m.addLayer({
+        id: "cities",
+        type: "circle",
+        source: "cities",
+        maxzoom: 10,
+        paint: {
+          "circle-color": INK,
+          "circle-opacity": ["interpolate", ["linear"], ["zoom"], 1, 0.28, 6, 0.4, 10, 0],
+          "circle-radius": [
+            "interpolate", ["linear"], ["zoom"],
+            1, ["min", ["+", 1.6, ["*", ["sqrt", ["get", "places"]], 0.22]], 4],
+            8, ["min", ["+", 3, ["*", ["sqrt", ["get", "places"]], 0.35]], 7],
+          ],
+          "circle-radius-transition": { duration: 240 },
+          "circle-opacity-transition": { duration: 240 },
+        },
+      });
+      m.addLayer({
+        id: "city-selected",
+        type: "circle",
+        source: "cities",
+        maxzoom: 11,
+        filter: ["==", ["get", "slug"], "__none__"],
+        paint: {
+          "circle-color": "rgba(0,0,0,0)",
+          "circle-stroke-color": INK,
+          "circle-stroke-width": 1.4,
+          "circle-stroke-opacity": 0.55,
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 2, 6, 8, 10],
+        },
+      });
+      m.addLayer({
+        id: "city-labels",
+        type: "symbol",
+        source: "cities",
+        minzoom: 3,
+        maxzoom: 10,
+        filter: [">=", ["get", "places"], 4],
+        layout: {
+          "text-field": ["get", "name"],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 3, 10, 8, 12],
+          "text-font": ["Noto Sans Regular"],
+          "text-offset": [0, 1.1],
+          "text-anchor": "top",
+          "text-optional": true,
+          "text-padding": 8,
+        },
+        paint: {
+          "text-color": INK,
+          "text-halo-color": PAPER,
+          "text-halo-width": 1.2,
+          "text-opacity": ["interpolate", ["linear"], ["zoom"], 3, 0.55, 7, 0.85, 10, 0],
+        },
+      });
+
       /* ---- interaction -------------------------------------------------- */
-      const hit = ["pins", "pin-repeat"];
+      const hit = ["pins", "pin-repeat", "cities", "city-labels"];
       hit.forEach((id) => {
         m.on("mouseenter", id, () => { m.getCanvas().style.cursor = "pointer"; });
         m.on("mouseleave", id, () => { m.getCanvas().style.cursor = ""; });
@@ -276,24 +348,63 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         m.getCanvas().style.cursor = "";
         countPopup.remove();
       });
+      m.on("mousemove", "cities", (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
+        m.getCanvas().style.cursor = "pointer";
+        const f = e.features?.[0];
+        if (!f) return;
+        const n = f.properties?.places as number;
+        const name = f.properties?.name as string;
+        countPopup
+          .setLngLat((f.geometry as GeoJSON.Point).coordinates as [number, number])
+          .setText(`${name} · ${n} place${n === 1 ? "" : "s"}`)
+          .addTo(m);
+      });
+      m.on("mouseleave", "cities", () => {
+        m.getCanvas().style.cursor = "";
+        countPopup.remove();
+      });
+
+      const pickCity = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
+        const f = e.features?.[0];
+        const slug = f?.properties?.slug as string | undefined;
+        if (!f || !slug) return;
+        const [lon, lat] = (f.geometry as GeoJSON.Point).coordinates as [number, number];
+        onSelectCityRef.current?.(slug, [lon, lat]);
+      };
+      m.on("click", "cities", pickCity);
+      m.on("click", "city-labels", pickCity);
 
       m.on("click", "pins", (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
         const f = e.features?.[0] as MapGeoJSONFeature | undefined;
         if (!f) return;
         const props = f.properties as unknown as PinProps;
         const [lon, lat] = (f.geometry as GeoJSON.Point).coordinates as [number, number];
-        onSelect({ ...props, unnamed: Boolean(props.unnamed) }, [lon, lat]);
+        onSelectRef.current({ ...props, unnamed: Boolean(props.unnamed) }, [lon, lat]);
       });
 
-      // Expanding a cluster goes to the zoom that actually breaks it apart,
-      // rather than a fixed jump that either overshoots or does nothing.
+      // A cluster that is one city opens that city. Mixed clusters expand.
       m.on("click", "clusters", async (e: MapMouseEvent) => {
         const f = m.queryRenderedFeatures(e.point, { layers: ["clusters"] })[0];
         if (!f) return;
         const src = m.getSource("places") as GeoJSONSource;
-        const zoom = await src.getClusterExpansionZoom(f.properties.cluster_id as number);
+        const id = f.properties.cluster_id as number;
+        const [lon, lat] = (f.geometry as GeoJSON.Point).coordinates as [number, number];
+        try {
+          const leaves = await src.getClusterLeaves(id, 80, 0);
+          const tally = new Map<string, number>();
+          for (const leaf of leaves) {
+            const slug = (leaf.properties as { citySlug?: string } | null)?.citySlug;
+            if (slug) tally.set(slug, (tally.get(slug) ?? 0) + 1);
+          }
+          const top = [...tally.entries()].sort((a, b) => b[1] - a[1])[0];
+          if (top && top[1] >= Math.max(3, leaves.length * 0.6) && onSelectCityRef.current) {
+            onSelectCityRef.current(top[0], [lon, lat]);
+            return;
+          }
+        } catch { /* expand instead */ }
+        const zoom = await src.getClusterExpansionZoom(id);
         m.easeTo({
-          center: (f.geometry as GeoJSON.Point).coordinates as [number, number],
+          center: [lon, lat],
           zoom: Math.min(zoom + 0.35, 17),
           duration: reduced.current ? 0 : 620,
           easing: (t: number) => 1 - Math.pow(1 - t, 3),
@@ -322,7 +433,22 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
       m.remove();
       map.current = null;
     };
-  }, [onSelect]);
+  }, []);
+
+  useEffect(() => {
+    const m = map.current;
+    if (!m || !ready) return;
+    const src = m.getSource("cities") as GeoJSONSource | undefined;
+    if (!src || !cities) return;
+    src.setData({
+      type: "FeatureCollection",
+      features: cities.map((c) => ({
+        type: "Feature" as const,
+        properties: { slug: c.slug, name: c.name, places: c.places },
+        geometry: { type: "Point" as const, coordinates: [c.lon, c.lat] },
+      })),
+    });
+  }, [cities, ready]);
 
   /* ---------------------------------------------------------- selection */
   useEffect(() => {
@@ -330,6 +456,12 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
     if (!m || !ready || !m.getLayer("pin-selected")) return;
     m.setFilter("pin-selected", ["==", ["get", "id"], selectedId ?? "__none__"]);
   }, [selectedId, ready]);
+
+  useEffect(() => {
+    const m = map.current;
+    if (!m || !ready || !m.getLayer("city-selected")) return;
+    m.setFilter("city-selected", ["==", ["get", "slug"], selectedCitySlug ?? "__none__"]);
+  }, [selectedCitySlug, ready]);
 
   /* ------------------------------------------------------------- flyTo */
   useEffect(() => {

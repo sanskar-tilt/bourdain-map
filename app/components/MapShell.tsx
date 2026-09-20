@@ -61,6 +61,13 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
     [router]
   );
 
+  const onSelectCity = useCallback(
+    (citySlug: string) => {
+      router.push(`/city/${encodeURIComponent(citySlug)}/`);
+    },
+    [router]
+  );
+
   /* Cmd-K, Ctrl-K, or / — the palette is the primary way in, not a filter
      box in a corner. */
   useEffect(() => {
@@ -83,7 +90,14 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.shell} data-panel={panelOpen ? "open" : "closed"}>
       <MapSafe>
-        <MapView onSelect={onSelect} selectedId={selectedId} flyTo={camera} />
+        <MapView
+          onSelect={onSelect}
+          onSelectCity={onSelectCity}
+          selectedId={selectedId}
+          selectedCitySlug={kind === "city" ? slug : null}
+          cities={index?.cities ?? null}
+          flyTo={camera}
+        />
       </MapSafe>
 
       <header className={styles.masthead}>

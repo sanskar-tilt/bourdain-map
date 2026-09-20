@@ -70,3 +70,23 @@ export function fold(s: string): string {
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 }
+
+/** "hanoi" hits "Hà Nội". Pass already-folded strings. */
+export function compact(s: string): string {
+  return s.replace(/\s+/g, "");
+}
+
+export function foldedHits(foldedName: string, foldedQuery: string): boolean {
+  if (!foldedQuery) return false;
+  if (foldedName.includes(foldedQuery)) return true;
+  const n = compact(foldedQuery);
+  return n.length >= 3 && compact(foldedName).includes(n);
+}
+
+export function foldedRank(foldedName: string, foldedQuery: string): number {
+  const n = compact(foldedQuery);
+  const f = compact(foldedName);
+  if (foldedName === foldedQuery || f === n) return 0;
+  if (foldedName.startsWith(foldedQuery) || f.startsWith(n)) return 1;
+  return 2;
+}
