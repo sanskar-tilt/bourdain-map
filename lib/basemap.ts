@@ -1,13 +1,12 @@
 /**
  * Basemap. Visitors never see an "API key required" canvas.
  *
- * Order:
- *   1. Self-hosted PMTiles or a real Protomaps key, if one is actually set.
- *   2. OpenFreeMap dark — free vector, no key, cinematic.
- *   3. CARTO Dark Matter raster — no key, always works.
+ * Preview default is CARTO Dark Matter — inline raster, no key, no
+ * remote style.json. That is the only path visitors hit unless someone
+ * later sets a real PROTOMAPS_KEY or PMTILES_URL on Vercel.
  *
- * MapTiler is optional (`NEXT_PUBLIC_MAPTILER_KEY`) and never used as a
- * fallback without a key — that's the watermark the last preview showed.
+ * MapTiler is never on the default path. Their tiles watermark
+ * "API key required" when the key is missing or bad.
  */
 
 import type { StyleSpecification } from "maplibre-gl";
@@ -114,7 +113,9 @@ export function rasterDark(): StyleSpecification {
 
 export function initialMapStyle(): string | StyleSpecification {
   if (hasBasemap) return buildBasemapStyle();
-  return maptilerDarkUrl() ?? OPENFREEMAP_DARK;
+  // Carto Dark Matter is baked into the style JSON. No fetch, no key,
+  // no MapTiler watermark. OpenFreeMap / MapTiler stay optional later.
+  return rasterDark();
 }
 
 export function buildBasemapStyle(): StyleSpecification {

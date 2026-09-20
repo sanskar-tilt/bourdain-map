@@ -31,4 +31,16 @@ bourdain-signing.jpg         |  CC BY 2.0  |  Anthony Bourdain IMG 0416 (2047345
 
 --- Solo Bourdain portraits (2026-09-20) ---
 From Downloads/bourdain_images/bourdain (CC pack). Loader O cycles these — no food plates.
-bourdain-portrait-black.jpg, pillar, plain, peabody-red, podium, wnyc, candid-2008
+bourdain-portrait-black.jpg, pillar, plain, peabody-red, podium, wnyc, candid-2008, hires, peabody, signing
+
+--- Extra Commons stills (kept on disk, not in the O-cycle) ---
+Category: https://commons.wikimedia.org/wiki/Category:Anthony_Bourdain
+bourdain-crop-1.jpg          |  CC BY 2.0  |  File:Anthony Bourdain crop 1.jpg
+bourdain-crop-2.jpg          |  CC BY 2.0  |  File:Anthony Bourdain crop 2.jpg
+bourdain-crop-3.jpg          |  CC BY 2.0  |  File:Anthony Bourdain crop 3.jpg
+bourdain-peabody-podium.jpg  |  CC BY 2.0  |  File:Anthony Bourdain at the 73rd Annual Peabody Awards.jpg
+bourdain-2014.jpg            |  CC BY 2.0  |  File:Anthony Bourdain 2014 (cropped).jpg
+bourdain-peabody-look.jpg    |  CC BY 2.0  |  File:Anthony Bourdain (14097901240) (cropped).jpg
+bourdain-wnyc-2011.jpg       |  CC BY 2.0  |  File:Anthony Bourdain on WNYC-2011-24-02.jpg
+bourdain-2007.jpg            |  CC BY 2.0  |  File:Anthony Bourdain 2007 (cropped).jpg
+bourdain-peabody-close.jpg   |  CC BY 2.0  |  File:Anthony Bourdain (14284031394) (cropped 2).jpg

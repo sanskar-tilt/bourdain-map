@@ -13,7 +13,7 @@ import {
 } from "maplibre-gl";
 import { Protocol } from "pmtiles";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { initialMapStyle, hasBasemap } from "../../lib/basemap";
+import { initialMapStyle } from "../../lib/basemap";
 import type { SearchCity } from "../../lib/artifacts";
 import styles from "./MapView.module.css";
 
@@ -510,9 +510,6 @@ export default function MapView({
         <button className={styles.reset} onClick={resetView} type="button">
           Whole world
         </button>
-        {false && !hasBasemap && (
-          <p className={styles.noTiles}>No basemap yet — pins only.</p>
-        )}
         <p className={styles.status} aria-live="polite">
           {loaded === 0 ? "Finding the places…"
             : loaded < 0 ? "The places didn't load. Reload and they should."

@@ -4,9 +4,9 @@ import s from "./home.module.css";
 
 /* BOURDAIN, with the O as a circular photo window.
 
-   The loader teaches the mark by cycling food through the O; afterwards the
-   same lockup is the nav logo at small size. One component so they cannot
-   drift apart.
+   The loader teaches the mark by cycling solo portraits of him through the O;
+   afterwards the same lockup is the nav logo at small size. One component so
+   they cannot drift apart.
 
    "Where he ate" is deliberately *not* part of it. The mark can be a flex;
    the sentence explaining what the site is cannot. */

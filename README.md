@@ -58,9 +58,10 @@ correct for every one of them: the anon key is designed to be public and is
 useless without the RLS policies, and the tile key is a per-domain read key.
 No secret ever goes in this app — there is no server to keep one on.
 
-Without the tile variables the map still runs: pins on a flat ground, with a
-note in the corner. Without the Supabase ones, the map and every page work and
-the interactive bits say they aren't configured.
+Without the tile variables the map still runs on CARTO Dark Matter — no
+API key, no watermark. Optionally set `NEXT_PUBLIC_PROTOMAPS_KEY` on Vercel
+later for vector tiles. Without the Supabase ones, the map and every page
+work and the interactive bits say they aren't configured.
 
 ## Deploying
 

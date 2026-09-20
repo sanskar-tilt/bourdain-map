@@ -50,7 +50,7 @@ export default function Home() {
 
   const room = m.pullback?.background;
   const roomMeta = room?.photo ? photos[room.photo] : undefined;
-  const footagePoster = pair?.meta && usable(pair.meta) ? largest(pair.meta) : "/home/pairing-dinner.jpg";
+  const footagePoster = pair?.meta && usable(pair.meta) ? largest(pair.meta) : "/home/bourdain-peabody-red.jpg";
 
   const gallery = (m.gallery ?? [])
     .map((g) => {
@@ -102,7 +102,7 @@ export default function Home() {
               <span className={s.roomCredit}>{room.credit}</span>
             </>
           ) : (
-            <img src="/home/pullback-kitchen.jpg" alt="" />
+            <img src="/home/bourdain-peabody-podium.jpg" alt="" />
           )
         }
       />
