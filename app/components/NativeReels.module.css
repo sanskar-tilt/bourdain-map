@@ -41,24 +41,6 @@
   background: #111;
 }
 
-.igSlot {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 540px;
-  height: 100%;
-  transform: translate(-50%, -50%) scale(1.35);
-  transform-origin: center;
-  overflow: hidden;
-  pointer-events: auto;
-}
-.igSlot :global(blockquote),
-.igSlot :global(iframe) {
-  margin: 0 !important;
-  background: #111 !important;
-  border: 0 !important;
-  min-width: 0 !important;
-}
-
 .shade {
   position: absolute;
   inset: 0;

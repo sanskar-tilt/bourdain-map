@@ -84,6 +84,7 @@ function EmbedSlide({ reel, near }: { reel: ReelEntry; near: boolean }) {
 
   if (reel.platform === "youtube") {
     const id = reel.videoId;
+    // Shorts and youtu.be ids share the same embed player. Loop via playlist=.
     return (
       <iframe
         className={styles.embed}
