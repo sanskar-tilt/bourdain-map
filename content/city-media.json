@@ -1,16 +1,19 @@
 {
   "_readme": [
     "Priority-city extras. Quote and youtube only when sourced.",
-    "YouTube ids are official CNN (or Max) clips, verified via oEmbed.",
-    "An absent field stays empty. Never invent either.",
-    "groups[] expand onto every listed slug. aliases help episode matching."
+    "Quotes are city-tied lines from Parts Unknown field notes / off-the-cuff",
+    "(Explore Parts Unknown / CNN), show transcripts, The Layover, Wikiquote,",
+    "or a 2013 CNN interview. Never invent. Never reassign a line to fill a gap.",
+    "YouTube ids are official CNN or Max clips, verified via oEmbed.",
+    "An absent field stays empty. The city page already omits the quote and",
+    "shows 'No public clip linked' when there is no id."
   ],
   "groups": [
     {
       "slugs": ["shibuya-jp", "shinjuku-jp", "minato-jp", "chuo-jp"],
       "quote": {
         "text": "I love Tokyo. If I had to eat only in one city for the rest of my life, Tokyo would be it.",
-        "attr": "Anthony Bourdain, Parts Unknown field notes"
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Tokyo"
       },
       "youtube": {
         "id": "Rx2g65MjsLk",
@@ -20,8 +23,8 @@
     {
       "slugs": ["ha-noi-vn"],
       "quote": {
-        "text": "Vietnam is a country, not a war.",
-        "attr": "Anthony Bourdain"
+        "text": "Does everybody fall in love with the country like I did? I came here and it stole my heart, you know.",
+        "attr": "Anthony Bourdain, Parts Unknown, Vietnam"
       },
       "youtube": {
         "id": "efG56KcQj0Q",
@@ -31,8 +34,8 @@
     {
       "slugs": ["ho-chi-minh-city-vn"],
       "quote": {
-        "text": "Vietnam is a country, not a war.",
-        "attr": "Anthony Bourdain"
+        "text": "Does everybody fall in love with the country like I did? I came here and it stole my heart, you know.",
+        "attr": "Anthony Bourdain, Parts Unknown, Vietnam"
       },
       "youtube": {
         "id": "NMrgQ_dOyhk",
@@ -42,8 +45,112 @@
     {
       "slugs": ["greater-london-gb", "city-of-westminster-gb"],
       "quote": {
-        "text": "If I’m an advocate for anything, it’s to move. As far as you can, as much as you can.",
-        "attr": "Anthony Bourdain"
+        "text": "I love London and have many dear friends there.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: London"
+      },
+      "youtube": {
+        "id": "n97pPlhqc9U",
+        "title": "The dish that sparked a British cooking revolution — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["paris-fr"],
+      "quote": {
+        "text": "Most of us are lucky to see Paris once in a lifetime. Please, make the most of it by doing as little as possible.",
+        "attr": "Anthony Bourdain, The Layover: Paris"
+      }
+    },
+    {
+      "slugs": ["rome-it"],
+      "quote": {
+        "text": "Rome may be the most romantic city in the world, and one of the most filmed.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Rome"
+      },
+      "youtube": {
+        "id": "zLuCzgO5URE",
+        "title": "The real Rome — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["marseille-fr"],
+      "quote": {
+        "text": "Marseille. As it turns out, exactly the kind of place I like.",
+        "attr": "Anthony Bourdain, Parts Unknown, Marseille (CNN transcript)"
+      },
+      "youtube": {
+        "id": "pcBCMPJOZTU",
+        "title": "Is Marseille a ‘victim of bad reputation’? — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["berlin-de"],
+      "quote": {
+        "text": "Berlin is a city of ghosts, an ever-evolving space where memories and new ideas live side by side.",
+        "attr": "Anthony Bourdain, Parts Unknown, Berlin"
+      },
+      "youtube": {
+        "id": "h3WAfPJqUm8",
+        "title": "Bourdain on visiting one of Germany's most ‘open cities’ — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["cologne-de"],
+      "youtube": {
+        "id": "SEIDe8mKQE0",
+        "title": "Anthony Bourdain finds his happy zone in Cologne — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["lyon-fr"],
+      "youtube": {
+        "id": "0Nth_j2jhsM",
+        "title": "Lyon with Daniel Boulud — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["granada-es"],
+      "youtube": {
+        "id": "CHlyf2hoPW4",
+        "title": "Tapas in Granada — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["porto-pt"],
+      "youtube": {
+        "id": "4xzeo1BalAs",
+        "title": "Parts Unknown: Porto trailer (CNN)"
+      }
+    },
+    {
+      "slugs": ["glasgow-gb"],
+      "quote": {
+        "text": "Glasgow is one of my favorite cities on earth.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Scotland"
+      },
+      "youtube": {
+        "id": "4F2WKLhhnhk",
+        "title": "Scotland — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["city-of-edinburgh-gb"],
+      "youtube": {
+        "id": "4F2WKLhhnhk",
+        "title": "Scotland — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["copenhagen-dk"],
+      "youtube": {
+        "id": "-TXkdZGeCio",
+        "title": "A famous Danish late-night dish — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["palermo-it"],
+      "youtube": {
+        "id": "e9weQLCSNPY",
+        "title": "Sicily — Parts Unknown (CNN)"
       }
     },
     {
@@ -69,122 +176,17 @@
       }
     },
     {
-      "slugs": ["detroit-us"],
+      "slugs": ["singapore-sg"],
       "quote": {
-        "text": "It IS America.",
-        "attr": "Anthony Bourdain, CNN Parts Unknown field notes, Detroit"
+        "text": "I come here mostly to eat, because that's what they do here. And they arguably do it better — with more diverse, affordable food options per square foot than just about anywhere on Earth.",
+        "attr": "Anthony Bourdain, Parts Unknown, Singapore"
       }
     },
     {
-      "slugs": ["shanghai-cn", "jingan-district-cn"],
-      "youtube": {
-        "id": "R1iW6gkpb_8",
-        "title": "‘Pillows of happiness’ — Shanghai, Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["rome-it"],
-      "youtube": {
-        "id": "zLuCzgO5URE",
-        "title": "The real Rome — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["lyon-fr"],
-      "youtube": {
-        "id": "0Nth_j2jhsM",
-        "title": "Lyon with Daniel Boulud — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["granada-es"],
-      "youtube": {
-        "id": "CHlyf2hoPW4",
-        "title": "Tapas in Granada — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["charleston-us"],
-      "youtube": {
-        "id": "XqEtC2X9fAw",
-        "title": "Charleston with Sean Brock and Bill Murray — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["havana-cu"],
-      "youtube": {
-        "id": "fAMoe-TfZM0",
-        "title": "The hottest spot in Havana — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["saint-petersburg-ru"],
-      "youtube": {
-        "id": "1TC28XjJoo0",
-        "title": "Midnight train to St. Petersburg — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["sao-paulo-br"],
-      "youtube": {
-        "id": "kbUHvKIAWrM",
-        "title": "The caipirinha man — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["kisangani-cd"],
-      "youtube": {
-        "id": "TJ0yBH414fM",
-        "title": "Fishing on the Congo — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["yangon-city-mm"],
-      "youtube": {
-        "id": "owXDTgPa--Y",
-        "title": "Tea you can eat — Myanmar, Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["tangier-ma", "fez-ma", "casablanca-ma"],
-      "youtube": {
-        "id": "DXNq4PyfNqE",
-        "title": "Morocco — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["tehran-ir", "isfahan-ir"],
-      "youtube": {
-        "id": "w9mwlWcQ53A",
-        "title": "Iran — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["glasgow-gb", "city-of-edinburgh-gb"],
-      "youtube": {
-        "id": "4F2WKLhhnhk",
-        "title": "Scotland — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["lima-pe"],
-      "youtube": {
-        "id": "aA2Y6NVxSDo",
-        "title": "Ceviche in Peru — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["mumbai-in", "kolkata-in", "amritsar-in"],
-      "youtube": {
-        "id": "_RFTnb4nC-A",
-        "title": "Indian food — Parts Unknown (CNN)"
-      }
-    },
-    {
-      "slugs": ["livingston-us"],
-      "youtube": {
-        "id": "BFzJcULxpq4",
-        "title": "Mining in Montana — Parts Unknown (CNN)"
+      "slugs": ["hong-kong-cn"],
+      "quote": {
+        "text": "To feel sentimental about the past is unusual for Hong Kong. Hong Kong is always changing, it's always embraced change.",
+        "attr": "Anthony Bourdain, Parts Unknown, Hong Kong"
       }
     },
     {
@@ -195,24 +197,180 @@
       }
     },
     {
-      "slugs": ["quebec-ca"],
+      "slugs": ["chiang-mai-city-municipality-th"],
       "youtube": {
-        "id": "-jbmWbol258",
-        "title": "Quebec — Parts Unknown (CNN)"
+        "id": "NjxPMa4tu0c",
+        "title": "Anthony Bourdain visits Chiang Mai — Parts Unknown (CNN)"
       }
     },
     {
-      "slugs": ["chicago-us"],
+      "slugs": ["bangkok-th"],
       "youtube": {
-        "id": "jD5KjcaFisE",
-        "title": "Chicago's Chinatown — Parts Unknown (CNN)"
+        "id": "3hVGk1BLZ6Q",
+        "title": "Drunken noodles with no noodles in Thailand? — Parts Unknown (CNN)"
       }
     },
     {
-      "slugs": ["new-york-us"],
+      "slugs": ["manila-ph"],
       "youtube": {
-        "id": "hC3rukJc79U",
-        "title": "Old-school Puerto Rican in the Bronx — Parts Unknown (CNN)"
+        "id": "hWcjcbjN3Sk",
+        "title": "‘Filipinos love feeding people’ — Manila, Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["mumbai-in", "kolkata-in", "amritsar-in"],
+      "youtube": {
+        "id": "_RFTnb4nC-A",
+        "title": "Indian food — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["yangon-city-mm"],
+      "youtube": {
+        "id": "owXDTgPa--Y",
+        "title": "Tea you can eat — Myanmar, Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["siem-reap-kh"],
+      "quote": {
+        "text": "It's an irritating reality that many places and events defy description. Angkor Wat and Machu Picchu, for instance, seem to demand silence, like a love affair you can never talk about.",
+        "attr": "Anthony Bourdain, The Nasty Bits"
+      }
+    },
+    {
+      "slugs": ["tehran-ir", "isfahan-ir"],
+      "quote": {
+        "text": "I have said that Iran is the most outgoingly warm, pro-American place we've ever shot, and that's true.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Iran"
+      },
+      "youtube": {
+        "id": "w9mwlWcQ53A",
+        "title": "Iran — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["tbilisi-ge", "batumi-ge"],
+      "quote": {
+        "text": "You should know Georgia because it's nice. Because the food is excellent. The country is beautiful — some of the most beautiful scenery on Earth.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Tbilisi"
+      }
+    },
+    {
+      "slugs": ["shanghai-cn", "jingan-district-cn"],
+      "youtube": {
+        "id": "R1iW6gkpb_8",
+        "title": "‘Pillows of happiness’ — Shanghai, Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["moscow-ru"],
+      "quote": {
+        "text": "It's a different Moscow every time I come here.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Russia"
+      }
+    },
+    {
+      "slugs": ["saint-petersburg-ru"],
+      "youtube": {
+        "id": "1TC28XjJoo0",
+        "title": "Midnight train to St. Petersburg — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["lagos-ng"],
+      "quote": {
+        "text": "It is also an incredibly inspiring place, with perhaps the hardest-working, most enterprising, most optimistic population I've ever encountered.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Lagos"
+      }
+    },
+    {
+      "slugs": ["johannesburg-ward-66-za"],
+      "youtube": {
+        "id": "xBCM0x34x7s",
+        "title": "Johannesburg: meat on plate, blood on pants — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["tangier-ma"],
+      "quote": {
+        "text": "There is no place like it in the world.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Morocco"
+      },
+      "youtube": {
+        "id": "DXNq4PyfNqE",
+        "title": "Morocco — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["fez-ma", "casablanca-ma"],
+      "youtube": {
+        "id": "DXNq4PyfNqE",
+        "title": "Morocco — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["dakar-sn"],
+      "youtube": {
+        "id": "uNSRQWM_Gj4",
+        "title": "Bourdain learns how to eat Senegal's national dish — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["tripoli-ly"],
+      "youtube": {
+        "id": "sG9jZWV-P5A",
+        "title": "An American favorite in Tripoli — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["kisangani-cd"],
+      "quote": {
+        "text": "It is written that I should be loyal to the nightmare of my choice. I think I now understand what that means.",
+        "attr": "Anthony Bourdain, Parts Unknown, Congo"
+      },
+      "youtube": {
+        "id": "TJ0yBH414fM",
+        "title": "Fishing on the Congo — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["ngorongoro-tz"],
+      "youtube": {
+        "id": "dx1_WiMIg2w",
+        "title": "Even the toilet has a nice view — Tanzania, Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["sao-paulo-br"],
+      "youtube": {
+        "id": "kbUHvKIAWrM",
+        "title": "The caipirinha man — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["buenos-aires-ar"],
+      "quote": {
+        "text": "There is already, to my mind, a mournful quality to Buenos Aires, a gorgeous background track of melancholy.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Buenos Aires"
+      },
+      "youtube": {
+        "id": "WOJIybZd2wY",
+        "title": "Buenos Aires: it was meat, meat and more meat — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["lima-pe"],
+      "youtube": {
+        "id": "aA2Y6NVxSDo",
+        "title": "Ceviche in Peru — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["bogota-co", "medellin-co", "cartagena-co"],
+      "youtube": {
+        "id": "qNiF0R1QJpk",
+        "title": "Colombia: a thing of beauty — Parts Unknown (CNN)"
       }
     },
     {
@@ -223,31 +381,155 @@
       }
     },
     {
-      "slugs": ["copenhagen-dk"],
+      "slugs": ["havana-cu"],
+      "quote": {
+        "text": "Even crumbling from neglect, Havana is the most beautiful city in all of Latin America or the Caribbean.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Cuba"
+      },
       "youtube": {
-        "id": "-TXkdZGeCio",
-        "title": "A famous Danish late-night dish — Parts Unknown (CNN)"
+        "id": "fAMoe-TfZM0",
+        "title": "The hottest spot in Havana — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["new-york-us"],
+      "quote": {
+        "text": "You know what's great about New York? The threshold for citizenship as a New Yorker is actually pretty short.",
+        "attr": "Anthony Bourdain, The Layover: New York City"
+      },
+      "youtube": {
+        "id": "hC3rukJc79U",
+        "title": "Old-school Puerto Rican in the Bronx — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["los-angeles-us"],
+      "quote": {
+        "text": "Los Angeles is big — a sprawl — a patchwork of communities with origins everywhere in the world.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Los Angeles"
+      },
+      "youtube": {
+        "id": "PedzaRjDNfE",
+        "title": "Parts Unknown: Los Angeles trailer (CNN)"
+      }
+    },
+    {
+      "slugs": ["san-francisco-us"],
+      "youtube": {
+        "id": "OlETneOPa44",
+        "title": "Will San Francisco be awesome forever? — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["chicago-us"],
+      "quote": {
+        "text": "You wake up in Chicago, pull back the curtain, and you KNOW where you are.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Chicago"
+      },
+      "youtube": {
+        "id": "jD5KjcaFisE",
+        "title": "Chicago's Chinatown — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["new-orleans-us"],
+      "quote": {
+        "text": "There is no place like New Orleans. So it's a must-see city because there's no explaining it, no describing it.",
+        "attr": "Anthony Bourdain, CNN interview, 2013"
       }
     },
     {
       "slugs": ["miami-us", "miami-beach-us", "miami-dade-county-us"],
+      "quote": {
+        "text": "Another day, another country. Miami is like that. You can eat your way across the Caribbean and through all of Latin America and then over to Africa if you'd like. It's all there.",
+        "attr": "Anthony Bourdain, Parts Unknown, Miami"
+      },
       "youtube": {
         "id": "cJWFVoHMhVk",
         "title": "Talking Miami — Parts Unknown (CNN)"
       }
     },
     {
+      "slugs": ["detroit-us"],
+      "quote": {
+        "text": "Detroit isn't just a national treasure. It IS America.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Detroit"
+      },
+      "youtube": {
+        "id": "u54xeMkAJkU",
+        "title": "Detroit: 3.5 million is the loneliest number — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["seattle-us"],
+      "quote": {
+        "text": "Seattle has always been a place where you can go to reinvent yourself.",
+        "attr": "Anthony Bourdain, Parts Unknown, Seattle"
+      }
+    },
+    {
+      "slugs": ["mexico-city-mx"],
+      "quote": {
+        "text": "Mexico is a country where everyday people fight to live. All too often they lose that battle. A magnificent, heartbreakingly beautiful country.",
+        "attr": "Anthony Bourdain, Parts Unknown, Mexico"
+      },
+      "youtube": {
+        "id": "Nq7tmRHpSJM",
+        "title": "Máximo mixes French and Mexican cuisine — Parts Unknown (CNN)"
+      }
+    },
+    {
       "slugs": ["oaxaca-city-mx"],
+      "quote": {
+        "text": "I haven't been anywhere in Mexico where the cooking is better than here.",
+        "attr": "Anthony Bourdain, Parts Unknown, Oaxaca"
+      },
       "youtube": {
         "id": "_A1Yvxdr06w",
         "title": "A Zapotec meal outside Oaxaca — Parts Unknown (CNN)"
       }
     },
     {
-      "slugs": ["palermo-it"],
+      "slugs": ["montreal-ca"],
+      "quote": {
+        "text": "In the week I spent with them recently for the making of this episode of Parts Unknown, they fed me as I have never been fed in my well-travelled life.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Québec"
+      },
       "youtube": {
-        "id": "e9weQLCSNPY",
-        "title": "Sicily — Parts Unknown (CNN)"
+        "id": "6wVItLXdrfw",
+        "title": "Prepare yourself for Montreal's food — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["quebec-ca"],
+      "quote": {
+        "text": "This episode is listed as being about Canada. But it is clearly not. It is not even, really, about Québec. It is, however, about three characters — and the world they move around in — that could not have existed anywhere in the world BUT QUÉBEC.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes: Québec"
+      },
+      "youtube": {
+        "id": "-jbmWbol258",
+        "title": "Quebec — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["charleston-us"],
+      "youtube": {
+        "id": "XqEtC2X9fAw",
+        "title": "Charleston with Sean Brock and Bill Murray — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["livingston-us"],
+      "youtube": {
+        "id": "BFzJcULxpq4",
+        "title": "Mining in Montana — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["provincetown-us"],
+      "youtube": {
+        "id": "9SoPrwBCpyo",
+        "title": "A legendary Cape Cod restaurant — Parts Unknown (CNN)"
       }
     }
   ],
@@ -294,6 +576,7 @@
     "antananarivo-mg": { "exact": ["antananarivo"], "loose": ["madagascar"] },
     "belo-horizonte-br": { "exact": ["belo horizonte"] },
     "puerto-varas-cl": { "exact": ["puerto varas"] },
-    "winchester-us": { "exact": ["winchester"] }
+    "winchester-us": { "exact": ["winchester"] },
+    "provincetown-us": { "exact": ["provincetown", "cape cod"] }
   }
 }

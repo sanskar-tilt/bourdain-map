@@ -41,7 +41,7 @@
 .corner > p { max-width: 100%; overflow-wrap: anywhere; }
 .corner > * { pointer-events: auto; }
 
-.status, .noTiles {
+.status {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 10.5px;
@@ -49,8 +49,6 @@
   text-transform: uppercase;
   color: var(--ink-faint);
 }
-.noTiles { color: var(--ink-dim); text-transform: none; }
-.noTiles code { font-size: 10px; }
 
 .reset {
   padding: var(--s2) var(--s3);

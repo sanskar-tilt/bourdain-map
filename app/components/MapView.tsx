@@ -583,6 +583,8 @@ export default function MapView({
           Whole world
         </button>
         <p className={styles.status} aria-live="polite">
+          {/* Tiles always paint: OpenFreeMap when no key, Protomaps when one
+              is set. Never a "No basemap" / pins-only message. */}
           {loaded === 0 ? "Finding the places…"
             : loaded < 0 ? "The places didn't load. Reload and they should."
             : `${loaded.toLocaleString()} places`}
