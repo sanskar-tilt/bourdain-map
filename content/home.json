@@ -6,53 +6,93 @@
   "loader": {
     "objects": [
       {
-        "photo": "bourdain-obama-hanoi.jpg",
-        "alt": "Anthony Bourdain and Barack Obama at bun cha in Hanoi",
-        "credit": "Public domain — White House Photo Office"
+        "photo": "bourdain-portrait-black.jpg",
+        "alt": "Anthony Bourdain, stark portrait",
+        "credit": "CC pack"
       },
       {
         "photo": "bourdain-portrait-hires.jpg",
-        "alt": "Anthony Bourdain, high-resolution portrait",
-        "credit": "CC BY 2.0 via Wikimedia Commons"
-      },
-      {
-        "photo": "bourdain-signing.jpg",
-        "alt": "Anthony Bourdain at a book signing",
-        "credit": "CC BY 2.0 — Neeta Lind via Wikimedia"
+        "alt": "Anthony Bourdain portrait",
+        "credit": "CC BY 2.0 Wikimedia"
       },
       {
         "photo": "bourdain-peabody.jpg",
         "alt": "Anthony Bourdain at the Peabody Awards",
-        "credit": "CC BY 2.0 — Peabody Awards via Wikimedia"
+        "credit": "CC BY 2.0 Peabody Awards"
       },
       {
-        "photo": "bourdain-portrait.jpg",
-        "alt": "Anthony Bourdain, portrait",
-        "credit": "CC BY 2.0 via Wikimedia Commons"
+        "photo": "bourdain-peabody-red.jpg",
+        "alt": "Anthony Bourdain, Peabody Awards",
+        "credit": "CC pack"
       },
       {
-        "photo": "pairing-dinner.jpg",
-        "alt": "Bourdain at a dinner table, 2008",
-        "credit": "CC BY 2.0 — Wikimedia Commons"
+        "photo": "bourdain-signing.jpg",
+        "alt": "Anthony Bourdain",
+        "credit": "CC BY 2.0"
       },
       {
-        "photo": "pairing-wnyc.jpg",
+        "photo": "bourdain-portrait-pillar.jpg",
+        "alt": "Anthony Bourdain standing portrait",
+        "credit": "CC pack"
+      },
+      {
+        "photo": "bourdain-portrait-plain.jpg",
+        "alt": "Anthony Bourdain",
+        "credit": "CC pack"
+      },
+      {
+        "photo": "bourdain-wnyc.jpg",
         "alt": "Anthony Bourdain at WNYC",
-        "credit": "CC BY 2.0 — WNYC via Wikimedia"
+        "credit": "CC pack"
+      },
+      {
+        "photo": "bourdain-podium.jpg",
+        "alt": "Anthony Bourdain at the podium",
+        "credit": "CC pack"
+      },
+      {
+        "photo": "bourdain-candid-2008.jpg",
+        "alt": "Anthony Bourdain, 2008",
+        "credit": "CC pack"
       }
     ],
     "portrait": {
-      "photo": "bourdain-peabody.jpg",
-      "alt": "Anthony Bourdain at the Peabody Awards",
-      "credit": "CC BY 2.0 — Peabody Awards via Wikimedia"
+      "photo": "bourdain-portrait-black.jpg",
+      "alt": "Anthony Bourdain, stark portrait",
+      "credit": "CC pack"
     }
   },
   "hero": {
     "photos": [
       {
+        "photo": "bourdain-portrait-black.jpg",
+        "alt": "Anthony Bourdain, stark portrait",
+        "credit": "CC pack"
+      },
+      {
+        "photo": "bourdain-portrait-hires.jpg",
+        "alt": "Anthony Bourdain portrait",
+        "credit": "CC BY 2.0 Wikimedia"
+      },
+      {
+        "photo": "bourdain-peabody.jpg",
+        "alt": "Anthony Bourdain at the Peabody Awards",
+        "credit": "CC BY 2.0 Peabody Awards"
+      },
+      {
+        "photo": "bourdain-peabody-red.jpg",
+        "alt": "Anthony Bourdain, Peabody Awards",
+        "credit": "CC pack"
+      },
+      {
+        "photo": "bourdain-signing.jpg",
+        "alt": "Anthony Bourdain",
+        "credit": "CC BY 2.0"
+      },
+      {
         "photo": "bourdain-obama-hanoi.jpg",
         "alt": "Anthony Bourdain and Barack Obama at bun cha in Hanoi",
-        "credit": "Public domain — White House Photo Office",
+        "credit": "Public domain \u2014 White House Photo Office",
         "placeSlug": "ha-noi-vn"
       },
       {
@@ -64,13 +104,13 @@
       {
         "photo": "bourdain-signing.jpg",
         "alt": "Anthony Bourdain at a book signing",
-        "credit": "CC BY 2.0 — Neeta Lind via Wikimedia",
+        "credit": "CC BY 2.0 \u2014 Neeta Lind via Wikimedia",
         "placeSlug": "borough-market-greater-london"
       }
     ],
     "quotes": [
       {
-        "text": "If I’m an advocate for anything, it’s to move. As far as you can, as much as you can.",
+        "text": "If I\u2019m an advocate for anything, it\u2019s to move. As far as you can, as much as you can.",
         "attr": "Anthony Bourdain"
       }
     ]
@@ -84,7 +124,7 @@
     {
       "photo": "bourdain-obama-hanoi.jpg",
       "alt": "Bun cha in Hanoi",
-      "credit": "Public domain — White House Photo Office",
+      "credit": "Public domain \u2014 White House Photo Office",
       "placeSlug": "banh-cuon-nong-kim-thoa-ha-noi",
       "line": "Hanoi"
     },
@@ -98,14 +138,14 @@
     {
       "photo": "pairing-dinner.jpg",
       "alt": "Bourdain at a dinner table, 2008",
-      "credit": "CC BY 2.0 — Wikimedia Commons",
+      "credit": "CC BY 2.0 \u2014 Wikimedia Commons",
       "placeSlug": "st-john-restaurant-greater-london",
       "line": "St John"
     },
     {
       "photo": "bourdain-signing.jpg",
       "alt": "Anthony Bourdain at a book signing",
-      "credit": "CC BY 2.0 — Neeta Lind via Wikimedia",
+      "credit": "CC BY 2.0 \u2014 Neeta Lind via Wikimedia",
       "placeSlug": "brasserie-les-halles-new-york",
       "line": "Les Halles"
     },
@@ -133,8 +173,8 @@
     "vertical": true,
     "background": {
       "photo": "pullback-kitchen.jpg",
-      "alt": "A small commercial kitchen — steel counters, ovens and a griddle, terracotta tile floor",
-      "credit": "Set photo for MANIFESTO clip context — used with the clip"
+      "alt": "A small commercial kitchen \u2014 steel counters, ovens and a griddle, terracotta tile floor",
+      "credit": "Set photo for MANIFESTO clip context \u2014 used with the clip"
     }
   },
   "pairing": {
@@ -142,22 +182,22 @@
       {
         "photo": "bourdain-peabody.jpg",
         "alt": "Anthony Bourdain at the Peabody Awards",
-        "credit": "CC BY 2.0 — Peabody Awards via Wikimedia"
+        "credit": "CC BY 2.0 \u2014 Peabody Awards via Wikimedia"
       },
       {
         "photo": "bourdain-obama-hanoi.jpg",
         "alt": "Anthony Bourdain and Barack Obama at bun cha in Hanoi",
-        "credit": "Public domain — White House Photo Office"
+        "credit": "Public domain \u2014 White House Photo Office"
       },
       {
         "photo": "pairing-dinner.jpg",
         "alt": "Bourdain at a dinner table, 2008",
-        "credit": "CC BY 2.0 — Wikimedia Commons"
+        "credit": "CC BY 2.0 \u2014 Wikimedia Commons"
       }
     ],
     "quotes": [
       {
-        "text": "Maybe that’s enlightenment enough: to know that there is no final resting place of the mind.",
+        "text": "Maybe that\u2019s enlightenment enough: to know that there is no final resting place of the mind.",
         "attr": "Anthony Bourdain, Kitchen Confidential"
       }
     ]
