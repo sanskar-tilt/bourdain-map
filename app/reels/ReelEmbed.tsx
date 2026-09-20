@@ -87,6 +87,7 @@ export default function ReelEmbed({ reel }: { reel: ReelEntry }) {
     const inject = () => {
       setPhase("loading");
       if (reel.platform === "instagram") {
+        if (!reel.url) return fail();
         slot.appendChild(igBlockquote(reel.url));
         kickInstagram(fail);
         // Processed embeds get .instagram-media-rendered; dead reels never do.

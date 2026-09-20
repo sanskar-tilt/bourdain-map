@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import MapView, { type PinProps } from "./MapView";
+import MapSearch from "./MapSearch";
 import SearchPalette from "./SearchPalette";
 import { loadSearchIndex, type SearchIndex } from "../../lib/artifacts";
 import styles from "./MapShell.module.css";
@@ -71,9 +72,7 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  /* Any route other than the map itself renders into the panel — places,
-     cities, and the static pages like /about. */
-  const panelOpen = (path ?? "/") !== "/";
+  const panelOpen = kind === "place" || kind === "city";
 
   return (
     <div className={styles.shell} data-panel={panelOpen ? "open" : "closed"}>
@@ -87,23 +86,21 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
           </p>
         </div>
         <nav className={styles.nav}>
+          <a href="/">Home</a>
+          <a href="/map/">Map</a>
+          <a href="/reels/">Reels</a>
           <a href="/tables/">Tables</a>
           <a href="/stories/">Stories</a>
-          <a href="/about/">About</a>
-          <a href="/account/">You</a>
         </nav>
-        <button
-          type="button"
-          className={styles.searchTrigger}
-          onClick={() => setPaletteOpen(true)}
-        >
-          <svg className={styles.searchIcon} viewBox="0 0 16 16" aria-hidden="true">
-            <circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.4" />
-            <path d="M10.5 10.5 L14 14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-          </svg>
-          <span>Try a city — Tokyo, Lagos, Buenos Aires</span>
-          <kbd>⌘K</kbd>
-        </button>
+        <div className={styles.searchSlot}>
+          {index && (
+            <MapSearch
+              index={index}
+              onPreview={(lon, lat, zoom) => setCamera({ lon, lat, zoom })}
+              onChoose={(href) => router.push(href)}
+            />
+          )}
+        </div>
       </header>
 
       {/* Panel, never modal. The map stays visible and interactive behind it. */}
@@ -113,7 +110,7 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               className={styles.close}
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/map/")}
               aria-label="Close"
             >
               ×

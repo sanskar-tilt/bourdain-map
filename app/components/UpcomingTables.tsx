@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 import { supabase, supabaseConfigured } from "../../lib/supabase";
 import { loadSearchIndex, type SearchPlace } from "../../lib/artifacts";
+import DinnerInterest from "./DinnerInterest";
 import s from "./ui.module.css";
 import Link from "next/link";
-
-/* Every upcoming table, everywhere. The place names come from the static
-   search index rather than a join, because the read path is artifacts. */
 
 type Row = {
   id: string; place_id: string; starts_at: string; seats: number;
@@ -18,7 +16,7 @@ export default function UpcomingTables() {
   const [rows, setRows] = useState<Row[]>([]);
   const [seats, setSeats] = useState<Record<string, { seats: number; seats_taken: number }>>({});
   const [places, setPlaces] = useState<Record<string, SearchPlace>>({});
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(!supabaseConfigured);
 
   useEffect(() => {
     (async () => {
@@ -50,67 +48,72 @@ export default function UpcomingTables() {
     })();
   }, []);
 
-  if (!supabaseConfigured) {
-    return <p className={s.note}>Tables aren&rsquo;t configured on this build.</p>;
-  }
-
   const emptySeats = rows.reduce((n, r) => {
     const sc = seats[r.id];
     return n + Math.max(0, (sc?.seats ?? r.seats) - (sc?.seats_taken ?? 0));
   }, 0);
 
   return (
-    <div className={s.form}>
+    <div className={`${s.form} ${s.page}`}>
       <h2 className={s.h2}>Tables</h2>
-      {!ready && <p className={s.note}>…</p>}
+      <p className={s.note}>
+        Someone picks a place, opens seats, strangers take them. The first
+        one is in London.
+      </p>
 
-      {ready && rows.length === 0 && (
-        <p className={s.note}>
-          No tables open yet. Find somewhere on the map and open the first one.
-        </p>
-      )}
+      <DinnerInterest seats={8} />
 
-      {ready && rows.length > 0 && (
-        <p className={s.note}>
-          {emptySeats} seat{emptySeats === 1 ? "" : "s"} currently waiting for
-          someone, across {rows.length} table{rows.length === 1 ? "" : "s"}.
-        </p>
-      )}
-
-      {rows.map((r) => {
-        const p = places[r.place_id];
-        const sc = seats[r.id];
-        const total = sc?.seats ?? r.seats;
-        const taken = sc?.seats_taken ?? 0;
-        const free = Math.max(0, total - taken);
-        return (
-          <div key={r.id} className={s.table}>
-            <div className={s.tableTop}>
-              <span className={s.tableWhen}>
-                {new Date(r.starts_at).toLocaleString(undefined, {
-                  weekday: "short", day: "numeric", month: "short",
-                  hour: "2-digit", minute: "2-digit",
-                })}
-              </span>
-              <span>{p?.city ?? ""}</span>
+      <section className={s.section}>
+        <h2 className={s.h2}>Open now</h2>
+        {!ready && <p className={s.note}>Looking…</p>}
+        {ready && rows.length === 0 && (
+          <p className={s.note}>
+            None open yet. The London list above is how you get to the first
+            one. Or find a pin on the{" "}
+            <Link href="/map/">map</Link> and be the person who opens a table.
+          </p>
+        )}
+        {ready && rows.length > 0 && (
+          <p className={s.note}>
+            {emptySeats} seat{emptySeats === 1 ? "" : "s"} waiting, across{" "}
+            {rows.length} table{rows.length === 1 ? "" : "s"}.
+          </p>
+        )}
+        {rows.map((r) => {
+          const p = places[r.place_id];
+          const sc = seats[r.id];
+          const total = sc?.seats ?? r.seats;
+          const taken = sc?.seats_taken ?? 0;
+          const free = Math.max(0, total - taken);
+          return (
+            <div key={r.id} className={s.table}>
+              <div className={s.tableTop}>
+                <span className={s.tableWhen}>
+                  {new Date(r.starts_at).toLocaleString(undefined, {
+                    weekday: "short", day: "numeric", month: "short",
+                    hour: "2-digit", minute: "2-digit",
+                  })}
+                </span>
+                <span>{p?.city ?? ""}</span>
+              </div>
+              {p?.slug ? (
+                <Link className={s.tableWhen} href={`/place/${p.slug}/`}>{p.name}</Link>
+              ) : (
+                <span className={s.tableWhen}>a place on the map</span>
+              )}
+              {r.blurb && <p className={s.blurb}>{r.blurb}</p>}
+              <div className={s.chairs}>
+                {Array.from({ length: total }).map((_, i) => (
+                  <span key={i} className={s.chair} data-taken={i < taken} data-free={i >= taken} />
+                ))}
+              </div>
+              <p className={s.seatLine}>
+                {free === 0 ? "Full." : `${free} seat${free === 1 ? "" : "s"} still empty.`}
+              </p>
             </div>
-            {p?.slug ? (
-              <Link className={s.tableWhen} href={`/place/${p.slug}/`}>{p.name}</Link>
-            ) : (
-              <span className={s.tableWhen}>a place on the map</span>
-            )}
-            {r.blurb && <p className={s.blurb}>{r.blurb}</p>}
-            <div className={s.chairs}>
-              {Array.from({ length: total }).map((_, i) => (
-                <span key={i} className={s.chair} data-taken={i < taken} data-free={i >= taken} />
-              ))}
-            </div>
-            <p className={s.seatLine}>
-              {free === 0 ? "Full." : `${free} seat${free === 1 ? "" : "s"} still empty.`}
-            </p>
-          </div>
-        );
-      })}
+          );
+        })}
+      </section>
     </div>
   );
 }

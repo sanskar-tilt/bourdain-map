@@ -84,7 +84,20 @@ export default function PlaceActions({ placeId, placeName }: { placeId: string; 
 
   useEffect(() => { void load(); }, [load]);
 
-  if (!supabaseConfigured) return null;
+  if (!supabaseConfigured) {
+    return (
+      <section className={s.section}>
+        <h2 className={s.h2}>A table here</h2>
+        <p className={s.note}>
+          The first dinner is in London. If you want a seat — here or there —
+          leave your name.
+        </p>
+        <p className={s.note}>
+          <Link href="/tables/#london">Hear about the first London dinner</Link>
+        </p>
+      </section>
+    );
+  }
 
   const fmt = (d: string) =>
     new Date(d).toLocaleString(undefined, {

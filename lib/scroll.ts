@@ -45,17 +45,12 @@ export function startScroll(): () => void {
 
   if (!reduced) {
     lenis = new Lenis({
-      // Their measured config. lerp 0.1 is the whole feel: a flick keeps
-      // travelling and coasts to a stop instead of ending when your finger does.
-      lerp: 0.1,
+      // noth.in measured feel: duration ~1.2, expo settle. Touch stays native.
+      duration: 1.2,
       wheelMultiplier: 1,
-      easing: (t: number) => 1.001 - Math.pow(2, -10 * t),
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      // Touch keeps the platform's own momentum; Lenis on top of it fights
-      // the OS and feels worse, not better.
       syncTouch: false,
-      // We drive the loop ourselves so the cursor and any scroll-linked work
-      // share one frame.
       autoRaf: false,
     });
     document.documentElement.classList.add("lenis");

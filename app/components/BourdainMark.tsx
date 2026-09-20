@@ -28,11 +28,11 @@ export default function BourdainMark({
     <span className={small ? s.markSmall : s.mark} aria-label="Bourdain">
       <span aria-hidden="true">B</span>
       <span className={s.markO} aria-hidden="true">
-        {usable(meta) ? (
+        {usable(meta) || photo ? (
           <img
             {...(probe ? { "data-loader-object": "", "data-final": isFinal ? "true" : "false" } : {})}
-            src={largest(meta)}
-            srcSet={srcsetAttr(meta)}
+            src={usable(meta) ? largest(meta) : `/home/${photo}`}
+            srcSet={usable(meta) ? srcsetAttr(meta) : undefined}
             sizes={sizes}
             alt=""
             decoding="async"

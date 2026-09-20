@@ -42,10 +42,11 @@ type Props = {
    *  against the same scroll, opposite the frame, so the shrink reads as a
    *  dolly-out rather than a zoom on a flat card. */
   background?: React.ReactNode;
+  invite?: React.ReactNode;
   children?: React.ReactNode;
 };
 
-export default function HeroPullback({ target, video, background, children }: Props) {
+export default function HeroPullback({ target, video, background, invite, children }: Props) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const [pts, setPts] = useState<[number, number][]>([]);
@@ -185,6 +186,7 @@ export default function HeroPullback({ target, video, background, children }: Pr
         ) : (
           <div className={s.pullPhoto}>{children}</div>
         )}
+        {invite && <div className={s.pullInvite}>{invite}</div>}
       </div>
     </section>
   );

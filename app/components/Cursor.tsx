@@ -18,6 +18,11 @@ import s from "./Cursor.module.css";
 
 const LERP = 0.09;
 const SETTLED = 0.3; // px — under this, stop writing transforms
+const LABELS: Record<string, string> = {
+  sit: "Sit with",
+  explore: "Explore",
+  table: "View the table",
+};
 
 export default function Cursor() {
   const pill = useRef<HTMLDivElement>(null);
@@ -53,6 +58,8 @@ export default function Cursor() {
       if (!hit) return;
       active = true;
       el.dataset.active = "true";
+      const kind = hit.getAttribute("data-cursor") || "sit";
+      el.textContent = LABELS[kind] ?? "Explore";
     };
     const out = (e: Event) => {
       if (!active) return;
@@ -98,7 +105,7 @@ export default function Cursor() {
 
   return (
     <div ref={pill} className={s.pill} data-active="false" data-cursor-pill="" aria-hidden="true">
-      SIT DOWN
+      Explore
     </div>
   );
 }

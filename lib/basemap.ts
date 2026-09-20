@@ -64,11 +64,51 @@ function tileSource(): StyleSpecification["sources"] {
   return {};
 }
 
-/** True when we have no tiles at all — the map still runs, showing pins on a
- *  flat ground, which is a legible degraded state rather than a broken one. */
+/** True when we have our own vector tiles. */
 export const hasBasemap = Boolean(PMTILES_URL || PROTOMAPS_KEY);
 
+/** Carto Voyager — streets, labels, depth, no API key. */
+function rasterVoyager(): StyleSpecification {
+  return {
+    version: 8,
+    glyphs: GLYPHS,
+    sources: {
+      carto: {
+        type: "raster",
+        tiles: [
+          "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
+          "https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
+          "https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
+        ],
+        tileSize: 256,
+        maxzoom: 20,
+        attribution:
+          '© <a href="https://www.openstreetmap.org">OpenStreetMap</a> © <a href="https://carto.com">CARTO</a>',
+      },
+    },
+    layers: [
+      {
+        id: "background",
+        type: "background",
+        paint: { "background-color": "#d4d8cc" },
+      },
+      {
+        id: "carto",
+        type: "raster",
+        source: "carto",
+        paint: {
+          "raster-saturation": -0.18,
+          "raster-contrast": 0.06,
+          "raster-brightness-min": 0.04,
+        },
+      },
+    ],
+  };
+}
+
 export function buildBasemapStyle(): StyleSpecification {
+  if (!hasBasemap) return rasterVoyager();
+
   const sources = tileSource();
   const layers: StyleSpecification["layers"] = [
     {

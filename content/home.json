@@ -1,14 +1,14 @@
 {
   "_readme": [
     "The homepage. Edit this, drop images in public/home/, and the page updates.",
-    "EVERY PHOTO NEEDS A CREDIT. Filled 2026-09-20 from Downloads/bourdain_images (CC)."
+    "EVERY PHOTO NEEDS A CREDIT."
   ],
   "loader": {
     "objects": [
       {
         "photo": "bourdain-obama-hanoi.jpg",
         "alt": "Anthony Bourdain and Barack Obama at bun cha in Hanoi",
-        "credit": "Public domain \u2014 White House Photo Office"
+        "credit": "Public domain — White House Photo Office"
       },
       {
         "photo": "bourdain-portrait-hires.jpg",
@@ -16,24 +16,24 @@
         "credit": "CC BY 2.0 via Wikimedia Commons"
       },
       {
-        "photo": "bourdain-signing.jpg",
-        "alt": "Anthony Bourdain at a book signing",
-        "credit": "CC BY 2.0 \u2014 Neeta Lind via Wikimedia"
-      },
-      {
-        "photo": "bourdain-peabody.jpg",
-        "alt": "Anthony Bourdain at the Peabody Awards",
-        "credit": "CC BY 2.0 \u2014 Peabody Awards via Wikimedia"
-      },
-      {
         "photo": "loader-ramen.jpg",
         "alt": "Overhead bowl of ramen",
         "credit": "Public domain / CC0 via Rawpixel"
       },
       {
+        "photo": "bourdain-signing.jpg",
+        "alt": "Anthony Bourdain at a book signing",
+        "credit": "CC BY 2.0 — Neeta Lind via Wikimedia"
+      },
+      {
         "photo": "loader-pho.jpg",
         "alt": "Overhead bowl of pho",
         "credit": "Public domain / CC0 via Rawpixel"
+      },
+      {
+        "photo": "bourdain-peabody.jpg",
+        "alt": "Anthony Bourdain at the Peabody Awards",
+        "credit": "CC BY 2.0 — Peabody Awards via Wikimedia"
       },
       {
         "photo": "loader-dumplings.jpg",
@@ -44,41 +44,107 @@
         "photo": "loader-skewers.jpg",
         "alt": "Skewers on a grill from above",
         "credit": "Public domain / CC0 via Rawpixel"
+      },
+      {
+        "photo": "pairing-dinner.jpg",
+        "alt": "Bourdain at a dinner table, 2008",
+        "credit": "CC BY 2.0 — Wikimedia Commons"
       }
     ],
     "portrait": {
       "photo": "bourdain-peabody.jpg",
       "alt": "Anthony Bourdain at the Peabody Awards",
-      "credit": "CC BY 2.0 \u2014 Peabody Awards via Wikimedia"
+      "credit": "CC BY 2.0 — Peabody Awards via Wikimedia"
     }
   },
   "hero": {
     "photos": [
       {
-        "photo": "hero-ramen-sashimi.jpg",
-        "alt": "Ramen and sashimi overhead",
-        "credit": "CC0 via StockSnap / Openverse",
-        "placeSlug": ""
+        "photo": "bourdain-obama-hanoi.jpg",
+        "alt": "Anthony Bourdain and Barack Obama at bun cha in Hanoi",
+        "credit": "Public domain — White House Photo Office",
+        "placeSlug": "ha-noi-vn"
       },
       {
         "photo": "hero-octopus.jpg",
         "alt": "Fresh octopus at a market",
         "credit": "Public domain / CC0 via Rawpixel",
-        "placeSlug": ""
+        "placeSlug": "tsukiji-fish-market-chuo"
       },
       {
         "photo": "hero-crab.jpg",
         "alt": "Crab at a seafood market",
         "credit": "Public domain / CC0 via Rawpixel",
-        "placeSlug": ""
+        "placeSlug": "borough-market-greater-london"
       }
     ],
     "quotes": [
-      "Travel isn\u2019t always pretty. It isn\u2019t always comfortable. Sometimes it hurts, it even breaks your heart. But that\u2019s okay. The journey changes you.",
-      "If I\u2019m an advocate for anything, it\u2019s to move. As far as you can, as much as you can. Across the ocean, or simply across the river.",
-      "We ask very simple questions: What makes us laugh? What makes us cry? What makes us feel?"
+      {
+        "text": "If I’m an advocate for anything, it’s to move. As far as you can, as much as you can.",
+        "attr": "Anthony Bourdain"
+      }
     ]
   },
+  "london": {
+    "citySlug": "greater-london-gb",
+    "seats": 8,
+    "line": "One table in London. Eight seats. Come alone."
+  },
+  "gallery": [
+    {
+      "photo": "bourdain-obama-hanoi.jpg",
+      "alt": "Bun cha in Hanoi",
+      "credit": "Public domain — White House Photo Office",
+      "placeSlug": "ha-noi-vn",
+      "line": "Hanoi"
+    },
+    {
+      "photo": "hero-octopus.jpg",
+      "alt": "Fresh octopus at a market",
+      "credit": "Public domain / CC0 via Rawpixel",
+      "placeSlug": "borough-market-greater-london",
+      "line": "Borough Market"
+    },
+    {
+      "photo": "pairing-dinner.jpg",
+      "alt": "Bourdain at a dinner table, 2008",
+      "credit": "CC BY 2.0 — Wikimedia Commons",
+      "placeSlug": "st-john-restaurant-greater-london",
+      "line": "St John"
+    },
+    {
+      "photo": "bourdain-signing.jpg",
+      "alt": "Anthony Bourdain at a book signing",
+      "credit": "CC BY 2.0 — Neeta Lind via Wikimedia",
+      "placeSlug": "brasserie-les-halles-new-york",
+      "line": "Les Halles"
+    },
+    {
+      "photo": "hero-crab.jpg",
+      "alt": "Crab at a seafood market",
+      "credit": "Public domain / CC0 via Rawpixel",
+      "placeSlug": "tsukiji-fish-market-chuo",
+      "line": "Tsukiji"
+    }
+  ],
+  "reels": [
+    {
+      "file": "dont-be-afraid.mp4",
+      "poster": "pullback-kitchen.jpg",
+      "credit": "Clip by MANIFESTO (@bymnfsto), used with permission",
+      "line": "Don't be afraid to sit down."
+    },
+    {
+      "photo": "bourdain-obama-hanoi.jpg",
+      "credit": "Public domain — White House Photo Office",
+      "line": "A table is enough."
+    },
+    {
+      "photo": "pairing-dinner.jpg",
+      "credit": "CC BY 2.0 — Wikimedia Commons",
+      "line": "Come alone. That's the point."
+    }
+  ],
   "pullback": {
     "file": "dont-be-afraid.mp4",
     "credit": "Clip by MANIFESTO (@bymnfsto), used with permission",
@@ -87,38 +153,34 @@
     "vertical": true,
     "background": {
       "photo": "pullback-kitchen.jpg",
-      "alt": "A small commercial kitchen \u2014 steel counters, ovens and a griddle, terracotta tile floor",
-      "credit": "Set photo for MANIFESTO clip context \u2014 replace if a stronger credit is required"
+      "alt": "A small commercial kitchen — steel counters, ovens and a griddle, terracotta tile floor",
+      "credit": "Set photo for MANIFESTO clip context — used with the clip"
     }
   },
   "pairing": {
     "photos": [
       {
+        "photo": "bourdain-peabody.jpg",
+        "alt": "Anthony Bourdain at the Peabody Awards",
+        "credit": "CC BY 2.0 — Peabody Awards via Wikimedia"
+      },
+      {
+        "photo": "bourdain-obama-hanoi.jpg",
+        "alt": "Anthony Bourdain and Barack Obama at bun cha in Hanoi",
+        "credit": "Public domain — White House Photo Office"
+      },
+      {
         "photo": "pairing-dinner.jpg",
         "alt": "Bourdain at a dinner table, 2008",
-        "credit": "CC BY 2.0 \u2014 Wikimedia Commons"
-      },
-      {
-        "photo": "pairing-wnyc.jpg",
-        "alt": "Anthony Bourdain on WNYC, 2011",
-        "credit": "CC BY 2.0 \u2014 Wikimedia Commons"
-      },
-      {
-        "photo": "pairing-kitchen.jpg",
-        "alt": "Bourdain in a kitchen with a skull tee, 2008",
-        "credit": "CC BY 2.0 \u2014 Wikimedia Commons"
+        "credit": "CC BY 2.0 — Wikimedia Commons"
       }
     ],
     "quotes": [
-      "Maybe that\u2019s enlightenment enough: to know that there is no final resting place of the mind; no moment of smug clarity.",
-      "It\u2019s an irritating reality that many places and events in our lives \u2014 even whole eras \u2014 are somewhat absurd, and almost meaningless.",
-      "The journey is part of the experience \u2014 an expression of the seriousness of one\u2019s intent to know the world."
+      {
+        "text": "Maybe that’s enlightenment enough: to know that there is no final resting place of the mind.",
+        "attr": "Anthony Bourdain, Kitchen Confidential"
+      }
     ]
-  },
-  "video": {
-    "url": "",
-    "title": "",
-    "source": ""
   },
   "colophon": {
     "copyright": "Fan-made, non-commercial. Not affiliated with the Bourdain estate, CNN, or Zero Point Zero. Place data compiled by deannd (r/AnthonyBourdain), used with permission."

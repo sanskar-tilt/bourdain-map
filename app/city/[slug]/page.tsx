@@ -1,4 +1,6 @@
 import { allCities, cityBySlug, SHOW_NAMES } from "../../../lib/detail";
+import { cityQuote, cityClip } from "../../../lib/cityQuotes";
+import { youtubeId, youtubeThumb, youtubeWatch } from "../../../lib/youtube";
 import styles from "./city.module.css";
 import Link from "next/link";
 
@@ -52,10 +54,12 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
   if (!city) return <p className={styles.missing}>No such city.</p>;
 
   const gone = city.places.filter((p) => p.status === "closed").length;
-  // Only exact matches are stated plainly; weaker ones are marked as such,
-  // because a country-level match is a guess with a nice haircut.
   const episodes = city.episodes.filter((e) => e.match === "exact");
   const looser = city.episodes.filter((e) => e.match !== "exact");
+  const quote = cityQuote(city.slug);
+  const clip = cityClip(city.slug);
+  const yt = clip?.id ?? youtubeId(city.videoUrl);
+  const ytTitle = clip?.title ?? city.videoTitle ?? "Official clip";
 
   return (
     <article className={styles.city}>
@@ -64,6 +68,15 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         {city.places.length} place{city.places.length === 1 ? "" : "s"}
         {gone > 0 && <>, {gone} of them gone</>}
       </p>
+
+      {quote && (
+        <section className={styles.section}>
+          <blockquote className={styles.quote}>
+            <p>{quote.text}</p>
+            <cite>{quote.attr}</cite>
+          </blockquote>
+        </section>
+      )}
 
       {episodes.length > 0 && (
         <section className={styles.section}>
@@ -84,7 +97,31 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </section>
       )}
 
-      {city.videoUrl ? (
+      {yt ? (
+        <section className={styles.section}>
+          <h2 className={styles.h2}>Watch</h2>
+          <a
+            className={styles.ytCard}
+            href={youtubeWatch(yt)}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <img
+              className={styles.ytThumb}
+              src={youtubeThumb(yt)}
+              alt=""
+              width={480}
+              height={360}
+            />
+            <span>
+              {ytTitle}
+              {city.videoSource && (
+                <span className={styles.videoSource}>{city.videoSource}</span>
+              )}
+            </span>
+          </a>
+        </section>
+      ) : city.videoUrl ? (
         <section className={styles.section}>
           <h2 className={styles.h2}>Watch</h2>
           <a className={styles.video} href={city.videoUrl} rel="noreferrer" target="_blank">
@@ -92,15 +129,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             <span className={styles.videoSource}>{city.videoSource}</span>
           </a>
         </section>
-      ) : (
-        <section className={styles.section}>
-          <h2 className={styles.h2}>Watch</h2>
-          <p className={styles.empty}>
-            No official clip for {city.name} that we can point at. Only the real
-            uploads go here — the rips get taken down and the link rots.
-          </p>
-        </section>
-      )}
+      ) : null}
 
       <section className={styles.section}>
         <h2 className={styles.h2}>The places</h2>

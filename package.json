@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "prebuild": "node scripts/optimise_photos.mjs && node scripts/render_world_image.mjs",
+    "prebuild": "node scripts/optimise_photos.mjs && node scripts/render_world_image.mjs && node scripts/build_detail.mjs",
     "photos": "node scripts/optimise_photos.mjs"
   },
   "dependencies": {

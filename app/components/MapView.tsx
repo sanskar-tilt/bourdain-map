@@ -69,18 +69,18 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
     const m = new MapLibreMap({
       container: holder.current,
       style: buildBasemapStyle(),
-      // Framed rather than zoomed all the way out: this crops the poles and
-      // centres the landmass, so the opening frame is a composition instead
-      // of a Mercator default. See notes/decisions.md.
       center: [10, 26],
       zoom: 1.45,
       minZoom: 1.1,
       maxZoom: 18,
       attributionControl: { compact: true },
-      // Cheaper compositing on a map whose basemap never tilts.
       pitchWithRotate: false,
       dragRotate: false,
       renderWorldCopies: true,
+      fadeDuration: 180,
+      maxTileCacheSize: 160,
+      pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      cancelPendingTileRequestsWhileZooming: true,
     });
     map.current = m;
     // Exposed so the map can be inspected from the console and from the
@@ -223,6 +223,28 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
           "circle-opacity-transition": { duration: 300 },
         },
       });
+      m.addLayer({
+        id: "pin-labels",
+        type: "symbol",
+        source: "places",
+        filter: ["!", ["has", "point_count"]],
+        minzoom: 11,
+        layout: {
+          "text-field": ["get", "name"],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 11, 10, 15, 12],
+          "text-font": ["Noto Sans Regular"],
+          "text-offset": [0, 1.15],
+          "text-anchor": "top",
+          "text-optional": true,
+          "text-padding": 4,
+        },
+        paint: {
+          "text-color": INK,
+          "text-halo-color": PAPER,
+          "text-halo-width": 1.3,
+        },
+      });
+
       /* ---- interaction -------------------------------------------------- */
       const hit = ["pins", "pin-repeat"];
       hit.forEach((id) => {
@@ -329,10 +351,8 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
         <button className={styles.reset} onClick={resetView} type="button">
           Whole world
         </button>
-        {!hasBasemap && (
-          <p className={styles.noTiles}>
-            No basemap yet — pins only.
-          </p>
+        {false && !hasBasemap && (
+          <p className={styles.noTiles}>No basemap yet — pins only.</p>
         )}
         <p className={styles.status} aria-live="polite">
           {loaded === 0 ? "Finding the places…"

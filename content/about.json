@@ -1,40 +1,21 @@
 {
-  "_readme": [
-    "This file is the About page. Edit it, drop images in public/about/, and",
-    "the page updates \u2014 no code change needed.",
-    "",
-    "PHOTOS: put the original files in public/about/ at whatever size your",
-    "camera produced. `npm run build` resizes them (or run",
-    "`node scripts/optimise_photos.mjs` on its own). Never reference anything",
-    "in public/about/opt/ \u2014 that folder is generated.",
-    "",
-    "PLACE LINKS: `placeSlug` is the last part of a place URL. Open the pin on",
-    "the map and copy it out of the address bar \u2014 /place/THIS-BIT/. The build",
-    "checks every slug and tells you if one doesn't exist, so a typo becomes a",
-    "warning rather than a dead link.",
-    "",
-    "Any section left empty renders as a marked placeholder rather than",
-    "disappearing, so you can see what's still missing."
-  ],
   "intro": {
     "photo": "",
     "alt": "",
-    "text": ""
+    "text": "A map of where Anthony Bourdain ate, and a way for strangers to sit down at those places and eat together. Fan-made. Sells nothing."
   },
-  "places": [
-    {
-      "photo": "",
-      "alt": "",
-      "caption": "",
-      "placeSlug": ""
-    }
-  ],
+  "places": [],
   "tattoo": {
     "photo": "",
     "alt": "",
     "caption": ""
   },
   "essay": {
-    "paragraphs": []
+    "paragraphs": [
+      "People everywhere are broadly the same, mostly kind, and everyone has a story worth hearing. That was his idea. This site is built so that idea has somewhere to sit, rather than a paragraph on an About page.",
+      "The map is the browsing surface. The table is the point: someone picks a place, sets a date, opens a few seats, strangers take them. After the meal, whoever went writes a short piece about who they met. Not a review — a story.",
+      "The first table is in London. Eight seats. Come alone. We will write when the date is set.",
+      "Almost every pin comes from a map deannd built on r/AnthonyBourdain over about two years, watching the shows and writing down where he went. Used with permission. Her descriptions appear on the place pages, quoted and credited — they are hers, not the site's voice."
+    ]
   }
 }

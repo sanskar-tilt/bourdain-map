@@ -47,6 +47,10 @@
 
 /* This is the primary navigation, not a utility. A first-time visitor
    looking at every pin at once needs a way in, and it is this. */
+.searchSlot {
+  margin-left: auto;
+  min-width: min(420px, 56vw);
+}
 .searchTrigger {
   margin-left: auto;
   display: flex;

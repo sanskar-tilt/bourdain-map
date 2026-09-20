@@ -1,47 +1,31 @@
 {
   "_readme": [
-    "This file is the Reels page. Paste a reel URL in, rebuild, done — no",
-    "code change to add a reel.",
-    "",
-    "Each entry in `reels`:",
-    "  url       required. The full reel URL, straight from the address bar.",
-    "            Instagram: https://www.instagram.com/reel/SHORTCODE/",
-    "            TikTok:    https://www.tiktok.com/@user/video/1234567890",
-    "            Short links (vm.tiktok.com) don't work — open one in a",
-    "            browser first and paste the URL it lands on.",
-    "  platform  required. \"instagram\" or \"tiktok\". If it disagrees with",
-    "            the URL, the URL wins and the build says so.",
-    "  caption   optional. Your line under the clip. The player itself is",
-    "            the platform's; this caption is the site's voice.",
-    "  added     optional. A date, for your own bookkeeping. Not displayed.",
-    "",
-    "Entries that can't be embedded are skipped with a build warning, never",
-    "shipped broken. A reel deleted upstream after shipping degrades on the",
-    "page itself: the caption stays, the player becomes a marked",
-    "'no longer available' state.",
-    "",
-    "Nothing is downloaded or rehosted — clips play through Instagram and",
-    "TikTok's own embeds and belong to their creators. The three entries",
-    "below are working samples; delete them when you have your own."
+    "Immersive /reels player. Paste a reel URL or a local file.",
+    "Instagram: https://www.instagram.com/reel/SHORTCODE/",
+    "TikTok:    https://www.tiktok.com/@user/video/1234567890",
+    "Local:     file in public/home/ (wins the slide; no outbound player)."
   ],
   "reels": [
     {
+      "file": "dont-be-afraid.mp4",
+      "poster": "pullback-kitchen.jpg",
+      "caption": "Don't be afraid to sit down.",
+      "credit": "Clip by MANIFESTO (@bymnfsto), used with permission"
+    },
+    {
       "url": "https://www.instagram.com/reel/DaBbKMnRBsy/",
       "platform": "instagram",
-      "caption": "José Andrés, on what would have been Bourdain's birthday.",
-      "added": "2026-08-19"
+      "caption": "José Andrés, on what would have been his birthday."
     },
     {
       "url": "https://www.tiktok.com/@thejonathankite/video/7459479822331284766",
       "platform": "tiktok",
-      "caption": "Jonathan Kite doing Bourdain at a Costco. The voice is unnervingly close.",
-      "added": "2026-08-19"
+      "caption": "The voice is unnervingly close."
     },
     {
       "url": "https://www.tiktok.com/@joshuadairen/video/7514448051121949994",
       "platform": "tiktok",
-      "caption": "On why he was a bridge, not just a chef.",
-      "added": "2026-08-19"
+      "caption": "A bridge, not just a chef."
     }
   ]
 }

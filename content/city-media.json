@@ -1,0 +1,299 @@
+{
+  "_readme": [
+    "Priority-city extras. Quote and youtube only when sourced.",
+    "YouTube ids are official CNN (or Max) clips, verified via oEmbed.",
+    "An absent field stays empty. Never invent either.",
+    "groups[] expand onto every listed slug. aliases help episode matching."
+  ],
+  "groups": [
+    {
+      "slugs": ["shibuya-jp", "shinjuku-jp", "minato-jp", "chuo-jp"],
+      "quote": {
+        "text": "I love Tokyo. If I had to eat only in one city for the rest of my life, Tokyo would be it.",
+        "attr": "Anthony Bourdain, Parts Unknown field notes"
+      },
+      "youtube": {
+        "id": "Rx2g65MjsLk",
+        "title": "Tokyo after dark — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["ha-noi-vn"],
+      "quote": {
+        "text": "Vietnam is a country, not a war.",
+        "attr": "Anthony Bourdain"
+      },
+      "youtube": {
+        "id": "efG56KcQj0Q",
+        "title": "Dinner with President Obama in Hanoi — Parts Unknown (Max)"
+      }
+    },
+    {
+      "slugs": ["ho-chi-minh-city-vn"],
+      "quote": {
+        "text": "Vietnam is a country, not a war.",
+        "attr": "Anthony Bourdain"
+      },
+      "youtube": {
+        "id": "NMrgQ_dOyhk",
+        "title": "Vietnam's street food — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["greater-london-gb", "city-of-westminster-gb"],
+      "quote": {
+        "text": "If I’m an advocate for anything, it’s to move. As far as you can, as much as you can.",
+        "attr": "Anthony Bourdain"
+      }
+    },
+    {
+      "slugs": ["beirut-lb"],
+      "quote": {
+        "text": "Am I wrong to love this place?",
+        "attr": "Anthony Bourdain, on Beirut — Parts Unknown (CNN)"
+      },
+      "youtube": {
+        "id": "U0CzPiIDBD4",
+        "title": "On Beirut: ‘Am I wrong to love this place?’ — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["istanbul-tr", "uskudar-tr"],
+      "quote": {
+        "text": "A confusing yet delightful country.",
+        "attr": "Anthony Bourdain, on Turkey — Parts Unknown (CNN)"
+      },
+      "youtube": {
+        "id": "NND5Qv4mk9w",
+        "title": "Istanbul — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["detroit-us"],
+      "quote": {
+        "text": "It IS America.",
+        "attr": "Anthony Bourdain, CNN Parts Unknown field notes, Detroit"
+      }
+    },
+    {
+      "slugs": ["shanghai-cn", "jingan-district-cn"],
+      "youtube": {
+        "id": "R1iW6gkpb_8",
+        "title": "‘Pillows of happiness’ — Shanghai, Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["rome-it"],
+      "youtube": {
+        "id": "zLuCzgO5URE",
+        "title": "The real Rome — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["lyon-fr"],
+      "youtube": {
+        "id": "0Nth_j2jhsM",
+        "title": "Lyon with Daniel Boulud — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["granada-es"],
+      "youtube": {
+        "id": "CHlyf2hoPW4",
+        "title": "Tapas in Granada — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["charleston-us"],
+      "youtube": {
+        "id": "XqEtC2X9fAw",
+        "title": "Charleston with Sean Brock and Bill Murray — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["havana-cu"],
+      "youtube": {
+        "id": "fAMoe-TfZM0",
+        "title": "The hottest spot in Havana — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["saint-petersburg-ru"],
+      "youtube": {
+        "id": "1TC28XjJoo0",
+        "title": "Midnight train to St. Petersburg — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["sao-paulo-br"],
+      "youtube": {
+        "id": "kbUHvKIAWrM",
+        "title": "The caipirinha man — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["kisangani-cd"],
+      "youtube": {
+        "id": "TJ0yBH414fM",
+        "title": "Fishing on the Congo — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["yangon-city-mm"],
+      "youtube": {
+        "id": "owXDTgPa--Y",
+        "title": "Tea you can eat — Myanmar, Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["tangier-ma", "fez-ma", "casablanca-ma"],
+      "youtube": {
+        "id": "DXNq4PyfNqE",
+        "title": "Morocco — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["tehran-ir", "isfahan-ir"],
+      "youtube": {
+        "id": "w9mwlWcQ53A",
+        "title": "Iran — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["glasgow-gb", "city-of-edinburgh-gb"],
+      "youtube": {
+        "id": "4F2WKLhhnhk",
+        "title": "Scotland — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["lima-pe"],
+      "youtube": {
+        "id": "aA2Y6NVxSDo",
+        "title": "Ceviche in Peru — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["mumbai-in", "kolkata-in", "amritsar-in"],
+      "youtube": {
+        "id": "_RFTnb4nC-A",
+        "title": "Indian food — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["livingston-us"],
+      "youtube": {
+        "id": "BFzJcULxpq4",
+        "title": "Mining in Montana — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["seoul-kr"],
+      "youtube": {
+        "id": "enf4UveWpuA",
+        "title": "Hot pot in South Korea — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["quebec-ca"],
+      "youtube": {
+        "id": "-jbmWbol258",
+        "title": "Quebec — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["chicago-us"],
+      "youtube": {
+        "id": "jD5KjcaFisE",
+        "title": "Chicago's Chinatown — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["new-york-us"],
+      "youtube": {
+        "id": "hC3rukJc79U",
+        "title": "Old-school Puerto Rican in the Bronx — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["asuncion-py"],
+      "youtube": {
+        "id": "QeBUI7kVrKs",
+        "title": "Late night in Paraguay — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["copenhagen-dk"],
+      "youtube": {
+        "id": "-TXkdZGeCio",
+        "title": "A famous Danish late-night dish — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["miami-us", "miami-beach-us", "miami-dade-county-us"],
+      "youtube": {
+        "id": "cJWFVoHMhVk",
+        "title": "Talking Miami — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["oaxaca-city-mx"],
+      "youtube": {
+        "id": "_A1Yvxdr06w",
+        "title": "A Zapotec meal outside Oaxaca — Parts Unknown (CNN)"
+      }
+    },
+    {
+      "slugs": ["palermo-it"],
+      "youtube": {
+        "id": "e9weQLCSNPY",
+        "title": "Sicily — Parts Unknown (CNN)"
+      }
+    }
+  ],
+  "aliases": {
+    "greater-london-gb": { "exact": ["london"] },
+    "city-of-westminster-gb": { "exact": ["london", "westminster"] },
+    "city-of-edinburgh-gb": { "exact": ["edinburgh"] },
+    "ha-noi-vn": { "exact": ["hanoi", "ha noi"], "loose": ["vietnam"] },
+    "ho-chi-minh-city-vn": { "exact": ["ho chi minh", "saigon"], "loose": ["vietnam"] },
+    "shibuya-jp": { "exact": ["tokyo", "shibuya"] },
+    "shinjuku-jp": { "exact": ["tokyo", "shinjuku"] },
+    "minato-jp": { "exact": ["tokyo", "minato"] },
+    "chuo-jp": { "exact": ["tokyo", "tsukiji"] },
+    "johannesburg-ward-66-za": { "exact": ["johannesburg"], "loose": ["south africa"] },
+    "east-honolulu-us": { "exact": ["honolulu", "hawaii"] },
+    "paradise-us": { "exact": ["las vegas"] },
+    "miami-dade-county-us": { "exact": ["miami"] },
+    "miami-beach-us": { "exact": ["miami"] },
+    "chiang-mai-city-municipality-th": { "exact": ["chiang mai"] },
+    "yangon-city-mm": { "exact": ["yangon", "rangoon"], "loose": ["myanmar"] },
+    "central-jakarta-id": { "exact": ["jakarta"] },
+    "ubud-district-id": { "exact": ["ubud", "bali"] },
+    "vientiane-capital-la": { "exact": ["vientiane"] },
+    "jingan-district-cn": { "exact": ["shanghai"] },
+    "saint-petersburg-ru": { "exact": ["st petersburg", "saint petersburg"] },
+    "sao-paulo-br": { "exact": ["sao paulo"] },
+    "rio-de-janeiro-br": { "exact": ["rio de janeiro", "rio"] },
+    "san-carlos-de-bariloche-ar": { "exact": ["bariloche"] },
+    "oaxaca-city-mx": { "exact": ["oaxaca"] },
+    "mexico-city-mx": { "exact": ["mexico city"] },
+    "st-johns-ca": { "exact": ["st johns"] },
+    "uskudar-tr": { "exact": ["istanbul"] },
+    "chamonix-mont-blanc-fr": { "exact": ["chamonix"] },
+    "san-sebastian-es": { "exact": ["san sebastian"] },
+    "george-town-my": { "exact": ["george town", "penang"] },
+    "hong-kong-cn": { "exact": ["hong kong"] },
+    "macau-cn": { "exact": ["macau", "macao"] },
+    "ngorongoro-tz": { "exact": ["ngorongoro"] },
+    "livingston-us": { "exact": ["livingston", "montana"] },
+    "san-juan-us": { "exact": ["san juan", "puerto rico"] },
+    "santo-domingo-do": { "exact": ["santo domingo"] },
+    "kisangani-cd": { "exact": ["kisangani"], "loose": ["congo"] },
+    "tripoli-ly": { "exact": ["tripoli"], "loose": ["libya"] },
+    "antananarivo-mg": { "exact": ["antananarivo"], "loose": ["madagascar"] },
+    "belo-horizonte-br": { "exact": ["belo horizonte"] },
+    "puerto-varas-cl": { "exact": ["puerto varas"] },
+    "winchester-us": { "exact": ["winchester"] }
+  }
+}

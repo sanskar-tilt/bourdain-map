@@ -6,11 +6,11 @@ import BourdainMark from "./BourdainMark";
 import styles from "./SiteShell.module.css";
 
 const NAV = [
+  { href: "/", label: "Home" },
   { href: "/map/", label: "Map" },
+  { href: "/reels/", label: "Reels" },
   { href: "/tables/", label: "Tables" },
   { href: "/stories/", label: "Stories" },
-  { href: "/reels/", label: "Reels" },
-  { href: "/about/", label: "About" },
 ];
 
 export default function SiteHeader() {
@@ -27,14 +27,17 @@ export default function SiteHeader() {
           <Link
             key={n.href}
             href={n.href}
-            aria-current={path.startsWith(n.href) ? "page" : undefined}
+            aria-current={
+              n.href === "/"
+                ? path === "/" ? "page" : undefined
+                : path.startsWith(n.href) ? "page" : undefined
+            }
             // Map links carry the pill; everything else keeps its cursor.
             {...(n.href === "/map/" ? { "data-cursor": "sit" } : {})}
           >
             {n.label}
           </Link>
         ))}
-        <Link href="/account/">You</Link>
       </nav>
     </header>
   );

@@ -129,6 +129,12 @@ html[data-opening="pending"] .arrival-nav,
 html[data-opening="curtain"] .arrival-nav,
 html[data-opening="photo"] .arrival-nav,
 html[data-opening="text"] .arrival-nav { opacity: 0; }
+html[data-opening="pending"] .arrival-text,
+html[data-opening="curtain"] .arrival-text { opacity: 0; }
+.arrival-text {
+  opacity: 1;
+  transition: opacity var(--t-move) var(--ease-out);
+}
 .arrival-nav {
   opacity: 1;
   transition: opacity var(--t-move) var(--ease-out);

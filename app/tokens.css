@@ -66,6 +66,9 @@
   /* ---- tracking: exactly two values ---- */
   --track-tight: -0.01em;  /* anything display-sized        */
   --track-label:  0.03em;  /* 12px uppercase mono, always   */
+  --track-mid:    0.04em;
+  --track-wide:   0.12em;
+  --letter-stagger: 60ms;
 
   /* ---- leading ---- */
   --lh-solid: 1;      /* everything display-sized, set solid */

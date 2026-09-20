@@ -1,0 +1,8 @@
+{
+  "_readme": [
+    "Attributed Bourdain lines, keyed by city slug.",
+    "Only add a quote you can source. An absent city shows no quote.",
+    "Never invent a city association to fill the panel."
+  ],
+  "quotes": {}
+}

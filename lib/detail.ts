@@ -78,7 +78,7 @@ function load(): Detail {
   if (!fs.existsSync(p)) {
     // A missing artifact must fail loudly at build, not render an empty site.
     throw new Error(
-      "data/detail.json is missing. Run: python3 scripts/export_map_data.py"
+      "data/detail.json is missing. Run: node scripts/build_detail.mjs"
     );
   }
   cached = JSON.parse(fs.readFileSync(p, "utf-8")) as Detail;

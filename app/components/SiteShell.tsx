@@ -32,6 +32,11 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   // No smoothing on map routes: the map owns the wheel there.
   if (isMapRoute(path)) return <MapShell>{children}</MapShell>;
 
+  // Reels own the scroll. Lenis and the site header would fight snap.
+  if (path === "/reels" || path.startsWith("/reels/")) {
+    return <div className={styles.reelRoot}>{children}</div>;
+  }
+
   return (
     <div className={styles.doc}>
       <SmoothScroll />

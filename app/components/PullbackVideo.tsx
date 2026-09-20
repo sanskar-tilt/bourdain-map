@@ -172,7 +172,9 @@ function LocalPullback({
           // Muted is the default on every arrival, not just the first.
           el.muted = true;
           setMuted(true);
-          if (el.ended) el.currentTime = start ?? 0;
+          if (el.ended) {
+            el.currentTime = start ?? 0;
+          }
           void el.play().catch(() => setState("blocked"));
         } else {
           el.pause();
@@ -205,6 +207,7 @@ function LocalPullback({
       src={src}
       muted
       playsInline
+      loop
       controls={controls}
       preload="metadata"
       onLoadedMetadata={() => {

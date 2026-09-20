@@ -137,17 +137,31 @@ function hexToRgb(hex: string): [number, number, number] {
   ];
 }
 
-export default function FluidHero() {
+export default function FluidHero({
+  video,
+  poster,
+}: {
+  video?: string;
+  poster?: string;
+}) {
   const stage = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const footageRef = useRef<HTMLVideoElement>(null);
+  const stillRef = useRef<HTMLImageElement>(null);
   const [live, setLive] = useState(false);
+  const [brush, setBrush] = useState(false);
 
-  /* Decide whether the sim may exist at all. Re-evaluated on media changes. */
+  /* WebGL fluid on wide fine pointers. Everyone else gets a 2D brush
+     that still reveals the footage — never a dead hero. */
   useEffect(() => {
     const wide = window.matchMedia("(min-width: 992px)");
     const fine = window.matchMedia("(pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setLive(wide.matches && fine.matches && !reduced.matches);
+    const sync = () => {
+      const ok = wide.matches && fine.matches && !reduced.matches;
+      setLive(ok);
+      setBrush(!ok && !reduced.matches);
+    };
     sync();
     for (const m of [wide, fine, reduced]) m.addEventListener("change", sync);
     return () => {
@@ -273,7 +287,12 @@ export default function FluidHero() {
       gl.bindTexture(gl.TEXTURE_2D, mapTex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
     };
-    img.src = "/data/world-map.png";
+    const still = stillRef.current;
+    if (still?.complete && still.naturalWidth) {
+      gl.bindTexture(gl.TEXTURE_2D, mapTex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, still);
+    }
+    img.src = poster || "/data/world-map.png";
 
     const ground = hexToRgb(
       getComputedStyle(document.documentElement).getPropertyValue("--ground") || "#E6E6E1"
@@ -341,6 +360,14 @@ export default function FluidHero() {
       const now = performance.now();
       const dt = Math.min(1 / 30, (now - last) / 1000);
       last = now;
+
+      const footage = footageRef.current;
+      if (footage && footage.readyState >= 2) {
+        gl.bindTexture(gl.TEXTURE_2D, mapTex);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, footage);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
+      }
 
       if (pointer.moved) {
         inkAlive = true;
@@ -413,16 +440,99 @@ export default function FluidHero() {
       canvas.removeEventListener("webglcontextlost", onLost);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [live]);
+  }, [live, poster]);
+
+  /* Soft 2D reveal when WebGL is gated off — still footage, still a gesture. */
+  useEffect(() => {
+    if (live || !brush) return;
+    const host = stage.current;
+    const canvas = canvasRef.current;
+    if (!host || !canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const size = () => {
+      const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+      canvas.width = Math.round(host.clientWidth * dpr);
+      canvas.height = Math.round(host.clientHeight * dpr);
+    };
+    size();
+    const trails: { x: number; y: number; life: number }[] = [];
+    const onMove = (e: PointerEvent) => {
+      const r = host.getBoundingClientRect();
+      trails.push({
+        x: ((e.clientX - r.left) / r.width) * canvas.width,
+        y: ((e.clientY - r.top) / r.height) * canvas.height,
+        life: 1,
+      });
+    };
+    host.addEventListener("pointermove", onMove, { passive: true });
+    const stop = onFrame(() => {
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = getComputedStyle(document.documentElement)
+        .getPropertyValue("--ground") || "#E6E6E1";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "destination-out";
+      for (let i = trails.length - 1; i >= 0; i--) {
+        const t = trails[i];
+        t.life -= 0.012;
+        if (t.life <= 0) { trails.splice(i, 1); continue; }
+        const g = ctx.createRadialGradient(t.x, t.y, 0, t.x, t.y, 90 * t.life);
+        g.addColorStop(0, `rgba(0,0,0,${0.55 * t.life})`);
+        g.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, 90 * t.life, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    window.addEventListener("resize", size);
+    return () => {
+      stop();
+      host.removeEventListener("pointermove", onMove);
+      window.removeEventListener("resize", size);
+    };
+  }, [live, brush]);
+
+  const letters = ["B", "O", "U", "R", "D", "A", "I", "N"];
 
   return (
     <section ref={stage} className={s.fluidHero} data-hero data-live={live}>
-      {/* SSR ships no canvas: the static composition IS the markup, and the
-          sim mounts over it only when every gate passes. */}
-      {live && <canvas ref={canvasRef} className={s.fluidCanvas} data-fluid="" />}
+      {video && (
+        <video
+          ref={footageRef}
+          className={s.heroFootage}
+          src={video}
+          poster={poster}
+          muted
+          playsInline
+          loop
+          autoPlay
+          preload="metadata"
+        />
+      )}
+      {poster && (
+        <img
+          ref={stillRef}
+          className={s.heroFootage}
+          src={poster}
+          alt=""
+          hidden={Boolean(video)}
+        />
+      )}
+      {(live || brush) && <canvas ref={canvasRef} className={s.fluidCanvas} data-fluid="" />}
       <h1 className={s.heroWord} aria-label="Bourdain">
-        BOURDAIN
+        {letters.map((ch, i) => (
+          <span key={ch + i} className={s.heroLetter} style={{ ["--i" as string]: i }}>
+            <span>{ch}</span>
+          </span>
+        ))}
       </h1>
+      <p className={`${s.heroSupport} arrival-text`} data-arrival-text>
+        Follow his footsteps. Share a table.
+      </p>
+      <a className={`${s.heroCta} arrival-text`} data-arrival-text href="/tables/#london" data-cursor="table">
+        Hear about the first London dinner
+      </a>
       <p className={`${s.scrollCue} arrival-cue`} aria-hidden="true">
         <span className="label">scroll</span>
       </p>

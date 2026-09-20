@@ -1,4 +1,5 @@
 .doc { min-height: 100%; display: flex; flex-direction: column; }
+.reelRoot { min-height: 100dvh; background: #0a0a0a; }
 
 .header {
   position: sticky;
@@ -42,5 +43,5 @@
 
 @media (max-width: 640px) {
   .header { gap: var(--s3); padding: var(--s3) var(--s4); }
-  .nav { gap: var(--s3); }
+  .nav { gap: var(--s2); flex-wrap: wrap; justify-content: flex-end; }
 }

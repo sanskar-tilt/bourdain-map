@@ -1,12 +1,130 @@
 {
- "bourdain-portrait.jpg": {
-  "width": 806,
-  "height": 1044,
-  "ratio": 0.772,
+ "bourdain-obama-hanoi.jpg": {
+  "width": 1024,
+  "height": 682,
+  "ratio": 1.5015,
   "srcset": [
    {
     "width": 800,
-    "src": "/home/opt/bourdain-portrait-800.webp"
+    "src": "/home/opt/bourdain-obama-hanoi-800.webp"
+   }
+  ]
+ },
+ "bourdain-portrait-hires.jpg": {
+  "width": 1600,
+  "height": 1067,
+  "ratio": 1.4995,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-portrait-hires-800.webp"
+   },
+   {
+    "width": 1600,
+    "src": "/home/opt/bourdain-portrait-hires-1600.webp"
+   }
+  ]
+ },
+ "loader-ramen.jpg": {
+  "width": 1024,
+  "height": 680,
+  "ratio": 1.5059,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/loader-ramen-800.webp"
+   }
+  ]
+ },
+ "bourdain-signing.jpg": {
+  "width": 894,
+  "height": 1206,
+  "ratio": 0.7413,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-signing-800.webp"
+   }
+  ]
+ },
+ "loader-pho.jpg": {
+  "width": 1024,
+  "height": 769,
+  "ratio": 1.3316,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/loader-pho-800.webp"
+   }
+  ]
+ },
+ "bourdain-peabody.jpg": {
+  "width": 1057,
+  "height": 1474,
+  "ratio": 0.7171,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-peabody-800.webp"
+   }
+  ]
+ },
+ "loader-dumplings.jpg": {
+  "width": 2048,
+  "height": 1536,
+  "ratio": 1.3333,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/loader-dumplings-800.webp"
+   },
+   {
+    "width": 1600,
+    "src": "/home/opt/loader-dumplings-1600.webp"
+   }
+  ]
+ },
+ "loader-skewers.jpg": {
+  "width": 683,
+  "height": 1024,
+  "ratio": 0.667,
+  "srcset": [
+   {
+    "width": 683,
+    "src": "/home/opt/loader-skewers-683.webp"
+   }
+  ]
+ },
+ "pairing-dinner.jpg": {
+  "width": 1280,
+  "height": 960,
+  "ratio": 1.3333,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/pairing-dinner-800.webp"
+   }
+  ]
+ },
+ "hero-octopus.jpg": {
+  "width": 1024,
+  "height": 683,
+  "ratio": 1.4993,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/hero-octopus-800.webp"
+   }
+  ]
+ },
+ "hero-crab.jpg": {
+  "width": 576,
+  "height": 1024,
+  "ratio": 0.5625,
+  "srcset": [
+   {
+    "width": 576,
+    "src": "/home/opt/hero-crab-576.webp"
    }
   ]
  },
