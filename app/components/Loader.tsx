@@ -8,16 +8,9 @@ import s from "./home.module.css";
 
 /* The loader.
  *
- * BOURDAIN with the O as a photo window. Through the count, overhead shots of
- * food cycle through the O on a non-linear interval — slow at both ends,
- * fastest mid-count. That breathing is the effect; a constant interval is a
- * spinner.
- *
- * Then it resolves. When the count lands the cycling stops and the last image
- * in the O is the one photograph of the man. Hold, then the curtain lifts.
- * All of this, and then him. He is never one frame in the shuffle — arriving
- * at him once is a sentence; flickering his face a dozen times is a gimmick,
- * and it spends one licensed photograph instead of a dozen.
+ * First paint is the whole viewport: BOURDAIN, huge, the O a window that
+ * cycles portraits of him. Nothing else gets a vote until this finishes.
+ * Then the curtain lifts into the film.
  *
  * Rendered server-side. Every dismissal read — sessionStorage, matchMedia,
  * the query string — happens in an effect, so first paint is identical on
@@ -126,8 +119,9 @@ export default function Loader({
           meta={shown?.meta}
           alt={shown?.alt}
           isFinal={resolved}
+          huge
           probe
-          sizes="clamp(64px, 9vw, 132px)"
+          sizes="clamp(160px, 22vw, 360px)"
         />
         <span className={s.loaderCount} data-loader-count="">
           {n < 1000 ? String(n).padStart(4, "0") : n.toLocaleString("en-GB")}

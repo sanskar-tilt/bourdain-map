@@ -1,5 +1,5 @@
 .wrap { position: absolute; inset: 0; z-index: var(--z-map); }
-.map { position: absolute; inset: 0; background: var(--map-water); }
+.map { position: absolute; inset: 0; background: #0B0D10; }
 
 /* MapLibre's own chrome, brought into the palette. */
 /* Clear the masthead. */

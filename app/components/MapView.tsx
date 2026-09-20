@@ -13,7 +13,7 @@ import {
 } from "maplibre-gl";
 import { Protocol } from "pmtiles";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildBasemapStyle, hasBasemap } from "../../lib/basemap";
+import { initialMapStyle, hasBasemap } from "../../lib/basemap";
 import type { SearchCity } from "../../lib/artifacts";
 import styles from "./MapView.module.css";
 
@@ -21,9 +21,9 @@ import styles from "./MapView.module.css";
    JSON outside the CSS cascade. Single source of truth stays the token file;
    these must be changed together. */
 const ACCENT = "#B8342A";                        /* the one accent: pins only */
-const PAPER_RING = "#9DA0A5";                    /* the ring on a place that is gone */
-const PAPER = "#E6E6E1";   /* the ground; closed pins are filled with it */
-const INK = "#16181B";
+const PAPER_RING = "#6A6E74";                    /* the ring on a place that is gone */
+const PAPER = "#1A1C20";   /* dark ground fill for a closed pin */
+const INK = "#E8E6E1";     /* labels on the dark basemap */
 
 /* Above this zoom every pin stands alone. Below it they gather. 7 keeps a
    dense city legible while still collapsing a continent to a constellation. */
@@ -79,7 +79,7 @@ export default function MapView({
     try {
       m = new MapLibreMap({
         container: holder.current,
-        style: buildBasemapStyle(),
+        style: initialMapStyle(),
         center: [10, 26],
         zoom: 1.45,
         minZoom: 1.1,
@@ -87,8 +87,9 @@ export default function MapView({
         attributionControl: { compact: true },
         pitchWithRotate: false,
         dragRotate: false,
+        dragPan: { linearity: 0.28, deceleration: 2600, maxSpeed: 1400 },
         renderWorldCopies: true,
-        fadeDuration: 180,
+        fadeDuration: 220,
         maxTileCacheSize: 160,
         pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
         cancelPendingTileRequestsWhileZooming: true,
@@ -261,7 +262,7 @@ export default function MapView({
         },
         paint: {
           "text-color": INK,
-          "text-halo-color": PAPER,
+          "text-halo-color": "#0B0D10",
           "text-halo-width": 1.3,
         },
       });
@@ -319,7 +320,7 @@ export default function MapView({
         },
         paint: {
           "text-color": INK,
-          "text-halo-color": PAPER,
+          "text-halo-color": "#0B0D10",
           "text-halo-width": 1.2,
           "text-opacity": ["interpolate", ["linear"], ["zoom"], 3, 0.55, 7, 0.85, 10, 0],
         },
@@ -467,12 +468,30 @@ export default function MapView({
   useEffect(() => {
     const m = map.current;
     if (!m || !ready || !flyTo) return;
+    const dest: [number, number] = [flyTo.lon, flyTo.lat];
+    const here = m.getCenter();
+    const hop = Math.hypot(here.lng - dest[0], here.lat - dest[1]);
+    const zoom = flyTo.zoom ?? 15;
+    if (reduced.current) {
+      m.jumpTo({ center: dest, zoom });
+      return;
+    }
+    if (hop < 8) {
+      m.easeTo({
+        center: dest,
+        zoom,
+        duration: 720,
+        easing: (t: number) => 1 - Math.pow(1 - t, 3),
+        essential: true,
+      });
+      return;
+    }
     m.flyTo({
-      center: [flyTo.lon, flyTo.lat],
-      zoom: flyTo.zoom ?? 15,
-      duration: reduced.current ? 0 : 1400,
-      curve: 1.42,
-      speed: 1.1,
+      center: dest,
+      zoom,
+      duration: 1100,
+      curve: 1.28,
+      speed: 1.25,
       essential: true,
     });
   }, [flyTo, ready]);

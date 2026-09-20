@@ -1,46 +1,42 @@
 /**
- * A custom Protomaps basemap style.
+ * Basemap. Visitors never see an "API key required" canvas.
  *
- * Deliberately not `namedFlavor()` from @protomaps/basemaps. Every generic
- * Bourdain map on the internet fails in the same place: a stock basemap with
- * markers dropped on top, so the map is louder than the data. The rule here
- * is that the pins are the only bright thing on the screen.
+ * Order:
+ *   1. Self-hosted PMTiles or a real Protomaps key, if one is actually set.
+ *   2. OpenFreeMap dark — free vector, no key, cinematic.
+ *   3. CARTO Dark Matter raster — no key, always works.
  *
- * What survives: coastlines, water, country outlines, and city labels that
- * appear as you zoom in. What is deliberately gone: every POI, every road
- * label, every building, all landuse tinting. Roads exist only as the
- * faintest structure at close zoom so a street feels like a street.
- *
- * Values come from app/tokens.css. They are duplicated here as literals
- * because MapLibre resolves style JSON outside the CSS cascade and cannot
- * read custom properties.
+ * MapTiler is optional (`NEXT_PUBLIC_MAPTILER_KEY`) and never used as a
+ * fallback without a key — that's the watermark the last preview showed.
  */
 
 import type { StyleSpecification } from "maplibre-gl";
 
 const MAP_TOKENS = {
-  land: "#E6E6E1",
-  water: "#D8DAD6",
-  line: "#C2C2B9",
-  lineStrong: "#B0B0A6",
-  road: "#D2D2CA",
-  label: "#8A8D93",
-  labelBright: "#6E7178",
-  halo: "#E6E6E1",
+  land: "#14161A",
+  water: "#0B0D10",
+  line: "#2A2E34",
+  lineStrong: "#3A4048",
+  road: "#1E2228",
+  label: "#8A9098",
+  labelBright: "#C4C8CE",
+  halo: "#0B0D10",
 } as const;
 
-/** Where the tiles come from. A self-hosted .pmtiles file is the goal: no
- *  key, no per-load billing, and the style is ours rather than rented. */
-const PMTILES_URL = process.env.NEXT_PUBLIC_PMTILES_URL ?? "";
-const PROTOMAPS_KEY = process.env.NEXT_PUBLIC_PROTOMAPS_KEY ?? "";
+const PMTILES_URL = (process.env.NEXT_PUBLIC_PMTILES_URL ?? "").trim();
+const PROTOMAPS_KEY = (process.env.NEXT_PUBLIC_PROTOMAPS_KEY ?? "").trim();
+const MAPTILER_KEY = (process.env.NEXT_PUBLIC_MAPTILER_KEY ?? "").trim();
 
 const GLYPHS = "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf";
 const FONT = ["Noto Sans Regular"];
 const FONT_MED = ["Noto Sans Medium"];
 
+function usableKey(k: string): boolean {
+  return k.length >= 12 && !/^(your|xxx|changeme|todo|replace|placeholder)/i.test(k);
+}
+
 function tileSource(): StyleSpecification["sources"] {
   if (PMTILES_URL) {
-    // pmtiles:// is resolved by the Protocol registered in MapView.
     return {
       protomaps: {
         type: "vector",
@@ -50,7 +46,7 @@ function tileSource(): StyleSpecification["sources"] {
       },
     };
   }
-  if (PROTOMAPS_KEY) {
+  if (usableKey(PROTOMAPS_KEY)) {
     return {
       protomaps: {
         type: "vector",
@@ -64,11 +60,20 @@ function tileSource(): StyleSpecification["sources"] {
   return {};
 }
 
-/** True when we have our own vector tiles. */
-export const hasBasemap = Boolean(PMTILES_URL || PROTOMAPS_KEY);
+/** True when we have our own vector tiles (not a missing/placeholder key). */
+export const hasBasemap = Boolean(PMTILES_URL || usableKey(PROTOMAPS_KEY));
 
-/** Carto Voyager — streets, labels, depth, no API key. */
-function rasterVoyager(): StyleSpecification {
+/** Free public dark style. No key. CORS open. */
+export const OPENFREEMAP_DARK = "https://tiles.openfreemap.org/styles/dark";
+
+/** Optional MapTiler dark — only when a real key is present. */
+export function maptilerDarkUrl(): string | null {
+  if (!usableKey(MAPTILER_KEY)) return null;
+  return `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
+}
+
+/** CARTO Dark Matter — no key, raster, never watermarks. */
+export function rasterDark(): StyleSpecification {
   return {
     version: 8,
     glyphs: GLYPHS,
@@ -76,9 +81,9 @@ function rasterVoyager(): StyleSpecification {
       carto: {
         type: "raster",
         tiles: [
-          "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-          "https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
-          "https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png",
+          "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
+          "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
+          "https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
         ],
         tileSize: 256,
         maxzoom: 20,
@@ -90,24 +95,30 @@ function rasterVoyager(): StyleSpecification {
       {
         id: "background",
         type: "background",
-        paint: { "background-color": "#d4d8cc" },
+        paint: { "background-color": "#0B0D10" },
       },
       {
         id: "carto",
         type: "raster",
         source: "carto",
         paint: {
-          "raster-saturation": -0.18,
-          "raster-contrast": 0.06,
-          "raster-brightness-min": 0.04,
+          "raster-saturation": -0.12,
+          "raster-contrast": 0.1,
+          "raster-brightness-min": 0,
+          "raster-brightness-max": 0.86,
         },
       },
     ],
   };
 }
 
+export function initialMapStyle(): string | StyleSpecification {
+  if (hasBasemap) return buildBasemapStyle();
+  return maptilerDarkUrl() ?? OPENFREEMAP_DARK;
+}
+
 export function buildBasemapStyle(): StyleSpecification {
-  if (!hasBasemap) return rasterVoyager();
+  if (!hasBasemap) return rasterDark();
 
   const sources = tileSource();
   const layers: StyleSpecification["layers"] = [
@@ -118,135 +129,113 @@ export function buildBasemapStyle(): StyleSpecification {
     },
   ];
 
-  if (hasBasemap) {
-    layers.push(
-      // ---- land ------------------------------------------------------
-      {
-        id: "earth",
-        type: "fill",
-        source: "protomaps",
-        "source-layer": "earth",
-        paint: { "fill-color": MAP_TOKENS.land },
+  layers.push(
+    {
+      id: "earth",
+      type: "fill",
+      source: "protomaps",
+      "source-layer": "earth",
+      paint: { "fill-color": MAP_TOKENS.land },
+    },
+    {
+      id: "water",
+      type: "fill",
+      source: "protomaps",
+      "source-layer": "water",
+      paint: { "fill-color": MAP_TOKENS.water },
+    },
+    {
+      id: "coastline",
+      type: "line",
+      source: "protomaps",
+      "source-layer": "water",
+      paint: {
+        "line-color": MAP_TOKENS.line,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.4, 8, 0.8, 14, 1.2],
       },
-
-      // ---- water -----------------------------------------------------
-      // Slightly darker and cooler than the paper, so the coast reads as an
-      // edge rather than needing a heavy stroke.
-      {
-        id: "water",
-        type: "fill",
-        source: "protomaps",
-        "source-layer": "water",
-        paint: { "fill-color": MAP_TOKENS.water },
+    },
+    {
+      id: "boundary-country",
+      type: "line",
+      source: "protomaps",
+      "source-layer": "boundaries",
+      filter: ["<=", ["get", "kind_detail"], 2],
+      paint: {
+        "line-color": MAP_TOKENS.lineStrong,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.4, 6, 0.7, 12, 1],
+        "line-dasharray": [3, 2],
       },
-      {
-        id: "coastline",
-        type: "line",
-        source: "protomaps",
-        "source-layer": "water",
-        paint: {
-          "line-color": MAP_TOKENS.line,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.4, 8, 0.8, 14, 1.2],
-        },
+    },
+    {
+      id: "roads-minor",
+      type: "line",
+      source: "protomaps",
+      "source-layer": "roads",
+      minzoom: 12,
+      filter: ["!=", ["get", "kind"], "highway"],
+      paint: {
+        "line-color": MAP_TOKENS.road,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 1.4],
       },
-
-      // ---- borders ---------------------------------------------------
-      // Country outlines only. Nothing below national level: subdividing
-      // the world into administrative units is noise here.
-      {
-        id: "boundary-country",
-        type: "line",
-        source: "protomaps",
-        "source-layer": "boundaries",
-        filter: ["<=", ["get", "kind_detail"], 2],
-        paint: {
-          "line-color": MAP_TOKENS.lineStrong,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.4, 6, 0.7, 12, 1],
-          "line-dasharray": [3, 2],
-        },
+    },
+    {
+      id: "roads-major",
+      type: "line",
+      source: "protomaps",
+      "source-layer": "roads",
+      minzoom: 8,
+      filter: ["==", ["get", "kind"], "highway"],
+      paint: {
+        "line-color": MAP_TOKENS.road,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.4, 16, 2.2],
       },
-
-      // ---- roads -----------------------------------------------------
-      // Structure, not information. No labels, no classification colour,
-      // and nothing at all until you are close enough for it to mean
-      // something.
-      {
-        id: "roads-minor",
-        type: "line",
-        source: "protomaps",
-        "source-layer": "roads",
-        minzoom: 12,
-        filter: ["!=", ["get", "kind"], "highway"],
-        paint: {
-          "line-color": MAP_TOKENS.road,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 1.4],
-        },
+    },
+    {
+      id: "label-country",
+      type: "symbol",
+      source: "protomaps",
+      "source-layer": "places",
+      filter: ["==", ["get", "kind"], "country"],
+      maxzoom: 7,
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": FONT_MED,
+        "text-size": ["interpolate", ["linear"], ["zoom"], 2, 9, 6, 12],
+        "text-letter-spacing": 0.18,
+        "text-transform": "uppercase",
+        "text-max-width": 7,
+        "text-padding": 24,
       },
-      {
-        id: "roads-major",
-        type: "line",
-        source: "protomaps",
-        "source-layer": "roads",
-        minzoom: 8,
-        filter: ["==", ["get", "kind"], "highway"],
-        paint: {
-          "line-color": MAP_TOKENS.road,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.4, 16, 2.2],
-        },
+      paint: {
+        "text-color": MAP_TOKENS.label,
+        "text-halo-color": MAP_TOKENS.halo,
+        "text-halo-width": 1.1,
       },
-
-      // ---- labels ----------------------------------------------------
-      // Countries first, then cities as you descend. Sparse by design:
-      // the label layer is there to orient you, not to be read.
-      {
-        id: "label-country",
-        type: "symbol",
-        source: "protomaps",
-        "source-layer": "places",
-        filter: ["==", ["get", "kind"], "country"],
-        maxzoom: 7,
-        layout: {
-          "text-field": ["get", "name"],
-          "text-font": FONT_MED,
-          "text-size": ["interpolate", ["linear"], ["zoom"], 2, 9, 6, 12],
-          "text-letter-spacing": 0.18,
-          "text-transform": "uppercase",
-          "text-max-width": 7,
-          "text-padding": 24,
-        },
-        paint: {
-          "text-color": MAP_TOKENS.label,
-          "text-halo-color": MAP_TOKENS.halo,
-          "text-halo-width": 1.1,
-        },
+    },
+    {
+      id: "label-city",
+      type: "symbol",
+      source: "protomaps",
+      "source-layer": "places",
+      filter: ["in", ["get", "kind"], ["literal", ["locality", "city"]]],
+      minzoom: 4,
+      layout: {
+        "text-field": ["get", "name"],
+        "text-font": FONT,
+        "text-size": ["interpolate", ["linear"], ["zoom"], 4, 9.5, 10, 12, 14, 13],
+        "text-letter-spacing": 0.06,
+        "text-max-width": 8,
+        "text-padding": 14,
+        "symbol-sort-key": ["coalesce", ["get", "min_zoom"], 10],
       },
-      {
-        id: "label-city",
-        type: "symbol",
-        source: "protomaps",
-        "source-layer": "places",
-        filter: ["in", ["get", "kind"], ["literal", ["locality", "city"]]],
-        minzoom: 4,
-        layout: {
-          "text-field": ["get", "name"],
-          "text-font": FONT,
-          "text-size": ["interpolate", ["linear"], ["zoom"], 4, 9.5, 10, 12, 14, 13],
-          "text-letter-spacing": 0.06,
-          "text-max-width": 8,
-          "text-padding": 14,
-          // Bigger places win the collision at low zoom, so the world
-          // thins out sensibly rather than arbitrarily.
-          "symbol-sort-key": ["coalesce", ["get", "min_zoom"], 10],
-        },
-        paint: {
-          "text-color": MAP_TOKENS.labelBright,
-          "text-halo-color": MAP_TOKENS.halo,
-          "text-halo-width": 1.2,
-          "text-opacity": ["interpolate", ["linear"], ["zoom"], 4, 0.5, 8, 0.85],
-        },
-      }
-    );
-  }
+      paint: {
+        "text-color": MAP_TOKENS.labelBright,
+        "text-halo-color": MAP_TOKENS.halo,
+        "text-halo-width": 1.2,
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 4, 0.5, 8, 0.85],
+      },
+    }
+  );
 
   return {
     version: 8,

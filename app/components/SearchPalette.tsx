@@ -96,7 +96,9 @@ export default function SearchPalette({
   // before you commit to it.
   useEffect(() => {
     const r = results[cursor];
-    if (r) onPreview(r.lon, r.lat, r.zoom);
+    if (!r) return;
+    const t = window.setTimeout(() => onPreview(r.lon, r.lat, r.zoom), 180);
+    return () => window.clearTimeout(t);
   }, [cursor, results, onPreview]);
 
   useEffect(() => {

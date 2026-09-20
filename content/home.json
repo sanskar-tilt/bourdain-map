@@ -16,19 +16,9 @@
         "credit": "CC BY 2.0 via Wikimedia Commons"
       },
       {
-        "photo": "loader-ramen.jpg",
-        "alt": "Overhead bowl of ramen",
-        "credit": "Public domain / CC0 via Rawpixel"
-      },
-      {
         "photo": "bourdain-signing.jpg",
         "alt": "Anthony Bourdain at a book signing",
         "credit": "CC BY 2.0 — Neeta Lind via Wikimedia"
-      },
-      {
-        "photo": "loader-pho.jpg",
-        "alt": "Overhead bowl of pho",
-        "credit": "Public domain / CC0 via Rawpixel"
       },
       {
         "photo": "bourdain-peabody.jpg",
@@ -36,19 +26,19 @@
         "credit": "CC BY 2.0 — Peabody Awards via Wikimedia"
       },
       {
-        "photo": "loader-dumplings.jpg",
-        "alt": "Bamboo dumpling steamers from above",
-        "credit": "CC0 via WordPress Photos"
-      },
-      {
-        "photo": "loader-skewers.jpg",
-        "alt": "Skewers on a grill from above",
-        "credit": "Public domain / CC0 via Rawpixel"
+        "photo": "bourdain-portrait.jpg",
+        "alt": "Anthony Bourdain, portrait",
+        "credit": "CC BY 2.0 via Wikimedia Commons"
       },
       {
         "photo": "pairing-dinner.jpg",
         "alt": "Bourdain at a dinner table, 2008",
         "credit": "CC BY 2.0 — Wikimedia Commons"
+      },
+      {
+        "photo": "pairing-wnyc.jpg",
+        "alt": "Anthony Bourdain at WNYC",
+        "credit": "CC BY 2.0 — WNYC via Wikimedia"
       }
     ],
     "portrait": {
@@ -66,15 +56,15 @@
         "placeSlug": "ha-noi-vn"
       },
       {
-        "photo": "hero-octopus.jpg",
-        "alt": "Fresh octopus at a market",
-        "credit": "Public domain / CC0 via Rawpixel",
+        "photo": "bourdain-portrait-hires.jpg",
+        "alt": "Anthony Bourdain, high-resolution portrait",
+        "credit": "CC BY 2.0 via Wikimedia Commons",
         "placeSlug": "tsukiji-fish-market-chuo"
       },
       {
-        "photo": "hero-crab.jpg",
-        "alt": "Crab at a seafood market",
-        "credit": "Public domain / CC0 via Rawpixel",
+        "photo": "bourdain-signing.jpg",
+        "alt": "Anthony Bourdain at a book signing",
+        "credit": "CC BY 2.0 — Neeta Lind via Wikimedia",
         "placeSlug": "borough-market-greater-london"
       }
     ],
@@ -130,19 +120,9 @@
   "reels": [
     {
       "file": "dont-be-afraid.mp4",
-      "poster": "pullback-kitchen.jpg",
+      "poster": "bourdain-portrait.jpg",
       "credit": "Clip by MANIFESTO (@bymnfsto), used with permission",
       "line": "Don't be afraid to sit down."
-    },
-    {
-      "photo": "bourdain-obama-hanoi.jpg",
-      "credit": "Public domain — White House Photo Office",
-      "line": "A table is enough."
-    },
-    {
-      "photo": "pairing-dinner.jpg",
-      "credit": "CC BY 2.0 — Wikimedia Commons",
-      "line": "Come alone. That's the point."
     }
   ],
   "pullback": {

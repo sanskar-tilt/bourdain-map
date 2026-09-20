@@ -25,17 +25,6 @@
    }
   ]
  },
- "loader-ramen.jpg": {
-  "width": 1024,
-  "height": 680,
-  "ratio": 1.5059,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/loader-ramen-800.webp"
-   }
-  ]
- },
  "bourdain-signing.jpg": {
   "width": 894,
   "height": 1206,
@@ -44,17 +33,6 @@
    {
     "width": 800,
     "src": "/home/opt/bourdain-signing-800.webp"
-   }
-  ]
- },
- "loader-pho.jpg": {
-  "width": 1024,
-  "height": 769,
-  "ratio": 1.3316,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/loader-pho-800.webp"
    }
   ]
  },
@@ -69,29 +47,14 @@
    }
   ]
  },
- "loader-dumplings.jpg": {
-  "width": 2048,
-  "height": 1536,
-  "ratio": 1.3333,
+ "bourdain-portrait.jpg": {
+  "width": 692,
+  "height": 1016,
+  "ratio": 0.6811,
   "srcset": [
    {
-    "width": 800,
-    "src": "/home/opt/loader-dumplings-800.webp"
-   },
-   {
-    "width": 1600,
-    "src": "/home/opt/loader-dumplings-1600.webp"
-   }
-  ]
- },
- "loader-skewers.jpg": {
-  "width": 683,
-  "height": 1024,
-  "ratio": 0.667,
-  "srcset": [
-   {
-    "width": 683,
-    "src": "/home/opt/loader-skewers-683.webp"
+    "width": 692,
+    "src": "/home/opt/bourdain-portrait-692.webp"
    }
   ]
  },
@@ -103,6 +66,17 @@
    {
     "width": 800,
     "src": "/home/opt/pairing-dinner-800.webp"
+   }
+  ]
+ },
+ "pairing-wnyc.jpg": {
+  "width": 591,
+  "height": 665,
+  "ratio": 0.8887,
+  "srcset": [
+   {
+    "width": 591,
+    "src": "/home/opt/pairing-wnyc-591.webp"
    }
   ]
  },

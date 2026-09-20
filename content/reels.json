@@ -1,60 +1,44 @@
 {
   "_readme": [
-    "Immersive /reels player. Paste a reel URL or a local file.",
+    "Immersive /reels player. Vertical video only — no photo slides.",
     "Instagram: https://www.instagram.com/reel/SHORTCODE/",
     "TikTok:    https://www.tiktok.com/@user/video/1234567890",
-    "Local:     file in public/home/ (wins the slide; no outbound player)."
+    "Local:     file in public/home/ (native player; no outbound chrome).",
+    "Our UI never labels a slide TikTok or Instagram."
   ],
   "reels": [
     {
       "file": "dont-be-afraid.mp4",
-      "poster": "pullback-kitchen.jpg",
+      "poster": "bourdain-portrait.jpg",
       "caption": "Don't be afraid to sit down.",
       "credit": "Clip by MANIFESTO (@bymnfsto), used with permission"
     },
     {
-      "photo": "bourdain-obama-hanoi.jpg",
-      "caption": "A table is enough.",
-      "credit": "Public domain — White House Photo Office"
+      "url": "https://www.tiktok.com/@bourdainology/video/7349931622185159969",
+      "caption": "Tokyo, after the service."
     },
     {
-      "photo": "pairing-dinner.jpg",
-      "caption": "Come alone. That's the point.",
-      "credit": "CC BY 2.0 — Wikimedia Commons"
+      "url": "https://www.tiktok.com/@bourdainology/video/7349183539780373792",
+      "caption": "First time at a Waffle House."
     },
     {
-      "photo": "loader-pho.jpg",
-      "caption": "Then eat.",
-      "credit": "Public domain / CC0 via Rawpixel"
+      "url": "https://www.tiktok.com/@friendsofanthonybourdain/video/7191654747361889579",
+      "caption": "The hangover cure."
     },
     {
-      "photo": "loader-ramen.jpg",
-      "caption": "The bowl is the whole argument.",
-      "credit": "Public domain / CC0 via Rawpixel"
-    },
-    {
-      "photo": "bourdain-signing.jpg",
-      "caption": "He sat down first.",
-      "credit": "CC BY 2.0 — Neeta Lind via Wikimedia"
-    },
-    {
-      "photo": "hero-octopus.jpg",
-      "caption": "Markets before restaurants.",
-      "credit": "Public domain / CC0 via Rawpixel"
+      "url": "https://www.instagram.com/reel/C3ddnNduxxD/",
+      "caption": "The Parts Unknown open."
     },
     {
       "url": "https://www.instagram.com/reel/DaBbKMnRBsy/",
-      "platform": "instagram",
       "caption": "José Andrés, on what would have been his birthday."
     },
     {
       "url": "https://www.tiktok.com/@thejonathankite/video/7459479822331284766",
-      "platform": "tiktok",
       "caption": "The voice is unnervingly close."
     },
     {
       "url": "https://www.tiktok.com/@joshuadairen/video/7514448051121949994",
-      "platform": "tiktok",
       "caption": "A bridge, not just a chef."
     }
   ]

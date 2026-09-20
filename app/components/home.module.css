@@ -15,7 +15,14 @@
   transform: translateY(-100%);
   transition: transform var(--t-signature) var(--ease-in-out);
 }
-.loaderInner { display: grid; place-items: center; gap: var(--s3); }
+.loaderInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 6vh 2.5vw 12vh;
+}
 .loaderWord {
   font-family: var(--font-mono);
   font-size: var(--step--1);
@@ -25,11 +32,15 @@
 }
 /* One of exactly two sanctioned uses of the accent; the other is map pins. */
 .loaderCount {
+  position: absolute;
+  bottom: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
   color: var(--accent);
   min-width: 4.5ch;
   text-align: center;
   font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-8);
+  font-size: clamp(1.25rem, 3.2vw, 2.25rem);
   line-height: var(--lh-solid);
   letter-spacing: var(--track-tight);
   font-variant-numeric: tabular-nums;
@@ -201,14 +212,14 @@
   .pairing { grid-template-columns: 1fr; gap: var(--s5); }
   .quote, .inviteLine { font-size: var(--step-6); }
   .quoteBig { font-size: var(--step-6); }
-  .counter, .loaderCount { font-size: var(--step-7); }
+  .counter { font-size: var(--step-7); }
   .section { padding: var(--s7) var(--s4); }
 }
 
 /* ------------------------------------------------------- the mark */
 /* BOURDAIN with the O as a circular photo window. One component, two
    sizes: the loader teaches the mark, the nav wears it. */
-.mark, .markSmall {
+.mark, .markHuge, .markSmall {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-display-loaded), var(--font-display);
@@ -217,6 +228,12 @@
   white-space: nowrap;
 }
 .mark { font-size: clamp(2.75rem, 9vw, 5rem); gap: 0.02em; }
+.markHuge {
+  font-size: clamp(3.6rem, 15.4vw, 20rem);
+  width: 100%;
+  justify-content: center;
+  gap: 0.01em;
+}
 .markSmall { font-size: var(--step-3); gap: 0.02em; }
 
 /* The window. Circular, sized to the cap height so it sits as a letter
@@ -686,7 +703,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
+  transform: none;
 }
 /* Never distorted, never masked, never pushed around. Above the canvas,
    transparent to the pointer so the water underneath still stirs. */

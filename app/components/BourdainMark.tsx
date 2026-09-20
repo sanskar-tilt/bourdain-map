@@ -12,12 +12,14 @@ import s from "./home.module.css";
    the sentence explaining what the site is cannot. */
 
 export default function BourdainMark({
-  photo, meta, alt, small, isFinal, probe, sizes = "80px",
+  photo, meta, alt, small, huge, isFinal, probe, sizes = "80px",
 }: {
   photo?: string;
   meta?: PhotoMeta;
   alt?: string;
   small?: boolean;
+  /** Full-viewport lockup — the first-paint loader. */
+  huge?: boolean;
   isFinal?: boolean;
   /** Only the loader's mark carries the test hooks. The nav wears the same
    *  component, and without this both answer the same querySelector. */
@@ -25,7 +27,7 @@ export default function BourdainMark({
   sizes?: string;
 }) {
   return (
-    <span className={small ? s.markSmall : s.mark} aria-label="Bourdain">
+    <span className={huge ? s.markHuge : small ? s.markSmall : s.mark} aria-label="Bourdain">
       <span aria-hidden="true">B</span>
       <span className={s.markO} aria-hidden="true">
         {usable(meta) || photo ? (

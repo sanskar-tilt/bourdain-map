@@ -27,12 +27,12 @@
   --accent-soft: rgba(184, 52, 42, 0.14);
   --accent-dim:  rgba(184, 52, 42, 0.62);
 
-  /* ---- basemap ---- */
-  --map-land:    #E6E6E1;
-  --map-water:   #D8DAD6;
-  --map-line:    #C2C2B9;
-  --map-road:    #D2D2CA;
-  --map-label:   #8A8D93;
+  /* ---- basemap (dark cinematic; pins stay the only accent) ---- */
+  --map-land:    #14161A;
+  --map-water:   #0B0D10;
+  --map-line:    #2A2E34;
+  --map-road:    #1E2228;
+  --map-label:   #9AA0A8;
 
   /* ---- type: two families plus mono for labels ---- */
   --font-display: "Instrument Serif", Superclarendon, "Iowan Old Style",
@@ -51,17 +51,17 @@
      leaps at the top, fine gradations at the bottom, which is what makes
      a scale read as authored rather than generated. Eleven sizes total.
      1.5625rem / 25px is the deliberate odd one. */
-  --step--2: 0.625rem;   /* 10 — smallest label            */
-  --step--1: 0.75rem;    /* 12 — every uppercase mono label */
-  --step-0:  0.875rem;   /* 14 — small body                 */
-  --step-1:  1rem;       /* 16 — body                       */
-  --step-2:  1.125rem;   /* 18 — large body                 */
-  --step-3:  1.25rem;    /* 20                              */
-  --step-4:  1.5625rem;  /* 25 — sub-display                */
-  --step-5:  2rem;       /* 32 — display 4        ×1.28     */
-  --step-6:  2.75rem;    /* 44 — display 3        ×1.375    */
-  --step-7:  3.75rem;    /* 60 — display 2        ×1.36     */
-  --step-8:  5rem;       /* 80 — display 1        ×1.33     */
+  --step--2: 0.75rem;    /* 12 — smallest label            */
+  --step--1: 0.875rem;   /* 14 — uppercase mono label      */
+  --step-0:  1.0625rem;  /* 17 — small body                */
+  --step-1:  1.25rem;    /* 20 — body                      */
+  --step-2:  1.5rem;     /* 24 — large body                */
+  --step-3:  1.75rem;    /* 28                             */
+  --step-4:  2.25rem;    /* 36 — sub-display               */
+  --step-5:  3.25rem;    /* 52 — display 4                 */
+  --step-6:  4.5rem;     /* 72 — display 3                 */
+  --step-7:  6.5rem;     /* 104 — display 2                */
+  --step-8:  9rem;       /* 144 — display 1                */
 
   /* ---- tracking: exactly two values ---- */
   --track-tight: -0.01em;  /* anything display-sized        */

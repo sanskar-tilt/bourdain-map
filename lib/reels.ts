@@ -38,19 +38,19 @@ const HOSTS: Record<"instagram" | "tiktok", string[]> = {
 
 function parse(raw: Raw, i: number): ReelEntry | null {
   const file = typeof raw.file === "string" ? raw.file.trim() : "";
-  const photo = typeof raw.photo === "string" ? raw.photo.trim() : "";
   const caption = typeof raw.caption === "string"
     ? raw.caption
     : typeof raw.line === "string" ? raw.line : undefined;
   const credit = typeof raw.credit === "string" ? raw.credit : undefined;
   const poster = typeof raw.poster === "string" ? raw.poster.trim() : undefined;
 
-  if (file || photo) {
+  // Photo-only slides are not reels. A local file is film; otherwise
+  // an embed URL. Stills stay off the snap deck.
+  if (file) {
     return {
-      id: `local-${file || photo}-${i}`,
+      id: `local-${file}-${i}`,
       platform: "local",
-      file: file || undefined,
-      photo: photo || undefined,
+      file,
       poster,
       caption,
       credit,
@@ -103,6 +103,6 @@ export function reelEntries(): ReelEntry[] {
       });
     } catch { /* optional */ }
   });
-  // The snap deck is ours. Outbound embeds stay off it when we have film.
-  return local.length ? local : remote;
+  // Local film first, then vertical embeds of him. No photo slides.
+  return [...local, ...remote];
 }

@@ -377,10 +377,10 @@ export default function FluidHero({
 
       const footage = footageRef.current;
       if (footage && footage.readyState >= 2) {
+        // Same upload path as the still: the display shader already flips Y.
+        // UNPACK_FLIP_Y here double-flipped the film and stood it on its head.
         gl.bindTexture(gl.TEXTURE_2D, mapTex);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, footage);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
       }
 
       if (pointer.moved) {

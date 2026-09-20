@@ -84,7 +84,9 @@ export default function MapSearch({
   useEffect(() => {
     if (!open) return;
     const r = results[cursor];
-    if (r) onPreview(r.lon, r.lat, r.zoom);
+    if (!r) return;
+    const t = window.setTimeout(() => onPreview(r.lon, r.lat, r.zoom), 180);
+    return () => window.clearTimeout(t);
   }, [cursor, results, open, onPreview]);
 
   useEffect(() => {
