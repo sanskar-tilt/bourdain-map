@@ -80,9 +80,9 @@ export default function Home() {
         invite={
           <>
             <p>A table in London. {seats} seats.</p>
-            <Link href="/tables/#london" data-cursor="table">
+            <a href="#london" data-cursor="table">
               Hear about the first dinner
-            </Link>
+            </a>
           </>
         }
         background={
@@ -162,7 +162,9 @@ export default function Home() {
 
       <section className={`${s.section} ${s.invite} reveal`}>
         <MaskedText as="p" text="Pull up a chair." className={s.inviteLine} />
-        <DinnerInterest id="chair" seats={seats} />
+        <a className={s.inviteCta} href="#london" data-cursor="table">
+          Hear about the first London dinner
+        </a>
         <Link className={s.inviteCta} href="/map/" data-cursor="explore">
           Or open the map
         </Link>

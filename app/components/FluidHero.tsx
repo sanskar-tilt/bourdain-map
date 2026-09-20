@@ -530,7 +530,7 @@ export default function FluidHero({
       <p className={`${s.heroSupport} arrival-text`} data-arrival-text>
         Follow his footsteps. Share a table.
       </p>
-      <a className={`${s.heroCta} arrival-text`} data-arrival-text href="/tables/#london" data-cursor="table">
+      <a className={`${s.heroCta} arrival-text`} data-arrival-text href="#london" data-cursor="table">
         Hear about the first London dinner
       </a>
       <p className={`${s.scrollCue} arrival-cue`} aria-hidden="true">

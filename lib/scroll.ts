@@ -39,6 +39,18 @@ function frame(time: number) {
   raf = requestAnimationFrame(frame);
 }
 
+export function scrollToId(id: string): boolean {
+  if (typeof document === "undefined" || !id) return false;
+  const el = document.getElementById(id);
+  if (!el) return false;
+  if (lenis) {
+    lenis.scrollTo(el, { offset: -24, duration: reduced ? 0 : 1.15 });
+  } else {
+    el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  }
+  return true;
+}
+
 export function startScroll(): () => void {
   if (typeof window === "undefined") return () => {};
   reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -60,9 +72,30 @@ export function startScroll(): () => void {
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
   }
 
+  function onClick(e: MouseEvent) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = (e.target as Element | null)?.closest?.("a[href]");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (!href?.startsWith("#") || href === "#") return;
+    const id = decodeURIComponent(href.slice(1));
+    if (!document.getElementById(id)) return;
+    e.preventDefault();
+    history.pushState(null, "", href);
+    scrollToId(id);
+  }
+  document.addEventListener("click", onClick);
+
+  const bootHash = () => {
+    const id = decodeURIComponent(location.hash.replace(/^#/, ""));
+    if (id) scrollToId(id);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(bootHash));
+
   raf = requestAnimationFrame(frame);
 
   return () => {
+    document.removeEventListener("click", onClick);
     cancelAnimationFrame(raf);
     lenis?.destroy();
     lenis = null;

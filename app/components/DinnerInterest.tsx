@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { supabase, supabaseConfigured } from "../../lib/supabase";
+import {
+  onInterest,
+  validEmail,
+  writeInterest,
+  type Interest,
+} from "../../lib/londonInterest";
 import s from "./ui.module.css";
-
-const KEY = "wha:london-interest";
-
-type Saved = { name: string; email: string; note: string; at: number };
 
 export default function DinnerInterest({
   id = "london",
@@ -18,35 +20,28 @@ export default function DinnerInterest({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
-  const [done, setDone] = useState(false);
+  const [saved, setSaved] = useState<Interest | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return;
-      const saved = JSON.parse(raw) as Saved;
-      if (saved?.email) setDone(true);
-    } catch { /* ignore */ }
-  }, []);
+  useEffect(() => onInterest(setSaved), []);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setErr(null);
-    const payload: Saved = {
+    const payload: Interest = {
       name: name.trim(),
       email: email.trim(),
       note: note.trim(),
       at: Date.now(),
     };
-    if (!payload.email || !payload.name) {
-      setErr("A name and an email — that's all.");
+    if (!payload.name || !validEmail(payload.email)) {
+      setErr("A name and a real email — that's all.");
       return;
     }
     setBusy(true);
     try {
-      localStorage.setItem(KEY, JSON.stringify(payload));
+      try { writeInterest(payload); } catch { /* private mode */ }
       if (supabaseConfigured) {
         const { error } = await supabase.from("dinner_interest").insert({
           name: payload.name,
@@ -55,11 +50,10 @@ export default function DinnerInterest({
           city: "London",
         });
         if (error) {
-          // Table may not exist on this build. Local save still stands.
           console.warn("[dinner] supabase insert skipped", error.message);
         }
       }
-      setDone(true);
+      setSaved(payload);
     } catch {
       setErr("That didn't go through. Try again.");
     } finally {
@@ -67,20 +61,20 @@ export default function DinnerInterest({
     }
   }
 
-  if (done) {
+  if (saved) {
     return (
-      <div className={s.form} id={id}>
+      <div className={s.form} id={id} data-done="true" aria-live="polite">
         <p className={s.h2}>You&rsquo;re on the list</p>
         <p className={s.note}>
-          We&rsquo;ll write when the first London table of {seats} is set.
-          Come alone if you want. That&rsquo;s the point.
+          {saved.name}, we&rsquo;ll write when the first London table of{" "}
+          {seats} is set. Come alone if you want. That&rsquo;s the point.
         </p>
       </div>
     );
   }
 
   return (
-    <form className={s.form} id={id} onSubmit={onSubmit}>
+    <form className={s.form} id={id} onSubmit={onSubmit} noValidate>
       <p className={s.h2}>Hear about the first London dinner</p>
       <p className={s.note}>
         {seats} seats. No date yet. Leave a name and an email — we&rsquo;ll
@@ -117,7 +111,7 @@ export default function DinnerInterest({
       <button className={s.button} type="submit" disabled={busy}>
         {busy ? "Holding your seat…" : "Put me on the list"}
       </button>
-      {err && <p className={s.err}>{err}</p>}
+      {err && <p className={s.err} role="alert">{err}</p>}
     </form>
   );
 }

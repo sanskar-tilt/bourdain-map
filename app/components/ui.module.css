@@ -1,6 +1,16 @@
 /* Shared chrome for every interactive bit. Tokens only. Rough by design. */
 
-.form { display: flex; flex-direction: column; gap: var(--s3); }
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  scroll-margin-top: 5.5rem;
+}
+.form[data-done="true"] {
+  padding: var(--s4);
+  border: 1px solid var(--edge-strong);
+  border-radius: 2px;
+}
 .page {
   padding: var(--s7) var(--s5) var(--s8);
   max-width: 42rem;
