@@ -1,82 +1,12 @@
 {
- "bourdain-crop-2.jpg": {
-  "width": 1149,
-  "height": 1443,
-  "ratio": 0.7963,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/bourdain-crop-2-800.webp"
-   }
-  ]
- },
- "bourdain-peabody-red.jpg": {
-  "width": 1196,
-  "height": 1659,
-  "ratio": 0.7209,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/bourdain-peabody-red-800.webp"
-   }
-  ]
- },
- "bourdain-2014.jpg": {
-  "width": 1095,
-  "height": 1182,
-  "ratio": 0.9264,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/bourdain-2014-800.webp"
-   }
-  ]
- },
- "bourdain-peabody-podium.jpg": {
-  "width": 1920,
-  "height": 2882,
-  "ratio": 0.6662,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/bourdain-peabody-podium-800.webp"
-   },
-   {
-    "width": 1600,
-    "src": "/home/opt/bourdain-peabody-podium-1600.webp"
-   }
-  ]
- },
- "bourdain-signing.jpg": {
-  "width": 894,
-  "height": 1206,
-  "ratio": 0.7413,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/bourdain-signing-800.webp"
-   }
-  ]
- },
- "bourdain-crop-3.jpg": {
+ "bourdain-portrait-black.jpg": {
   "width": 774,
   "height": 1194,
   "ratio": 0.6482,
   "srcset": [
    {
     "width": 774,
-    "src": "/home/opt/bourdain-crop-3-774.webp"
-   }
-  ]
- },
- "bourdain-peabody-look.jpg": {
-  "width": 1170,
-  "height": 1589,
-  "ratio": 0.7363,
-  "srcset": [
-   {
-    "width": 800,
-    "src": "/home/opt/bourdain-peabody-look-800.webp"
+    "src": "/home/opt/bourdain-portrait-black-774.webp"
    }
   ]
  },
@@ -92,6 +22,98 @@
    {
     "width": 1600,
     "src": "/home/opt/bourdain-portrait-hires-1600.webp"
+   }
+  ]
+ },
+ "bourdain-peabody.jpg": {
+  "width": 1057,
+  "height": 1474,
+  "ratio": 0.7171,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-peabody-800.webp"
+   }
+  ]
+ },
+ "bourdain-peabody-red.jpg": {
+  "width": 1196,
+  "height": 1659,
+  "ratio": 0.7209,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-peabody-red-800.webp"
+   }
+  ]
+ },
+ "bourdain-signing.jpg": {
+  "width": 894,
+  "height": 1206,
+  "ratio": 0.7413,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-signing-800.webp"
+   }
+  ]
+ },
+ "bourdain-portrait-pillar.jpg": {
+  "width": 692,
+  "height": 1016,
+  "ratio": 0.6811,
+  "srcset": [
+   {
+    "width": 692,
+    "src": "/home/opt/bourdain-portrait-pillar-692.webp"
+   }
+  ]
+ },
+ "bourdain-portrait-plain.jpg": {
+  "width": 1149,
+  "height": 1443,
+  "ratio": 0.7963,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-portrait-plain-800.webp"
+   }
+  ]
+ },
+ "bourdain-wnyc.jpg": {
+  "width": 591,
+  "height": 665,
+  "ratio": 0.8887,
+  "srcset": [
+   {
+    "width": 591,
+    "src": "/home/opt/bourdain-wnyc-591.webp"
+   }
+  ]
+ },
+ "bourdain-podium.jpg": {
+  "width": 1920,
+  "height": 2882,
+  "ratio": 0.6662,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-podium-800.webp"
+   },
+   {
+    "width": 1600,
+    "src": "/home/opt/bourdain-podium-1600.webp"
+   }
+  ]
+ },
+ "bourdain-candid-2008.jpg": {
+  "width": 1280,
+  "height": 960,
+  "ratio": 1.3333,
+  "srcset": [
+   {
+    "width": 800,
+    "src": "/home/opt/bourdain-candid-2008-800.webp"
    }
   ]
  },

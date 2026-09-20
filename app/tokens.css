@@ -23,9 +23,9 @@
   --ink-ring:  #9DA0A5;
 
   /* ---- the one accent ---- */
-  --accent:      #B8342A;
-  --accent-soft: rgba(184, 52, 42, 0.14);
-  --accent-dim:  rgba(184, 52, 42, 0.62);
+  --accent:      #A24B35;
+  --accent-soft: rgba(162, 75, 53, 0.14);
+  --accent-dim:  rgba(162, 75, 53, 0.62);
 
   /* ---- basemap (dark cinematic; pins stay the only accent) ---- */
   --map-land:    #14161A;

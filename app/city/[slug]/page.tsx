@@ -104,19 +104,10 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                   </span>
                   <span className={styles.epTitle}>{e.title}</span>
                   {e.airDate && <span className={styles.epDate}>{e.airDate}</span>}
-                  {!id && <span className={styles.epNone}>No official clip in the data</span>}
+                  {!id && (
+                    <span className={styles.epNone}>No public clip linked</span>
+                  )}
                 </span>
-              );
-              const thumb = id ? (
-                <img
-                  className={styles.ytThumb}
-                  src={youtubeThumb(id)}
-                  alt=""
-                  width={480}
-                  height={360}
-                />
-              ) : (
-                <span className={styles.ytEmpty} aria-hidden="true" />
               );
               return (
                 <li key={`${e.show}-${e.season}-${e.episode}-${e.title}`}>
@@ -127,12 +118,17 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                       rel="noreferrer"
                       target="_blank"
                     >
-                      {thumb}
+                      <img
+                        className={styles.ytThumb}
+                        src={youtubeThumb(id)}
+                        alt=""
+                        width={480}
+                        height={360}
+                      />
                       {meta}
                     </a>
                   ) : (
                     <div className={styles.epCard} data-empty="true">
-                      {thumb}
                       {meta}
                     </div>
                   )}

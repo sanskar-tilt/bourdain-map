@@ -108,27 +108,78 @@ function locParts(loc) {
     .filter(Boolean);
 }
 
+function titleHead(title) {
+  const cut = title.split(":")[0].trim();
+  return cut || title;
+}
+
+function cityInTitle(keys, title) {
+  for (const k of keys) {
+    if (!k || k.length < 4) continue;
+    if (
+      title === k ||
+      title.startsWith(k + " ") ||
+      title.startsWith(k + ":") ||
+      title.endsWith(" " + k) ||
+      title.includes(" " + k + " ") ||
+      title.includes(" " + k + ":")
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/** Title leads with another country ("Thailand: …") — not this city. */
+function otherCountryTitle(city, title) {
+  const head = titleHead(title);
+  for (const [cc, names] of Object.entries(CC_LOOSE)) {
+    if (cc === city.cc) continue;
+    for (const n of names) {
+      const f = fold(n);
+      if (f.length < 5) continue;
+      if (head === f || title.startsWith(f + " ") || title.startsWith(f + ":")) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 function matchKind(city, ep) {
   const keys = derivedKeys(city);
   const loose = looseKeys(city);
-  let hit = null;
   const title = fold(ep.title);
+  if (otherCountryTitle(city, title) && !cityInTitle(keys, title)) return null;
+
+  let hit = null;
+  const locFields = (ep.locations ?? []).map((loc) => ({
+    whole: fold(loc),
+    parts: locParts(loc),
+  }));
   const fields = [
-    ...(ep.locations ?? []).map((loc) => ({ whole: fold(loc), parts: locParts(loc) })),
     { whole: title, parts: title.split(" ").filter(Boolean) },
+    ...locFields,
   ];
   for (const { whole, parts } of fields) {
     for (const k of keys) {
       if (!k || k.length < 3) continue;
-      if (whole === k || parts.includes(k)) return "exact";
+      if (whole === k || parts.includes(k)) {
+        if (whole === title || cityInTitle(keys, title) || locFields[0]?.whole === k) {
+          return "exact";
+        }
+        hit = hit ?? "loose";
+        continue;
+      }
       if (k.length >= 5 && (whole.includes(k) || parts.some((p) => p.includes(k)))) {
-        return "exact";
+        if (cityInTitle(keys, title)) return "exact";
+        hit = hit ?? "loose";
       }
     }
     for (const k of loose) {
       if (!k || k.length < 3) continue;
       if (whole === k || parts.includes(k) || (k.length >= 5 && whole.includes(k))) {
-        hit = "loose";
+        hit = hit ?? "loose";
       }
     }
   }

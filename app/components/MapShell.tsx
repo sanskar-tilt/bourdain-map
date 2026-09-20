@@ -89,16 +89,18 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={styles.shell} data-panel={panelOpen ? "open" : "closed"}>
-      <MapSafe>
-        <MapView
-          onSelect={onSelect}
-          onSelectCity={onSelectCity}
-          selectedId={selectedId}
-          selectedCitySlug={kind === "city" ? slug : null}
-          cities={index?.cities ?? null}
-          flyTo={camera}
-        />
-      </MapSafe>
+      <div className={styles.mapHit}>
+        <MapSafe>
+          <MapView
+            onSelect={onSelect}
+            onSelectCity={onSelectCity}
+            selectedId={selectedId}
+            selectedCitySlug={kind === "city" ? slug : null}
+            cities={index?.cities ?? null}
+            flyTo={camera}
+          />
+        </MapSafe>
+      </div>
 
       <header className={styles.masthead}>
         <div className={styles.brand}>

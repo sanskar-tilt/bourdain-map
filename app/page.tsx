@@ -102,7 +102,7 @@ export default function Home() {
               <span className={s.roomCredit}>{room.credit}</span>
             </>
           ) : (
-            <img src="/home/bourdain-peabody-podium.jpg" alt="" />
+            <img src="/home/bourdain-podium.jpg" alt="" />
           )
         }
       />

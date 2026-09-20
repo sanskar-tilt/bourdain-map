@@ -1,5 +1,11 @@
-.wrap { position: absolute; inset: 0; z-index: var(--z-map); }
-.map { position: absolute; inset: 0; background: #0B0D10; }
+.wrap {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-map);
+  pointer-events: auto;
+}
+.map { position: absolute; inset: 0; background: #E6E6E1; }
+.wrap[data-map-theme="dark"] .map { background: #0B0D10; }
 
 /* MapLibre's own chrome, brought into the palette. */
 /* Clear the masthead. */

@@ -1,26 +1,18 @@
 /**
  * Basemap. Visitors never see an "API key required" canvas.
  *
- * Preview default is CARTO Dark Matter — inline raster, no key, no
- * remote style.json. That is the only path visitors hit unless someone
- * later sets a real PROTOMAPS_KEY or PMTILES_URL on Vercel.
+ * Two free raster styles, no key:
+ *   light — Carto Positron, paper/ink, the default (the owner finds night too dark)
+ *   dark  — Carto Dark Matter, cinematic night
  *
- * MapTiler is never on the default path. Their tiles watermark
- * "API key required" when the key is missing or bad.
+ * Protomaps / PMTiles, when a real key or URL is set, replace the raster
+ * with a sparse paper or night vector style. MapTiler is never the default.
  */
 
 import type { StyleSpecification } from "maplibre-gl";
 
-const MAP_TOKENS = {
-  land: "#14161A",
-  water: "#0B0D10",
-  line: "#2A2E34",
-  lineStrong: "#3A4048",
-  road: "#1E2228",
-  label: "#8A9098",
-  labelBright: "#C4C8CE",
-  halo: "#0B0D10",
-} as const;
+export type MapTheme = "light" | "dark";
+export const MAP_THEME_KEY = "wha:map-theme";
 
 const PMTILES_URL = (process.env.NEXT_PUBLIC_PMTILES_URL ?? "").trim();
 const PROTOMAPS_KEY = (process.env.NEXT_PUBLIC_PROTOMAPS_KEY ?? "").trim();
@@ -62,28 +54,76 @@ function tileSource(): StyleSpecification["sources"] {
 /** True when we have our own vector tiles (not a missing/placeholder key). */
 export const hasBasemap = Boolean(PMTILES_URL || usableKey(PROTOMAPS_KEY));
 
-/** Free public dark style. No key. CORS open. */
 export const OPENFREEMAP_DARK = "https://tiles.openfreemap.org/styles/dark";
 
-/** Optional MapTiler dark — only when a real key is present. */
 export function maptilerDarkUrl(): string | null {
   if (!usableKey(MAPTILER_KEY)) return null;
   return `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
 }
 
-/** CARTO Dark Matter — no key, raster, never watermarks. */
-export function rasterDark(): StyleSpecification {
+export function readMapTheme(): MapTheme {
+  try {
+    const v = localStorage.getItem(MAP_THEME_KEY);
+    if (v === "dark" || v === "light") return v;
+  } catch { /* private mode */ }
+  return "light";
+}
+
+export function writeMapTheme(theme: MapTheme) {
+  try { localStorage.setItem(MAP_THEME_KEY, theme); } catch { /* private mode */ }
+}
+
+/** Warmer rust than the site accent — reads as a pin, not a measles outbreak. */
+export function pinColors(theme: MapTheme) {
+  if (theme === "light") {
+    return {
+      pin: "#A24B35",
+      glow: "#A24B35",
+      glowOpacity: 0.2,
+      closed: "#E4E2DB",
+      closedRing: "#8A8680",
+      selected: "#1C1A18",
+      selectedRing: "#A24B35",
+      ink: "#2C2A28",
+      halo: "#EDEBE4",
+      paper: "#EDEBE4",
+      cluster: "#A24B35",
+    };
+  }
+  return {
+    pin: "#C46248",
+    glow: "#C46248",
+    glowOpacity: 0.22,
+    closed: "#1A1C20",
+    closedRing: "#6A6E74",
+    selected: "#E8E6E1",
+    selectedRing: "#C46248",
+    ink: "#E8E6E1",
+    halo: "#0B0D10",
+    paper: "#1A1C20",
+    cluster: "#C46248",
+  };
+}
+
+function cartoRaster(
+  path: string,
+  ground: string,
+  paint: {
+    "raster-saturation"?: number;
+    "raster-contrast"?: number;
+    "raster-brightness-min"?: number;
+    "raster-brightness-max"?: number;
+  }
+): StyleSpecification {
   return {
     version: 8,
     glyphs: GLYPHS,
     sources: {
       carto: {
         type: "raster",
-        tiles: [
-          "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-          "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-          "https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-        ],
+        tiles: ["a", "b", "c"].map(
+          (s) => `https://${s}.basemaps.cartocdn.com/${path}/{z}/{x}/{y}@2x.png`
+        ),
         tileSize: 256,
         maxzoom: 20,
         attribution:
@@ -94,56 +134,89 @@ export function rasterDark(): StyleSpecification {
       {
         id: "background",
         type: "background",
-        paint: { "background-color": "#0B0D10" },
+        paint: { "background-color": ground },
       },
       {
         id: "carto",
         type: "raster",
         source: "carto",
-        paint: {
-          "raster-saturation": -0.12,
-          "raster-contrast": 0.1,
-          "raster-brightness-min": 0,
-          "raster-brightness-max": 0.86,
-        },
+        paint,
       },
     ],
   };
 }
 
-export function initialMapStyle(): string | StyleSpecification {
-  if (hasBasemap) return buildBasemapStyle();
-  // Carto Dark Matter is baked into the style JSON. No fetch, no key,
-  // no MapTiler watermark. OpenFreeMap / MapTiler stay optional later.
-  return rasterDark();
+/** Paper/ink Positron — calm, readable, not a night canvas. */
+export function rasterLight(): StyleSpecification {
+  return cartoRaster("light_all", "#E6E6E1", {
+    "raster-saturation": -0.42,
+    "raster-contrast": -0.06,
+    "raster-brightness-min": 0.06,
+    "raster-brightness-max": 0.97,
+  });
 }
 
-export function buildBasemapStyle(): StyleSpecification {
-  if (!hasBasemap) return rasterDark();
+/** Cinematic Dark Matter. */
+export function rasterDark(): StyleSpecification {
+  return cartoRaster("dark_all", "#0B0D10", {
+    "raster-saturation": -0.18,
+    "raster-contrast": 0.04,
+    "raster-brightness-min": 0,
+    "raster-brightness-max": 0.82,
+  });
+}
 
+const PM_DARK = {
+  land: "#14161A",
+  water: "#0B0D10",
+  line: "#2A2E34",
+  lineStrong: "#3A4048",
+  road: "#1E2228",
+  label: "#8A9098",
+  labelBright: "#C4C8CE",
+  halo: "#0B0D10",
+} as const;
+
+const PM_LIGHT = {
+  land: "#E6E6E1",
+  water: "#D2D4D0",
+  line: "#C2C2BA",
+  lineStrong: "#A8A89E",
+  road: "#D8D8D0",
+  label: "#5C6058",
+  labelBright: "#3A3C38",
+  halo: "#E6E6E1",
+} as const;
+
+export function initialMapStyle(theme: MapTheme = "light"): StyleSpecification {
+  if (hasBasemap) return buildBasemapStyle(theme);
+  return theme === "dark" ? rasterDark() : rasterLight();
+}
+
+export function buildBasemapStyle(theme: MapTheme = "light"): StyleSpecification {
+  if (!hasBasemap) return theme === "dark" ? rasterDark() : rasterLight();
+
+  const T = theme === "dark" ? PM_DARK : PM_LIGHT;
   const sources = tileSource();
   const layers: StyleSpecification["layers"] = [
     {
       id: "background",
       type: "background",
-      paint: { "background-color": MAP_TOKENS.water },
+      paint: { "background-color": T.water },
     },
-  ];
-
-  layers.push(
     {
       id: "earth",
       type: "fill",
       source: "protomaps",
       "source-layer": "earth",
-      paint: { "fill-color": MAP_TOKENS.land },
+      paint: { "fill-color": T.land },
     },
     {
       id: "water",
       type: "fill",
       source: "protomaps",
       "source-layer": "water",
-      paint: { "fill-color": MAP_TOKENS.water },
+      paint: { "fill-color": T.water },
     },
     {
       id: "coastline",
@@ -151,7 +224,7 @@ export function buildBasemapStyle(): StyleSpecification {
       source: "protomaps",
       "source-layer": "water",
       paint: {
-        "line-color": MAP_TOKENS.line,
+        "line-color": T.line,
         "line-width": ["interpolate", ["linear"], ["zoom"], 2, 0.4, 8, 0.8, 14, 1.2],
       },
     },
@@ -162,7 +235,7 @@ export function buildBasemapStyle(): StyleSpecification {
       "source-layer": "boundaries",
       filter: ["<=", ["get", "kind_detail"], 2],
       paint: {
-        "line-color": MAP_TOKENS.lineStrong,
+        "line-color": T.lineStrong,
         "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.4, 6, 0.7, 12, 1],
         "line-dasharray": [3, 2],
       },
@@ -175,8 +248,8 @@ export function buildBasemapStyle(): StyleSpecification {
       minzoom: 12,
       filter: ["!=", ["get", "kind"], "highway"],
       paint: {
-        "line-color": MAP_TOKENS.road,
-        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.3, 16, 1.4],
+        "line-color": T.road,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.25, 16, 1.1],
       },
     },
     {
@@ -187,8 +260,8 @@ export function buildBasemapStyle(): StyleSpecification {
       minzoom: 8,
       filter: ["==", ["get", "kind"], "highway"],
       paint: {
-        "line-color": MAP_TOKENS.road,
-        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.4, 16, 2.2],
+        "line-color": T.road,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.35, 16, 1.8],
       },
     },
     {
@@ -208,8 +281,8 @@ export function buildBasemapStyle(): StyleSpecification {
         "text-padding": 24,
       },
       paint: {
-        "text-color": MAP_TOKENS.label,
-        "text-halo-color": MAP_TOKENS.halo,
+        "text-color": T.label,
+        "text-halo-color": T.halo,
         "text-halo-width": 1.1,
       },
     },
@@ -230,18 +303,13 @@ export function buildBasemapStyle(): StyleSpecification {
         "symbol-sort-key": ["coalesce", ["get", "min_zoom"], 10],
       },
       paint: {
-        "text-color": MAP_TOKENS.labelBright,
-        "text-halo-color": MAP_TOKENS.halo,
+        "text-color": T.labelBright,
+        "text-halo-color": T.halo,
         "text-halo-width": 1.2,
         "text-opacity": ["interpolate", ["linear"], ["zoom"], 4, 0.5, 8, 0.85],
       },
-    }
-  );
+    },
+  ];
 
-  return {
-    version: 8,
-    glyphs: GLYPHS,
-    sources,
-    layers,
-  };
+  return { version: 8, glyphs: GLYPHS, sources, layers };
 }

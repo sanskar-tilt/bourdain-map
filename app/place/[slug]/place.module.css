@@ -3,12 +3,12 @@
 
 .name {
   font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-4);
+  font-size: clamp(1.85rem, 4.6vw, 3.1rem);
   line-height: 1.05;
   letter-spacing: -0.01em;
 }
 .meta {
-  display: flex; align-items: center; gap: var(--s3);
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s3);
   font-size: var(--step--1);
   letter-spacing: var(--track-mid);
   text-transform: uppercase;
@@ -66,3 +66,40 @@
   border-top: 1px solid var(--edge); color: var(--ink-faint);
   font-size: var(--step--1); line-height: 1.6; }
 .credit strong { color: var(--ink-dim); font-weight: 400; }
+
+.cityQuote {
+  margin: 0;
+  font-family: var(--font-display-loaded), var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.35;
+  letter-spacing: var(--track-tight);
+}
+.cityQuote cite {
+  display: block;
+  margin-top: var(--s2);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-style: normal;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.watch {
+  display: grid;
+  gap: var(--s2);
+  background-image: none;
+  text-decoration: none;
+}
+.watch span {
+  font-size: var(--step-0);
+  color: var(--ink-dim);
+}
+.watchThumb {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+  background: var(--raised);
+}

@@ -5,28 +5,6 @@ import Link from "next/link";
 import type { ReelEntry } from "../../lib/reels";
 import styles from "./NativeReels.module.css";
 
-declare global {
-  interface Window {
-    instgrm?: { Embeds?: { process?: () => void } };
-  }
-}
-
-let igLoading = false;
-function kickInstagram() {
-  if (window.instgrm?.Embeds?.process) {
-    window.instgrm.Embeds.process();
-    return;
-  }
-  if (igLoading) return;
-  igLoading = true;
-  const s = document.createElement("script");
-  s.src = "https://www.instagram.com/embed.js";
-  s.async = true;
-  s.onload = () => window.instgrm?.Embeds?.process?.();
-  s.onerror = () => { igLoading = false; };
-  document.body.appendChild(s);
-}
-
 function LocalSlide({ reel, active }: { reel: ReelEntry; active: boolean }) {
   const vid = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
@@ -41,10 +19,10 @@ function LocalSlide({ reel, active }: { reel: ReelEntry; active: boolean }) {
   }, [active]);
 
   const src = reel.file ? `/home/${reel.file}` : undefined;
-  const still = reel.photo
-    ? `/home/${reel.photo}`
-    : reel.poster
-      ? `/home/${reel.poster}`
+  const still = reel.poster
+    ? `/home/${reel.poster}`
+    : reel.photo
+      ? `/home/${reel.photo}`
       : undefined;
 
   return (
@@ -63,12 +41,6 @@ function LocalSlide({ reel, active }: { reel: ReelEntry; active: boolean }) {
             const el = e.currentTarget;
             el.currentTime = 0;
             if (active) void el.play().catch(() => {});
-          }}
-          onClick={() => {
-            const el = vid.current;
-            if (!el) return;
-            el.muted = !el.muted;
-            setMuted(el.muted);
           }}
         />
       ) : still ? (
@@ -97,23 +69,9 @@ function LocalSlide({ reel, active }: { reel: ReelEntry; active: boolean }) {
 }
 
 function EmbedSlide({ reel, near }: { reel: ReelEntry; near: boolean }) {
-  const slot = useRef<HTMLDivElement>(null);
+  if (!near || !reel.videoId) return <div className={styles.media} />;
 
-  useEffect(() => {
-    if (!near || reel.platform !== "instagram" || !slot.current || !reel.url) return;
-    if (slot.current.querySelector("blockquote")) {
-      kickInstagram();
-      return;
-    }
-    const b = document.createElement("blockquote");
-    b.className = "instagram-media";
-    b.setAttribute("data-instgrm-permalink", reel.url);
-    b.setAttribute("data-instgrm-version", "14");
-    slot.current.appendChild(b);
-    kickInstagram();
-  }, [near, reel.platform, reel.url]);
-
-  if (reel.platform === "tiktok" && reel.videoId && near) {
+  if (reel.platform === "tiktok") {
     return (
       <iframe
         className={styles.embed}
@@ -123,9 +81,20 @@ function EmbedSlide({ reel, near }: { reel: ReelEntry; near: boolean }) {
       />
     );
   }
-  if (reel.platform === "instagram") {
-    return <div ref={slot} className={styles.igSlot} />;
+
+  if (reel.platform === "youtube") {
+    const id = reel.videoId;
+    return (
+      <iframe
+        className={styles.embed}
+        src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${id}&rel=0&modestbranding=1&controls=0`}
+        allow="autoplay; fullscreen; encrypted-media"
+        allowFullScreen
+        title={reel.caption ?? "Reel"}
+      />
+    );
   }
+
   return <div className={styles.media} />;
 }
 
@@ -150,6 +119,13 @@ function Slide({
   );
 }
 
+function realIndexOf(i: number, n: number) {
+  if (n <= 1) return 0;
+  if (i === 0) return n - 1;
+  if (i === n + 1) return 0;
+  return i - 1;
+}
+
 export default function NativeReels({
   reels,
   fullPage,
@@ -160,20 +136,43 @@ export default function NativeReels({
   const deck = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
-  activeRef.current = active;
+  const n = reels.length;
+  const looped = n > 1 ? [reels[n - 1], ...reels, reels[0]] : reels;
+
+  useEffect(() => { activeRef.current = active; }, [active]);
 
   useEffect(() => {
     const root = deck.current;
     if (!root) return;
-    const slides = [...root.querySelectorAll("[data-reel-slide]")];
+    const slides = [...root.querySelectorAll<HTMLElement>("[data-reel-slide]")];
+    const jump = (i: number) => {
+      slides[i]?.scrollIntoView({ behavior: "auto", block: "start" });
+    };
+    if (n > 1) jump(1);
+
     const io = new IntersectionObserver(
       (entries) => {
         const hit = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (!hit) return;
-        const i = slides.indexOf(hit.target);
-        if (i >= 0) setActive(i);
+        const i = slides.indexOf(hit.target as HTMLElement);
+        if (i < 0) return;
+        if (n > 1 && i === 0) {
+          jump(n);
+          setActive(n - 1);
+          activeRef.current = n - 1;
+          return;
+        }
+        if (n > 1 && i === n + 1) {
+          jump(1);
+          setActive(0);
+          activeRef.current = 0;
+          return;
+        }
+        const r = realIndexOf(i, n);
+        setActive(r);
+        activeRef.current = r;
       },
       { root, threshold: 0.65 }
     );
@@ -185,8 +184,15 @@ export default function NativeReels({
       if (tag === "INPUT" || tag === "TEXTAREA") return;
       e.preventDefault();
       const dir = e.key === "ArrowUp" ? -1 : 1;
-      const next = Math.min(slides.length - 1, Math.max(0, activeRef.current + dir));
-      slides[next]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      let next = activeRef.current + dir;
+      if (n > 1) {
+        if (next < 0) next = n - 1;
+        if (next >= n) next = 0;
+        jump(next + 1);
+      } else {
+        next = Math.min(slides.length - 1, Math.max(0, next));
+        slides[next]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     };
     window.addEventListener("keydown", onKey);
 
@@ -194,7 +200,7 @@ export default function NativeReels({
       io.disconnect();
       window.removeEventListener("keydown", onKey);
     };
-  }, [reels.length]);
+  }, [n]);
 
   if (!reels.length) return null;
 
@@ -203,16 +209,19 @@ export default function NativeReels({
       {fullPage && (
         <Link href="/" className={styles.home}>Home</Link>
       )}
-      {reels.map((reel, i) => (
-        <Slide
-          key={reel.id}
-          reel={reel}
-          active={i === active}
-          near={Math.abs(i - active) <= 1}
-          index={i}
-          total={reels.length}
-        />
-      ))}
+      {looped.map((reel, i) => {
+        const r = realIndexOf(i, n);
+        return (
+          <Slide
+            key={`${reel.id}-loop-${i}`}
+            reel={reel}
+            active={r === active}
+            near={Math.abs(r - active) <= 1 || (n > 1 && ((r === 0 && active === n - 1) || (r === n - 1 && active === 0)))}
+            index={r}
+            total={n}
+          />
+        );
+      })}
     </div>
   );
 }

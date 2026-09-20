@@ -1,12 +1,13 @@
 /**
  * Reels manifest. URLs stay as official embeds; local files play natively.
- * The player shell is ours — this file only parses the list.
+ * TikTok and YouTube Shorts only — Instagram is dropped.
  */
 
 import fs from "node:fs";
 import path from "node:path";
+import { youtubeId } from "./youtube";
 
-export type ReelPlatform = "instagram" | "tiktok" | "local";
+export type ReelPlatform = "tiktok" | "youtube" | "local";
 
 export type ReelEntry = {
   id: string;
@@ -31,10 +32,11 @@ type Raw = {
   poster?: unknown;
 };
 
-const HOSTS: Record<"instagram" | "tiktok", string[]> = {
-  instagram: ["www.instagram.com", "instagram.com"],
-  tiktok: ["www.tiktok.com", "tiktok.com"],
-};
+const TIKTOK = ["www.tiktok.com", "tiktok.com"];
+const YOUTUBE = [
+  "www.youtube.com", "youtube.com", "m.youtube.com",
+  "youtu.be", "www.youtube-nocookie.com", "youtube-nocookie.com",
+];
 
 function parse(raw: Raw, i: number): ReelEntry | null {
   const file = typeof raw.file === "string" ? raw.file.trim() : "";
@@ -44,8 +46,6 @@ function parse(raw: Raw, i: number): ReelEntry | null {
   const credit = typeof raw.credit === "string" ? raw.credit : undefined;
   const poster = typeof raw.poster === "string" ? raw.poster.trim() : undefined;
 
-  // Photo-only slides are not reels. A local file is film; otherwise
-  // an embed URL. Stills stay off the snap deck.
   if (file) {
     return {
       id: `local-${file}-${i}`,
@@ -62,24 +62,36 @@ function parse(raw: Raw, i: number): ReelEntry | null {
   try { u = new URL(raw.url); }
   catch { return null; }
 
-  const fromHost = (Object.keys(HOSTS) as Array<"instagram" | "tiktok">).find((p) =>
-    HOSTS[p].includes(u.hostname)
-  );
-  if (!fromHost) return null;
+  const host = u.hostname.replace(/^www\./, "");
+  if (host === "instagram.com") return null;
 
-  const entry: ReelEntry = {
-    id: `${fromHost}-${u.pathname}-${i}`,
-    platform: fromHost,
-    url: `https://${u.hostname}${u.pathname}`,
-    caption,
-    credit,
-  };
-  if (fromHost === "tiktok") {
+  if (TIKTOK.includes(u.hostname) || TIKTOK.includes(host)) {
     const id = u.pathname.match(/\/video\/(\d+)/)?.[1];
     if (!id) return null;
-    entry.videoId = id;
+    return {
+      id: `tiktok-${id}-${i}`,
+      platform: "tiktok",
+      url: `https://www.tiktok.com${u.pathname}`,
+      videoId: id,
+      caption,
+      credit,
+    };
   }
-  return entry;
+
+  if (YOUTUBE.includes(u.hostname) || YOUTUBE.includes(host)) {
+    const id = youtubeId(raw.url);
+    if (!id) return null;
+    return {
+      id: `youtube-${id}-${i}`,
+      platform: "youtube",
+      url: `https://www.youtube.com/shorts/${id}`,
+      videoId: id,
+      caption,
+      credit,
+    };
+  }
+
+  return null;
 }
 
 export function reelEntries(): ReelEntry[] {
@@ -95,7 +107,7 @@ export function reelEntries(): ReelEntry[] {
       (manifest.reels ?? []).forEach((raw, i) => {
         const e = parse(raw, i);
         if (!e) return;
-        const key = e.file || e.photo || e.url || e.id;
+        const key = e.file || e.videoId || e.url || e.id;
         if (seen.has(key)) return;
         seen.add(key);
         if (e.platform === "local") local.push(e);
@@ -103,6 +115,5 @@ export function reelEntries(): ReelEntry[] {
       });
     } catch { /* optional */ }
   });
-  // Local film first, then vertical embeds of him. No photo slides.
   return [...local, ...remote];
 }

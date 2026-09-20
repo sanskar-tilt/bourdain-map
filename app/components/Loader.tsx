@@ -124,7 +124,10 @@ export default function Loader({
           sizes="clamp(160px, 22vw, 360px)"
         />
         <span className={s.loaderCount} data-loader-count="">
-          {n < 1000 ? String(n).padStart(4, "0") : n.toLocaleString("en-GB")}
+          <span className={s.loaderNum}>
+            {n < 1000 ? String(n).padStart(4, "0") : n.toLocaleString("en-GB")}
+          </span>
+          <span className={s.loaderLabel}>places he ate</span>
         </span>
       </div>
     </div>

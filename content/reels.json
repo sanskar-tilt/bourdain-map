@@ -1,18 +1,13 @@
 {
   "_readme": [
     "Immersive /reels player. Vertical video only — no photo slides.",
-    "Instagram: https://www.instagram.com/reel/SHORTCODE/",
-    "TikTok:    https://www.tiktok.com/@user/video/1234567890",
-    "Local:     file in public/home/ (native player; no outbound chrome).",
-    "Our UI never labels a slide TikTok or Instagram."
+    "TikTok:         https://www.tiktok.com/@user/video/1234567890",
+    "YouTube Shorts: https://www.youtube.com/shorts/VIDEO_ID",
+    "Local:          file in public/home/ (native player).",
+    "Instagram is not used. Our UI never labels a slide by platform.",
+    "Every remote URL was oEmbed-checked; titles mention Bourdain."
   ],
   "reels": [
-    {
-      "file": "dont-be-afraid.mp4",
-      "poster": "bourdain-peabody-red.jpg",
-      "caption": "Don't be afraid to sit down.",
-      "credit": "Clip by MANIFESTO (@bymnfsto), used with permission"
-    },
     {
       "url": "https://www.tiktok.com/@bourdainology/video/7349931622185159969",
       "caption": "Tokyo, after the service."
@@ -26,20 +21,492 @@
       "caption": "The hangover cure."
     },
     {
-      "url": "https://www.instagram.com/reel/C3ddnNduxxD/",
-      "caption": "The Parts Unknown open."
-    },
-    {
-      "url": "https://www.instagram.com/reel/DaBbKMnRBsy/",
-      "caption": "José Andrés, on what would have been his birthday."
-    },
-    {
       "url": "https://www.tiktok.com/@thejonathankite/video/7459479822331284766",
       "caption": "The voice is unnervingly close."
     },
     {
       "url": "https://www.tiktok.com/@joshuadairen/video/7514448051121949994",
       "caption": "A bridge, not just a chef."
+    },
+    {
+      "url": "https://www.youtube.com/shorts/WM2rIE9dfJc",
+      "caption": "*chefs kiss* Anthony Bourdain - Kitchen Confidential (Review)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/U-yhOE18X8c",
+      "caption": ". Obama & Bourdain's Unrecognized Adventure"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/fmzpUIk808k",
+      "caption": "A Mouthwatering Chilean Food Tour | Anthony Bourdain: No Reservations | Travel Channel"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/EvnhQ3x-7gE",
+      "caption": "Anthon Bourdain: Parts Unknown | Best Moments In Nashville"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/uP2QpgsFJtM",
+      "caption": "Anthony Bordain EatsTacos in Tijauna | No Reservations"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/0nI9LvK7r-4",
+      "caption": "Anthony Bourdain - Banh Mi in Vietnam"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/rvHNdqQXgnw",
+      "caption": "Anthony Bourdain - No Reservations - Back to Beirut"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/Ag6NEedrHDM",
+      "caption": "Anthony Bourdain - No Reservations - Croatia - Trailer"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/gWIPDR2pccE",
+      "caption": "Anthony Bourdain - No Reservations - Croatia E1"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/wdYe8M0jHoY",
+      "caption": "Anthony Bourdain - No Reservations - Croatia E2"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/BK3WWQe4NM8",
+      "caption": "Anthony Bourdain - No Reservations - Croatia E5"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/5I7AyHIxlIE",
+      "caption": "Anthony Bourdain - No Reservations - Croatia E9"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/lj6zyqFCc-8",
+      "caption": "Anthony Bourdain - Parts Unknown - S01E2 Jollibee Clip HD"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/i3M7E3w6oTY",
+      "caption": "Anthony Bourdain - Tribute Scooter Ride in Vietnam."
+    },
+    {
+      "url": "https://www.youtube.com/shorts/4DZh5NJXD3M",
+      "caption": "Anthony Bourdain A Cooks Tour Season 1 Episode 3: Cobra Heart Foods That Make You…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/7O9l7ccsloI",
+      "caption": "Anthony Bourdain A Cooks Tour Season 1 Episode 4: Eating on the Mekong (4k)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/vRZeLqLMm-Q",
+      "caption": "Anthony Bourdain Dines at The French Laundry | Anthony Bourdain A Cooks Tour"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/XCk6_LfGbUg",
+      "caption": "Anthony Bourdain Enjoys Fine New Jersey Cuisine | Anthony Bourdain: No Reservations |…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/ty5cVrpne-A",
+      "caption": "Anthony Bourdain Exposes Truth Behind Eating Street Food"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/IzROud4ZFy0",
+      "caption": "Anthony Bourdain Interview on 1st Beirut No Reservations Episode"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/bsswLoKG-Go",
+      "caption": "Anthony Bourdain Kitchen Confidential"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/42ssE1ezQ-g",
+      "caption": "Anthony Bourdain No Reservations Sea 05 Epis 07 Philippines"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/n0lVpq9fFcw",
+      "caption": "Anthony Bourdain Parts Unknown Dinner with former US President Barack Obama DCODE"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/mP5QjgmOjR8",
+      "caption": "Anthony Bourdain Parts Unknown New Season Trailer"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/hF2V-5lBWoo",
+      "caption": "Anthony Bourdain Parts Unknown Trailer"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/dpcZrAltAcA",
+      "caption": "Anthony Bourdain Parts Unknown Trailer"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/dpU1zYRkvRs",
+      "caption": "Anthony Bourdain Pho in Vietnam"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/FddwePsXME0",
+      "caption": "Anthony Bourdain Talks \"Kitchen Confidential\""
+    },
+    {
+      "url": "https://www.youtube.com/shorts/rMQrLxZclsE",
+      "caption": "Anthony Bourdain Talks About Kitchen Confidential (Year 2000)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/hoC6zzqKdl8",
+      "caption": "Anthony Bourdain Tokyo Sun 9pm ET/PT"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/LzO9NITmd84",
+      "caption": "Anthony Bourdain Tribute Tour in Vietnam (Owners reflect on Bourdain's visit)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/AaCe3mK1Hos",
+      "caption": "Anthony Bourdain Visits The Famous Tsukiji Market | Anthony Bourdain A Cook's Tour"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/mhn73nczNHg",
+      "caption": "Anthony Bourdain advice for his younger self 🎯"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/_nME8m2ulXg",
+      "caption": "Anthony Bourdain and Barack Obama have a meal 🍛💖"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/cV78FSOtifY",
+      "caption": "Anthony Bourdain and President Obama Have a Beer"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/b7mkb3xBNjE",
+      "caption": "Anthony Bourdain and Tokyo"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/0ziDn8FqdI4",
+      "caption": "Anthony Bourdain and Vietnam's street food CNN (Vietsub)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/eNisyunwSV4",
+      "caption": "Anthony Bourdain beats jetlag with noodles (Anthony Bourdain Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/DXNq4PyfNqE",
+      "caption": "Anthony Bourdain details hashish in Morocco (Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/cjKDNreKAJ8",
+      "caption": "Anthony Bourdain explores Tokyo's music scene (Parts Unknown, Japan)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/OLeOVvgok2E",
+      "caption": "Anthony Bourdain explores Zanzibar's 'insane variety' (Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/V03F545Gd38",
+      "caption": "Anthony Bourdain no reservations intro HD"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/DtShpjAQ2q0",
+      "caption": "Anthony Bourdain on \"Kitchen Confidential\" - EMMYTVLEGENDS.ORG"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/q7ul0xx1nHk",
+      "caption": "Anthony Bourdain on Avoiding Hangovers"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/ccRxaAkIrU4",
+      "caption": "Anthony Bourdain on Kitchen Confidential Insider's Edition | Part 1"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/Dr1C_Qpeg7k",
+      "caption": "Anthony Bourdain on Street Food"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/CjhPUsB3QV4",
+      "caption": "Anthony Bourdain on Tokyo"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/FjIQ_8Fp7xE",
+      "caption": "Anthony Bourdain on Vietnam"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/6diDi8D8ois",
+      "caption": "Anthony Bourdain on “Kitchen Confidential” (2000)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/c8_ivho0TD4",
+      "caption": "Anthony Bourdain scoots through Vietnam (Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/pCtf7bFEXlw",
+      "caption": "Anthony Bourdain sharing what he learned through travel and creating \"Parts Unknown.\""
+    },
+    {
+      "url": "https://www.youtube.com/shorts/5YBNdcJcwQ0",
+      "caption": "Anthony Bourdain shocked by this in Punjab, India (Anthony Bourdain Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/4F2WKLhhnhk",
+      "caption": "Anthony Bourdain travels to Scotland (Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/JBR6v1VmTxA",
+      "caption": "Anthony Bourdain visits Chernobyl - No Reservations"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/HFC_L2GSFUM",
+      "caption": "Anthony Bourdain's \"Kitchen Confidential\" - An Animated Preview"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/ibWPlC5-gJ0",
+      "caption": "Anthony Bourdain's Kitchen Confidential A Viral Sensation"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/gFpPghvB_Fk",
+      "caption": "Anthony Bourdain's Life Advice Will Change Your Future (MUST WATCH)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/QaeUrQfnTbE",
+      "caption": "Anthony Bourdain's Love for Vietnam's Street Food 🇻🇳 🍲"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/kVuxAcYWUoE",
+      "caption": "Anthony Bourdain's closing monologue for No Reservations, Brooklyn"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/LquvDeSDnzA",
+      "caption": "Anthony Bourdain's travelling advice."
+    },
+    {
+      "url": "https://www.youtube.com/shorts/cK8It2T66TU",
+      "caption": "Anthony Bourdain: A Cook’s Tour (in Asia) | Vietnam, Cambodia, Thailand & Japan! 🇻🇳🇯🇵🇨🇳🇰🇭"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/ysYGCtGYGdc",
+      "caption": "Anthony Bourdain: Iran not what I expected (Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/GsHqg1aiekU",
+      "caption": "Anthony Bourdain: Kitchen Confidential"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/1ii4w9NhYSA",
+      "caption": "Anthony Bourdain: Love for Vietnam"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/gUJlLHf5I_E",
+      "caption": "Anthony Bourdain: Must. Have. Jerk. Chicken. (Parts Unknown: Jamaica)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/Nih3NJytsJM",
+      "caption": "Anthony Bourdain: Parts Unknown"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/GBGfrtoiBQI",
+      "caption": "Anthony Bourdain: Parts Unknown | Official Trailer | DocPlay"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/Rx2g65MjsLk",
+      "caption": "Anthony Bourdain: Tokyo after dark (Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/fKdxw_fgp1g",
+      "caption": "Anthony Bourdain: Unexpected Management Secrets from Kitchen Confidential"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/ZQlD-lE_DR8",
+      "caption": "Anthony Bourdain’s First Time in Tokyo"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/0_uHPevpgUE",
+      "caption": "Anthony Bourdain’s Hangover Cure?"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/yp-MitXIfM4",
+      "caption": "Anthony Bourdain’s simple formula to cure a hangover 🍻"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/LXKRqjCpSCk",
+      "caption": "Anthony Eats High-End Cuisine | No Reservations with Anthony Bourdain | Travel Channel"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/TkhVNUeUzI0",
+      "caption": "Anthony Tries the Best Street Vendor in Haiti | Anthony Bourdain : No Reservations |…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/7PeX1i7t1iw",
+      "caption": "Anthony's Most Memorable Meals | Anthony Bourdain: No Reservations | Travel Channel"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/CWGpd9tqsTU",
+      "caption": "Anthony’s Love Letter to Vietnam | Anthony Bourdain: No Reservations | Travel Channel"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/sBLrAFjauVQ",
+      "caption": "Around the World with Anthony Bourdain 🌍 | No Reservations | Travel Channel"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/I6gry5oBKeU",
+      "caption": "Ban Cuon Visited By Anthony Bourdain In Hanoi Vietnam"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/qUzhhCaWe_g",
+      "caption": "Banh Mi in Vietnam - Anthony Bourdain recommended"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/v29GrVJn-5M",
+      "caption": "Barack Obama & Anthony Bourdain $6 Pho in Vietnam"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/efG56KcQj0Q",
+      "caption": "Barack Obama & Anthony Bourdain Have Dinner | Anthony Bourdain: Parts Unknown | Max"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/DS3sLOuf_t0",
+      "caption": "Barack Obama Shares Bun Cha And Beer With Anthony Bourdain In Hanoi Creating Iconic Moment"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/Z_l8wmJtssU",
+      "caption": "Beef's Best Kept Secrets | Anthony Bourdain: No Reservations | Travel Channel"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/cQ4g5eVSy5g",
+      "caption": "Best Banh Mi in Vietnam with Anthony Bourdain’s Stamp of Approval"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/VwHt6lVbSQQ",
+      "caption": "Best Bunh Mi in Vietnam per Anthony Bourdain"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/BF0DIllKRSY",
+      "caption": "Bourdain asks Obama the big question | Anthony Bourdain: Parts Unknown"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/NMrgQ_dOyhk",
+      "caption": "Bourdain falls in love with Vietnam's street food (Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/P73PqTHi5oQ",
+      "caption": "Bourdain finds pleasure in a cheese cart (Anthony Bourdain Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/R0hH_XR433A",
+      "caption": "Bourdain searches for the perfect sushi in Tokyo (Parts Unknown, Japan)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/HHZrv3HphW8",
+      "caption": "Bourdain's Hangover Cure: NYC Food Adventure!"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/0rlDBhwyCU8",
+      "caption": "Bourdain's NYC Hangover Cure: Joints, Coke, Szechuan Food!"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/4un5xZyzH0A",
+      "caption": "Bourdain’s Favourite Lunch Lady of Vietnam 🍜 | Her Legacy Lives On"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/xQf9kEJbqQs",
+      "caption": "Bourdain’s hangover cure 🍻"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/uie3aLDdIYU",
+      "caption": "CNN Parts Unknown with Anthony Bourdain Open - Season 1"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/kUuieTtoNEM",
+      "caption": "CNN: \"Anthony Bourdain: Parts Unknown - Tokyo\" promo"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/Wvw9dteouwQ",
+      "caption": "Chef Jacques Pépin shares his hangover cure! 🍷"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/6l4t3awWAQA",
+      "caption": "Chicago Deep Dish Pizza & Foie Gras Hot Dogs | Anthony Bourdain: No Reservations |…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/y-cR4iEmcUM",
+      "caption": "Detroit: DIY BBQ (Anthony Bourdain Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/iO6lp9rTUUY",
+      "caption": "Eating Authentic Bún Chả in Hanoi with President Obama"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/BH6XNusKH7c",
+      "caption": "Exploring the Cuisine & Catacombs of Les Halles | Anthony Bourdain: No Reservations |…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/IPOks-BY3QY",
+      "caption": "FOX Comedy Kitchen Confidential Starring Bradley Cooper Based on Anthony Bourdain's…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/nU2gRvVyhh8",
+      "caption": "Famous Meal Between Anthony Bourdain and Barack Obama"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/hMbjdTnLK8w",
+      "caption": "Food, Family, & Tradition in Sardinia | Anthony Bourdain: No Reservations | Travel Channel"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/esRb2sFuuvE",
+      "caption": "Former President Obama remembers Anthony Bourdain"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/DM0PJsD-CPs",
+      "caption": "Goose Liver, Pheasant, and “Bad Santa” Pork | Anthony Bourdain : No Reservations |…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/d1xqmdNTa-4",
+      "caption": "Hanoi's Most Famous Bun Cha - Bourdain & Obama"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/cGWhGCy1CNE",
+      "caption": "Iran: The land of secret recipes (Anthony Bourdain Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/xlBOiQYcZC4",
+      "caption": "Is Kitchen Confidential Still Worth Reading? 📖🤔"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/pcBCMPJOZTU",
+      "caption": "Is Marseille a 'victim of bad reputation'? (Anthony Bourdain Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/phJE7QtC_oI",
+      "caption": "Israel: Anthony Bourdain has traditional Palestinian meal (Parts Unknown, Jerusalem)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/o7nodvp41-4",
+      "caption": "KITCHEN CONFIDENTIAL BY ANTHONY BOURDAIN - BOOK REVIEW"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/8b5U0IkndyQ",
+      "caption": "Kitchen Confidential - Anthony Bourdain BOOK REVIEW/THOUGHTS"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/U7SgSxJKUBU",
+      "caption": "Kitchen Confidential by Anthony Bourdain: 6 Minute Summary"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/Xqfq36omqtM",
+      "caption": "MORE of Anthony’s Most Memorable Meals | Anthony Bourdain: No Reservations | Travel…"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/PRaDWBko4rM",
+      "caption": "Midnight Street Food Ambience | Bourdain | Sleep & Relax"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/9yJBLeA1vRg",
+      "caption": "My 1st time in Tokyo. Narrated by"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/rhAIF3Hmxuc",
+      "caption": "New Mexico: \"My face is burning off!\" (Anthony Bourdain Parts Unknown)"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/3hMjIa45RY8",
+      "caption": "Obama & Bourdain's $6 Hanoi Meal That Shocked the World 🇻🇳🍜"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/qFuPB6DheRs",
+      "caption": "Obama Dines With Anthony Bourdain in Vietnam"
+    },
+    {
+      "url": "https://www.youtube.com/shorts/LPE9yYo-zbY",
+      "caption": "Obama and Bourdain Tourist Trap? 🇻🇳"
     }
   ]
 }

@@ -33,17 +33,31 @@
 /* One of exactly two sanctioned uses of the accent; the other is map pins. */
 .loaderCount {
   position: absolute;
-  bottom: 7vh;
+  bottom: 6vh;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.28em;
   color: var(--accent);
-  min-width: 4.5ch;
   text-align: center;
+  min-width: 8ch;
+}
+.loaderNum {
   font-family: var(--font-display-loaded), var(--font-display);
-  font-size: clamp(1.25rem, 3.2vw, 2.25rem);
+  font-size: clamp(2.4rem, 8.5vw, 7.5rem);
   line-height: var(--lh-solid);
   letter-spacing: var(--track-tight);
   font-variant-numeric: tabular-nums;
+}
+.loaderLabel {
+  font-family: var(--font-body-loaded), var(--font-body);
+  font-size: clamp(0.72rem, 1.5vw, 0.95rem);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: var(--w-regular);
 }
 
 /* -------------------------------------------------------- hero text */

@@ -102,3 +102,21 @@ export const SHOW_NAMES: Record<string, string> = {
   book: "Book",
   other: "Other",
 };
+
+export const KIND_LABELS: Record<string, string> = {
+  food: "restaurant",
+  market: "market",
+  sight: "place",
+  activity: "activity",
+  lodging: "hotel",
+};
+
+/** Title-case ALL CAPS KML names. Short acronyms (COI, FIG) stay as-is. */
+export function displayPlaceName(name: string): string {
+  const letters = [...name].filter((c) => /[A-Za-z]/.test(c)).join("");
+  if (letters.length < 8) return name;
+  if (name !== name.toUpperCase()) return name;
+  return name
+    .toLowerCase()
+    .replace(/(^|[\s/.'-])(\S)/g, (_m, p: string, c: string) => p + c.toUpperCase());
+}

@@ -1,4 +1,8 @@
-import { allPlaces, placeBySlug, SHOW_NAMES } from "../../../lib/detail";
+import {
+  allPlaces, placeBySlug, SHOW_NAMES, KIND_LABELS, displayPlaceName,
+} from "../../../lib/detail";
+import { cityQuoteBest, cityClipBest } from "../../../lib/cityQuotes";
+import { youtubeThumb, youtubeWatch } from "../../../lib/youtube";
 import PlaceActions from "../../components/PlaceActions";
 import styles from "./place.module.css";
 import Link from "next/link";
@@ -21,9 +25,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = placeBySlug(slug);
   if (!p) return { title: "Not found" };
   const where = p.city ?? regionName(p.cc);
+  const name = displayPlaceName(p.name);
   return {
-    title: `${p.name}${where ? ` — ${where}` : ""}`,
-    description: `Anthony Bourdain went to ${p.name}${where ? ` in ${where}` : ""}.`,
+    title: `${name}${where ? ` — ${where}` : ""}`,
+    description: `Anthony Bourdain went to ${name}${where ? ` in ${where}` : ""}.`,
   };
 }
 
@@ -41,20 +46,24 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
   const gone = place.status === "closed";
   const unnamed = /^meals? with/i.test(place.name);
   const country = regionName(place.cc);
+  const name = displayPlaceName(place.name);
+  const kind = KIND_LABELS[place.kind];
+  const quote = cityQuoteBest(place.citySlug);
+  const clip = cityClipBest(place.citySlug);
+  const visits = place.appearances.filter((a) => a.show !== "other" || a.episodeTitle);
 
   return (
     <article className={styles.place} data-gone={gone}>
-      <h1 className={styles.name}>{place.name}</h1>
+      <h1 className={styles.name}>{name}</h1>
 
       <p className={styles.meta}>
         {place.citySlug ? (
           <Link href={`/city/${place.citySlug}/`}>{place.city}</Link>
         ) : (
-          /* McMurdo Station is not in a city, and that is the correct answer
-             rather than missing data. It still gets a name, a country and a
-             page. */
           <span>{country ?? "Somewhere unmapped"}</span>
         )}
+        {country && <span>{country}</span>}
+        {kind && <span>{kind}</span>}
         {gone && <span className={styles.gone}>gone</span>}
       </p>
 
@@ -66,8 +75,33 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
         </p>
       )}
 
+      {quote && (
+        <blockquote className={styles.cityQuote}>
+          <p>{quote.text}</p>
+          <cite>{quote.attr}</cite>
+        </blockquote>
+      )}
+
+      {clip?.id && (
+        <a
+          className={styles.watch}
+          href={youtubeWatch(clip.id)}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            className={styles.watchThumb}
+            src={youtubeThumb(clip.id)}
+            alt=""
+            width={480}
+            height={360}
+          />
+          <span>{clip.title ?? "Official clip"}</span>
+        </a>
+      )}
+
       <ol className={styles.visits}>
-        {place.appearances.map((a, i) => {
+        {visits.map((a, i) => {
           const inferred = a.episodeSource === "inferred";
           return (
             <li key={i} className={styles.visit}>
@@ -85,9 +119,6 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
                 <p className={inferred ? styles.epTitleSoft : styles.epTitle}>
                   {a.episodeTitle}
                   {inferred && (
-                    /* An episode we attributed from the city rather than
-                       established for this place. Saying so costs one line and
-                       buys the rest of the page its credibility. */
                     <span className={styles.qualifier}>
                       likely — matched on the city, not this place
                     </span>
@@ -98,7 +129,6 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
               {a.ate && <p className={styles.ate}>{a.ate}</p>}
 
               {a.note && (
-                /* deannd's words, quoted and credited. Not the site's voice. */
                 <figure className={styles.quote}>
                   <blockquote>{a.note}</blockquote>
                   <figcaption>deannd</figcaption>
@@ -109,7 +139,7 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
         })}
       </ol>
 
-      <PlaceActions placeId={place.id} placeName={place.name} />
+      <PlaceActions placeId={place.id} placeName={name} />
 
       <p className={styles.credit}>
         This place, and what he ate here, comes from the map <strong>deannd</strong>{" "}

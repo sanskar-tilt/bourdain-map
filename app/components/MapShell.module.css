@@ -2,6 +2,14 @@
   position: fixed;
   inset: 0;
   background: var(--ground);
+  /* Map owns the wheel. Chrome and the sidebar opt back in. */
+  pointer-events: none;
+}
+.mapHit {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-map);
+  pointer-events: auto;
 }
 
 /* ---------------------------------------------------------------- chrome */
@@ -103,12 +111,18 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   transform: translateX(100%);
+  pointer-events: none;
+  visibility: hidden;
   /* --slow/--ease died in the retoken, so the panel had been snapping open
      with no transition at all. An entrance, so the entrance band. */
   transition: transform var(--t-enter) var(--ease-in-out);
 }
-.shell[data-panel="open"] .panel { transform: translateX(0); }
-.panel[aria-hidden="true"] { pointer-events: none; }
+.shell[data-panel="open"] .panel {
+  transform: translateX(0);
+  pointer-events: auto;
+  visibility: visible;
+}
+.panel[aria-hidden="true"] { pointer-events: none; visibility: hidden; }
 
 .panelBody { padding: var(--s6) var(--s5) var(--s7); }
 

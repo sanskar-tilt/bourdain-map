@@ -3,6 +3,7 @@
   background: color-mix(in srgb, var(--ground) 62%, transparent);
   display: flex; justify-content: center;
   padding: 12vh var(--s4) var(--s4);
+  pointer-events: auto;
 }
 .palette {
   width: min(560px, 100%);
