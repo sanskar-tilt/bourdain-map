@@ -10,13 +10,6 @@
       "name": "Greater London",
       "slug": "greater-london-gb",
       "cc": "GB",
-      "places": 16,
-      "note": "matched from \"London\""
-    },
-    {
-      "name": "Greater London",
-      "slug": "greater-london-gb",
-      "cc": "GB",
       "places": 16
     },
     {
@@ -140,18 +133,6 @@
       "places": 9
     },
     {
-      "name": "Moscow",
-      "slug": "moscow-ru",
-      "cc": "RU",
-      "places": 10
-    },
-    {
-      "name": "Saint Petersburg",
-      "slug": "saint-petersburg-ru",
-      "cc": "RU",
-      "places": 7
-    },
-    {
       "name": "Reykjavik",
       "slug": "reykjavik-is",
       "cc": "IS",
@@ -173,13 +154,6 @@
       "name": "City of Edinburgh",
       "slug": "city-of-edinburgh-gb",
       "cc": "GB",
-      "places": 4,
-      "note": "matched from \"Edinburgh\""
-    },
-    {
-      "name": "City of Edinburgh",
-      "slug": "city-of-edinburgh-gb",
-      "cc": "GB",
       "places": 4
     },
     {
@@ -192,28 +166,31 @@
       "name": "Cologne",
       "slug": "cologne-de",
       "cc": "DE",
-      "places": 8,
-      "note": "high place-count add"
+      "places": 8
     },
     {
       "name": "Granada",
       "slug": "granada-es",
       "cc": "ES",
-      "places": 8,
-      "note": "high place-count add"
+      "places": 8
     },
     {
       "name": "Chamonix-Mont-Blanc",
       "slug": "chamonix-mont-blanc-fr",
       "cc": "FR",
-      "places": 5,
-      "note": "high place-count add"
+      "places": 5
     },
     {
       "name": "Helsinki",
       "slug": "helsinki-fi",
       "cc": "FI",
-      "places": 5,
+      "places": 5
+    },
+    {
+      "name": "Imola",
+      "slug": "imola-it",
+      "cc": "IT",
+      "places": 4,
       "note": "high place-count add"
     }
   ],
@@ -231,6 +208,24 @@
       "places": 4
     },
     {
+      "name": "Minato",
+      "slug": "minato-jp",
+      "cc": "JP",
+      "places": 5
+    },
+    {
+      "name": "Osaka",
+      "slug": "osaka-jp",
+      "cc": "JP",
+      "places": 5
+    },
+    {
+      "name": "Sapporo",
+      "slug": "sapporo-jp",
+      "cc": "JP",
+      "places": 3
+    },
+    {
       "name": "Singapore",
       "slug": "singapore-sg",
       "cc": "SG",
@@ -243,29 +238,22 @@
       "places": 4
     },
     {
+      "name": "Chiang Mai City Municipality",
+      "slug": "chiang-mai-city-municipality-th",
+      "cc": "TH",
+      "places": 10
+    },
+    {
+      "name": "H\u00e0 N\u1ed9i",
+      "slug": "ha-noi-vn",
+      "cc": "VN",
+      "places": 10
+    },
+    {
       "name": "Ho Chi Minh City",
       "slug": "ho-chi-minh-city-vn",
       "cc": "VN",
-      "places": 9,
-      "note": "matched from \"Ho Chi Minh\""
-    },
-    {
-      "name": "Hong Kong",
-      "slug": "hong-kong-cn",
-      "cc": "CN",
-      "places": 36
-    },
-    {
-      "name": "Shanghai",
-      "slug": "shanghai-cn",
-      "cc": "CN",
-      "places": 4
-    },
-    {
-      "name": "Beijing",
-      "slug": "beijing-cn",
-      "cc": "CN",
-      "places": 1
+      "places": 9
     },
     {
       "name": "Seoul",
@@ -331,8 +319,7 @@
       "name": "Yangon City",
       "slug": "yangon-city-mm",
       "cc": "MM",
-      "places": 9,
-      "note": "matched from \"Yangon\""
+      "places": 9
     },
     {
       "name": "Siem Reap",
@@ -347,21 +334,8 @@
       "places": 5
     },
     {
-      "name": "Quezon City",
-      "slug": "quezon-city-ph",
-      "cc": "PH",
-      "places": 1
-    },
-    {
       "name": "Central Jakarta",
       "slug": "central-jakarta-id",
-      "cc": "ID",
-      "places": 1,
-      "note": "matched from \"Jakarta\""
-    },
-    {
-      "name": "South Jakarta",
-      "slug": "south-jakarta-id",
       "cc": "ID",
       "places": 1
     },
@@ -369,83 +343,132 @@
       "name": "Ubud District",
       "slug": "ubud-district-id",
       "cc": "ID",
-      "places": 2,
-      "note": "matched from \"Ubud\""
+      "places": 2
     },
     {
       "name": "Vientiane Capital",
       "slug": "vientiane-capital-la",
       "cc": "LA",
-      "places": 2,
-      "note": "matched from \"Vientiane\""
-    },
-    {
-      "name": "Osaka",
-      "slug": "osaka-jp",
-      "cc": "JP",
-      "places": 5
-    },
-    {
-      "name": "Sapporo",
-      "slug": "sapporo-jp",
-      "cc": "JP",
-      "places": 3
-    },
-    {
-      "name": "Chiang Mai City Municipality",
-      "slug": "chiang-mai-city-municipality-th",
-      "cc": "TH",
-      "places": 10,
-      "note": "high place-count add"
-    },
-    {
-      "name": "H\u00e0 N\u1ed9i",
-      "slug": "ha-noi-vn",
-      "cc": "VN",
-      "places": 10,
-      "note": "high place-count add"
+      "places": 2
     },
     {
       "name": "Colombo",
       "slug": "colombo-lk",
       "cc": "LK",
-      "places": 8,
-      "note": "high place-count add"
+      "places": 8
     },
     {
       "name": "George Town",
       "slug": "george-town-my",
       "cc": "MY",
-      "places": 7,
-      "note": "high place-count add"
-    },
-    {
-      "name": "Macau",
-      "slug": "macau-cn",
-      "cc": "CN",
-      "places": 6,
-      "note": "high place-count add"
-    },
-    {
-      "name": "Harbin",
-      "slug": "harbin-cn",
-      "cc": "CN",
-      "places": 5,
-      "note": "high place-count add"
-    },
-    {
-      "name": "Minato",
-      "slug": "minato-jp",
-      "cc": "JP",
-      "places": 5,
-      "note": "high place-count add"
+      "places": 7
     },
     {
       "name": "Tbilisi",
       "slug": "tbilisi-ge",
       "cc": "GE",
+      "places": 5
+    },
+    {
+      "name": "Kuala Lumpur",
+      "slug": "kuala-lumpur-my",
+      "cc": "MY",
+      "places": 4
+    },
+    {
+      "name": "Yerevan",
+      "slug": "yerevan-am",
+      "cc": "AM",
       "places": 5,
       "note": "high place-count add"
+    },
+    {
+      "name": "Batumi",
+      "slug": "batumi-ge",
+      "cc": "GE",
+      "places": 4,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Chuo",
+      "slug": "chuo-jp",
+      "cc": "JP",
+      "places": 4,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Isfahan",
+      "slug": "isfahan-ir",
+      "cc": "IR",
+      "places": 4,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Kanazawa",
+      "slug": "kanazawa-jp",
+      "cc": "JP",
+      "places": 4,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Naha",
+      "slug": "naha-jp",
+      "cc": "JP",
+      "places": 4,
+      "note": "high place-count add"
+    }
+  ],
+  "China": [
+    {
+      "name": "Beijing",
+      "slug": "beijing-cn",
+      "cc": "CN",
+      "places": 1
+    },
+    {
+      "name": "Shanghai",
+      "slug": "shanghai-cn",
+      "cc": "CN",
+      "places": 4
+    },
+    {
+      "name": "Hong Kong",
+      "slug": "hong-kong-cn",
+      "cc": "CN",
+      "places": 36
+    },
+    {
+      "name": "Macau",
+      "slug": "macau-cn",
+      "cc": "CN",
+      "places": 6
+    },
+    {
+      "name": "Harbin",
+      "slug": "harbin-cn",
+      "cc": "CN",
+      "places": 5
+    },
+    {
+      "name": "Jing'an District",
+      "slug": "jingan-district-cn",
+      "cc": "CN",
+      "places": 4,
+      "note": "high place-count add"
+    }
+  ],
+  "Russia": [
+    {
+      "name": "Moscow",
+      "slug": "moscow-ru",
+      "cc": "RU",
+      "places": 10
+    },
+    {
+      "name": "Saint Petersburg",
+      "slug": "saint-petersburg-ru",
+      "cc": "RU",
+      "places": 7
     }
   ],
   "Africa": [
@@ -471,8 +494,7 @@
       "name": "Johannesburg Ward 66",
       "slug": "johannesburg-ward-66-za",
       "cc": "ZA",
-      "places": 2,
-      "note": "matched from \"Johannesburg\""
+      "places": 2
     },
     {
       "name": "Dakar",
@@ -539,6 +561,13 @@
       "slug": "kisangani-cd",
       "cc": "CD",
       "places": 1
+    },
+    {
+      "name": "Ngorongoro",
+      "slug": "ngorongoro-tz",
+      "cc": "TZ",
+      "places": 4,
+      "note": "high place-count add"
     }
   ],
   "South America": [
@@ -642,14 +671,303 @@
       "name": "San Carlos de Bariloche",
       "slug": "san-carlos-de-bariloche-ar",
       "cc": "AR",
-      "places": 1,
-      "note": "matched from \"Bariloche\""
+      "places": 1
+    }
+  ],
+  "North America": [
+    {
+      "name": "New York",
+      "slug": "new-york-us",
+      "cc": "US",
+      "places": 116
     },
     {
-      "name": "San Carlos de Bariloche",
-      "slug": "san-carlos-de-bariloche-ar",
-      "cc": "AR",
+      "name": "Los Angeles",
+      "slug": "los-angeles-us",
+      "cc": "US",
+      "places": 40
+    },
+    {
+      "name": "San Francisco",
+      "slug": "san-francisco-us",
+      "cc": "US",
+      "places": 29
+    },
+    {
+      "name": "Chicago",
+      "slug": "chicago-us",
+      "cc": "US",
+      "places": 38
+    },
+    {
+      "name": "New Orleans",
+      "slug": "new-orleans-us",
+      "cc": "US",
+      "places": 41
+    },
+    {
+      "name": "Miami",
+      "slug": "miami-us",
+      "cc": "US",
+      "places": 15
+    },
+    {
+      "name": "Miami-Dade County",
+      "slug": "miami-dade-county-us",
+      "cc": "US",
+      "places": 2
+    },
+    {
+      "name": "Houston",
+      "slug": "houston-us",
+      "cc": "US",
+      "places": 4
+    },
+    {
+      "name": "Austin",
+      "slug": "austin-us",
+      "cc": "US",
+      "places": 11
+    },
+    {
+      "name": "Portland",
+      "slug": "portland-us",
+      "cc": "US",
+      "places": 6
+    },
+    {
+      "name": "Seattle",
+      "slug": "seattle-us",
+      "cc": "US",
+      "places": 34
+    },
+    {
+      "name": "Las Vegas",
+      "slug": "las-vegas-us",
+      "cc": "US",
+      "places": 7
+    },
+    {
+      "name": "Detroit",
+      "slug": "detroit-us",
+      "cc": "US",
+      "places": 10
+    },
+    {
+      "name": "Philadelphia",
+      "slug": "philadelphia-us",
+      "cc": "US",
+      "places": 28
+    },
+    {
+      "name": "Boston",
+      "slug": "boston-us",
+      "cc": "US",
+      "places": 9
+    },
+    {
+      "name": "Washington",
+      "slug": "washington-us",
+      "cc": "US",
+      "places": 7
+    },
+    {
+      "name": "Mexico City",
+      "slug": "mexico-city-mx",
+      "cc": "MX",
+      "places": 10
+    },
+    {
+      "name": "Tijuana",
+      "slug": "tijuana-mx",
+      "cc": "MX",
+      "places": 4
+    },
+    {
+      "name": "Oaxaca City",
+      "slug": "oaxaca-city-mx",
+      "cc": "MX",
+      "places": 4
+    },
+    {
+      "name": "Puebla",
+      "slug": "puebla-mx",
+      "cc": "MX",
       "places": 1
+    },
+    {
+      "name": "Monterrey",
+      "slug": "monterrey-mx",
+      "cc": "MX",
+      "places": 1
+    },
+    {
+      "name": "Toronto",
+      "slug": "toronto-ca",
+      "cc": "CA",
+      "places": 30
+    },
+    {
+      "name": "Montreal",
+      "slug": "montreal-ca",
+      "cc": "CA",
+      "places": 29
+    },
+    {
+      "name": "Vancouver",
+      "slug": "vancouver-ca",
+      "cc": "CA",
+      "places": 6
+    },
+    {
+      "name": "Quebec",
+      "slug": "quebec-ca",
+      "cc": "CA",
+      "places": 2
+    },
+    {
+      "name": "Havana",
+      "slug": "havana-cu",
+      "cc": "CU",
+      "places": 9
+    },
+    {
+      "name": "Kingston",
+      "slug": "kingston-us",
+      "cc": "US",
+      "places": 1
+    },
+    {
+      "name": "San Juan",
+      "slug": "san-juan-us",
+      "cc": "US",
+      "places": 3
+    },
+    {
+      "name": "Atlanta",
+      "slug": "atlanta-us",
+      "cc": "US",
+      "places": 19,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Nashville",
+      "slug": "nashville-us",
+      "cc": "US",
+      "places": 12,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Miami Beach",
+      "slug": "miami-beach-us",
+      "cc": "US",
+      "places": 11,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Cleveland",
+      "slug": "cleveland-us",
+      "cc": "US",
+      "places": 10,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Kansas City",
+      "slug": "kansas-city-us",
+      "cc": "US",
+      "places": 10,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Charleston",
+      "slug": "charleston-us",
+      "cc": "US",
+      "places": 9,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Managua",
+      "slug": "managua-ni",
+      "cc": "NI",
+      "places": 8,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Pittsburgh",
+      "slug": "pittsburgh-us",
+      "cc": "US",
+      "places": 7,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Livingston",
+      "slug": "livingston-us",
+      "cc": "US",
+      "places": 6,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Provincetown",
+      "slug": "provincetown-us",
+      "cc": "US",
+      "places": 6,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Atlantic City",
+      "slug": "atlantic-city-us",
+      "cc": "US",
+      "places": 5,
+      "note": "high place-count add"
+    },
+    {
+      "name": "East Honolulu",
+      "slug": "east-honolulu-us",
+      "cc": "US",
+      "places": 5,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Paradise",
+      "slug": "paradise-us",
+      "cc": "US",
+      "places": 4,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Santo Domingo",
+      "slug": "santo-domingo-do",
+      "cc": "DO",
+      "places": 4,
+      "note": "high place-count add"
+    },
+    {
+      "name": "St. John's",
+      "slug": "st-johns-ca",
+      "cc": "CA",
+      "places": 4,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Winchester",
+      "slug": "winchester-us",
+      "cc": "US",
+      "places": 4,
+      "note": "high place-count add"
+    }
+  ],
+  "Oceania": [
+    {
+      "name": "Sydney",
+      "slug": "sydney-au",
+      "cc": "AU",
+      "places": 10
+    },
+    {
+      "name": "Melbourne",
+      "slug": "melbourne-au",
+      "cc": "AU",
+      "places": 4
     }
   ]
 }
