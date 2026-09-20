@@ -496,7 +496,7 @@ export default function FluidHero({
   const letters = ["B", "O", "U", "R", "D", "A", "I", "N"];
 
   return (
-    <section ref={stage} className={s.fluidHero} data-hero data-live={live}>
+    <section ref={stage} className={s.fluidHero} data-hero data-live={live} data-journey="film">
       {video && (
         <video
           ref={footageRef}

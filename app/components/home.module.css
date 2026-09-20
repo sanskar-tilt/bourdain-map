@@ -364,6 +364,8 @@
   .heroSupport { font-size: var(--step-1); bottom: calc(var(--s7) + 28px); }
   .heroCta { bottom: var(--s6); }
   .pullInvite { left: var(--s4); bottom: var(--s4); }
+  .pullback { height: 200vh; }
+  .pullWorld { display: none; }
 }
 .pullWorld canvas { display: block; width: 100%; height: 100%; }
 

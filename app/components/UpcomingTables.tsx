@@ -64,6 +64,17 @@ export default function UpcomingTables() {
       <DinnerInterest seats={8} />
 
       <section className={s.section}>
+        <h2 className={s.h2}>London</h2>
+        <p className={s.note}>Eight seats. No date yet. Every chair is empty.</p>
+        <div className={s.chairs} aria-hidden="true">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <span key={i} className={s.chair} data-free="true" />
+          ))}
+        </div>
+        <p className={s.seatLine}>The list above is how you take one.</p>
+      </section>
+
+      <section className={s.section}>
         <h2 className={s.h2}>Open now</h2>
         {!ready && <p className={s.note}>Looking…</p>}
         {ready && rows.length === 0 && (

@@ -24,6 +24,7 @@ type Raw = {
   url?: unknown;
   platform?: unknown;
   caption?: unknown;
+  line?: unknown;
   credit?: unknown;
   file?: unknown;
   photo?: unknown;
@@ -38,7 +39,9 @@ const HOSTS: Record<"instagram" | "tiktok", string[]> = {
 function parse(raw: Raw, i: number): ReelEntry | null {
   const file = typeof raw.file === "string" ? raw.file.trim() : "";
   const photo = typeof raw.photo === "string" ? raw.photo.trim() : "";
-  const caption = typeof raw.caption === "string" ? raw.caption : undefined;
+  const caption = typeof raw.caption === "string"
+    ? raw.caption
+    : typeof raw.line === "string" ? raw.line : undefined;
   const credit = typeof raw.credit === "string" ? raw.credit : undefined;
   const poster = typeof raw.poster === "string" ? raw.poster.trim() : undefined;
 
@@ -80,14 +83,26 @@ function parse(raw: Raw, i: number): ReelEntry | null {
 }
 
 export function reelEntries(): ReelEntry[] {
-  let raw: Raw[] = [];
-  try {
-    const manifest = JSON.parse(
-      fs.readFileSync(path.join(process.cwd(), "content", "reels.json"), "utf-8")
-    ) as { reels?: Raw[] };
-    raw = manifest.reels ?? [];
-  } catch {
-    raw = [];
-  }
-  return raw.map(parse).filter((e): e is ReelEntry => e !== null);
+  const files = ["content/home.json", "content/reels.json"];
+  const seen = new Set<string>();
+  const local: ReelEntry[] = [];
+  const remote: ReelEntry[] = [];
+  files.forEach((rel) => {
+    try {
+      const manifest = JSON.parse(
+        fs.readFileSync(path.join(process.cwd(), rel), "utf-8")
+      ) as { reels?: Raw[] };
+      (manifest.reels ?? []).forEach((raw, i) => {
+        const e = parse(raw, i);
+        if (!e) return;
+        const key = e.file || e.photo || e.url || e.id;
+        if (seen.has(key)) return;
+        seen.add(key);
+        if (e.platform === "local") local.push(e);
+        else remote.push(e);
+      });
+    } catch { /* optional */ }
+  });
+  // The snap deck is ours. Outbound embeds stay off it when we have film.
+  return local.length ? local : remote;
 }

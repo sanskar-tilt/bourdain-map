@@ -126,6 +126,19 @@
 }
 .sound[data-on="true"] { outline: 1px solid rgba(243, 241, 234, 0.4); }
 
+.swipe {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 2;
+  margin: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 234, 0.45);
+}
 .home {
   position: fixed;
   top: 16px;

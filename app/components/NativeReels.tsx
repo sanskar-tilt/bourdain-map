@@ -78,7 +78,7 @@ function LocalSlide({ reel, active }: { reel: ReelEntry; active: boolean }) {
             setMuted(el.muted);
           }}
         >
-          sound
+          {muted ? "sound off" : "sound on"}
         </button>
       )}
     </>
@@ -133,6 +133,7 @@ function Slide({
         {reel.caption && <p className={styles.caption}>{reel.caption}</p>}
         {reel.credit && <p className={styles.credit}>{reel.credit}</p>}
         <p className={styles.index} aria-hidden="true">{index + 1}/{total}</p>
+        {index === 0 && active && <p className={styles.swipe} aria-hidden="true">Swipe</p>}
       </div>
     </section>
   );

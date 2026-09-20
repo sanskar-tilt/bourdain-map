@@ -20,8 +20,8 @@ import s from "./home.module.css";
  * only custom properties that feed transform and opacity. Nothing reads
  * layout per frame.
  *
- * Gated behind 992px: below that there is no pin at all and the hero renders
- * settled. Same under reduced motion.
+ * The scroll journey runs on every width. Reduced motion settles it. The
+ * world-dot canvas hides on small screens; the film and the table stay.
  */
 
 type Props = {
@@ -63,7 +63,6 @@ export default function HeroPullback({ target, video, background, invite, childr
     const el = wrap.current;
     if (!el) return;
 
-    const gate = window.matchMedia("(min-width: 992px)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let active = false;
@@ -80,7 +79,7 @@ export default function HeroPullback({ target, video, background, invite, childr
     };
 
     const sync = () => {
-      const on = gate.matches && !reduced.matches;
+      const on = !reduced.matches;
       if (on === active) return;
       active = on;
       el.dataset.pinned = on ? "true" : "false";
@@ -98,10 +97,8 @@ export default function HeroPullback({ target, video, background, invite, childr
     };
 
     sync();
-    gate.addEventListener("change", sync);
     reduced.addEventListener("change", sync);
     return () => {
-      gate.removeEventListener("change", sync);
       reduced.removeEventListener("change", sync);
       unsubscribe?.();
       window.removeEventListener("resize", read);
