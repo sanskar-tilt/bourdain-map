@@ -23,3 +23,8 @@ skewers_smoke.jpg  |  cc0  |  https://www.rawpixel.com/image/5908908/image-publi
 octopus_market.jpg  |  cc0  |  https://www.rawpixel.com/image/3303904/free-photo-image-octopus-squid-fresh-food-market
 crab_market.jpg  |  cc0  |  https://www.rawpixel.com/image/5965383/fresh-crap-sale-seafood-market
 ramen_bowl.jpg  |  cc0  |  https://www.rawpixel.com/image/5925771/photo-image-public-domain-food-free
+--- Extra stills (2026-09-20) ---
+bourdain-portrait-hires.jpg  |  CC BY 2.0 / Flickr via Commons  |  Anthony Bourdain (14471302619).jpg
+bourdain-peabody.jpg         |  CC BY 2.0  |  Anthony Bourdain Peabody 2014b.jpg
+bourdain-obama-hanoi.jpg     |  Public domain (US gov)  |  Obama + Bourdain Hanoi bun cha
+bourdain-signing.jpg         |  CC BY 2.0  |  Anthony Bourdain IMG 0416 (2047345857).jpg

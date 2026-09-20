@@ -1,0 +1,655 @@
+{
+  "Europe": [
+    {
+      "name": "Paris",
+      "slug": "paris-fr",
+      "cc": "FR",
+      "places": 43
+    },
+    {
+      "name": "Greater London",
+      "slug": "greater-london-gb",
+      "cc": "GB",
+      "places": 16,
+      "note": "matched from \"London\""
+    },
+    {
+      "name": "Greater London",
+      "slug": "greater-london-gb",
+      "cc": "GB",
+      "places": 16
+    },
+    {
+      "name": "City of Westminster",
+      "slug": "city-of-westminster-gb",
+      "cc": "GB",
+      "places": 7
+    },
+    {
+      "name": "Rome",
+      "slug": "rome-it",
+      "cc": "IT",
+      "places": 27
+    },
+    {
+      "name": "Madrid",
+      "slug": "madrid-es",
+      "cc": "ES",
+      "places": 4
+    },
+    {
+      "name": "Barcelona",
+      "slug": "barcelona-es",
+      "cc": "ES",
+      "places": 2
+    },
+    {
+      "name": "Amsterdam",
+      "slug": "amsterdam-nl",
+      "cc": "NL",
+      "places": 18
+    },
+    {
+      "name": "Berlin",
+      "slug": "berlin-de",
+      "cc": "DE",
+      "places": 12
+    },
+    {
+      "name": "Lisbon",
+      "slug": "lisbon-pt",
+      "cc": "PT",
+      "places": 11
+    },
+    {
+      "name": "Porto",
+      "slug": "porto-pt",
+      "cc": "PT",
+      "places": 8
+    },
+    {
+      "name": "Venice",
+      "slug": "venice-it",
+      "cc": "IT",
+      "places": 8
+    },
+    {
+      "name": "Naples",
+      "slug": "naples-it",
+      "cc": "IT",
+      "places": 1
+    },
+    {
+      "name": "Palermo",
+      "slug": "palermo-it",
+      "cc": "IT",
+      "places": 7
+    },
+    {
+      "name": "Marseille",
+      "slug": "marseille-fr",
+      "cc": "FR",
+      "places": 7
+    },
+    {
+      "name": "Lyon",
+      "slug": "lyon-fr",
+      "cc": "FR",
+      "places": 4
+    },
+    {
+      "name": "Bordeaux",
+      "slug": "bordeaux-fr",
+      "cc": "FR",
+      "places": 2
+    },
+    {
+      "name": "Dublin",
+      "slug": "dublin-ie",
+      "cc": "IE",
+      "places": 24
+    },
+    {
+      "name": "Copenhagen",
+      "slug": "copenhagen-dk",
+      "cc": "DK",
+      "places": 4
+    },
+    {
+      "name": "Stockholm",
+      "slug": "stockholm-se",
+      "cc": "SE",
+      "places": 7
+    },
+    {
+      "name": "Prague",
+      "slug": "prague-cz",
+      "cc": "CZ",
+      "places": 6
+    },
+    {
+      "name": "Budapest",
+      "slug": "budapest-hu",
+      "cc": "HU",
+      "places": 5
+    },
+    {
+      "name": "Vienna",
+      "slug": "vienna-at",
+      "cc": "AT",
+      "places": 9
+    },
+    {
+      "name": "Moscow",
+      "slug": "moscow-ru",
+      "cc": "RU",
+      "places": 10
+    },
+    {
+      "name": "Saint Petersburg",
+      "slug": "saint-petersburg-ru",
+      "cc": "RU",
+      "places": 7
+    },
+    {
+      "name": "Reykjavik",
+      "slug": "reykjavik-is",
+      "cc": "IS",
+      "places": 3
+    },
+    {
+      "name": "San Sebasti\u00e1n",
+      "slug": "san-sebastian-es",
+      "cc": "ES",
+      "places": 9
+    },
+    {
+      "name": "Glasgow",
+      "slug": "glasgow-gb",
+      "cc": "GB",
+      "places": 4
+    },
+    {
+      "name": "City of Edinburgh",
+      "slug": "city-of-edinburgh-gb",
+      "cc": "GB",
+      "places": 4,
+      "note": "matched from \"Edinburgh\""
+    },
+    {
+      "name": "City of Edinburgh",
+      "slug": "city-of-edinburgh-gb",
+      "cc": "GB",
+      "places": 4
+    },
+    {
+      "name": "Kyiv",
+      "slug": "kyiv-ua",
+      "cc": "UA",
+      "places": 5
+    },
+    {
+      "name": "Cologne",
+      "slug": "cologne-de",
+      "cc": "DE",
+      "places": 8,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Granada",
+      "slug": "granada-es",
+      "cc": "ES",
+      "places": 8,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Chamonix-Mont-Blanc",
+      "slug": "chamonix-mont-blanc-fr",
+      "cc": "FR",
+      "places": 5,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Helsinki",
+      "slug": "helsinki-fi",
+      "cc": "FI",
+      "places": 5,
+      "note": "high place-count add"
+    }
+  ],
+  "Asia": [
+    {
+      "name": "Shibuya",
+      "slug": "shibuya-jp",
+      "cc": "JP",
+      "places": 2
+    },
+    {
+      "name": "Shinjuku",
+      "slug": "shinjuku-jp",
+      "cc": "JP",
+      "places": 4
+    },
+    {
+      "name": "Singapore",
+      "slug": "singapore-sg",
+      "cc": "SG",
+      "places": 39
+    },
+    {
+      "name": "Bangkok",
+      "slug": "bangkok-th",
+      "cc": "TH",
+      "places": 4
+    },
+    {
+      "name": "Ho Chi Minh City",
+      "slug": "ho-chi-minh-city-vn",
+      "cc": "VN",
+      "places": 9,
+      "note": "matched from \"Ho Chi Minh\""
+    },
+    {
+      "name": "Hong Kong",
+      "slug": "hong-kong-cn",
+      "cc": "CN",
+      "places": 36
+    },
+    {
+      "name": "Shanghai",
+      "slug": "shanghai-cn",
+      "cc": "CN",
+      "places": 4
+    },
+    {
+      "name": "Beijing",
+      "slug": "beijing-cn",
+      "cc": "CN",
+      "places": 1
+    },
+    {
+      "name": "Seoul",
+      "slug": "seoul-kr",
+      "cc": "KR",
+      "places": 8
+    },
+    {
+      "name": "Taipei",
+      "slug": "taipei-tw",
+      "cc": "TW",
+      "places": 24
+    },
+    {
+      "name": "Mumbai",
+      "slug": "mumbai-in",
+      "cc": "IN",
+      "places": 1
+    },
+    {
+      "name": "Kolkata",
+      "slug": "kolkata-in",
+      "cc": "IN",
+      "places": 1
+    },
+    {
+      "name": "Amritsar",
+      "slug": "amritsar-in",
+      "cc": "IN",
+      "places": 4
+    },
+    {
+      "name": "Beirut",
+      "slug": "beirut-lb",
+      "cc": "LB",
+      "places": 2
+    },
+    {
+      "name": "Istanbul",
+      "slug": "istanbul-tr",
+      "cc": "TR",
+      "places": 2
+    },
+    {
+      "name": "\u00dcsk\u00fcdar",
+      "slug": "uskudar-tr",
+      "cc": "TR",
+      "places": 1
+    },
+    {
+      "name": "Dubai",
+      "slug": "dubai-ae",
+      "cc": "AE",
+      "places": 3
+    },
+    {
+      "name": "Tehran",
+      "slug": "tehran-ir",
+      "cc": "IR",
+      "places": 4
+    },
+    {
+      "name": "Yangon City",
+      "slug": "yangon-city-mm",
+      "cc": "MM",
+      "places": 9,
+      "note": "matched from \"Yangon\""
+    },
+    {
+      "name": "Siem Reap",
+      "slug": "siem-reap-kh",
+      "cc": "KH",
+      "places": 2
+    },
+    {
+      "name": "Manila",
+      "slug": "manila-ph",
+      "cc": "PH",
+      "places": 5
+    },
+    {
+      "name": "Quezon City",
+      "slug": "quezon-city-ph",
+      "cc": "PH",
+      "places": 1
+    },
+    {
+      "name": "Central Jakarta",
+      "slug": "central-jakarta-id",
+      "cc": "ID",
+      "places": 1,
+      "note": "matched from \"Jakarta\""
+    },
+    {
+      "name": "South Jakarta",
+      "slug": "south-jakarta-id",
+      "cc": "ID",
+      "places": 1
+    },
+    {
+      "name": "Ubud District",
+      "slug": "ubud-district-id",
+      "cc": "ID",
+      "places": 2,
+      "note": "matched from \"Ubud\""
+    },
+    {
+      "name": "Vientiane Capital",
+      "slug": "vientiane-capital-la",
+      "cc": "LA",
+      "places": 2,
+      "note": "matched from \"Vientiane\""
+    },
+    {
+      "name": "Osaka",
+      "slug": "osaka-jp",
+      "cc": "JP",
+      "places": 5
+    },
+    {
+      "name": "Sapporo",
+      "slug": "sapporo-jp",
+      "cc": "JP",
+      "places": 3
+    },
+    {
+      "name": "Chiang Mai City Municipality",
+      "slug": "chiang-mai-city-municipality-th",
+      "cc": "TH",
+      "places": 10,
+      "note": "high place-count add"
+    },
+    {
+      "name": "H\u00e0 N\u1ed9i",
+      "slug": "ha-noi-vn",
+      "cc": "VN",
+      "places": 10,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Colombo",
+      "slug": "colombo-lk",
+      "cc": "LK",
+      "places": 8,
+      "note": "high place-count add"
+    },
+    {
+      "name": "George Town",
+      "slug": "george-town-my",
+      "cc": "MY",
+      "places": 7,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Macau",
+      "slug": "macau-cn",
+      "cc": "CN",
+      "places": 6,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Harbin",
+      "slug": "harbin-cn",
+      "cc": "CN",
+      "places": 5,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Minato",
+      "slug": "minato-jp",
+      "cc": "JP",
+      "places": 5,
+      "note": "high place-count add"
+    },
+    {
+      "name": "Tbilisi",
+      "slug": "tbilisi-ge",
+      "cc": "GE",
+      "places": 5,
+      "note": "high place-count add"
+    }
+  ],
+  "Africa": [
+    {
+      "name": "Cairo",
+      "slug": "cairo-eg",
+      "cc": "EG",
+      "places": 3
+    },
+    {
+      "name": "Lagos",
+      "slug": "lagos-ng",
+      "cc": "NG",
+      "places": 1
+    },
+    {
+      "name": "Nairobi",
+      "slug": "nairobi-ke",
+      "cc": "KE",
+      "places": 2
+    },
+    {
+      "name": "Johannesburg Ward 66",
+      "slug": "johannesburg-ward-66-za",
+      "cc": "ZA",
+      "places": 2,
+      "note": "matched from \"Johannesburg\""
+    },
+    {
+      "name": "Dakar",
+      "slug": "dakar-sn",
+      "cc": "SN",
+      "places": 7
+    },
+    {
+      "name": "Casablanca",
+      "slug": "casablanca-ma",
+      "cc": "MA",
+      "places": 2
+    },
+    {
+      "name": "Fez",
+      "slug": "fez-ma",
+      "cc": "MA",
+      "places": 2
+    },
+    {
+      "name": "Tangier",
+      "slug": "tangier-ma",
+      "cc": "MA",
+      "places": 8
+    },
+    {
+      "name": "Accra",
+      "slug": "accra-gh",
+      "cc": "GH",
+      "places": 3
+    },
+    {
+      "name": "Antananarivo",
+      "slug": "antananarivo-mg",
+      "cc": "MG",
+      "places": 3
+    },
+    {
+      "name": "Maputo",
+      "slug": "maputo-mz",
+      "cc": "MZ",
+      "places": 1
+    },
+    {
+      "name": "Monrovia",
+      "slug": "monrovia-lr",
+      "cc": "LR",
+      "places": 4
+    },
+    {
+      "name": "Windhoek",
+      "slug": "windhoek-na",
+      "cc": "NA",
+      "places": 1
+    },
+    {
+      "name": "Tripoli",
+      "slug": "tripoli-ly",
+      "cc": "LY",
+      "places": 7
+    },
+    {
+      "name": "Kisangani",
+      "slug": "kisangani-cd",
+      "cc": "CD",
+      "places": 1
+    }
+  ],
+  "South America": [
+    {
+      "name": "S\u00e3o Paulo",
+      "slug": "sao-paulo-br",
+      "cc": "BR",
+      "places": 31
+    },
+    {
+      "name": "Rio de Janeiro",
+      "slug": "rio-de-janeiro-br",
+      "cc": "BR",
+      "places": 10
+    },
+    {
+      "name": "Buenos Aires",
+      "slug": "buenos-aires-ar",
+      "cc": "AR",
+      "places": 7
+    },
+    {
+      "name": "Lima",
+      "slug": "lima-pe",
+      "cc": "PE",
+      "places": 1
+    },
+    {
+      "name": "Miraflores",
+      "slug": "miraflores-co",
+      "cc": "CO",
+      "places": 1
+    },
+    {
+      "name": "Bogota",
+      "slug": "bogota-co",
+      "cc": "CO",
+      "places": 3
+    },
+    {
+      "name": "Medell\u00edn",
+      "slug": "medellin-co",
+      "cc": "CO",
+      "places": 2
+    },
+    {
+      "name": "Cartagena",
+      "slug": "cartagena-co",
+      "cc": "CO",
+      "places": 4
+    },
+    {
+      "name": "Santiago",
+      "slug": "santiago-cl",
+      "cc": "CL",
+      "places": 6
+    },
+    {
+      "name": "Valpara\u00edso",
+      "slug": "valparaiso-cl",
+      "cc": "CL",
+      "places": 3
+    },
+    {
+      "name": "Quito",
+      "slug": "quito-ec",
+      "cc": "EC",
+      "places": 2
+    },
+    {
+      "name": "Montevideo",
+      "slug": "montevideo-uy",
+      "cc": "UY",
+      "places": 8
+    },
+    {
+      "name": "Asuncion",
+      "slug": "asuncion-py",
+      "cc": "PY",
+      "places": 3
+    },
+    {
+      "name": "Salvador",
+      "slug": "salvador-br",
+      "cc": "BR",
+      "places": 8
+    },
+    {
+      "name": "Belo Horizonte",
+      "slug": "belo-horizonte-br",
+      "cc": "BR",
+      "places": 6
+    },
+    {
+      "name": "Puerto Varas",
+      "slug": "puerto-varas-cl",
+      "cc": "CL",
+      "places": 1
+    },
+    {
+      "name": "San Carlos de Bariloche",
+      "slug": "san-carlos-de-bariloche-ar",
+      "cc": "AR",
+      "places": 1,
+      "note": "matched from \"Bariloche\""
+    },
+    {
+      "name": "San Carlos de Bariloche",
+      "slug": "san-carlos-de-bariloche-ar",
+      "cc": "AR",
+      "places": 1
+    }
+  ]
+}
