@@ -1,11 +1,11 @@
 /**
  * Basemap. Visitors never see an "API key required" canvas.
  *
- * Two free raster styles, no key:
- *   light — Carto Positron, paper/ink, the default (the owner finds night too dark)
- *   dark  — Carto Dark Matter, cinematic night
+ * Default, no key: OpenFreeMap vector styles (Positron paper, Dark night).
+ * Carto's public raster CDN watermarks every tile with "API KEY REQUIRED",
+ * so it is never the fallback.
  *
- * Protomaps / PMTiles, when a real key or URL is set, replace the raster
+ * Protomaps / PMTiles, when a real key or URL is set, replace that
  * with a sparse paper or night vector style. MapTiler is never the default.
  */
 
@@ -54,6 +54,8 @@ function tileSource(): StyleSpecification["sources"] {
 /** True when we have our own vector tiles (not a missing/placeholder key). */
 export const hasBasemap = Boolean(PMTILES_URL || usableKey(PROTOMAPS_KEY));
 
+/** Positron paper — the default. No key, no watermark. */
+export const OPENFREEMAP_LIGHT = "https://tiles.openfreemap.org/styles/positron";
 export const OPENFREEMAP_DARK = "https://tiles.openfreemap.org/styles/dark";
 
 export function maptilerDarkUrl(): string | null {
@@ -146,7 +148,7 @@ function cartoRaster(
   };
 }
 
-/** Paper/ink Positron — calm, readable, not a night canvas. */
+/** Unused. Carto's public raster CDN watermarks "API KEY REQUIRED". */
 export function rasterLight(): StyleSpecification {
   return cartoRaster("light_all", "#E6E6E1", {
     "raster-saturation": -0.42,
@@ -188,13 +190,16 @@ const PM_LIGHT = {
   halo: "#E6E6E1",
 } as const;
 
-export function initialMapStyle(theme: MapTheme = "light"): StyleSpecification {
+export function initialMapStyle(theme: MapTheme = "light"): string | StyleSpecification {
   if (hasBasemap) return buildBasemapStyle(theme);
-  return theme === "dark" ? rasterDark() : rasterLight();
+  return theme === "dark" ? OPENFREEMAP_DARK : OPENFREEMAP_LIGHT;
 }
 
 export function buildBasemapStyle(theme: MapTheme = "light"): StyleSpecification {
-  if (!hasBasemap) return theme === "dark" ? rasterDark() : rasterLight();
+  if (!hasBasemap) {
+    // Unreachable from initialMapStyle; keep a typed style for tests.
+    return theme === "dark" ? rasterDark() : rasterLight();
+  }
 
   const T = theme === "dark" ? PM_DARK : PM_LIGHT;
   const sources = tileSource();
