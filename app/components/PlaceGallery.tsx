@@ -67,6 +67,7 @@ export default function PlaceGallery({ items }: { items: GalleryItem[] }) {
             </div>
             <span className={s.galleryName}>{it.line ?? it.placeSlug}</span>
             {it.city && <span className={s.galleryCity}>{it.city}</span>}
+            <span className={s.galleryPill} aria-hidden="true">Explore →</span>
             {it.credit && <span className={s.credit}>{it.credit}</span>}
           </Link>
         ))}

@@ -59,6 +59,17 @@ function LocalSlide({ reel, active }: { reel: ReelEntry; active: boolean }) {
           playsInline
           loop
           preload={active ? "auto" : "metadata"}
+          onEnded={(e) => {
+            const el = e.currentTarget;
+            el.currentTime = 0;
+            if (active) void el.play().catch(() => {});
+          }}
+          onClick={() => {
+            const el = vid.current;
+            if (!el) return;
+            el.muted = !el.muted;
+            setMuted(el.muted);
+          }}
         />
       ) : still ? (
         <img className={styles.media} src={still} alt="" />

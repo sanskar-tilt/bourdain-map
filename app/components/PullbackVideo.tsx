@@ -18,7 +18,7 @@ import s from "./home.module.css";
  * re-entry, so autoplay never fires with sound no matter what the visitor
  * did last pass.
  *
- * Two modes, decided by the same gates as the pin (992px, reduced motion):
+ * Two modes, decided by the same gate as the pin (reduced motion):
  *   auto   — chrome-less player scaling with the pull-back, sound pill in
  *            the stage corner. The pill does not shrink with the frame.
  *   static — no pin anywhere near this: a labelled frame with a play button,
@@ -104,14 +104,11 @@ export default function PullbackVideo({ file, credit, videoId, start, vertical }
 function usePinGate(): boolean {
   const [auto, setAuto] = useState(false);
   useEffect(() => {
-    const gate = window.matchMedia("(min-width: 992px)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setAuto(gate.matches && !reduced.matches);
+    const sync = () => setAuto(!reduced.matches);
     sync();
-    gate.addEventListener("change", sync);
     reduced.addEventListener("change", sync);
     return () => {
-      gate.removeEventListener("change", sync);
       reduced.removeEventListener("change", sync);
     };
   }, []);
@@ -199,7 +196,7 @@ function LocalPullback({
     setMuted(el.muted);
   };
 
-  const creditLine = credit?.trim() || "credit required — set it in content/home.json";
+  const creditLine = credit?.trim() || "Clip used with permission";
 
   const videoEl = (controls: boolean) => (
     <video
@@ -347,14 +344,11 @@ function YouTubePullback({
 
   /* Mode: mirrors HeroPullback's gate exactly. */
   useEffect(() => {
-    const gate = window.matchMedia("(min-width: 992px)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setAuto(gate.matches && !reduced.matches);
+    const sync = () => setAuto(!reduced.matches);
     sync();
-    gate.addEventListener("change", sync);
     reduced.addEventListener("change", sync);
     return () => {
-      gate.removeEventListener("change", sync);
       reduced.removeEventListener("change", sync);
     };
   }, []);

@@ -332,6 +332,20 @@ export default function FluidHero({
     };
     host.addEventListener("pointermove", onMove, { passive: true });
 
+    /* One slow stroke so the film shows itself before anyone moves. */
+    let stroke = 0;
+    const intro = window.setInterval(() => {
+      stroke += 1;
+      const t = stroke / 14;
+      if (t > 1) { window.clearInterval(intro); return; }
+      pointer.x = 0.18 + t * 0.62;
+      pointer.y = 0.5;
+      pointer.dx = 0.35;
+      pointer.dy = 0;
+      pointer.moved = true;
+      pointer.known = true;
+    }, 45);
+
     /* Pause when the hero is off-screen — no reason to simulate under the
        colophon. */
     let onScreen = true;
@@ -433,6 +447,7 @@ export default function FluidHero({
 
     return () => {
       dead = true;
+      window.clearInterval(intro);
       stopFrame();
       io.disconnect();
       host.removeEventListener("pointermove", onMove);
@@ -457,6 +472,13 @@ export default function FluidHero({
     };
     size();
     const trails: { x: number; y: number; life: number }[] = [];
+    for (let i = 0; i < 10; i++) {
+      trails.push({
+        x: canvas.width * (0.2 + i * 0.06),
+        y: canvas.height * 0.5,
+        life: 0.9,
+      });
+    }
     const onMove = (e: PointerEvent) => {
       const r = host.getBoundingClientRect();
       trails.push({

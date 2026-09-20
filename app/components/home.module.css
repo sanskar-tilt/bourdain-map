@@ -297,6 +297,13 @@
   line-height: var(--lh-tight);
   letter-spacing: var(--track-tight);
 }
+.tableChairs { display: flex; gap: 6px; }
+.tableChair {
+  width: 14px;
+  height: 17px;
+  border: 1.5px dashed var(--ink);
+  border-radius: 1px;
+}
 .bridge {
   justify-items: center;
   text-align: center;
@@ -354,6 +361,23 @@
   letter-spacing: var(--track-label);
   text-transform: uppercase;
   color: var(--ink-faint);
+}
+.galleryPill {
+  justify-self: start;
+  margin-top: 2px;
+  padding: 3px 10px;
+  border: 1px solid var(--edge-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.galleryCard:hover .galleryPill {
+  color: var(--ground);
+  background: var(--ink);
+  border-color: var(--ink);
 }
 .storiesTease {
   max-width: 36rem;

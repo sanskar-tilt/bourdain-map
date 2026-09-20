@@ -80,8 +80,13 @@ export default function Home() {
         invite={
           <>
             <p>A table in London. {seats} seats.</p>
+            <div className={s.tableChairs} aria-hidden="true">
+              {Array.from({ length: seats }).map((_, i) => (
+                <span key={i} className={s.tableChair} />
+              ))}
+            </div>
             <a href="#london" data-cursor="table">
-              Hear about the first dinner
+              Take a seat
             </a>
           </>
         }
