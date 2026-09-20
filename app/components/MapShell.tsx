@@ -1,12 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Component, type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import MapView, { type PinProps } from "./MapView";
 import MapSearch from "./MapSearch";
 import SearchPalette from "./SearchPalette";
 import { loadSearchIndex, type SearchIndex } from "../../lib/artifacts";
 import styles from "./MapShell.module.css";
+
+class MapSafe extends Component<{ children: ReactNode }, { ok: boolean }> {
+  state = { ok: true };
+  static getDerivedStateFromError() { return { ok: false }; }
+  render() { return this.state.ok ? this.props.children : null; }
+}
 
 /** The URL is the state. Everything here derives from the path. */
 function parsePath(path: string): { kind: "place" | "city" | null; slug: string | null } {
@@ -76,7 +82,9 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={styles.shell} data-panel={panelOpen ? "open" : "closed"}>
-      <MapView onSelect={onSelect} selectedId={selectedId} flyTo={camera} />
+      <MapSafe>
+        <MapView onSelect={onSelect} selectedId={selectedId} flyTo={camera} />
+      </MapSafe>
 
       <header className={styles.masthead}>
         <div className={styles.brand}>

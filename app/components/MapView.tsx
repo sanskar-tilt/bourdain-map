@@ -66,22 +66,30 @@ export default function MapView({ onSelect, selectedId, flyTo }: Props) {
     const protocol = new Protocol();
     addProtocol("pmtiles", protocol.tile);
 
-    const m = new MapLibreMap({
-      container: holder.current,
-      style: buildBasemapStyle(),
-      center: [10, 26],
-      zoom: 1.45,
-      minZoom: 1.1,
-      maxZoom: 18,
-      attributionControl: { compact: true },
-      pitchWithRotate: false,
-      dragRotate: false,
-      renderWorldCopies: true,
-      fadeDuration: 180,
-      maxTileCacheSize: 160,
-      pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-      cancelPendingTileRequestsWhileZooming: true,
-    });
+    let m: MapLibreMap;
+    try {
+      m = new MapLibreMap({
+        container: holder.current,
+        style: buildBasemapStyle(),
+        center: [10, 26],
+        zoom: 1.45,
+        minZoom: 1.1,
+        maxZoom: 18,
+        attributionControl: { compact: true },
+        pitchWithRotate: false,
+        dragRotate: false,
+        renderWorldCopies: true,
+        fadeDuration: 180,
+        maxTileCacheSize: 160,
+        pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        cancelPendingTileRequestsWhileZooming: true,
+      });
+    } catch (err) {
+      console.warn("[map] WebGL failed — search and the panel still work.", err);
+      setLoaded(-1);
+      removeProtocol("pmtiles");
+      return;
+    }
     map.current = m;
     // Exposed so the map can be inspected from the console and from the
     // headless perf/diagnostic scripts. Read-only in practice.
