@@ -51,7 +51,17 @@
 }
 .nav a:hover { color: var(--ink); }
 
-@media (max-width: 640px) { .nav { display: none; } }
+@media (max-width: 640px) {
+  .masthead { flex-wrap: wrap; gap: var(--s2) var(--s3); }
+  .nav {
+    display: flex;
+    order: 3;
+    width: 100%;
+    padding-top: 0;
+    flex-wrap: wrap;
+  }
+  .searchSlot { min-width: 0; flex: 1 1 12rem; }
+}
 
 /* This is the primary navigation, not a utility. A first-time visitor
    looking at every pin at once needs a way in, and it is this. */

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { supabase, supabaseConfigured, useAuth, signIn, signOut } from "../../lib/supabase";
 import s from "./ui.module.css";
 
@@ -14,7 +15,18 @@ export default function Account() {
   const [err, setErr] = useState<string | null>(null);
 
   if (!supabaseConfigured) {
-    return <p className={s.note}>Sign-in isn&rsquo;t configured on this build.</p>;
+    return (
+      <div className={`${s.form} ${s.page}`}>
+        <h2 className={s.h2}>No account needed</h2>
+        <p className={s.note}>
+          The map is open without signing in. Leave a name for the first
+          London table if that&rsquo;s why you&rsquo;re here.
+        </p>
+        <Link className={s.button} href="/tables/#london">
+          Hear about the London table
+        </Link>
+      </div>
+    );
   }
   if (!ready) return <p className={s.note}>…</p>;
 

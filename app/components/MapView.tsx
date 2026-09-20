@@ -481,13 +481,17 @@ export default function MapView({
     m.setFilter("city-selected", ["==", ["get", "slug"], selectedCitySlug ?? "__none__"]);
   }, [selectedCitySlug, ready]);
 
+  const destLon = flyTo?.lon;
+  const destLat = flyTo?.lat;
+  const destZoom = flyTo?.zoom;
+
   useEffect(() => {
     const m = map.current;
-    if (!m || !ready || !flyTo) return;
-    const dest: [number, number] = [flyTo.lon, flyTo.lat];
+    if (!m || !ready || destLon == null || destLat == null) return;
+    const dest: [number, number] = [destLon, destLat];
     const here = m.getCenter();
     const hop = Math.hypot(here.lng - dest[0], here.lat - dest[1]);
-    const zoom = Math.min(flyTo.zoom ?? 15, MAX_ZOOM);
+    const zoom = Math.min(destZoom ?? 15, MAX_ZOOM);
     unlockMap(m);
     m.stop();
     const done = () => unlockMap(m);
@@ -514,7 +518,7 @@ export default function MapView({
       curve: 1.42,
       essential: true,
     });
-  }, [flyTo, ready]);
+  }, [destLon, destLat, destZoom, ready]);
 
   const resetView = useCallback(() => {
     const m = map.current;

@@ -60,8 +60,10 @@ No secret ever goes in this app — there is no server to keep one on.
 
 Without the tile variables the map still runs — light paper (Carto Positron)
 by default, with a Dark Matter night toggle. No API key, no watermark.
-Optionally set `NEXT_PUBLIC_PROTOMAPS_KEY` on Vercel later for vector tiles. Without the Supabase ones, the map and every page
-work and the interactive bits say they aren't configured.
+Optionally set `NEXT_PUBLIC_PROTOMAPS_KEY` on Vercel later for vector tiles.
+Without the Supabase ones, the map, tables, stories, and the London dinner
+list still work. The form holds your name on this device until a backend
+is attached.
 
 ## Deploying
 

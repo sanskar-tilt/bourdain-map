@@ -150,6 +150,7 @@ export default function FluidHero({
   const stillRef = useRef<HTMLImageElement>(null);
   const [live, setLive] = useState(false);
   const [brush, setBrush] = useState(false);
+  const [muted, setMuted] = useState(true);
 
   /* WebGL fluid on wide fine pointers. Everyone else gets a 2D brush
      that still reveals the footage — never a dead hero. */
@@ -531,6 +532,28 @@ export default function FluidHero({
           autoPlay
           preload="metadata"
         />
+      )}
+      {video && (
+        <button
+          type="button"
+          className={s.heroSound}
+          data-sound-pill
+          data-on={muted ? "false" : "true"}
+          aria-pressed={!muted}
+          aria-label={muted ? "Unmute film" : "Mute film"}
+          onClick={() => {
+            const el = footageRef.current;
+            if (!el) return;
+            el.muted = !el.muted;
+            setMuted(el.muted);
+            if (!el.muted) void el.play().catch(() => {});
+          }}
+        >
+          <span className={s.pillWord}>sound</span>
+          <span className={s.pillTrack} aria-hidden="true">
+            <span className={s.pillKnob} />
+          </span>
+        </button>
       )}
       {poster && (
         <img

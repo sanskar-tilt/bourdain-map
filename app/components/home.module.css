@@ -721,6 +721,26 @@
   display: block;
   transform: none;
 }
+/* Same pill as the pull-back, parked on the film so unmute is obvious
+   before the scroll journey starts. Always on — the film is muted. */
+.heroSound {
+  position: absolute;
+  left: 50%;
+  top: var(--s4);
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s3);
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  padding: var(--s2) var(--s4);
+  cursor: pointer;
+}
+.heroSound[data-on="true"] .pillKnob { transform: translateX(20px); }
+.heroSound[data-on="true"] .pillTrack { background: var(--ink-faint); }
 /* Never distorted, never masked, never pushed around. Above the canvas,
    transparent to the pointer so the water underneath still stirs. */
 .heroWord {

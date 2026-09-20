@@ -57,6 +57,11 @@
 }
 .button:hover { filter: brightness(1.08); }
 .button:disabled { opacity: 0.45; cursor: default; }
+a.button {
+  text-decoration: none;
+  color: var(--ground);
+  background-image: none;
+}
 
 .ghost {
   align-self: flex-start;
