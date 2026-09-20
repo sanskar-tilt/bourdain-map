@@ -118,15 +118,47 @@ function foldLite(s: string): string {
 
 /** True only when the clip title and episode title share a real word. Never guess. */
 export function clipFitsEpisode(title: string, clip: CityClip | null): boolean {
-  if (!clip?.id) return false;
+  return clipFitScore(title, clip) > 0;
+}
+
+function clipFitScore(title: string, clip: CityClip | null): number {
+  if (!clip?.id) return 0;
   const et = foldLite(title);
   const ct = foldLite(clip.title ?? "");
-  if (!et || !ct) return false;
+  if (!et || !ct) return 0;
   const words = (s: string) =>
     s.split(" ").filter((w) => w.length >= 4 && !CLIP_STOP.has(w));
-  if (words(et).some((w) => ct.includes(w))) return true;
-  if (words(ct).some((w) => et.includes(w))) return true;
-  return false;
+  if (!words(et).some((w) => ct.includes(w)) && !words(ct).some((w) => et.includes(w))) {
+    return 0;
+  }
+  // Prefer the episode whose title is actually named in the clip.
+  if (ct.includes(et)) return 10 + Math.max(0, 24 - et.length);
+  return 1;
+}
+
+/**
+ * At most one sourced clip per city, on the episode it actually fits.
+ * A lone episode may carry the city clip. Never invent an id. Never
+ * stamp the same clip on every row.
+ */
+export function assignEpisodeClip<T extends { title: string; youtubeId?: string | null }>(
+  listed: T[],
+  clip: CityClip | null
+): (string | null)[] {
+  const ids = listed.map((e) => e.youtubeId ?? null);
+  if (!clip?.id || listed.length === 0) return ids;
+  let best = -1;
+  let bestScore = 0;
+  listed.forEach((e, i) => {
+    const score = clipFitScore(e.title, clip);
+    if (score > bestScore) {
+      bestScore = score;
+      best = i;
+    }
+  });
+  if (best < 0 && listed.length === 1 && !ids[0]) best = 0;
+  if (best >= 0 && !ids[best]) ids[best] = clip.id;
+  return ids;
 }
 
 export function cityAlias(slug: string | null | undefined): CityAlias {

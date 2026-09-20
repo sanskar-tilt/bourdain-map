@@ -1,5 +1,5 @@
 import { allCities, cityBySlug, SHOW_NAMES } from "../../../lib/detail";
-import { cityQuoteBest, cityClipBest, clipFitsEpisode } from "../../../lib/cityQuotes";
+import { cityQuoteBest, cityClipBest, assignEpisodeClip } from "../../../lib/cityQuotes";
 import { youtubeId, youtubeThumb, youtubeWatch } from "../../../lib/youtube";
 import styles from "./city.module.css";
 import Link from "next/link";
@@ -61,9 +61,8 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
   const yt = clip?.id ?? youtubeId(city.videoUrl);
   const ytTitle = clip?.title ?? city.videoTitle ?? "Official clip";
   const listed = episodes.length > 0 ? episodes : looser;
-  const epClipId = (title: string) =>
-    clip && clipFitsEpisode(title, clip) ? clip.id : null;
-  const clipOnEpisode = listed.some((e) => epClipId(e.title));
+  const epIds = assignEpisodeClip(listed, clip);
+  const clipOnEpisode = epIds.some(Boolean);
 
   return (
     <article className={styles.city}>
@@ -82,16 +81,22 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </section>
       )}
 
-      {(episodes.length > 0 || looser.length > 0) && (
-        <section className={styles.section}>
-          <h2 className={styles.h2}>
-            {episodes.length > 0 ? "He filmed here" : "Episodes that may cover this"}
-          </h2>
+      <section className={styles.section}>
+        <h2 className={styles.h2}>
+          {listed.length === 0
+            ? "Episodes"
+            : episodes.length > 0
+              ? "He filmed here"
+              : "Episodes that may cover this"}
+        </h2>
+        {listed.length === 0 ? (
+          <p className={styles.empty}>No episode is tied to this city in the data.</p>
+        ) : (
           <ul className={styles.eps}>
             {listed.map((e, i) => {
-              const id = epClipId(e.title);
+              const id = epIds[i];
               const meta = (
-                <>
+                <span className={styles.epMeta}>
                   <span className={styles.epShow}>{SHOW_NAMES[e.show] ?? e.show}</span>
                   <span className={styles.epNum}>
                     {e.season != null && `S${e.season}`}
@@ -99,10 +104,22 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                   </span>
                   <span className={styles.epTitle}>{e.title}</span>
                   {e.airDate && <span className={styles.epDate}>{e.airDate}</span>}
-                </>
+                  {!id && <span className={styles.epNone}>No official clip in the data</span>}
+                </span>
+              );
+              const thumb = id ? (
+                <img
+                  className={styles.ytThumb}
+                  src={youtubeThumb(id)}
+                  alt=""
+                  width={480}
+                  height={360}
+                />
+              ) : (
+                <span className={styles.ytEmpty} aria-hidden="true" />
               );
               return (
-                <li key={i}>
+                <li key={`${e.show}-${e.season}-${e.episode}-${e.title}`}>
                   {id ? (
                     <a
                       className={styles.epCard}
@@ -110,30 +127,27 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                       rel="noreferrer"
                       target="_blank"
                     >
-                      <img
-                        className={styles.ytThumb}
-                        src={youtubeThumb(id)}
-                        alt=""
-                        width={480}
-                        height={360}
-                      />
-                      <span className={styles.epMeta}>{meta}</span>
+                      {thumb}
+                      {meta}
                     </a>
                   ) : (
-                    <div className={styles.epMeta}>{meta}</div>
+                    <div className={styles.epCard} data-empty="true">
+                      {thumb}
+                      {meta}
+                    </div>
                   )}
                 </li>
               );
             })}
           </ul>
-          {episodes.length === 0 && (
-            <p className={styles.empty}>
-              Matched on country or region rather than by name, so this is
-              not stated as fact.
-            </p>
-          )}
-        </section>
-      )}
+        )}
+        {listed.length > 0 && episodes.length === 0 && (
+          <p className={styles.empty}>
+            Matched on country or region rather than by name, so this is
+            not stated as fact.
+          </p>
+        )}
+      </section>
 
       {!clipOnEpisode && yt ? (
         <section className={styles.section}>
@@ -169,26 +183,36 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
         </section>
       ) : null}
 
-      <section className={styles.section}>
+      <section className={styles.section} data-places={city.places.length}>
         <h2 className={styles.h2}>The places</h2>
-        <ul className={styles.places}>
-          {city.places.map((p) => (
-            <li key={p.slug ?? p.name} data-gone={p.status === "closed"}>
-              {p.slug ? (
-                <Link className={styles.placeName} href={`/place/${p.slug}/`}>{p.name}</Link>
-              ) : (
-                <span className={styles.placeName}>{p.name}</span>
-              )}
-              <span className={styles.placeShows}>
-                {p.shows.map((s) => SHOW_NAMES[s] ?? s).join(" · ")}
-                {p.status === "closed" && " · gone"}
-              </span>
-              {(p.ate || p.note) && (
-                <span className={styles.placeAte}>{p.ate ?? p.note}</span>
-              )}
-            </li>
-          ))}
-        </ul>
+        {city.places.length === 0 ? (
+          <p className={styles.empty}>No pin is tied to this city in the data.</p>
+        ) : (
+          <ul className={styles.places}>
+            {city.places.map((p) => (
+              <li key={p.slug ?? p.name} data-gone={p.status === "closed"}>
+                {p.slug ? (
+                  <Link
+                    className={styles.placeName}
+                    href={`/place/${p.slug}/`}
+                    scroll={false}
+                  >
+                    {p.name}
+                  </Link>
+                ) : (
+                  <span className={styles.placeName}>{p.name}</span>
+                )}
+                <span className={styles.placeShows}>
+                  {p.shows.map((s) => SHOW_NAMES[s] ?? s).join(" · ")}
+                  {p.status === "closed" && " · gone"}
+                </span>
+                {(p.ate || p.note) && (
+                  <span className={styles.placeAte}>{p.ate ?? p.note}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className={styles.section}>

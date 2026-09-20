@@ -25,6 +25,22 @@
 }
 .epCard:hover .epTitle { color: var(--ink); }
 .epCard .ytThumb { border-radius: 2px; }
+.ytEmpty {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 2px;
+  background: var(--raised);
+  border: 1px solid var(--edge);
+}
+.epNone {
+  flex-basis: 100%;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--track-mid);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
 @media (max-width: 420px) {
   .epCard { grid-template-columns: 1fr; }
 }

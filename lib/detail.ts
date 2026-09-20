@@ -44,6 +44,8 @@ export type CityEpisode = {
   title: string;
   airDate: string | null;
   match: string;
+  /** Official clip id when the source data has one. Never invented. */
+  youtubeId?: string | null;
 };
 
 export type CityDetail = {
