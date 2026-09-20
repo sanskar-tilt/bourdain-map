@@ -1,65 +1,62 @@
 {
  "_readme": [
-  "The homepage. Edit this, drop images in public/home/, and the page updates",
-  "— no code change needed. Same pipeline as content/about.json.",
-  "",
-  "EVERY PHOTO NEEDS A CREDIT. The `credit` field renders next to the image and",
-  "again in the colophon. A photo with no credit still renders, but the build",
-  "prints a warning, because shipping someone's photograph uncredited is the one",
-  "thing this project cannot do.",
-  "",
-  "LOADER: loader.objects[] are overhead shots of FOOD — bowls, plates, a glass",
-  "from above. Round subjects, centred, identical zoom, so nothing jumps inside",
-  "the letter O. loader.portrait is the ONE photograph of Bourdain: it appears",
-  "once, at the end, when the count lands. Do not put him in objects[].",
-  "",
-  "POOLS: hero.photos[] and hero.quotes[] are pools — one of each is chosen at",
-  "random per visit, so the page is never the same twice. Same for pairing.",
-  "",
-  "Sections left empty render as marked gaps rather than disappearing.",
-  "",
-  "pullback.file is a self-hosted clip in public/home/ and WINS over",
-  "videoId. Only for video you have the creator's written permission to",
-  "host — keep the message. credit is REQUIRED, like every photo.",
-  "PULLBACK: the set-piece under the hero quote. pullback.videoId is the",
-  "11-character id from a YouTube URL (youtube.com/watch?v=THIS-BIT) —",
-  "OFFICIAL UPLOADS ONLY, same rule as cities.video_url. It autoplays muted",
-  "while the section is on screen and pauses off it; the SOUND pill is the",
-  "only way to hear it. pullback.start is optional seconds to skip in.",
-  "pullback.vertical: true for Shorts/9:16 clips — a full-height vertical",
-  "frame instead of a 16:9 cover crop.",
-  "NOTE: the video must allow embedding — many fan edits don't (YouTube",
-  "error 150, usually music claims). The player degrades to a marked card",
-  "if so, and scripts/pullback_acceptance.mjs will fail on it loudly.",
-  "pullback.background is the full-bleed photograph of the room behind the",
-  "shrinking frame — same pipeline as every other photo (file in",
-  "public/home/, credit REQUIRED). Both render as marked gaps until set."
+  "The homepage. Edit this, drop images in public/home/, and the page updates.",
+  "EVERY PHOTO NEEDS A CREDIT. Filled 2026-09-20 from Downloads/bourdain_images (CC)."
  ],
  "loader": {
   "objects": [
    {
-    "photo": "",
-    "alt": "",
-    "credit": ""
+    "photo": "loader-ramen.jpg",
+    "alt": "Overhead bowl of ramen",
+    "credit": "Public domain / CC0 via Rawpixel"
+   },
+   {
+    "photo": "loader-pho.jpg",
+    "alt": "Overhead bowl of pho",
+    "credit": "Public domain / CC0 via Rawpixel"
+   },
+   {
+    "photo": "loader-dumplings.jpg",
+    "alt": "Bamboo dumpling steamers from above",
+    "credit": "CC0 via WordPress Photos"
+   },
+   {
+    "photo": "loader-skewers.jpg",
+    "alt": "Skewers on a grill from above",
+    "credit": "Public domain / CC0 via Rawpixel"
    }
   ],
   "portrait": {
    "photo": "bourdain-portrait.jpg",
-   "alt": "Anthony Bourdain, arms crossed on a table, looking into the camera",
-   "credit": ""
+   "alt": "Anthony Bourdain looking into the camera",
+   "credit": "CC BY 2.0 — Wikimedia Commons"
   }
  },
  "hero": {
   "photos": [
    {
-    "photo": "",
-    "alt": "",
-    "credit": "",
+    "photo": "hero-ramen-sashimi.jpg",
+    "alt": "Ramen and sashimi overhead",
+    "credit": "CC0 via StockSnap / Openverse",
+    "placeSlug": ""
+   },
+   {
+    "photo": "hero-octopus.jpg",
+    "alt": "Fresh octopus at a market",
+    "credit": "Public domain / CC0 via Rawpixel",
+    "placeSlug": ""
+   },
+   {
+    "photo": "hero-crab.jpg",
+    "alt": "Crab at a seafood market",
+    "credit": "Public domain / CC0 via Rawpixel",
     "placeSlug": ""
    }
   ],
   "quotes": [
-   ""
+   "Travel isn’t always pretty. It isn’t always comfortable. Sometimes it hurts, it even breaks your heart. But that’s okay. The journey changes you.",
+   "If I’m an advocate for anything, it’s to move. As far as you can, as much as you can. Across the ocean, or simply across the river.",
+   "We ask very simple questions: What makes us laugh? What makes us cry? What makes us feel?"
   ]
  },
  "pullback": {
@@ -71,19 +68,31 @@
   "background": {
    "photo": "pullback-kitchen.jpg",
    "alt": "A small commercial kitchen — steel counters, ovens and a griddle, terracotta tile floor",
-   "credit": ""
+   "credit": "Set photo for MANIFESTO clip context — replace if a stronger credit is required"
   }
  },
  "pairing": {
   "photos": [
    {
-    "photo": "",
-    "alt": "",
-    "credit": ""
+    "photo": "pairing-dinner.jpg",
+    "alt": "Bourdain at a dinner table, 2008",
+    "credit": "CC BY 2.0 — Wikimedia Commons"
+   },
+   {
+    "photo": "pairing-wnyc.jpg",
+    "alt": "Anthony Bourdain on WNYC, 2011",
+    "credit": "CC BY 2.0 — Wikimedia Commons"
+   },
+   {
+    "photo": "pairing-kitchen.jpg",
+    "alt": "Bourdain in a kitchen with a skull tee, 2008",
+    "credit": "CC BY 2.0 — Wikimedia Commons"
    }
   ],
   "quotes": [
-   ""
+   "Maybe that’s enlightenment enough: to know that there is no final resting place of the mind; no moment of smug clarity.",
+   "It’s an irritating reality that many places and events in our lives — even whole eras — are somewhat absurd, and almost meaningless.",
+   "The journey is part of the experience — an expression of the seriousness of one’s intent to know the world."
   ]
  },
  "video": {
@@ -92,6 +101,6 @@
   "source": ""
  },
  "colophon": {
-  "copyright": ""
+  "copyright": "Fan-made, non-commercial. Not affiliated with the Bourdain estate, CNN, or Zero Point Zero. Place data compiled by deannd (r/AnthonyBourdain), used with permission."
  }
 }

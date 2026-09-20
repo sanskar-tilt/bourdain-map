@@ -1,0 +1,25 @@
+SOURCES
+
+--- Bourdain (Wikimedia Commons) ---
+bourdain_portrait_pillar.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_crop_1.jpg
+bourdain_portrait_plain.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_crop_2.jpg
+bourdain_portrait_black_bg.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_crop_3.jpg
+bourdain_wnyc_2011_b.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_on_WNYC-2011-24-02.jpg
+bourdain_wnyc_2011.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_on_WNYC.jpg
+bourdain_peabody_red.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_(14262132056)_(cropped).jpg
+bourdain_peabody_red_b.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_(14281921131)_(cropped).jpg
+bourdain_podium_peabody.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_at_the_73rd_Annual_Peabody_Awards.jpg
+table_chef_skull_2008.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_IMG_0451_(2047347387).jpg
+bourdain_dinner_candid_2008.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_IMG_0531_(2048143750).jpg
+bourdain_dinner_candid_2008_b.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_IMG_0541_(2048144902).jpg
+bourdain_dinner_candid_2008_c.jpg  |  CC BY 2.0  |  https://commons.wikimedia.org/wiki/File:Anthony_Bourdain_IMG_0543_(2048145050).jpg
+
+--- Food (Openverse, CC0 / public domain) ---
+ramen_sashimi_overhead.jpg  |  cc0  |  https://stocksnap.io/photo/pho-soup-PGXW3EOZVU
+pho_overhead.jpg  |  cc0  |  https://www.rawpixel.com/image/5915205/image-public-domain-food-free
+dumpling_steamers.jpg  |  cc0  |  https://wordpress.org/photos/photo/137699056e/
+skewers_grill.jpg  |  cc0  |  https://www.rawpixel.com/image/5928225/photo-image-public-domain-summer-food
+skewers_smoke.jpg  |  cc0  |  https://www.rawpixel.com/image/5908908/image-public-domain-summer-food
+octopus_market.jpg  |  cc0  |  https://www.rawpixel.com/image/3303904/free-photo-image-octopus-squid-fresh-food-market
+crab_market.jpg  |  cc0  |  https://www.rawpixel.com/image/5965383/fresh-crap-sale-seafood-market
+ramen_bowl.jpg  |  cc0  |  https://www.rawpixel.com/image/5925771/photo-image-public-domain-food-free
